@@ -1,47 +1,26 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+<template lang="html">
+  <div class="navbar navbar-light">
+    <nav class="navbar navbar-expand-lg bg-body-secondary bg-opacity-75 w-100 shadow">
+      <div class="container-md">
+        <span class="navbar-brand fw-light">
+          <img class="h-50 w-25 me-5" src="./components/images/USEI.png" alt="USEI"/>
+          USEI
+        </span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <div class="navbar-nav mb-lg-0">
+            <router-link class="nav-item nav-link" to="/">Home</router-link> |
+            <router-link class="nav-item nav-link" to="/login">Login</router-link>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <router-view></router-view>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<script>
+export default {};
+</script>
+<style lang="css"></style>
