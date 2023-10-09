@@ -1,7 +1,7 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const sequelize = require('../../database/db'); // Asegúrate de que la ruta sea correcta
 
-const TipoUsuario = sequelize.define('TipoUsuario', {
+const TipoUsuarioENT = sequelize.define('TipoUsuario', {
   tipo: {
     type: DataTypes.STRING,
     allowNull: false
@@ -15,4 +15,4 @@ const TipoUsuario = sequelize.define('TipoUsuario', {
   timestamps: false // Desactivar las columnas createdAt y updatedAt
 });
 
-module.exports = TipoUsuario;
+module.exports = TipoUsuarioENT;
