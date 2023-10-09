@@ -1,5 +1,5 @@
 <template>
-<NavBarComponent />
+  <NavBarComponent />
   <router-view />
   <FooterComponent />
 </template>
