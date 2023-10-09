@@ -1,10 +1,9 @@
-<<<<<<< Updated upstream
-<template lang="html">
-  <div class="navbar navbar-light">
+<template>
+    <div class="navbar navbar-light">
     <nav class="navbar navbar-expand-lg bg-body-secondary bg-opacity-75 w-100 shadow">
       <div class="container-md">
         <span class="navbar-brand fw-light">
-          <img class="h-50 w-25 me-5" src="./components/images/USEI.png" alt="USEI"/>
+          <img class="h-50 w-25 me-5" src="@/components/images/USEI.png" alt="USEI"/>
           USEI
         </span>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,30 +18,4 @@
       </div>
     </nav>
   </div>
-  <router-view></router-view>
 </template>
-<script>
-export default {};
-</script>
-<style lang="css"></style>
-=======
-<template>
-  <NavBarComponent />
-  <router-view />
-  <FooterComponent />
-</template>
-
-<script>
-import NavBarComponent from "@/components/NavBarComponent.vue";
-import FooterComponent from "@/components/FooterComponent.vue";
-export default {
-  name: "App",
-  components: {
-    NavBarComponent,
-    FooterComponent
-  }
-};
-</script>
-
-<style></style>
->>>>>>> Stashed changes
