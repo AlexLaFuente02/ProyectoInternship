@@ -1,4 +1,4 @@
-const TipoUsuarioENT = require('../ENT/TipoUsuarioENT');
+const TipoUsuarioENT = require('../ENT/tipoUsuarioENT');
 const ResponseDTO = require('../DTO/ResponseDTO');
 
 const getAll = async () => {
