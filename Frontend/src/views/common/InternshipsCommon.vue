@@ -28,7 +28,14 @@ oportunidades de pasantía.</p>
 Internship by Cato y accede a todas las pasantías y oportunidades laborales que hemos preparado
 para ti.</p>
         <br>
+        <br>
+        <br>
+        <br>
+
         </div>
+
+       
+    
     <FooterCommon/>
 </template>
 <script>
