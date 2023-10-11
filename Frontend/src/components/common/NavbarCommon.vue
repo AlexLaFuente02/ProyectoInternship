@@ -3,13 +3,15 @@
             <div class="logo">
                 <img src="https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=360" alt="Logo de la marca">
             </div>
-            <nav>
-                <router-link to="/">Inicio</router-link>
-                <router-link to="/moreInformation">Mas infromacion</router-link>
-                <router-link to="/institutionsCommon">Instituciones</router-link>
-                <router-link to="/internshipsCommon">Pasantias</router-link>
+            <nav >
+                <a class="btn" href="/"><button>Inicio</button></a>
+                <a class="btn" href="/moreInformation"><button>Mas informacion</button></a>
+                <a class="btn" href="/institutionsCommon"><button>Institucione</button></a>
+                <a class="btn" href="/internshipsCommon"><button>Pasantias</button></a>
+             
             </nav>
-            <a class="btn" href="#"><button>Contact</button></a>
+
+            
     </header>
 </template>
 <script>
@@ -92,7 +94,7 @@ export default {
     }
     
     .header .btn button:hover{
-        background-color: #e2f1f8;
+        background-color: #1d79a4;
         color: #ffbc0e;
         transform: scale(1.1);
     }
