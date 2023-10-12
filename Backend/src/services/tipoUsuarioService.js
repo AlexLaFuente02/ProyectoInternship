@@ -1,4 +1,5 @@
 const TipoUsuarioENT = require('../ENT/TipoUsuarioENT');
+const TipoUsuarioDTO = require('../DTO/TipoUsuarioDTO');
 const ResponseDTO = require('../DTO/ResponseDTO');
 
 const getAll = async () => {
@@ -6,7 +7,11 @@ const getAll = async () => {
   try {
     const tiposUsuarios = await TipoUsuarioENT.findAll();
     console.log('Tipos de usuario obtenidos correctamente.');
-    return new ResponseDTO('TU-0000', tiposUsuarios, 'Tipos de usuario obtenidos correctamente');
+    // Mapear los resultados a objetos TipoUsuarioDTO
+    const tiposUsuariosDTO = tiposUsuarios.map((tipoUsuario) => new TipoUsuarioDTO(tipoUsuario.id, tipoUsuario.tipo));
+
+    console.log('Tipos de usuario obtenidos correctamente.');
+    return new ResponseDTO('TU-0000', tiposUsuariosDTO, 'Tipos de usuario obtenidos correctamente');
   } catch (error) {
     console.error('Error al obtener todos los tipos de usuario:', error);
     return new ResponseDTO('TU-1001', null, 'Error al obtener todos los tipos de usuario');

@@ -26,7 +26,7 @@ npm i express
 npm i mysql
 ```
 
-6. Instalamos sequelize en el proyecto:
+5. Instalamos sequelize en el proyecto:
 
 ```
 npm i sequelize
