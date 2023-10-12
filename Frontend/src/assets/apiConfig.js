@@ -1,0 +1,1 @@
+export const rutaApi = "http://localhost:5173/api/v1";
