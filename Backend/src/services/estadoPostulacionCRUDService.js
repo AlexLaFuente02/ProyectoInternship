@@ -55,13 +55,9 @@ const getById = async (id) => {
 };
 
 const create = async (nombreestadopostulacion) => {
-  console.log(
-    `Creando un nuevo estado de postulación: ${nombreestadopostulacion}...`
-  );
+  console.log(`Creando un nuevo estado de postulación: ${nombreestadopostulacion}...`);
   try {
-    const nuevoEstadoPostulacion = await EstadoPostulacionENT.create(
-      nombreestadopostulacion
-    );
+    const nuevoEstadoPostulacion = await EstadoPostulacionENT.create({ nombreestadopostulacion });
     return new ResponseDTO(
       "EP-0000",
       nuevoEstadoPostulacion,
@@ -94,9 +90,7 @@ const update = async (id, nombreestadopostulacion) => {
     }
     estadoPostulacion.nombreestadopostulacion = nombreestadopostulacion;
     await estadoPostulacion.save();
-    console.log(
-      `Estado de postulación con ID: '${id}' actualizado correctamente.`
-    );
+    console.log(`Estado de postulación con ID: '${id}' actualizado correctamente.`);
     return new ResponseDTO(
       "EP-0000",
       estadoPostulacion,
@@ -128,12 +122,10 @@ const remove = async (id) => {
       );
     }
     await estadoPostulacion.destroy();
-    console.log(
-      `Estado de postulación con ID: '${id}' eliminado correctamente.`
-    );
+    console.log("Estado de postulación eliminado correctamente.");
     return new ResponseDTO(
       "EP-0000",
-      `Estado de postulación con ID: '${id}' eliminado correctamente.`
+      "Estado de postulación eliminado correctamente."
     );
   } catch (error) {
     console.error(
