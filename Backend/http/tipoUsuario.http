@@ -1,12 +1,32 @@
-###SOLO SON DE REFERENCIA NO FUNCIONA SI DAS EL SEND REQUEST
-###USAR POSTMAN o EXTENSION
-
-POST localhost:3000/tipoUsuario/
-
-Accept: application/json
+###POST DE USUARIO
+POST http://localhost:3000/tipoUsuario/
 Content-Type: application/json
+Accept: application/json
 
 {
-    "tipo": "ola"
+  "tipo" : "new1"
 }
 
+
+###GET ALL DE USUARIO
+GET http://localhost:3000/tipoUsuario/
+Accept: application/json
+
+
+###GET BY ID DE USUARIO
+GET http://localhost:3000/tipoUsuario/5
+Accept: application/json
+
+
+###PUT DE USUARIO
+PUT http://localhost:3000/tipoUsuario/4
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo" : "cambiado"
+}
+
+###DELETE DE USUARIO
+DELETE http://localhost:3000/tipoUsuario/8
+Accept: application/json
