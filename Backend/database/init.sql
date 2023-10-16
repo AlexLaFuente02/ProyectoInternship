@@ -41,3 +41,23 @@ INSERT INTO semestre (codigosemestre) VALUES
 ("2-2022"),
 ("1-2023"),
 ("2-2023");
+
+CREATE TABLE sectorpertenencia (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombresectorpertenencia varchar(100) NOT NULL
+);
+
+INSERT INTO sectorpertenencia (nombresectorpertenencia) VALUES
+("SECTOR 1"),
+("SECTOR 2"),
+("SECTOR 3");
+
+CREATE TABLE carrera (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombrecarrera varchar(100) NOT NULL
+);
+
+INSERT INTO carrera (nombrecarrera) VALUES
+("Carrera 1"),
+("Carrera 2"),
+("Carrera 3");
