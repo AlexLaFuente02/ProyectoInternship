@@ -9,6 +9,19 @@ INSERT INTO tipousuario (tipo) VALUES
 ('Estudiante'),
 ('Institución');
 
+CREATE TABLE usuario (
+    /*id varchar(36) PRIMARY KEY,  -- Cambiado a VARCHAR para usar UUID Comentado por ahora*/
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idusuario varchar(50) NOT NULL,
+    contrasenia varchar(255) NOT NULL,
+    tipousuario_id int NOT NULL UNIQUE,
+    CONSTRAINT userid UNIQUE (idusuario),
+    CONSTRAINT usuario_tipousuario FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
+);
+
+INSERT INTO usuario (idusuario, contrasenia, tipousuario_id) VALUES
+('admin', 'admin', 1);
+
 CREATE TABLE estadopostulacion (
     id int AUTO_INCREMENT PRIMARY KEY,
     nombreestadopostulacion varchar(100) NOT NULL

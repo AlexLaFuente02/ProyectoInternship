@@ -1,32 +1,32 @@
-###POST DE USUARIO
+###GET ALL DE TIPO USUARIO
+GET http://localhost:3000/tipoUsuario/
+Accept: application/json
+
+
+###GET BY ID DE TIPO USUARIO
+GET http://localhost:3000/tipoUsuario/5
+Accept: application/json
+
+
+###POST DE TIPO USUARIO
 POST http://localhost:3000/tipoUsuario/
 Content-Type: application/json
 Accept: application/json
 
 {
-  "tipo" : "new1"
+  "tipo" : "TipoOscar"
 }
 
 
-###GET ALL DE USUARIO
-GET http://localhost:3000/tipoUsuario/
-Accept: application/json
-
-
-###GET BY ID DE USUARIO
-GET http://localhost:3000/tipoUsuario/5
-Accept: application/json
-
-
-###PUT DE USUARIO
-PUT http://localhost:3000/tipoUsuario/4
+###PUT DE TIPO USUARIO
+PUT http://localhost:3000/tipoUsuario/11
 Content-Type: application/json
 Accept: application/json
 
 {
-  "tipo" : "cambiado"
+  "tipo" : "TipoOsqui"
 }
 
-###DELETE DE USUARIO
+###DELETE DE TIPO USUARIO
 DELETE http://localhost:3000/tipoUsuario/8
 Accept: application/json
