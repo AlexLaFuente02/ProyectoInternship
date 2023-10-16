@@ -31,12 +31,17 @@ import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min";
 
 //Rutas 
 const routes = [
+    //Common
     {name: 'PrincipalPage', path: '/', component: PrincipalPage},
-    {name: 'StudentRegister', path: '/student/register', component: StudentRegister},
     {name: 'MoreInformation', path: '/moreInformation', component: MoreInformation},
     {name: 'InstitutionsCommon', path: '/institutionsCommon', component: InstitutionsCommon},
     {name: 'InternshipsCommon', path: '/internshipsCommon', component: InternshipsCommon},
     {name: 'UserRegister', path: '/userRegister', component: UserRegister},
+    //Student
+    {name: 'StudentRegister', path: '/student/register', component: StudentRegister},
+    //Institution
+
+    //Usei-Admin
 ];
 // Router
 const router = createRouter({

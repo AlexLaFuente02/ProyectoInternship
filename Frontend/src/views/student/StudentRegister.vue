@@ -1,76 +1,131 @@
 <template>
-    <div>
-      <h1>Registro de Estudiante</h1>
-      <form @submit.prevent="registrarEstudiante">
-        <div>
-          <label for="nombre">Nombre *</label>
-          <input type="text" id="nombre" v-model="estudiante.nombre" required>
+    <NavbarCommon/>
+    <div class="container">
+      <div class="container__stepper">
+        <div class="stepper__progress">
+          <div class="progress__bar"></div>
         </div>
-        <div>
-          <label for="primerApellido">Primer Apellido *</label>
-          <input type="text" id="primerApellido" v-model="estudiante.primerApellido" required>
+        <div class="container__items">
+            <div class="stepper__item" v-for="step in steps" :key="step.id">
+              <div class="item__number">
+                {{step.id}}
+              </div>
+            <div class="item__title">{{step.title}}</div>
+          </div>
         </div>
-        <div>
-          <label for="segundoApellido">Segundo Apellido *</label>
-          <input type="text" id="segundoApellido" v-model="estudiante.segundoApellido" required>
-        </div>
-        <div>
-          <label for="documento">Documento</label>
-          <input type="text" id="documento" v-model="estudiante.documento">
-        </div>
-        <div>
-          <label for="complemento">Complemento (Ciudades de Bolivia)</label>
-          <select id="complemento" v-model="estudiante.complemento">
-            <option value="Santa Cruz">Santa Cruz</option>
-            <option value="La Paz">La Paz</option>
-            <option value="Cochabamba">Cochabamba</option>
-            <!-- Agrega más opciones de ciudades aquí -->
-          </select>
-        </div>
-        <div>
-          <label for="validacion">Validación*</label>
-          <input type="checkbox" id="validacion" v-model="estudiante.validacion">
-        </div>
-        <div>
-          <label for="sede">Sede *</label>
-          <input type="text" id="sede" v-model="estudiante.sede" required>
-        </div>
-        <div>
-          <label for="carrera">Carrera *</label>
-          <input type="text" id="carrera" v-model="estudiante.carrera" required>
-        </div>
-        <div>
-          <label for="anioIngreso">Año de Ingreso *</label>
-          <input type="text" id="anioIngreso" v-model="estudiante.anioIngreso" required>
-        </div>
-        <button type="submit">REGISTRARSE</button>
-      </form>
+      </div>
+      <div class="container__content">
+        <component :is="steps[currentStep - 1].component"></component>
+      </div>
+      <div class="controls">
+        <button class="btn btn-primary" @click="prevStep" :disabled="currentStep === 1">Anterior</button>
+        <button class="btn btn-primary" @click="nextStep" v-if="currentStep !== steps.length">Siguiente</button>
+        <button class="btn btn-primary" v-else>Enviar</button>
+      </div>
     </div>
-  </template>
-  <script>
-  
-  export default {
-    data() {
-      return {
-        estudiante: {
-          nombre: '',
-          primerApellido: '',
-          segundoApellido: '',
-          documento: '',
-          complemento: '',
-          validacion: false,
-          sede: '',
-          carrera: '',
-          anioIngreso: ''
+    <FooterCommon/>
+</template>
+<script>
+import FooterCommon from '../../components/common/FooterCommon.vue';
+import NavbarCommon from '../../components/common/NavbarCommon.vue';
+import StudentFormRegister from '../../components/student/StudentFormRegister.vue';
+import StudentValidationRegister from '../../components/student/StudentValidationRegister.vue';
+export default {
+    components:{
+        NavbarCommon,
+        FooterCommon,
+        StudentFormRegister,
+        StudentValidationRegister
+    },
+    data(){
+        return{
+            currentStep: 1,
+            steps: [
+                {
+                    id: 1,
+                    component: 'StudentValidationRegister',
+                    title: 'Validación',
+                },
+                {
+                    id: 2,
+                    component: 'StudentFormRegister',
+                    title: 'Formulario',
+                },
+            ],
         }
-      };
     },
     methods: {
-      registrarEstudiante() {
-        // Aquí puedes enviar los datos del estudiante a tu servidor o realizar cualquier otra acción necesaria.
-        console.log(this.estudiante);
-      }
-    }
-  };
-  </script>
+        nextStep(){
+            this.currentStep++;
+        },
+        prevStep(){
+            this.currentStep--;
+        },
+    },
+}
+</script>
+<style>
+.container__stepper{
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+.container__items{
+  padding: 0%;
+  margin: 0%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    z-index: 1;
+}
+.stepper__progress{
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    background-color: #000;
+    z-index: 0;
+    margin-bottom: 5%;
+}
+/*Estilos para el progress en modo oscuro*/
+.dark-theme .stepper__progress{
+    background-color: #fff;
+}
+.progress__bar{
+  position: absolute;
+  height: 100%;
+}
+
+.stepper__item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 100%;
+    position: relative;
+    justify-content: center;
+    flex: 1 1 auto;
+}
+.item__number{
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    border-radius: 100%;
+    border: 2px solid #000;
+    position: relative;
+}
+/*Estilos para el item en modo oscuro*/
+.dark-theme .item__number{
+    border: 2px solid #fff;
+}
+
+</style>
 

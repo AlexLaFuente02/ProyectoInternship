@@ -2,7 +2,6 @@
 body {
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
-    background: #fff;
     color: #515C66;
     -webkit-font-smoothing: antialiased;
     padding: 0;
@@ -14,20 +13,13 @@ body {
   
   /* Estilos para el tema claro */
   body.main-body {
-    background: linear-gradient(99deg, #f6f9fe 0%, #e8F1F8 100%);
+    background: #e8F1F8;
     color: #515C67;
   }
-  body.main-body .header {
-    background: "#FDFEFF";
-  }
-  
   /* Estilos para el tema oscuro */
   .dark-theme {
-    background: linear-gradient(99deg, #39414A 0%, #2F363F 100%);
-    color: #E5E8EE; 
-  }
-  .dark-theme .header {
     background: #2F363F;
+    color: #eff3f8; 
   }
 
 
@@ -66,3 +58,30 @@ body {
   h6 {
     font-size: 1rem;
   }
+
+/* Ajustar tamaños de fuente para pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  h6 {
+    font-size: 0.8rem;
+  }
+}

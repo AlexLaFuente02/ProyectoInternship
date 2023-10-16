@@ -209,8 +209,8 @@ body.main-body .header {
           </div>
         </div>
         <div class="mx-auto my-2">
-          <button type="button" class="btn btn-warning me-3">Crear una Cuenta</button>
-          <button type="button" class="btn btn-primary">Iniciar Sesi&oacute;n</button>
+          <router-link type="button" class="btn btn-warning me-3" to="/userRegister">Crear una Cuenta</router-link>
+          <router-link type="button" class="btn btn-primary" to="/login">Iniciar Sesi&oacute;n</router-link>
         </div>
       </div>
     </nav>
