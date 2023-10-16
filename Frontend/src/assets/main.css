@@ -1,20 +1,68 @@
-:root { /* light mode */
-    --font-color: #000;
-    --link-color:#1C75B9;
-    --link-white-color:#fff;
-    --bg-color: rgb(243,243,243);
-}
-[data-theme="dark"] {
-    --font-color: #bdbab8;
-    --link-color:#0a86da;
-    --link-white-color:#bdbab8;
-    --bg-color: #333;
-}
-body
-{
-    color:#000;
-    color:var(--font-color);
-    background:rgb(243,243,243);
-    background:var(--bg-color);
-    overflow-y: auto;
-}
+/* Estilos generales */
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    background: #fff;
+    color: #515C66;
+    -webkit-font-smoothing: antialiased;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
+  
+  
+  /* Estilos para el tema claro */
+  body.main-body {
+    background: linear-gradient(99deg, #f6f9fe 0%, #e8F1F8 100%);
+    color: #515C67;
+  }
+  body.main-body .header {
+    background: "#FDFEFF";
+  }
+  
+  /* Estilos para el tema oscuro */
+  .dark-theme {
+    background: linear-gradient(99deg, #39414A 0%, #2F363F 100%);
+    color: #E5E8EE; 
+  }
+  .dark-theme .header {
+    background: #2F363F;
+  }
+
+
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 1.5rem 0 1rem 0;
+    font-family: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    color: inherit;
+  }
+  h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+    margin-top: 0;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.75rem;
+  }
+  
+  h4 {
+    font-size: 1.5rem;
+  }
+  
+  h5 {
+    font-size: 1.25rem;
+  }
+  
+  h6 {
+    font-size: 1rem;
+  }

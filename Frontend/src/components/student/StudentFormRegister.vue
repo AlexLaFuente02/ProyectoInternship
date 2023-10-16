@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <!--Form de registro de Estudiantes-->
+    <div class="formVue">
         
     </div>
 </template>
@@ -8,6 +9,6 @@ export default {
     
 }
 </script>
-<style>
+<style >
     
 </style>
