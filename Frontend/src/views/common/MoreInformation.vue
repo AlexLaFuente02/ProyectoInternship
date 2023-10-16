@@ -1,6 +1,7 @@
 <template >
     <NavbarCommon/>
-    <div class="MasInformacion">
+    <div class="container">
+        <div class="MasInformacion">
         <h1>Más información sobre <br>Internship by Cato</h1>
         <p>¡Bienvenido a Internship by Cato, la Bolsa de Trabajo de la Universidad Católica Boliviana "San Pablo" - Sede La Paz! ¿Por qué elegirnos? Te lo explicamos a continuación.</p>
         <br>
@@ -60,6 +61,9 @@ En Internship by Cato, estamos comprometidos con brindarte las herramientas nece
 <br>
 
     </div>
+
+    </div>
+   
     <FooterCommon/>
 </template>
 <script>
@@ -73,6 +77,19 @@ export default {
     },    
 }
 </script>
-<style >
+<style scoped>
+
+.container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10%;
+    color: rgb(0, 0, 0);
+    padding-top: 2rem;
+    
+}
     
 </style>
