@@ -1,64 +1,46 @@
 <template>
-  <div>
-    <h1>Registro de Instituciones</h1>
-    <form @submit.prevent="registrarInstitucion">
-      <h1>Datos Generales</h1>
-      <div>
-        <label for="nombre">Nombre Institucion*</label>
-        <input type="text" id="nombre" v-model="institucion.nombre" required>
-      </div>
-      <div>
-        <label for="Sector">Sector al que pertenece *</label>
-        <input type="text" id="Sector" v-model="institucion.sector" required>
-      </div>
-      <div>
-        <label for="Resenia">Reseña Institucion *</label>
-        <input type="text" id="Resenia" v-model="institucion.resenia" required>
-      </div>
-      <div>
-        <label for="Logo">Logo de institucion</label> <!-- Nose poner docu logo -->
-        <input type="text" id="Logo" v-model="institucion.logo">
-      </div>
-      <h1>Datos de contacto</h1>
-      <div>
-        <label for="nombrecontacto">Nombre contacto*</label>
-        <input type="text" id="nombrecontacto" v-model="institucion.nombrecontacto" required>
-      </div>
-      <div>
-        <label for="correo">Correo electronico *</label>
-        <input type="text" id="Sector" v-model="institucion.correo" required>
-      </div>
-      <div>
-        <label for="Celular">Celular de contacto *</label>
-        <input type="text" id="Celular" v-model="institucion.celular" required>
-      </div>
-      <button type="/">Cancelar/ Volver atras</button>
-      <button type="submit">REGISTRARSE</button>
+    <body>
+        <form class="login">
+      <input type="text" placeholder="Username">
+      <input type="password" placeholder="Password">
+      <button>Login</button>
     </form>
-  </div>
-</template>
-<script>
-
-export default {
-  data() {
-    return {
-      institucion: {
-        nombre: '',
-        sector: '',
-        resenia: '',
-        logo: '',
-        nombrecontacto: '',
-        correo:'',
-        Celular: ''
-      }
-    };
-  },
-  methods: {
-    registrarInstitucion() {
-      // Aquí puedes enviar los datos del estudiante a tu servidor o realizar cualquier otra acción necesaria.
-      console.log(this.institucion);
+    
+    <a href="https://codepen.io/davinci/" target="_blank">check my other pens</a>
+    
+    </body>
+    </template>
+    
+    <script>
+    export default {
+    
+}
+    </script>
+    
+    <style>
+    @import url(https://fonts.googleapis.com/css?family=Lato:400,300);
+    
+    /* Variables */
+    :root {
+      --app-padding: 6vh;
+      --app-width: 50vh;
+      --app-height: 90vh;
+      --detail-padding: 4vh;
+      --heading-text-size: 4.8vh;
+      --color-primary: #0F9EDE;
+      --color-secondary: #D0DFF0;
+      --color-text-secondary: rgba(black, 0.45);
+      --color-border: #E3E3E3;
+      --color-cal: #08B5CF;
+      --color-heart: #9965AA;
+      --color-steps: var(--color-primary);
+      --color-temp: #F4814B;
+      --view-delay: 2s;
+      --duration: 0.6s;
+      --segment-duration: 1.2s;
+      --pulse-duration: 1.75s;
+      --easing: cubic-bezier(0.77, 0, 0.175, 1);
+      --stroke-width: 0.5vh;
     }
-  }
-};
-</script>
-
+    
+    </style>

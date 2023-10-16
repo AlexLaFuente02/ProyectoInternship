@@ -6,10 +6,8 @@ const getAll = async () => {
   console.log('Obteniendo todos los tipos de usuario...');
   try {
     const tiposUsuarios = await TipoUsuarioENT.findAll();
-    console.log('Tipos de usuario obtenidos correctamente.');
     // Mapear los resultados a objetos TipoUsuarioDTO
     const tiposUsuariosDTO = tiposUsuarios.map((tipoUsuario) => new TipoUsuarioDTO(tipoUsuario.id, tipoUsuario.tipo));
-
     console.log('Tipos de usuario obtenidos correctamente.');
     return new ResponseDTO('TU-0000', tiposUsuariosDTO, 'Tipos de usuario obtenidos correctamente');
   } catch (error) {
