@@ -53,3 +53,23 @@ INSERT INTO sede (nombresede) VALUES
 ("La Paz"),
 ("Cochabamba"),
 ("Santa Cruz");
+
+CREATE TABLE sectorpertenencia (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombresectorpertenencia varchar(100) NOT NULL
+);
+
+INSERT INTO sectorpertenencia (nombresectorpertenencia) VALUES
+("SECTOR 1"),
+("SECTOR 2"),
+("SECTOR 3");
+
+CREATE TABLE carrera (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombrecarrera varchar(100) NOT NULL
+);
+
+INSERT INTO carrera (nombrecarrera) VALUES
+("Carrera 1"),
+("Carrera 2"),
+("Carrera 3");
