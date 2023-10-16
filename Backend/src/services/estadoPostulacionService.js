@@ -1,13 +1,21 @@
 const EstadoPostulacionENT = require("../ENT/estadoPostulacionENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
+const EstadoPostulacionDTO = require("../DTO/EstadoPostulacionDTO");
 
 const getAll = async () => {
   console.log("Obteniendo todos los estados de las postulaciones...");
   try {
     const estadosPostulacion = await EstadoPostulacionENT.findAll();
+    const estadosPostulacionDTO = estadosPostulacion.map(
+      (estadoPostulacion) =>
+        new EstadoPostulacionDTO(
+          estadoPostulacion.id,
+          estadoPostulacion.nombreestadopostulacion
+        )
+    );
     return new ResponseDTO(
       "EP-0000",
-      estadosPostulacion,
+      estadosPostulacionDTO,
       "Estados de postulación obtenidos correctamente."
     );
   } catch (error) {
@@ -55,7 +63,9 @@ const getById = async (id) => {
 };
 
 const create = async (nombreestadopostulacion) => {
-  console.log(`Creando un nuevo estado de postulación: ${nombreestadopostulacion}...`);
+  console.log(
+    `Creando un nuevo estado de postulación: ${nombreestadopostulacion}...`
+  );
   try {
     const nuevoEstadoPostulacion = await EstadoPostulacionENT.create({ nombreestadopostulacion });
     return new ResponseDTO(
@@ -90,7 +100,9 @@ const update = async (id, nombreestadopostulacion) => {
     }
     estadoPostulacion.nombreestadopostulacion = nombreestadopostulacion;
     await estadoPostulacion.save();
-    console.log(`Estado de postulación con ID: '${id}' actualizado correctamente.`);
+    console.log(
+      `Estado de postulación con ID: '${id}' actualizado correctamente.`
+    );
     return new ResponseDTO(
       "EP-0000",
       estadoPostulacion,
