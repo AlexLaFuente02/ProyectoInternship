@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const tipoUsuarioService = require('../services/tipoUsuarioService');
+const tipoUsuarioService = require('../services/TipoUsuarioService');
 
 router.get('/', async (req, res) => {
   console.log('GET request received for getAll');

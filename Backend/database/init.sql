@@ -41,3 +41,15 @@ INSERT INTO semestre (codigosemestre) VALUES
 ("2-2022"),
 ("1-2023"),
 ("2-2023");
+
+
+-- Table: sede
+CREATE TABLE sede (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombresede varchar(100) NOT NULL
+);
+
+INSERT INTO sede (nombresede) VALUES
+("La Paz"),
+("Cochabamba"),
+("Santa Cruz");

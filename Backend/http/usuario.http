@@ -13,9 +13,15 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "idusuario": "ola",
-  "contrasenia": "ola",
-  "tipousuario": {
-    "tipousuario_id": 1
-  }
+  "idusuario": "nuevoUsuario",
+  "contrasenia": "nuevaContraseña",
+  "tipousuario_id": 5
 }
+
+# {
+#   "idusuario": "nuevoUsuario",
+#   "contrasenia": "nuevaContraseña",
+#   "tipoUsuario": {
+#     "id": 2
+#   }
+# }
