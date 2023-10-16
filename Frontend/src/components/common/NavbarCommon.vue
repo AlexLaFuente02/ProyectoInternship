@@ -1,4 +1,4 @@
-<template>
+<!--<template>
     <header class="header">
         <div class="topBar" v-if="!this.responsiveMode">
             <div class="topBarImage">
@@ -172,5 +172,75 @@ body.main-body .header {
     background-color: #1d79a4;
     color: #ffbc0e;
     transform: scale(1.1);
+}
+</style>
+=======-->
+<template>
+  <header class="sticky-top">
+    <nav class="navbar navbar-expand-lg bg-body-secondary bg-opacity-75 shadow-lg">
+      <div class="container-md">
+        <div class="navbar-brand p-0 me-0 me-lg-2">
+          <img
+            class="img-fluid py-3 w-16rem"
+            src="../images/USEI.png"
+            alt="Unidad de Servicios Estudiantiles Integrales"
+          />
+        </div>
+        <div class="bd-navbar-toggle">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <div class="nav col-6 col-md-auto mb-lg-0 mx-auto justify-content-center mb-md-0 mb-3">
+            <router-link class="nav-item nav-link" to="/">Inicio</router-link>
+            <router-link class="nav-item nav-link" to="/moreInformation">M&aacute;s informaci&oacute;n</router-link>
+            <router-link class="nav-item nav-link" to="/institutionsCommon">Instituciones</router-link>
+            <router-link class="nav-item nav-link" to="/internshipsCommon">Pasant&iacute;as</router-link>
+            <button @click="toggleDarkMode">{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</button>
+          </div>
+        </div>
+        <div class="mx-auto my-2">
+          <button type="button" class="btn btn-warning me-3">Crear una Cuenta</button>
+          <button type="button" class="btn btn-primary">Iniciar Sesi&oacute;n</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+</template>
+<script>
+import { useThemeStore } from '@/store/common/useThemeStore';
+export default {
+    name: 'NavbarCommon',
+    data(){
+        return{
+            responsiveMode: false,
+        }
+    },
+    setup() {
+    const darkModeStore = useThemeStore();
+
+    function toggleDarkMode() {
+      darkModeStore.toggleDarkMode();
+    }
+
+    return {
+      isDarkMode: darkModeStore.isDarkMode,
+      toggleDarkMode,
+    };
+  },
+};
+</script>
+<style>
+.sticky-top{
+    box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
 }
 </style>

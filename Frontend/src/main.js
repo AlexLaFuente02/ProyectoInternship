@@ -25,6 +25,10 @@ import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
+//BOOTSTRAP
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min";
+
 //Rutas 
 const routes = [
     {name: 'PrincipalPage', path: '/', component: PrincipalPage},
