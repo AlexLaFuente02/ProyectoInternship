@@ -1,9 +1,8 @@
 <template >
-    <NavbarCommon/>
     <div class="container">
         <div class="MasInformacion">
-        <h1>Más información sobre <br>Internship by Cato</h1>
-        <p>¡Bienvenido a Internship by Cato, la Bolsa de Trabajo de la Universidad Católica Boliviana "San Pablo" - Sede La Paz! ¿Por qué elegirnos? Te lo explicamos a continuación.</p>
+            <h1>Más información sobre <br>Internship by Cato</h1>
+            <p>¡Bienvenido a Internship by Cato, la Bolsa de Trabajo de la Universidad Católica Boliviana "San Pablo" - Sede La Paz! ¿Por qué elegirnos? Te lo explicamos a continuación.</p>
         <br>
     </div>
     <div class="ConexionOportunidades">
@@ -59,27 +58,14 @@ Unidad de Servicios Estudiantiles Integrales
 	Celular: 76521445
 En Internship by Cato, estamos comprometidos con brindarte las herramientas necesarias para impulsar tu futuro profesional. Únete a nosotros y descubre un mundo de oportunidades. ¡Comienza ahora!</p>
 <br>
-
     </div>
-
     </div>
-   
-    <FooterCommon/>
 </template>
 <script>
-import FooterCommon from '@/components/common/FooterCommon.vue'
-import NavbarCommon from '@/components/common/NavbarCommon.vue'
-
-export default {
-    components: {
-        FooterCommon,
-        NavbarCommon,
-    },    
-}
+export default {}
 </script>
 <style scoped>
-
-.container{
+ .container{
     width: 100%;
     height: auto;
     display: flex;
@@ -87,9 +73,6 @@ export default {
     align-items: center;
     justify-content: center;
     padding: 0 10%;
-    color: rgb(0, 0, 0);
     padding-top: 2rem;
-    
 }
-    
 </style>
