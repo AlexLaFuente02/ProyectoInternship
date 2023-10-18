@@ -1,6 +1,7 @@
+const UsuarioDTO = require('../DTO/UsuarioDTO');
+const TipoUsuarioDTO = require('../DTO/TipoUsuarioDTO'); // Asegúrate de importar el DTO TipoUsuario
 const Usuario = require("../ENT/UsuarioENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
-//Usar DTO Usuario
 const TipoUsuario = require('../ENT/TipoUsuarioENT');
 
 const getAll = async () => {
@@ -8,10 +9,17 @@ const getAll = async () => {
     log.push('Obteniendo todos los usuarios...');
     try {
         const usuarios = await Usuario.findAll({
-            include: [{ model: TipoUsuario, as: 'tipoUsuario' }]
+            include: [{ model: TipoUsuario, as: 'tipousuario' }]
         });
         log.push('Usuarios obtenidos correctamente.');
-        return new ResponseDTO('U-0000', usuarios, 'Usuarios obtenidos correctamente', log);
+
+        // Mapea el resultado a los DTO correspondientes
+        const usuariosDTO = usuarios.map(usuario => {
+            const tipoUsuarioDTO = new TipoUsuarioDTO(usuario.tipousuario.id, usuario.tipousuario.tipo);
+            return new UsuarioDTO(usuario.id, usuario.idusuario, tipoUsuarioDTO);
+        });
+
+        return new ResponseDTO('U-0000', usuariosDTO, 'Usuarios obtenidos correctamente', log);
     } catch (error) {
         log.push(`Error al obtener todos los usuarios: ${error.message}`);
         console.error('Error al obtener todos los usuarios:', error);
@@ -20,71 +28,90 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-    console.log(`Obteniendo el usuario con ID: ${id}...`);
+    console.log(`Obteniendo usuario con ID: ${id}...`);
     try {
-        const usuario = await Usuario.findByPk(id);
-        if (!usuario) {
-            console.log(`Usuario con ID: ${id} no encontrado.`);
-            return new ResponseDTO("U-1002", null, "Usuario no encontrado");
-        }
-        console.log("Usuario obtenido correctamente.");
-        return new ResponseDTO("U-0000", usuario, "Usuario obtenido correctamente");
+        const usuario = await Usuario.findByPk(id, {
+            include: [{ model: TipoUsuario, as: 'tipousuario' }]
+        });
+        console.log('Usuario obtenido correctamente.');
+
+        // Mapea el resultado a los DTO correspondientes
+        const tipoUsuarioDTO = new TipoUsuarioDTO(usuario.tipousuario.id, usuario.tipousuario.tipo);
+        const usuarioDTO = new UsuarioDTO(usuario.id, usuario.idusuario, tipoUsuarioDTO);
+
+        return new ResponseDTO('U-0000', usuarioDTO, 'Usuario obtenido correctamente');
     } catch (error) {
         console.error(`Error al obtener el usuario con ID: ${id}.`, error);
-        return new ResponseDTO("U-1002", null, "Error al obtener el usuario");
+        return new ResponseDTO('U-1002', null, 'Error al obtener el usuario');
     }
 };
 
-const create = async (idusuario, contrasenia, tipoUsuario) => {
+const create = async (idusuario, contrasenia, tipousuario) => {
     console.log(`Creando un nuevo usuario: ${idusuario}...`);
+    console.log("Contraseña: " + contrasenia);
+    console.log("Tipo de usuario: " + tipousuario.id);
+
     try {
-      const tipousuario_id = tipoUsuario.id; // Extrae el ID del objeto tipoUsuario
-      const nuevoUsuario = await Usuario.create({ idusuario, contrasenia, tipousuario_id });
-      
-      // Obtenemos el objeto completo del tipo de usuario asociado
-      const tipoUsuario = await TipoUsuario.findByPk(tipousuario_id);
-      
-      // Agregamos el objeto completo de tipoUsuario al usuario
-      nuevoUsuario.tipoUsuario = tipoUsuario;
-  
-      console.log("Usuario creado correctamente.");
-      return new ResponseDTO(
-        "U-0000",
-        nuevoUsuario,
-        "Usuario creado correctamente"
-      );
+        // Extrae el ID del objeto tipousuario
+        const tipousuarioId = tipousuario.id;
+        // Crea el nuevo usuario
+        const nuevoUsuario = await Usuario.create({
+            idusuario,
+            contrasenia,
+            tipousuario_id: tipousuarioId,
+        });
+
+        // Mapea el resultado a los DTO correspondientes
+        const tipoUsuarioDTO = new TipoUsuarioDTO(tipousuarioId, tipousuario.tipo);
+        const nuevoUsuarioDTO = new UsuarioDTO(nuevoUsuario.id, nuevoUsuario.idusuario, tipoUsuarioDTO);
+
+        console.log("Usuario creado correctamente.");
+        return new ResponseDTO("U-0000", nuevoUsuarioDTO, "Usuario creado correctamente");
     } catch (error) {
-      console.error(`Error al crear el usuario: ${idusuario}.`, error);
-      return new ResponseDTO("U-1003", null, "Error al crear el usuario");
+        console.error(`Error al crear el usuario: ${idusuario}.`, error);
+        return new ResponseDTO("U-1003", null, "Error al crear el usuario");
     }
 };
 
-const update = async (id, idusuario, contrasenia, tipousuario_id) => {
-    console.log(`Actualizando el usuario con ID: ${id}...`);
+const update = async (id, idusuario, contrasenia, tipousuario) => {
+    console.log(`Actualizando usuario con ID: ${id}...`);
     try {
-        // Validación de datos de entrada
-        if (!idusuario && !contrasenia && !tipousuario_id) {
-            return new ResponseDTO("U-1004", null, "No se proporcionaron datos para actualizar");
-        }
+        // Extrae el ID del objeto tipousuario
+        const tipousuarioId = tipousuario.id;
+        // Actualiza el usuario
+        const usuarioActualizado = await Usuario.update({
+            idusuario,
+            contrasenia,
+            tipousuario_id: tipousuarioId,
+        }, 
+        {
+            where: { id },
+        });
 
-        const usuario = await Usuario.findByPk(id);
-        if (!usuario) {
-            console.log(`Usuario con ID: ${id} no encontrado.`);
-            return new ResponseDTO("U-1004", null, "Usuario no encontrado");
-        }
-
-        // Actualización de datos si se proporcionaron
-        if (idusuario) usuario.idusuario = idusuario;
-        if (contrasenia) usuario.contrasenia = contrasenia;
-        if (tipousuario_id) usuario.tipousuario_id = tipousuario_id;
-
-        await usuario.save();
+        // Mapea el resultado a los DTO correspondientes
+        const usuarioActualizadoDTO = new UsuarioDTO(id, idusuario, new TipoUsuarioDTO(tipousuarioId, tipousuario.tipo));
 
         console.log("Usuario actualizado correctamente.");
-        return new ResponseDTO("U-0000", usuario, "Usuario actualizado correctamente");
+        return new ResponseDTO("U-0000", usuarioActualizadoDTO, "Usuario actualizado correctamente");
     } catch (error) {
         console.error(`Error al actualizar el usuario con ID: ${id}.`, error);
         return new ResponseDTO("U-1004", null, "Error al actualizar el usuario");
+    }
+};
+
+const remove = async (id) => {
+    console.log(`Eliminando usuario con ID: ${id}...`);
+    try {
+        // Elimina el usuario
+        await Usuario.destroy({
+            where: { id },
+        });
+
+        console.log("Usuario eliminado correctamente.");
+        return new ResponseDTO("U-0000", null, "Usuario eliminado correctamente");
+    } catch (error) {
+        console.error(`Error al eliminar el usuario con ID: ${id}.`, error);
+        return new ResponseDTO("U-1005", null, "Error al eliminar el usuario");
     }
 };
 
@@ -93,4 +120,5 @@ module.exports = {
     getById,
     create,
     update,
+    remove,
 };

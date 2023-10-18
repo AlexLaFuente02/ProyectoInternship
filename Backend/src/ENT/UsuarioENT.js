@@ -19,11 +19,6 @@ const UsuarioENT = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    tipousuario_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true,
-    },
   },
   {
     tableName: "usuario",
@@ -32,8 +27,8 @@ const UsuarioENT = sequelize.define(
 );
 
 UsuarioENT.belongsTo(TipoUsuarioENT, {
-  foreignKey: "tipousuario_id",
-  as: "tipoUsuario",
+  foreignKey: "tipousuario_id", // Mantén la columna para la relación
+  as: "tipousuario",
   targetKey: "id",
 });
 

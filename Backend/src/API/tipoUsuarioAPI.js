@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const tipoUsuarioService = require('../services/TipoUsuarioService');
+const tipoUsuarioService = require('../services/tipoUsuarioService');
 
 router.get('/', async (req, res) => {
   console.log('GET request received for getAll');
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  console.log(`PUT request received for update with ID: ${req.params.id}, tipo: ${req.body.tipo}`);
+  console.log(`PUT request received for update with ID: ${req.params.id}`);
   const response = await tipoUsuarioService.update(req.params.id, req.body.tipo);
   res.json({
     method: 'update',
@@ -55,6 +55,7 @@ router.delete('/:id', async (req, res) => {
     result: response.result,
     message: response.message,
   });
-});
+}
+);
 
 module.exports = router;

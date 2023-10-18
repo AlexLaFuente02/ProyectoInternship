@@ -14,7 +14,7 @@ CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idusuario varchar(50) NOT NULL,
     contrasenia varchar(255) NOT NULL,
-    tipousuario_id int NOT NULL UNIQUE,
+    tipousuario_id int NOT NULL,
     CONSTRAINT userid UNIQUE (idusuario),
     CONSTRAINT usuario_tipousuario FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
 );

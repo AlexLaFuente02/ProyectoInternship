@@ -10,7 +10,7 @@ CREATE TABLE usuario (
     id varchar(36) PRIMARY KEY,  -- Cambiado a VARCHAR para usar UUID
     idusuario varchar(50) NOT NULL,
     contrasenia varchar(255) NOT NULL,
-    tipousuario_id int NOT NULL UNIQUE,
+    tipousuario_id int NOT NULL,
     CONSTRAINT userid UNIQUE (idusuario),
     CONSTRAINT usuario_tipousuario FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
 );

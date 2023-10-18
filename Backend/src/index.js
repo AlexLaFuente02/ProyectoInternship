@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 3000;
 
 // Importa las rutas de tipoUsuarioAPI
 const tipoUsuarioAPI = require("./API/tipoUsuarioAPI");
-const UsuarioAPI = require("./API/UsuarioAPI");
+const UsuarioAPI = require("./API/usuarioAPI");
 const estadoPostulacionAPI = require("./API/estadoPostulacionAPI");
 const semestreAPI = require("./API/semestreAPI");
 const sedeAPI = require("./API/sedeAPI");
@@ -20,7 +20,6 @@ app.use("/usuario", UsuarioAPI);
 app.use("/estadoPostulacion", estadoPostulacionAPI);
 app.use("/semestre", semestreAPI);
 app.use("/sede", sedeAPI);
-
 app.use("/sectorPertenencia", sectorPertenenciaAPI);
 app.use("/carrera", carreraAPI);
 

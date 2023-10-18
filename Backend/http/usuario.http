@@ -4,7 +4,7 @@ Accept: application/json
 
 
 ### GET de Usuario
-GET http://localhost:3000/usuario/1
+GET http://localhost:3000/usuario/4
 Accept: application/json
 
 ### POST de Usuario
@@ -13,15 +13,27 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "idusuario": "nuevoUsuario",
-  "contrasenia": "nuevaContraseña",
-  "tipousuario_id": 5
+  "idusuario": "Quelof8",
+  "contrasenia": "Cami",
+  "tipousuario": {
+    "id": 5
+  }
 }
 
-# {
-#   "idusuario": "nuevoUsuario",
-#   "contrasenia": "nuevaContraseña",
-#   "tipoUsuario": {
-#     "id": 2
-#   }
-# }
+### PUT de Usuario
+PUT http://localhost:3000/usuario/6
+Content-Type: application/json
+Accept: application/json
+
+{
+  "idusuario": "QuelitoMod",
+  "contrasenia": "amnesia",
+  "tipousuario": {
+    "id": 6
+  }
+}
+
+### DELETE de Usuario
+
+DELETE http://localhost:3000/usuario/2
+Accept: application/json
