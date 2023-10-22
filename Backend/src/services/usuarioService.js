@@ -46,30 +46,29 @@ const getById = async (id) => {
     }
 };
 
-const create = async (idusuario, contrasenia, tipousuario) => {
-    console.log(`Creando un nuevo usuario: ${idusuario}...`);
-    console.log("Contraseña: " + contrasenia);
-    console.log("Tipo de usuario: " + tipousuario.id);
+const createUser = async (userData) => {
+    console.log(`Creando un nuevo usuario: ${userData.idusuario}...`);
 
     try {
         // Extrae el ID del objeto tipousuario
-        const tipousuarioId = tipousuario.id;
+        const tipousuarioId = userData.tipousuario.id;
+
         // Crea el nuevo usuario
         const nuevoUsuario = await Usuario.create({
-            idusuario,
-            contrasenia,
+            idusuario: userData.idusuario,
+            contrasenia: userData.contrasenia,
             tipousuario_id: tipousuarioId,
         });
 
         // Mapea el resultado a los DTO correspondientes
-        const tipoUsuarioDTO = new TipoUsuarioDTO(tipousuarioId, tipousuario.tipo);
+        const tipoUsuarioDTO = new TipoUsuarioDTO(tipousuarioId, userData.tipousuario.tipo);
         const nuevoUsuarioDTO = new UsuarioDTO(nuevoUsuario.id, nuevoUsuario.idusuario, tipoUsuarioDTO);
 
         console.log("Usuario creado correctamente.");
         return new ResponseDTO("U-0000", nuevoUsuarioDTO, "Usuario creado correctamente");
     } catch (error) {
-        console.error(`Error al crear el usuario: ${idusuario}.`, error);
-        return new ResponseDTO("U-1003", null, "Error al crear el usuario");
+        console.error(`Error al crear el usuario: ${userData.idusuario}.`, error);
+        return new ResponseDTO("U-1003", null, `Error al crear el usuario: ${error}`);
     }
 };
 
@@ -118,7 +117,7 @@ const remove = async (id) => {
 module.exports = {
     getAll,
     getById,
-    create,
+    createUser,
     update,
     remove,
 };

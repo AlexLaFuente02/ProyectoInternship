@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const usuarioService = require('../services/UsuarioService');
+const usuarioService = require('../services/usuarioService');
 
 router.get('/', async (req, res) => {
     console.log('GET request received for getAll');
@@ -24,16 +24,18 @@ router.get('/:id', async (req, res) => {
     });
     });
 
+
 router.post('/', async (req, res) => {
-    console.log('POST request received for create with idusuario:', req.body.idusuario);
-    const response = await usuarioService.create(req.body.idusuario, req.body.contrasenia, req.body.tipousuario);
+    console.log('POST request received for createUser with data:', req.body);
+    const response = await usuarioService.createUser(req.body);
     res.json({
-        method: 'create',
+        method: 'createUser',
         code: response.code,
         result: response.result,
         message: response.message,
     });
-    });
+});
+
 
 router.put('/:id', async (req, res) => {
     console.log(`PUT request received for update with ID: ${req.params.id}, idusuario: ${req.body.idusuario}, contrasenia: ${req.body.contrasenia}, idtipousuario: ${req.body.tipousuario}`);
