@@ -45,7 +45,7 @@ CREATE TABLE carrera (
     nombrecarrera varchar(100) NOT NULL
 );
 
--- Table: estudiante
+-- Table: estudiante  SAMAEL
 CREATE TABLE estudiante (
     id int AUTO_INCREMENT PRIMARY KEY,
     usuario_id varchar(36) NOT NULL UNIQUE,  -- Cambiado a VARCHAR para usar UUID
@@ -66,7 +66,7 @@ CREATE TABLE estudiante (
     CONSTRAINT estudiantes_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
 );
 
--- Table: institucion
+-- Table: institucion  ALEX
 CREATE TABLE institucion (
     id varchar(36) PRIMARY KEY,  -- Cambiado a VARCHAR para usar UUID
     usuario_id varchar(36) NULL UNIQUE,  -- Cambiado a VARCHAR para usar UUID
@@ -81,20 +81,20 @@ CREATE TABLE institucion (
     CONSTRAINT institucion_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
 );
 
--- Table: adminusei
+-- Table: adminusei  OSCAR
 CREATE TABLE adminusei (
     id varchar(36) PRIMARY KEY,  -- Cambiado a VARCHAR para usar UUID
     usuario_id varchar(36) NOT NULL UNIQUE,  -- Cambiado a VARCHAR para usar UUID
     CONSTRAINT adminusei_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
 );
 
--- Table: estadoconvocatoria
+-- Table: estadoconvocatoria  OSCAR
 CREATE TABLE estadoconvocatoria (
     id int AUTO_INCREMENT PRIMARY KEY,
     nombreestadoconvocatoria varchar(100) NOT NULL
 );
 
--- Table: convocatoria
+-- Table: convocatoria  ALEX
 CREATE TABLE convocatoria (
     id int AUTO_INCREMENT PRIMARY KEY,
     institucion_id int NOT NULL,
@@ -110,7 +110,7 @@ CREATE TABLE convocatoria (
     CONSTRAINT convocatoria_institucion FOREIGN KEY (institucion_id) REFERENCES institucion (id)
 );
 
--- Table: aprobacionconvocatoria
+-- Table: aprobacionconvocatoria  SAMAEL
 CREATE TABLE aprobacionconvocatoria (
     id int AUTO_INCREMENT PRIMARY KEY,
     fechaaprobacion date NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE aprobacionconvocatoria (
     CONSTRAINT aprobacionconvocatoria_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
 );
 
--- Table: estadosolicitudinstitucion
+-- Table: estadosolicitudinstitucion  
 CREATE TABLE estadosolicitudinstitucion (
     id int AUTO_INCREMENT PRIMARY KEY,
     fechaaprobacion date NOT NULL,
@@ -146,7 +146,8 @@ CREATE TABLE postulacion (
 
 -- Table: historico_convocatorias
 CREATE TABLE historico_convocatorias (
-    id int AUTO_INCREMENT PRIMARY KEY,
+    id_h int NOT NULL AUTO_INCREMENT,
+    id_c int NOT NULL,
     institucion_id int NOT NULL,
     areapasantia varchar(100) NOT NULL,
     descripcionfunciones text NOT NULL,
@@ -156,20 +157,36 @@ CREATE TABLE historico_convocatorias (
     fechasolicitud date NOT NULL,
     fechaseleccionpasante date NOT NULL,
     estadoconvocatoria_id int NOT NULL,
-    CONSTRAINT historico_convocatorias_institucion FOREIGN KEY (institucion_id) REFERENCES institucion (id),
-    CONSTRAINT historico_convocatorias_estadoconvocatoria FOREIGN KEY (estadoconvocatoria_id) REFERENCES estadoconvocatoria (id)
+    PRIMARY KEY (id_h),
+    FOREIGN KEY (id_c) REFERENCES convocatoria (id),
+    FOREIGN KEY (estadoconvocatoria_id) REFERENCES estadoconvocatoria (id),
+    FOREIGN KEY (institucion_id) REFERENCES institucion (id)
 );
 
 -- Table: historico_postulaciones
 CREATE TABLE historico_postulaciones (
-    id int AUTO_INCREMENT PRIMARY KEY,
+    id_h int NOT NULL AUTO_INCREMENT,
+    id_p int NOT NULL,
     fechapostulacion date NOT NULL,
     estadopostulacion_id int NOT NULL,
     estudiante_id int NOT NULL,
     convocatoria_id int NOT NULL,
-    CONSTRAINT historico_postulaciones_estadopostulacion FOREIGN KEY (estadopostulacion_id) REFERENCES estadopostulacion (id),
-    CONSTRAINT historico_postulaciones_estudiante FOREIGN KEY (estudiante_id) REFERENCES estudiante (id),
-    CONSTRAINT historico_postulaciones_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
+    PRIMARY KEY (id_h),
+    FOREIGN KEY (id_p) REFERENCES postulacion (id),
+    FOREIGN KEY (estadopostulacion_id) REFERENCES estadopostulacion (id),
+    FOREIGN KEY (estudiante_id) REFERENCES estudiante (id),
+    FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
 );
 
--- Historico de usuario
+-- Historico de usuario  OSCAR
+-- Agregar el procedimiento almacenado para el historico de usuario
+CREATE TABLE historico_usuario (
+    id_h int NOT NULL AUTO_INCREMENT,
+    id_u int NOT NULL,
+    idusuario varchar(50) NOT NULL,
+    contrasenia varchar(255) NOT NULL,
+    tipousuario_id int NOT NULL,
+    PRIMARY KEY (id_h),
+    FOREIGN KEY (id_u) REFERENCES usuario (id),
+    FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
+);
