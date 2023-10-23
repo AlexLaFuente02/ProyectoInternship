@@ -7,7 +7,7 @@ GET http://{{host}}/institucion/
 Accept: application/json
 
 ### GET de Institucion por ID
-GET http://{{host}}/institucion/1
+GET http://{{host}}/institucion/2
 Accept: application/json
 
 ### POST de Institucion
@@ -31,22 +31,22 @@ Accept: application/json
 }
 
 ### PUT de Institucion
-PUT http://{{host}}/institucion/1
+PUT http://{{host}}/institucion/2
 Content-Type: application/json
 Accept: application/json
 
 {
   "nombreinstitucion": "Universidad ABC",
   "reseniainstitucion": "Descripción actualizada de la universidad.",
-  "logoinstitucion": "data:image/png;base64,...",  // Aquí iría el logo codificado en base64
+  "logoinstitucion": null, 
   "nombrecontacto": "María García",
   "correocontacto": "maria.garcia@universidadabc.com",
   "celularcontacto": "987654321",
   "usuario": {
-    "id": 6
+    "id": 2
   },
   "sectorpertenencia": {
-    "id": 4
+    "id": 1
   }
 }
 

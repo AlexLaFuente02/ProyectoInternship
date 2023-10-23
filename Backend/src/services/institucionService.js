@@ -12,7 +12,7 @@ const getAllInstitutions = async () => {
         });
         const institucionesDTO = instituciones.map(institucion => {
             const sectorPertenenciaDTO = new SectorPertenenciaDTO(institucion.sectorpertenencia.id, institucion.sectorpertenencia.nombresectorpertenencia);
-            return new InstitucionDTO(institucion.id, institucion.nombreinstitucion, sectorPertenenciaDTO, institucion.reseniainstitucion, institucion.logoinstitucion, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto);
+            return new InstitucionDTO(institucion.id, institucion.nombreinstitucion, institucion.reseniainstitucion, institucion.logoinstitucion, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto, sectorPertenenciaDTO);
         });
         console.log('Instituciones obtenidas correctamente.');
         return new ResponseDTO('I-0000', institucionesDTO, 'Instituciones obtenidas correctamente');
@@ -33,7 +33,7 @@ const getInstitutionById = async (id) => {
             return new ResponseDTO('I-1002', null, 'Institución no encontrada');
         }
         const sectorPertenenciaDTO = new SectorPertenenciaDTO(institucion.sectorpertenencia.id, institucion.sectorpertenencia.nombresectorpertenencia);
-        const institucionDTO = new InstitucionDTO(institucion.id, institucion.nombreinstitucion, sectorPertenenciaDTO, institucion.reseniainstitucion, institucion.logoinstitucion, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto);
+        const institucionDTO = new InstitucionDTO(institucion.id, institucion.nombreinstitucion, institucion.reseniainstitucion, institucion.logoinstitucion, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto, sectorPertenenciaDTO);
         console.log('Institución obtenida correctamente.');
         return new ResponseDTO('I-0000', institucionDTO, 'Institución obtenida correctamente');
     } catch (error) {
@@ -55,7 +55,7 @@ const createInstitution = async (institutionData) => {
             celularcontacto: institutionData.celularcontacto
         });
         const sectorPertenenciaDTO = new SectorPertenenciaDTO(institutionData.sectorpertenencia.id, institutionData.sectorpertenencia.nombresectorpertenencia);
-        const nuevaInstitucionDTO = new InstitucionDTO(nuevaInstitucion.id, nuevaInstitucion.nombreinstitucion, sectorPertenenciaDTO, nuevaInstitucion.reseniainstitucion, nuevaInstitucion.logoinstitucion, nuevaInstitucion.nombrecontacto, nuevaInstitucion.correocontacto, nuevaInstitucion.celularcontacto);
+        const nuevaInstitucionDTO = new InstitucionDTO(nuevaInstitucion.id, nuevaInstitucion.nombreinstitucion, nuevaInstitucion.reseniainstitucion, nuevaInstitucion.logoinstitucion, nuevaInstitucion.nombrecontacto, nuevaInstitucion.correocontacto, nuevaInstitucion.celularcontacto, sectorPertenenciaDTO);
         console.log('Institución creada correctamente.');
         return new ResponseDTO('I-0000', nuevaInstitucionDTO, 'Institución creada correctamente');
     } catch (error) {
@@ -81,9 +81,11 @@ const updateInstitution = async (id, institutionData) => {
             correocontacto: institutionData.correocontacto,
             celularcontacto: institutionData.celularcontacto
         });
+        const sectorPertenenciaDTO = new SectorPertenenciaDTO(institutionData.sectorpertenencia.id, institutionData.sectorpertenencia.nombresectorpertenencia);
+        const actulizadoInstitucionDTO = new InstitucionDTO(institucion.id, institucion.nombreinstitucion, institucion.reseniainstitucion, institucion.logoinstitucion, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto, sectorPertenenciaDTO);
         console.log('Institución actualizada correctamente.');
-        return new ResponseDTO('I-0000', null, 'Institución actualizada correctamente');
-    } catch (error) {
+        return new ResponseDTO('I-0000', actulizadoInstitucionDTO, 'Institución actualizada correctamente');
+        } catch (error) {
         console.error(`Error al actualizar la institución con ID: ${id}.`, error);
         return new ResponseDTO('I-1004', null, `Error al actualizar la institución: ${error}`);
     }
