@@ -27,7 +27,7 @@ export default {
     }
 }
 </script>
-<style >
+<style>
 .formVue{
     background-color: #FFF;
     padding: 5% 10%;
@@ -43,7 +43,10 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 5%;
+}
+.form__tittle h6{
+    font-size: 1.5rem;
+    text-align: center;
 }
 .form__description{
     display: flex;

@@ -1,5 +1,4 @@
 <template>
-    <NavbarCommon/>
     <div class="container">
         <div class="container__title">
                 <h1>REGISTRO DE USUARIOS</h1>
@@ -8,7 +7,6 @@
             <UserTypes/>
         </div>
     </div>
-    <FooterCommon/>
 </template>
 <script>
 import FooterCommon from '../../components/common/FooterCommon.vue';
@@ -35,9 +33,11 @@ export default {
     justify-content: center;
     align-items: center;
     margin-bottom: 5%;
+    text-align: center;
 }
 .container_user_types{
     display: flex;
     padding: 0 10%;
 }
+
 </style>

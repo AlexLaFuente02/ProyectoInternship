@@ -92,24 +92,10 @@ export default {
       darkModeStore.toggleDarkMode();
       console.log(darkModeStore.$event);
     },
-  },
-  /*setup() {
-    const darkModeStore = useThemeStore();
-
-    function toggleDarkMode() {
-      this.isDarkMode = !this.isDarkMode; // Actualiza inmediatamente el estado
-      darkModeStore.toggleDarkMode();
-      console.log(darkModeStore.$event);
-    }
-
-    return {
-      isDarkMode: darkModeStore.isDarkMode,
-      toggleDarkMode,
-    };
-  },*/
+},
 };
 </script>
-<style scoped>
+<style>
 
 .sticky-top{
     box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
@@ -119,16 +105,24 @@ export default {
 .dark-theme .sticky-top{
     background-color: #434B54;
 }
-
+.container-md{
+    width: 100%;
+}
+@media (max-width: 1400px){
+    .img-fluid{
+        width: 10rem;
+    }
+}
 
 /*Bajar de tamaño el logo*/
 @media (max-width: 768px){
     .img-fluid{
-        width: 8rem;
+        width: 5rem;
+        max-width: 70%;
     }
     /*Bajar el tamaño de los botones*/
     .btn{
-        font-size: 0.7rem;
+        font-size: 0.5rem;
     }
     /*Bajar el tamano del toggle*/
     .navbar-toggler-icon{
@@ -139,22 +133,8 @@ export default {
 /*Bajar de tamaño el logo*/
 @media (max-width: 576px){
     .img-fluid{
-        width: 6rem;
-    }
-    /*Bajar el tamaño de los botones*/
-    .btn{
-        font-size: 0.5rem;
-    }
-    /*Bajar el tamano del toggle*/
-    .navbar-toggler-icon{
-        width: 0.8rem;
-        height: 0.8rem;
-    }
-}
-/*Bajar de tamaño el logo*/
-@media (max-width: 420px){
-    .img-fluid{
         width: 3rem;
+        max-width: 50%;
     }
     /*Bajar el tamaño de los botones*/
     .btn{
@@ -162,8 +142,24 @@ export default {
     }
     /*Bajar el tamano del toggle*/
     .navbar-toggler-icon{
+        width: 0.6rem;
+        height: 0.6rem;
+    }
+}
+/*Bajar de tamaño el logo*/
+@media (max-width: 420px){
+    .img-fluid{
         width: 0.5rem;
-        height: 0.5rem;
+        max-width: 30%;
+    }
+    /*Bajar el tamaño de los botones*/
+    .btn{
+        font-size: 0.2rem;
+    }
+    /*Bajar el tamano del toggle*/
+    .navbar-toggler-icon{
+        width: 0.4rem;
+        height: 0.4rem;
     }
 }
 </style>

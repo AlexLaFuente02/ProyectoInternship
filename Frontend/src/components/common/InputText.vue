@@ -27,13 +27,23 @@ export default{
     }
 }
 </script>
-<style>
+<style scoped>
+.container__field{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.container__field label{
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
 input{
     border-radius: 5px;
     border: 1px solid #ced4da;
     padding: 5px;
     width: 100%;
     margin-bottom: 10px;  
-    
 }    
+
 </style>
