@@ -1,13 +1,17 @@
 const SemestreENT = require("../ENT/semestreENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
+const SemestreDTO = require("../DTO/SemestreDTO");
 
 const getAll = async () => {
   console.log("Obteniendo todos los semestres...");
   try {
     const semestres = await SemestreENT.findAll();
+    const semestresDTO = semestres.map(
+      (semestre) => new SemestreDTO(semestre.id, semestre.codigosemestre)
+    );
     return new ResponseDTO(
       "S-0000",
-      semestres,
+      semestresDTO,
       "Semestres obtenidos correctamente."
     );
   } catch (error) {

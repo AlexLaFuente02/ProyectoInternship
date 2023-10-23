@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const tipoUsuarioService = require('../services/TipoUsuarioService');
+const sectorPertenenciaService = require('../services/sectorPertenenciaService');
 
 router.get('/', async (req, res) => {
   console.log('GET request received for getAll');
-  const response = await tipoUsuarioService.getAll();
+  const response = await sectorPertenenciaService.getAll();
   res.json({
     method: 'getAll',
     code: response.code,
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   console.log(`GET request received for getById with ID: ${req.params.id}`);
-  const response = await tipoUsuarioService.getById(req.params.id);
+  const response = await sectorPertenenciaService.getById(req.params.id);
   res.json({
     method: 'getById',
     code: response.code,
@@ -25,8 +25,8 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  console.log('POST request received for create with tipo:', req.body.tipo);
-  const response = await tipoUsuarioService.create(req.body.tipo);
+  console.log('POST request received for create with nombresectorpertenencia:', req.body.nombresectorpertenencia);
+  const response = await sectorPertenenciaService.create(req.body.nombresectorpertenencia);
   res.json({
     method: 'create',
     code: response.code,
@@ -36,8 +36,8 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  console.log(`PUT request received for update with ID: ${req.params.id}, tipo: ${req.body.tipo}`);
-  const response = await tipoUsuarioService.update(req.params.id, req.body.tipo);
+  console.log(`PUT request received for update with ID: ${req.params.id}, nombresectorpertenencia: ${req.body.nombresectorpertenencia}`);
+  const response = await sectorPertenenciaService.update(req.params.id, req.body.nombresectorpertenencia);
   res.json({
     method: 'update',
     code: response.code,
@@ -48,7 +48,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   console.log(`DELETE request received for remove with ID: ${req.params.id}`);
-  const response = await tipoUsuarioService.remove(req.params.id);
+  const response = await sectorPertenenciaService.remove(req.params.id);
   res.json({
     method: 'remove',
     code: response.code,
