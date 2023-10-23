@@ -1,10 +1,12 @@
-@import ../settings.http
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
 ### GET ALL de Usuario
 GET http://{{host}}/usuario/
 Accept: application/json
 
 ### GET de Usuario
-GET http://{{host}}/usuario/4
+GET http://{{host}}/usuario/1
 Accept: application/json
 
 ### POST de Usuario
@@ -13,7 +15,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "idusuario": "Quelof8",
+  "idusuario": "Quelof82",
   "contrasenia": "Cami",
   "tipousuario": {
     "id": 2
@@ -34,5 +36,5 @@ Accept: application/json
 }
 
 ### DELETE de Usuario
-DELETE http://{{host}}/usuario/2
+DELETE http://{{host}}/usuario/3
 Accept: application/json

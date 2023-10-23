@@ -171,3 +171,5 @@ CREATE TABLE historico_postulaciones (
     CONSTRAINT historico_postulaciones_estudiante FOREIGN KEY (estudiante_id) REFERENCES estudiante (id),
     CONSTRAINT historico_postulaciones_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
 );
+
+-- Historico de usuario
