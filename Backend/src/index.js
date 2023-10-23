@@ -8,6 +8,7 @@ const UsuarioAPI = require("./API/usuarioAPI");
 const estadoPostulacionAPI = require("./API/estadoPostulacionAPI");
 const semestreAPI = require("./API/semestreAPI");
 const sedeAPI = require("./API/sedeAPI");
+const institucionAPI = require("./API/institucionAPI");
 
 const sectorPertenenciaAPI = require("./API/sectorPertenenciaAPI");
 const carreraAPI = require("./API/carreraAPI");
@@ -22,6 +23,7 @@ app.use("/semestre", semestreAPI);
 app.use("/sede", sedeAPI);
 app.use("/sectorPertenencia", sectorPertenenciaAPI);
 app.use("/carrera", carreraAPI);
+app.use("/institucion", institucionAPI);
 
 // Ruta de inicio
 app.get("/", (req, res) => {

@@ -72,3 +72,20 @@ INSERT INTO carrera (nombrecarrera) VALUES
 ("Carrera 1"),
 ("Carrera 2"),
 ("Carrera 3");
+
+
+/*INSTITUCION*/
+-- Table: institucion
+CREATE TABLE institucion (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    usuario_id int NULL,
+    nombreinstitucion varchar(100) NOT NULL,
+    sectorpertenencia_id int NOT NULL,
+    reseniainstitucion text NULL,
+    logoinstitucion BLOB NULL,  -- Cambiado a BLOB ya que MySQL no tiene tipo image
+    nombrecontacto varchar(100) NOT NULL,
+    correocontacto varchar(100) NOT NULL,
+    celularcontacto varchar(15) NOT NULL,
+    CONSTRAINT instituciones_sectorpertenencia FOREIGN KEY (sectorpertenencia_id) REFERENCES sectorpertenencia (id),
+    CONSTRAINT institucion_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
+);
