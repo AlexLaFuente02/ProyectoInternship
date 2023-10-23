@@ -7,13 +7,14 @@ body {
     padding: 0;
     margin: 0;
     height: 100%;
+    background: linear-gradient(99deg, #F6F9FE 0%, #E8F1F8 100%);
   }
 
   
   
   /* Estilos para el tema claro */
   body.main-body {
-    background: #e8F1F8;
+    background: linear-gradient(99deg, #F6F9FE 0%, #E8F1F8 100%);
     color: #515C67;
   }
   /* Estilos para el tema oscuro */

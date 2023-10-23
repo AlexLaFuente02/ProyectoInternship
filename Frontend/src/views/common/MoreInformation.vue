@@ -87,9 +87,7 @@ export default {
     align-items: center;
     justify-content: center;
     padding: 0 10%;
-    color: rgb(0, 0, 0);
     padding-top: 2rem;
-    
 }
     
 </style>

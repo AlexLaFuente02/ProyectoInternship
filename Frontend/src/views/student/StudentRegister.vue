@@ -2,9 +2,6 @@
     <NavbarCommon/>
     <div class="container">
       <div class="container__stepper">
-        <div class="stepper__progress">
-          <div class="progress__bar"></div>
-        </div>
         <div class="container__items">
             <div class="stepper__item" v-for="step in steps" :key="step.id">
               <div class="item__number">
@@ -66,7 +63,7 @@ export default {
 </script>
 <style>
 .container__stepper{
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 10px;
     margin-bottom: 1rem;
     background: #fff;
@@ -76,6 +73,10 @@ export default {
     align-items: center;
     width: 100%;
     position: relative;
+}
+/*Estilos para el modo oscuro*/
+.dark-theme .container__stepper{
+    background: #434B54;
 }
 .container__items{
   padding: 0%;
@@ -87,22 +88,7 @@ export default {
     width: 100%;
     z-index: 1;
 }
-.stepper__progress{
-    position: absolute;
-    width: 50%;
-    height: 2px;
-    background-color: #000;
-    z-index: 0;
-    margin-bottom: 5%;
-}
-/*Estilos para el progress en modo oscuro*/
-.dark-theme .stepper__progress{
-    background-color: #fff;
-}
-.progress__bar{
-  position: absolute;
-  height: 100%;
-}
+
 
 .stepper__item{
     display: flex;
@@ -118,13 +104,18 @@ export default {
     height: 50px;
     display: grid;
     place-items: center;
+    color: #fff;
+    border: 2px solid #fff;
     border-radius: 100%;
-    border: 2px solid #000;
     position: relative;
+    background: #0d6efd;
+    z-index: 1;
 }
 /*Estilos para el item en modo oscuro*/
 .dark-theme .item__number{
-    border: 2px solid #fff;
+    background: #Ffc107;
+    color: #000;
+    border: 2px solid #000;
 }
 
 </style>

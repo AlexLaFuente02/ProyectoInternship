@@ -33,8 +33,16 @@ export default {
 <style scoped>
 /* Footer */
 footer{
+    background-color: #FDFEFF;
     box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
     padding: 50px 0;
+    border-radius: 5px;
+}
+
+/*Modo oscuro*/
+.dark-theme ::after footer{
+    background-color: #515C66;
+    box-shadow: 0 24px 64px -2px rgba(255, 255, 255, 0.02), 0 6px 16px -2px rgba(255, 255, 255, 0.06), 0 2px 6px -2px rgba(255, 255, 255, 0.08);
 }
 .footer__bottom{
     display: flex;
@@ -42,6 +50,8 @@ footer{
     align-items: center;
     padding: 20px 0;
 }
+
+
 .copy__right{
     display: flex;
     align-items: center;
