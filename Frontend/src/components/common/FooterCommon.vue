@@ -1,83 +1,92 @@
 <template>
-  <footer>
-    <div class="container">
-      <div class="content__footer">
-        <div class="profil">
-          <div class="logo__area">
-            <font-awesome-icon
-              :icon="['fas', 'earth-americas']"
-              size="2x"
-              style="color: #838b8e"
-            />
-            <span class="logo__name">Internship</span>
-          </div>
-          <div class="desc__area">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-              architecto minima suscipit hic! Nulla labore illum ratione unde
-              perferendis, totam suscipit sequi fugiat. Tempora quaerat neque
-              laudantium? Perspiciatis, non nostrum?
-            </p>
-          </div>
-          <div class="social_media">
-            <font-awesome-icon
-              :icon="['fab', 'facebook']"
-              style="color: #838b8e"
-            />
-            <font-awesome-icon
-              :icon="['fab', 'tiktok']"
-              style="color: #838b8e"
-            />
-            <font-awesome-icon
-              :icon="['fab', 'instagram']"
-              style="color: #838b8e"
-            />
-            <font-awesome-icon
-              :icon="['fab', 'linkedin']"
-              style="color: #838b8e"
-            />
-          </div>
-        </div>
-
-        <div class="service__area">
-          <ul class="service__header">
-            <li class="service__name">Enlaces de navegación</li>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Mis pasantías</a></li>
-            <li><a href="#">Busqueda de pasantías</a></li>
-            <li><a href="#">Mi perfil</a></li>
-            <li><a href="#">Contáctenos</a></li>
-          </ul>
-          <ul class="service__header">
-            <li class="service__name">Información de contacto</li>
-            <li><a href="tel:+591123456789">Teléfono: 123456789</a></li>
-            <li>
-              <a href="mailto:info@internship">Correo: info@internship</a>
-            </li>
-            <li><a href="#">Dirección: Calle 123</a></li>
-          </ul>
-          <ul class="service_header">
-            <li class="service__name">Acerca de nosotros</li>
-            <li><a href="#">¿Quienes somos?</a></li>
-            <li><a href="#">Nuestro equipo</a></li>
-            <li><a href="#">Nuestros servicios</a></li>
-            <li><a href="#">Preguntas frecuentes</a></li>
-          </ul>
-        </div>
+  <footer
+    class="d-flex flex-wrap justify-content-between align-items-center py-5 px-6 border-top-1 bg-body-tertiary text-bg-light"
+  >
+    <div class="col-md-4 d-flex align-items-center">
+      <div class="mb-3 mb-md-0 d-none d-md-block">
+        <img
+          src="../images/USEI.png"
+          class="w-100"
+          alt="Unidad de Servicios Estudiantiles Integrales"
+        />
       </div>
-      <hr />
-      <div class="footer__bottom">
-        <div class="copy__right">
-          <font-awesome-icon
-            icon="fas-solid fa-registered"
-            style="color: #838b8e"
-          />
-          <span>2023 Internship</span>
-        </div>
-        <div class="tou">
-          <a href="#">Términos de uso</a>
-          <a href="#">Politica de privacidad</a>
-        </div>
+      <div
+        class="col-12 col-md-4 mb-4 mb-md-0 col-md-8 d-none d-md-block text-center"
+      >
+        <span
+          >Todos los Derechos Reservados &copy; Universidad Católica Boliviana
+          "San Pablo". 2023.</span
+        >
+      </div>
+    </div>
+    <div class="col-12 mb-3 d-md-none">
+      <img
+        src="../images/USEI.png"
+        class="w-100"
+        alt="Unidad de Servicios Estudiantiles Integrales"
+      />
+    </div>
+    <div class="col-12 d-md-none text-center mb-4">
+      <span
+        >Todos los Derechos Reservados &copy; Universidad Católica Boliviana
+        "San Pablo". 2023.</span
+      >
+    </div>
+    <div
+      class="col-md-4 d-flex align-items-center justify-content-center mb-4 mb-md-0 me-md-auto"
+    >
+      <font-awesome-icon
+        :icon="['fas', 'earth-americas']"
+        size="2x"
+        class="me-3"
+      />
+      <span class="text-3xl text-center">INTERNSHIP BY UCB</span>
+    </div>
+    <div class="text-center justify-content-center">
+      <h3>Nuestras Redes Sociales:</h3>
+      <div class="container p-3 pb-0">
+        <a
+          class="btn text-white btn-floating rounded-circle m-1"
+          style="background-color: #3b5998"
+          href="https://www.facebook.com/usei.lpz"
+          role="button"
+          ><font-awesome-icon :icon="['fab', 'facebook']"
+        /></a>
+        <a
+          class="btn text-white btn-floating rounded-circle m-1"
+          style="background-color: #55acee"
+          href="https://twitter.com/UCBLaPaz"
+          role="button"
+          ><font-awesome-icon :icon="['fab', 'twitter']"
+        /></a>
+        <a
+          class="btn text-white btn-floating rounded-circle m-1"
+          style="background-color: #dd4b39"
+          href="https://mail.google.com/mail/u/1/#inbox?compose=DmwnWsCRjWtfwVwNPvpsfBxKhjWRJWTNWsBrVrjkhPXCqBqStBvQlDTKSnBpJGCFDVNPRRMBDXDV"
+          role="button"
+          ><font-awesome-icon :icon="['fab', 'google']"
+        /></a>
+        <a
+          class="btn text-white btn-floating rounded-circle m-1"
+          style="background-color: #ac2bac"
+          href="https://www.instagram.com/usei.lapaz/?fbclid=IwAR07aYlD7DflEtSJDuW6ERzw_r7DjawQAQVxbXcShM4RmZjLHQAUPensFyc"
+          role="button"
+          ><font-awesome-icon :icon="['fab', 'instagram']"
+        /></a>
+        <a
+          class="btn text-white btn-floating rounded-circle m-1"
+          style="background-color: #0082ca"
+          href="https://www.linkedin.com/in/usei-la-paz-080327253/?originalSubdomain=bo"
+          role="button"
+          ><font-awesome-icon :icon="['fab', 'linkedin']"
+        /></a>
+        <a
+          class="btn text-white btn-floating rounded-circle m-1"
+          style="background-color: #333333"
+          href="https://www.tiktok.com/@lacato._?is_from_webapp=1&sender_device=pc"
+          role="button"
+          ><font-awesome-icon :icon="['fab', 'tiktok']"
+        /></a>
       </div>
     </div>
   </footer>
@@ -85,96 +94,4 @@
 <script>
 export default {};
 </script>
-<style>
-/* Footer */
-footer {
-  background-color: #1b3039;
-  color: #838b8e;
-  padding: 50px 0;
-}
-.footer__bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-}
-.copy__right {
-  display: flex;
-  align-items: center;
-}
-.copy__right span {
-  margin-left: 10px;
-}
-.tou a {
-  margin-left: 20px;
-}
-.content__footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.profil {
-  width: 30%;
-}
-.logo__area {
-  display: flex;
-  align-items: center;
-}
-.logo__name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-left: 10px;
-}
-.desc__area {
-  margin-top: 20px;
-}
-.social_media {
-  margin-top: 20px;
-}
-.social_media a {
-  margin-right: 20px;
-}
-.service__area {
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-}
-.service__header {
-  margin-right: 40px;
-}
-li.service__name {
-  color: #fff;
-  font-weight: 600;
-}
-.service__header li a {
-  color: #838b8e;
-  padding-bottom: 1px;
-  font-weight: 400;
-}
-.service__header li a:hover {
-  color: #fff;
-}
-.service__header li {
-  margin-bottom: 10px;
-}
-hr {
-  height: 1px;
-  border: none;
-  background-color: #838b8e;
-  margin-bottom: 1rem;
-}
-@media screen and (max-width: 768px) {
-  .content__footer {
-    flex-direction: column;
-  }
-  .profil {
-    width: 100%;
-  }
-  .service__area {
-    width: 100%;
-  }
-  .service__header {
-    margin-right: 0;
-  }
-}
-</style>
+<style scoped></style>

@@ -1,4 +1,5 @@
 //Librerias
+import './assets/main.css';
 import { createApp } from 'vue';
 import {createRouter, createWebHistory} from 'vue-router';
 import {createPinia} from 'pinia';
@@ -9,10 +10,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import PrimeVue from 'primevue/config';
 import App from './App.vue';
 //Paginas
+import LoginPage from '@/views/common/LoginPage.vue';
 import PrincipalPage from '@/views/common/PrincipalPage.vue';
 import MoreInformation from '@/views/common/MoreInformation.vue';
 import InstitutionsCommon from '@/views/common/InstitutionsCommon.vue';
 import InternshipsCommon from '@/views/common/InternshipsCommon.vue';
+import SelectionUserRegister from './views/common/SelectionUserRegister.vue';
+import UserRegister from '@/views/common/UserRegister.vue';
 //Paginas Student
 import StudentRegister from '@/views/student/StudentRegister.vue';
 //Paginas Institution
@@ -30,10 +34,13 @@ import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min";
 //Rutas 
 const routes = [
     {name: 'PrincipalPage', path: '/', component: PrincipalPage},
+    {name: 'LoginPage', path: '/login', component: LoginPage},
     {name: 'StudentRegister', path: '/student/register', component: StudentRegister},
     {name: 'MoreInformation', path: '/moreInformation', component: MoreInformation},
     {name: 'InstitutionsCommon', path: '/institutionsCommon', component: InstitutionsCommon},
     {name: 'InternshipsCommon', path: '/internshipsCommon', component: InternshipsCommon},
+    {name: 'SelectUserRegister', path: '/selectUserRegister', component: SelectionUserRegister},
+    {name: 'UserRegister', path: '/userRegister', component: UserRegister},
 ];
 // Router
 const router = createRouter({
