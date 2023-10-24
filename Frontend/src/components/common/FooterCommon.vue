@@ -1,45 +1,21 @@
 <template>
-  <footer
-    class="d-flex flex-wrap justify-content-between align-items-center py-5 px-6 border-top-1 bg-body-tertiary text-bg-light"
-  >
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-5 px-6 border-top-1 bg-body-tertiary text-bg-light">
     <div class="col-md-4 d-flex align-items-center">
       <div class="mb-3 mb-md-0 d-none d-md-block">
-        <img
-          src="../images/USEI.png"
-          class="w-100"
-          alt="Unidad de Servicios Estudiantiles Integrales"
-        />
+        <img src="../images/USEI.png" class="w-100" alt="Unidad de Servicios Estudiantiles Integrales"/>
       </div>
-      <div
-        class="col-12 col-md-4 mb-4 mb-md-0 col-md-8 d-none d-md-block text-center"
-      >
-        <span
-          >Todos los Derechos Reservados &copy; Universidad Católica Boliviana
-          "San Pablo". 2023.</span
-        >
+      <div class="col-12 col-md-4 mb-4 mb-md-0 col-md-8 d-none d-md-block text-center">
+        <span>Todos los Derechos Reservados &copy; Universidad Católica Boliviana"San Pablo". 2023.</span>
       </div>
     </div>
     <div class="col-12 mb-3 d-md-none">
-      <img
-        src="../images/USEI.png"
-        class="w-100"
-        alt="Unidad de Servicios Estudiantiles Integrales"
-      />
+      <img src="../images/USEI.png" class="w-100" alt="Unidad de Servicios Estudiantiles Integrales" />
     </div>
     <div class="col-12 d-md-none text-center mb-4">
-      <span
-        >Todos los Derechos Reservados &copy; Universidad Católica Boliviana
-        "San Pablo". 2023.</span
-      >
+      <span>Todos los Derechos Reservados &copy; Universidad Católica Boliviana "San Pablo". 2023.</span>
     </div>
-    <div
-      class="col-md-4 d-flex align-items-center justify-content-center mb-4 mb-md-0 me-md-auto"
-    >
-      <font-awesome-icon
-        :icon="['fas', 'earth-americas']"
-        size="2x"
-        class="me-3"
-      />
+    <div class="col-md-4 d-flex align-items-center justify-content-center mb-4 mb-md-0 me-md-auto" >
+      <font-awesome-icon :icon="['fas', 'earth-americas']" size="2x" class="me-3" />
       <span class="text-3xl text-center">INTERNSHIP BY UCB</span>
     </div>
     <div class="text-center justify-content-center">
@@ -94,4 +70,64 @@
 <script>
 export default {};
 </script>
-<style scoped></style>
+<style scoped>
+footer{
+    background-color: #FDFEFF;
+    box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+    padding: 50px 0;
+    border-radius: 5px;
+}
+
+/*Modo oscuro*/
+.dark-theme ::after footer{
+    background-color: #515C66;
+    box-shadow: 0 24px 64px -2px rgba(255, 255, 255, 0.02), 0 6px 16px -2px rgba(255, 255, 255, 0.06), 0 2px 6px -2px rgba(255, 255, 255, 0.08);
+}
+.footer__bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+
+.copy__right{
+    display: flex;
+    align-items: center;
+}
+.copy__right span{
+    margin-left: 10px;
+}
+.content__footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profil{
+    width: 30%;
+}
+.logo__area{
+    display: flex;
+    align-items: center;
+}
+.logo__name{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-left: 10px;
+}
+.social_media{
+    margin-top: 20px;
+}
+.social_media a{
+    margin-right: 20px;
+}
+@media screen and (max-width: 768px){
+    .content__footer{
+        flex-direction: column;
+    }
+    .profil{
+        width: 100%;
+    }
+}
+
+</style>
