@@ -2,7 +2,7 @@ const { DataTypes, Sequelize } = require("sequelize");
 const sequelize = require("../../database/db"); // Asegúrate de que la ruta sea correcta
 
 const TipoUsuarioENT = sequelize.define(
-  "TipoUsuario",
+  "tipousuario",
   {
     tipo: {
       type: DataTypes.STRING,

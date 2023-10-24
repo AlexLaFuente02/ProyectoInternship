@@ -1,9 +1,10 @@
-//Objeto DTO de Usuario
 class UsuarioDTO {
-    constructor(id, idusuario, tipousuario_id) {
-        this.id = id;
-        this.idusuario = idusuario;
-        this.tipousuario_id = tipousuario_id;
+    constructor(id, idusuario, tipousuario) {
+      this.id = id;
+      this.idusuario = idusuario;
+      this.tipousuario = tipousuario;
     }
-}
-module.exports = UsuarioDTO;
+  }
+  
+  module.exports = UsuarioDTO;
+  
