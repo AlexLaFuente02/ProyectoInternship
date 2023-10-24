@@ -93,21 +93,29 @@ CREATE TABLE estadoconvocatoria (
     nombreestadoconvocatoria varchar(100) NOT NULL
 );
 
+CREATE TABLE tiempoacumplir (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    descripcion varchar(255) NOT NULL
+);
+
 -- Table: convocatoria
 CREATE TABLE convocatoria (
     id int AUTO_INCREMENT PRIMARY KEY,
-    institucion_id int NOT NULL,
     areapasantia varchar(100) NOT NULL,
     descripcionfunciones text NOT NULL,
     requisitoscompetencias text NOT NULL,
-    horario text NOT NULL,
-    tiempoacumplir text NOT NULL,
+    horario_inicio TIME NOT NULL,
+    horario_fin TIME NOT NULL,
     fechasolicitud date NOT NULL,
-    fechaseleccionpasante date NOT NULL,
+    fechaseleccionpasante date NULL,
     estadoconvocatoria_id int NOT NULL,
+    institucion_id int NOT NULL,
+    tiempoacumplir_id int NOT NULL,
     CONSTRAINT convocatoria_estadoconvocatoria FOREIGN KEY (estadoconvocatoria_id) REFERENCES estadoconvocatoria (id),
-    CONSTRAINT convocatoria_institucion FOREIGN KEY (institucion_id) REFERENCES institucion (id)
+    CONSTRAINT convocatoria_institucion FOREIGN KEY (institucion_id) REFERENCES institucion (id),
+    CONSTRAINT convocatoria_tiempoacumplir FOREIGN KEY (tiempoacumplir_id) REFERENCES tiempoacumplir (id)
 );
+
 
 -- Table: aprobacionconvocatoria
 CREATE TABLE aprobacionconvocatoria (

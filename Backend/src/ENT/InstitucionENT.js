@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../database/db");
 const UsuarioENT = require("./UsuarioENT");
-const SectorPertenenciaENT = require("./SectorPertenenciaENT"); // Asumiendo que tienes un modelo para sectorpertenencia
+const SectorPertenenciaENT = require("./sectorPertenenciaENT"); // Asumiendo que tienes un modelo para sectorpertenencia
 
 const InstitucionENT = sequelize.define(
   "Institucion",
