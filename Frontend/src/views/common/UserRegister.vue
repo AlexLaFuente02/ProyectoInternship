@@ -1,47 +1,43 @@
 <template>
-  <div>
-    <h1>Registro</h1>
-    <form @submit.prevent="registrarEstudiante">
-      <div>
-        <label for="nombre">Nombre *</label>
-        <input type="text" id="nombre" v-model="estudiante.nombre" required />
-      </div>
-      <div>
-        <label for="primerApellido">Primer Apellido *</label>
-        <input
-          type="text"
-          id="primerApellido"
-          v-model="estudiante.primerApellido"
-          required
-        />
-      </div>
-      <div>
-        <label for="segundoApellido">Segundo Apellido *</label>
-        <input
-          type="text"
-          id="segundoApellido"
-          v-model="estudiante.segundoApellido"
-          required
-        />
-      </div>
-      <div>
-        <label for="documento">Documento</label>
-        <input type="text" id="documento" v-model="estudiante.documento" />
-      </div>
-      <div>
-        <label for="complemento">Complemento (Ciudades de Bolivia)</label>
-        <select id="complemento" v-model="estudiante.complemento">
-          <option value="Santa Cruz">Santa Cruz</option>
-          <option value="La Paz">La Paz</option>
-          <option value="Cochabamba">Cochabamba</option>
-          <!-- Agrega más opciones de ciudades aquí -->
-        </select>
-      </div>
-      <button type="submit">REGISTRARSE</button>
-    </form>
-  </div>
+    <div class="container">
+        <div class="container__title">
+                <h1>REGISTRO DE USUARIOS</h1>
+            </div>
+        <div class="container_user_types">
+            <UserTypes/>
+        </div>
+    </div>
 </template>
 <script>
-export default {};
+import FooterCommon from '../../components/common/FooterCommon.vue';
+import NavbarCommon from '../../components/common/NavbarCommon.vue';
+import UserTypes from '../../components/common/UserTypes.vue';
+export default {
+    components:{
+        NavbarCommon,
+        FooterCommon,
+        UserTypes
+    }
+}
 </script>
-<style></style>
+<style >
+.container{
+    padding: 5% 10%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.container__title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5%;
+    text-align: center;
+}
+.container_user_types{
+    display: flex;
+    padding: 0 10%;
+}
+
+</style>
