@@ -16,7 +16,9 @@
       <div class="controls">
         <button class="btn btn-primary" @click="prevStep" :disabled="currentStep === 1">Anterior</button>
         <button class="btn btn-primary" @click="nextStep" v-if="currentStep !== steps.length">Siguiente</button>
-        <button class="btn btn-primary" v-else>Enviar</button>
+        <button class="btn btn-primary" @click="register"
+        v-else 
+        >REGISTRARSE</button>
       </div>
     </div>
 </template>
@@ -26,6 +28,7 @@ import NavbarCommon from '../../components/common/NavbarCommon.vue';
 import StudentFormRegister from '../../components/student/StudentFormRegister.vue';
 import StudentValidationRegister from '../../components/student/StudentValidationRegister.vue';
 import { useThemeStore } from "@/store/common/useThemeStore";
+import { useFormRegisterStore } from "@/store/student/formRegisterStore";
 export default {
     components:{
         NavbarCommon,
@@ -35,6 +38,7 @@ export default {
     },
     data(){
         return{
+            formStore: useFormRegisterStore(),
             currentStep: 1,
             steps: [
                 {
@@ -48,6 +52,7 @@ export default {
                     title: 'Formulario',
                 },
             ],
+
         }
       },
     methods: {
@@ -56,6 +61,10 @@ export default {
         },
         prevStep(){
             this.currentStep--;
+        },
+        register(){
+            console.log(this.formStore);
+            //Enviar datos al backend
         }
     },
     computed: {
@@ -120,6 +129,14 @@ export default {
 .dark-theme .stepper__item.active .item__number{
     color: #000;
     background: #Ffc107;
+}
+.controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-top: 2%;
 }
 
 </style>
