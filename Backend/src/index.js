@@ -4,13 +4,14 @@ const PORT = process.env.PORT || 3000;
 
 // Importa las rutas de tipoUsuarioAPI
 const tipoUsuarioAPI = require("./API/tipoUsuarioAPI");
-const UsuarioAPI = require("./API/UsuarioAPI");
+const UsuarioAPI = require("./API/usuarioAPI");
 const estadoPostulacionAPI = require("./API/estadoPostulacionAPI");
 const semestreAPI = require("./API/semestreAPI");
 const sedeAPI = require("./API/sedeAPI");
-
 const sectorPertenenciaAPI = require("./API/sectorPertenenciaAPI");
 const carreraAPI = require("./API/carreraAPI");
+const institucionAPI = require("./API/institucionAPI");
+const estadoConvocatoriaAPI = require("./API/estadoConvocatoriaAPI");
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
 
@@ -20,9 +21,11 @@ app.use("/usuario", UsuarioAPI);
 app.use("/estadoPostulacion", estadoPostulacionAPI);
 app.use("/semestre", semestreAPI);
 app.use("/sede", sedeAPI);
-
 app.use("/sectorPertenencia", sectorPertenenciaAPI);
 app.use("/carrera", carreraAPI);
+app.use("/institucion", institucionAPI);
+app.use("/estadoConvocatoria", estadoConvocatoriaAPI);
+
 
 // Ruta de inicio
 app.get("/", (req, res) => {
