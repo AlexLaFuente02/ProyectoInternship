@@ -2,30 +2,18 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../../database/db");
 const EstadoPostulacionENT = require("./EstadoPostulacionENT");
 const EstudianteENT = require("./EstudianteENT");
-const ConvocatoriaENT = require("./convocatoriaENT");
+const ConvocatoriaENT = require("./ConvocatoriaENT");
 
 const PostulacionENT = sequelize.define(
   "Postulacion",
   {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
     },
     fechapostulacion: {
       type: DataTypes.DATE,
-      allowNull: false,
-    },
-    estadopostulacion_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    estudiante_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    convocatoria_id: {
-      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

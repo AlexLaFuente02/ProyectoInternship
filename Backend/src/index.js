@@ -1,5 +1,6 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
+const { swaggerDocs: V1SwaggerDocs } = require("./swagger");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -15,15 +16,14 @@ const institucionAPI = require("./API/institucionAPI");
 const estadoConvocatoriaAPI = require("./API/estadoConvocatoriaAPI");
 const tiempoAcumplirAPI = require("./API/tiempoacumplirAPI");
 const convocatoriaAPI = require("./API/convocatoriaAPI");
-const estudianteAPI = require("./API/estudianteAPI");
-const postulacionAPI = require("./API/postulacionAPI");
+const adminuseiAPI = require("./API/adminuseiAPI");
+const historicoUsuarioAPI = require("./API/historicoUsuarioAPI");
 
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
 
 // Middleware para permitir CORS desde cualquier dominio
-app.use(cors());  // Agrega esta línea justo antes de tus rutas
-
+app.use(cors()); // Agrega esta línea justo antes de tus rutas
 
 // Usa las rutas de tipoUsuarioAPI
 app.use("/tipoUsuario", tipoUsuarioAPI);
@@ -37,8 +37,8 @@ app.use("/institucion", institucionAPI);
 app.use("/estadoConvocatoria", estadoConvocatoriaAPI);
 app.use("/tiempoacumplir", tiempoAcumplirAPI);
 app.use("/convocatoria", convocatoriaAPI);
-app.use("/estudiante", estudianteAPI);
-app.use("/postulaciones", postulacionAPI);
+app.use("/adminUSEI", adminuseiAPI);
+app.use("/historicoUsuario", historicoUsuarioAPI);
 
 // Ruta de inicio
 app.get("/", (req, res) => {
@@ -47,5 +47,6 @@ app.get("/", (req, res) => {
 
 // Escucha en el puerto especificado
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
+  V1SwaggerDocs(app, PORT);
 });

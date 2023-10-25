@@ -20,7 +20,7 @@
     </div>
     <div class="text-center justify-content-center">
       <h3>Nuestras Redes Sociales:</h3>
-      <div class="container p-3 pb-0">
+      <div class="p-3 pb-0">
         <a
           class="btn text-white btn-floating rounded-circle m-1"
           style="background-color: #3b5998"

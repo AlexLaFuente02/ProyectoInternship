@@ -3,7 +3,7 @@ const ResponseDTO = require('../DTO/ResponseDTO');
 const PostulacionENT = require('../ENT/PostulacionENT');
 const EstadoPostulacionENT = require('../ENT/EstadoPostulacionENT');
 const EstudianteENT = require('../ENT/EstudianteENT');
-const ConvocatoriaENT = require('../ENT/convocatoriaENT');
+const ConvocatoriaENT = require('../ENT/ConvocatoriaENT');
 
 const getAllPostulaciones = async () => {
     console.log('Obteniendo todas las postulaciones...');

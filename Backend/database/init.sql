@@ -18,9 +18,12 @@ CREATE TABLE usuario (
     CONSTRAINT userid UNIQUE (idusuario),
     CONSTRAINT usuario_tipousuario FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
 );
+TRUNCATE TABLE usuario
 
 INSERT INTO usuario (idusuario, contrasenia, tipousuario_id) VALUES
-('admin', 'admin', 1);
+('admin1', 'admin1', 1),
+('admin2', 'admin2', 2),
+('admin3', 'admin3', 3);
 
 CREATE TABLE estadopostulacion (
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -164,6 +167,14 @@ CREATE TABLE historico_convocatorias (
     FOREIGN KEY (tiempoacumplir_id) REFERENCES tiempoacumplir (id)
 );
 
+CREATE TABLE adminusei (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    usuario_id int NOT NULL UNIQUE,
+    CONSTRAINT adminusei_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
+);
+
+INSERT INTO adminusei (usuario_id) VALUES (1);
+
 /*triggers historico convocatoria*/
 DELIMITER //
 CREATE TRIGGER after_convocatoria_insert
@@ -240,3 +251,100 @@ CREATE TABLE estudiante (
 INSERT INTO estudiante (usuario_id, nombres, apellidos, carnetidentidad, correoelectronico, celularcontacto, graduado, carrera_id, semestre_id, sede_id, aniograduacion, linkcurriculumvitae)
 VALUES (1, 'Juan', 'Pérez', '1234567', 'juan@example.com', '123-456-7890', 1, 2, 3, 1, 2022, 'https://example.com/juan_cv.pdf');
 
+-----------------------------------------------------------------------------------------------------------------
+-- Historico de usuario
+CREATE TABLE historico_usuario (
+    id_h int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_u int NOT NULL,
+    idusuario varchar(50) NOT NULL,
+    contrasenia varchar(255) NOT NULL,
+    tipousuario_id int NOT NULL
+);
+
+-- TRIGGERS USER_HISTORY
+-- INSERT
+DELIMITER //
+CREATE TRIGGER INSERT_ON_USERHISTORY
+AFTER INSERT ON USUARIO
+FOR EACH ROW
+BEGIN
+    INSERT INTO HISTORICO_USUARIO (id_u, idusuario, contrasenia, tipousuario_id)
+    VALUES (NEW.ID, NEW.IDUSUARIO, NEW.CONTRASENIA, NEW.TIPOUSUARIO_ID);
+END;
+//
+DELIMITER ;
+
+INSERT INTO USUARIO (IDUSUARIO, CONTRASENIA, TIPOUSUARIO_ID) VALUES ('admin11', 'admin11', 1);
+INSERT INTO USUARIO (IDUSUARIO, CONTRASENIA, TIPOUSUARIO_ID) VALUES ('admin21', 'admin21', 2);
+INSERT INTO USUARIO (IDUSUARIO, CONTRASENIA, TIPOUSUARIO_ID) VALUES ('admin31', 'admin31', 3);
+INSERT INTO USUARIO (IDUSUARIO, CONTRASENIA, TIPOUSUARIO_ID) VALUES ('admin12', 'admin12', 1);
+INSERT INTO USUARIO (IDUSUARIO, CONTRASENIA, TIPOUSUARIO_ID) VALUES ('admin22', 'admin22', 2);
+INSERT INTO USUARIO (IDUSUARIO, CONTRASENIA, TIPOUSUARIO_ID) VALUES ('admin32', 'admin32', 3);
+
+SELECT * FROM USUARIO;
+SELECT * FROM HISTORICO_USUARIO;
+DROP TRIGGER INSERT_ON_USERHISTORY;
+
+-- UPDATE
+DELIMITER //
+CREATE TRIGGER UPDATE_ON_USERHISTORY
+AFTER UPDATE ON USUARIO
+FOR EACH ROW
+BEGIN
+    INSERT INTO HISTORICO_USUARIO (id_u, idusuario, contrasenia, tipousuario_id)
+    VALUES (NEW.ID, NEW.IDUSUARIO, NEW.CONTRASENIA, NEW.TIPOUSUARIO_ID);
+END;
+//
+DELIMITER ;
+
+UPDATE USUARIO
+SET IDUSUARIO = 'osqui', CONTRASENIA = 'internship'
+WHERE id = 5;
+
+UPDATE USUARIO
+SET IDUSUARIO = 'osqui', CONTRASENIA = 'internship'
+WHERE id = 6;
+
+UPDATE USUARIO
+SET IDUSUARIO = 'osqui', CONTRASENIA = 'internship'
+WHERE id = 7;
+
+UPDATE USUARIO
+SET IDUSUARIO = 'osqui', CONTRASENIA = 'internship'
+WHERE id = 8;
+
+UPDATE USUARIO
+SET IDUSUARIO = 'osqui', CONTRASENIA = 'internship'
+WHERE id = 9;
+
+UPDATE USUARIO
+SET IDUSUARIO = 'osqui', CONTRASENIA = 'internship'
+WHERE id = 10;
+
+SELECT * FROM USUARIO;
+SELECT * FROM HISTORICO_USUARIO;
+DROP TRIGGER UPDATE_ON_USERHISTORY;
+
+-- DELETE
+DELIMITER //
+CREATE TRIGGER DELETE_ON_USERHISTORY
+AFTER DELETE ON USUARIO
+FOR EACH ROW
+BEGIN
+    INSERT INTO HISTORICO_USUARIO (id_u, idusuario, contrasenia, tipousuario_id)
+    VALUES (OLD.ID, OLD.IDUSUARIO, OLD.CONTRASENIA, OLD.TIPOUSUARIO_ID);
+END;
+//
+DELIMITER ;
+
+DELETE FROM USUARIO
+WHERE id = 10;
+
+DELETE FROM USUARIO
+WHERE id = 6;
+
+SELECT * FROM USUARIO;
+SELECT * FROM HISTORICO_USUARIO;
+DROP TRIGGER DELETE_ON_USERHISTORY;
+
+-----------------------------------------------------------------------------------------------------------------

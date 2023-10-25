@@ -2,7 +2,7 @@ const InstitucionDTO = require('../DTO/InstitucionDTO');
 const SectorPertenenciaDTO = require('../DTO/SectorPertenenciaDTO');
 const Institucion = require("../ENT/InstitucionENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
-const SectorPertenencia = require('../ENT/SectorPertenenciaENT');
+const SectorPertenencia = require('../ENT/sectorPertenenciaENT');
 
 const getAllInstitutions = async () => {
     console.log('Obteniendo todas las instituciones...');
