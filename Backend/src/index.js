@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -14,8 +15,14 @@ const institucionAPI = require("./API/institucionAPI");
 const estadoConvocatoriaAPI = require("./API/estadoConvocatoriaAPI");
 const tiempoAcumplirAPI = require("./API/tiempoacumplirAPI");
 const convocatoriaAPI = require("./API/convocatoriaAPI");
+
+
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
+
+// Middleware para permitir CORS desde cualquier dominio
+app.use(cors());  // Agrega esta línea justo antes de tus rutas
+
 
 // Usa las rutas de tipoUsuarioAPI
 app.use("/tipoUsuario", tipoUsuarioAPI);
