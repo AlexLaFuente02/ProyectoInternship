@@ -1,6 +1,5 @@
 
 <template>
-    <!--Form de registro de Estudiantes-->
     <div class="formVue">
         <div class="form__tittle">
             <h6>REGISTRO DE ESTUDIANTE</h6>
@@ -11,7 +10,7 @@ estudiante o graduado de la Universidad Católica Boliviana (UCB). Por favor, pr
 correo electrónico de la UCB y confírmala.</p>
         </div>
         <div class="form__container">
-            <InputText title="Correo Electrónico" placeholder="Ingrese su correo electrónico" type="email" />
+            <InputText title="Correo Electrónico" placeholder="Ingrese su correo electrónico" type="email"/>
             <br>
             <button type="button" class="btn btn-primary">Continuar</button>
             <br>
