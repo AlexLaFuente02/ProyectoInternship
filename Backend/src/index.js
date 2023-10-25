@@ -15,7 +15,8 @@ const institucionAPI = require("./API/institucionAPI");
 const estadoConvocatoriaAPI = require("./API/estadoConvocatoriaAPI");
 const tiempoAcumplirAPI = require("./API/tiempoacumplirAPI");
 const convocatoriaAPI = require("./API/convocatoriaAPI");
-
+const estudianteAPI = require("./API/estudianteAPI");
+const postulacionAPI = require("./API/postulacionAPI");
 
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
@@ -36,6 +37,8 @@ app.use("/institucion", institucionAPI);
 app.use("/estadoConvocatoria", estadoConvocatoriaAPI);
 app.use("/tiempoacumplir", tiempoAcumplirAPI);
 app.use("/convocatoria", convocatoriaAPI);
+app.use("/estudiante", estudianteAPI);
+app.use("/postulaciones", postulacionAPI);
 
 // Ruta de inicio
 app.get("/", (req, res) => {
