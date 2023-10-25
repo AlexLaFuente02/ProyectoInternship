@@ -199,3 +199,44 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+CREATE TABLE postulacion (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    fechapostulacion date NOT NULL,
+    estadopostulacion_id int NOT NULL,
+    estudiante_id int NOT NULL,
+    convocatoria_id int NOT NULL,
+    CONSTRAINT postulacion_estadopostulacion FOREIGN KEY (estadopostulacion_id) REFERENCES estadopostulacion (id),
+    CONSTRAINT postulacion_estudiante FOREIGN KEY (estudiante_id) REFERENCES estudiante (id),
+    CONSTRAINT postulacion_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
+);
+
+-- Insertar una nueva postulación
+INSERT INTO postulacion (fechapostulacion, estadopostulacion_id, estudiante_id, convocatoria_id)
+VALUES ('2023-10-25', 1, 1, 3);
+
+
+CREATE TABLE estudiante (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    usuario_id int NOT NULL UNIQUE,
+    nombres varchar(50) NOT NULL,
+    apellidos varchar(50) NOT NULL,
+    carnetidentidad varchar(15) NOT NULL,
+    correoelectronico varchar(100) NOT NULL,
+    celularcontacto varchar(15) NOT NULL,
+    graduado bit NOT NULL,
+    carrera_id int NOT NULL,
+    semestre_id int NULL,
+    sede_id int NULL,
+    aniograduacion int NULL,
+    linkcurriculumvitae varchar(255) NOT NULL,
+    CONSTRAINT estudiantes_carrera FOREIGN KEY (carrera_id) REFERENCES carrera (id),
+    CONSTRAINT estudiantes_semestre FOREIGN KEY (semestre_id) REFERENCES semestre (id),
+    CONSTRAINT estudiantes_sede FOREIGN KEY (sede_id) REFERENCES sede (id),
+    CONSTRAINT estudiantes_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
+);
+
+-- Insertar un nuevo estudiante
+INSERT INTO estudiante (usuario_id, nombres, apellidos, carnetidentidad, correoelectronico, celularcontacto, graduado, carrera_id, semestre_id, sede_id, aniograduacion, linkcurriculumvitae)
+VALUES (1, 'Juan', 'Pérez', '1234567', 'juan@example.com', '123-456-7890', 1, 2, 3, 1, 2022, 'https://example.com/juan_cv.pdf');
+
