@@ -72,6 +72,7 @@ export default {
 .sticky-top{
     box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
     background-color: #FDFEFF;
+    
 }
 /*Modo oscuro*/
 .dark-theme .sticky-top{

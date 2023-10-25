@@ -76,6 +76,7 @@ footer{
     box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
     padding: 50px 0;
     border-radius: 5px;
+  
 }
 
 /*Modo oscuro*/
@@ -87,7 +88,7 @@ footer{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    
 }
 
 
