@@ -1,20 +1,144 @@
-:root { /* light mode */
-    --font-color: #000;
-    --link-color:#1C75B9;
-    --link-white-color:#fff;
-    --bg-color: rgb(243,243,243);
+/* Estilos generales */
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #515C66;
+    -webkit-font-smoothing: antialiased;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    background: linear-gradient(99deg, #F6F9FE 0%, #E8F1F8 100%);
+  }
+
+input{
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border: 1px solid #dfe7f1;
+  background-color: #fff;
 }
-[data-theme="dark"] {
-    --font-color: #bdbab8;
-    --link-color:#0a86da;
-    --link-white-color:#bdbab8;
-    --bg-color: #333;
+input:focus{
+  outline: none;
+  border-color: #a8c0ff;
+  box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
-body
-{
-    color:#000;
-    color:var(--font-color);
-    background:rgb(243,243,243);
-    background:var(--bg-color);
-    overflow-y: auto;
+/* Estilos para el tema oscuro del input*/
+.dark-theme input{
+  background-color: #2F363F;
+  color: #eff3f8;
+  border-color: #4a5568;
+
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { -moz-appearance:textfield; }
+
+
+
+  
+  
+  /* Estilos para el tema claro */
+  body.main-body {
+    background: linear-gradient(99deg, #F6F9FE 0%, #E8F1F8 100%);
+    color: #515C67;
+  }
+  /* Estilos para el tema oscuro */
+  .dark-theme {
+    background: #2F363F;
+    color: #eff3f8; 
+  }
+
+
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 1.5rem 0 1rem 0;
+    font-family: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    color: inherit;
+  }
+  h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+    margin-top: 0;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.75rem;
+  }
+  
+  h4 {
+    font-size: 1.5rem;
+  }
+  
+  h5 {
+    font-size: 1.25rem;
+  }
+  
+  h6 {
+    font-size: 1rem;
+  }
+
+/* Ajustar tamaños de fuente para pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  h6 {
+    font-size: 0.8rem;
+  }
+}
+/*Ajustar tamaños de fuente para pantallas más pequeñas*/
+@media screen and (max-width: 576px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 0.9rem;
+  }
+
+  h6 {
+    font-size: 0.8rem;
+  }
 }

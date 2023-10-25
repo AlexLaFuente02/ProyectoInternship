@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -8,11 +9,20 @@ const UsuarioAPI = require("./API/usuarioAPI");
 const estadoPostulacionAPI = require("./API/estadoPostulacionAPI");
 const semestreAPI = require("./API/semestreAPI");
 const sedeAPI = require("./API/sedeAPI");
-
 const sectorPertenenciaAPI = require("./API/sectorPertenenciaAPI");
 const carreraAPI = require("./API/carreraAPI");
+const institucionAPI = require("./API/institucionAPI");
+const estadoConvocatoriaAPI = require("./API/estadoConvocatoriaAPI");
+const tiempoAcumplirAPI = require("./API/tiempoacumplirAPI");
+const convocatoriaAPI = require("./API/convocatoriaAPI");
+
+
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
+
+// Middleware para permitir CORS desde cualquier dominio
+app.use(cors());  // Agrega esta línea justo antes de tus rutas
+
 
 // Usa las rutas de tipoUsuarioAPI
 app.use("/tipoUsuario", tipoUsuarioAPI);
@@ -22,6 +32,10 @@ app.use("/semestre", semestreAPI);
 app.use("/sede", sedeAPI);
 app.use("/sectorPertenencia", sectorPertenenciaAPI);
 app.use("/carrera", carreraAPI);
+app.use("/institucion", institucionAPI);
+app.use("/estadoConvocatoria", estadoConvocatoriaAPI);
+app.use("/tiempoacumplir", tiempoAcumplirAPI);
+app.use("/convocatoria", convocatoriaAPI);
 
 // Ruta de inicio
 app.get("/", (req, res) => {
