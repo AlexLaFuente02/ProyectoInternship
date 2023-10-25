@@ -33,28 +33,48 @@ completa el siguiente formulario para registrarte como estudiante o graduado.</p
                 
                 v-model="formStore.documentNumber" type="text" class="field">
             </div>
-
-            <!--Agregar para selcionar el complemento-->
-            
-            <!--Agregar el check de validacion-->
-
-
-           
-            
+            <!--selected de sede y carrera-->
+            <div class="container__select">
+                <label>Sede *:</label>
+                <select v-model="formStore.campus" class="select">
+                    <option v-for="headquarter in this.campusStore.campuses.result" :key="headquarter.id" :value="headquarter.id">{{headquarter.nombresede}}</option>
+                </select>
+            </div>
         </div>
         
     </div>
 </template>
 <script>
 import { useFormRegisterStore } from "@/store/student/formRegisterStore";
+import { useCampusStore } from "@/store/common/campusStore";
 export default {
     components:{
     },
     data(){
         return{
             formStore: useFormRegisterStore(),
+            campusStore: useCampusStore(),
+
         }
     },
+    methods:{
+        //Obtener todas las sedes
+        async getCampus(){
+            var response=await this.campusStore.getCampuses();
+            //Validar el codigo de respuesta
+            /*if(response.code=="S-0000"){
+                console.log("Sedes obtenidas correctamente");
+            }
+            else{
+                console.log("Error al obtener las sedes");
+            }*/
+            console.log(this.campusStore.campuses.result);
+        },
+    },
+    //Tercer paso, obtener todas las sedes cuando se crea el componente
+    created(){
+        this.getCampus();
+    }
     
 }
 </script>
