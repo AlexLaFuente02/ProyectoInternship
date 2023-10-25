@@ -1,0 +1,49 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+### GET ALL Convocatorias
+GET http://{{host}}/convocatoria/
+Accept: application/json
+
+### GET Convocatoria by ID
+GET http://{{host}}/convocatoria/1
+Accept: application/json
+
+### POST Convocatoria
+POST http://{{host}}/convocatoria/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "areapasantia": "Área de prueba",
+  "descripcionfunciones": "Descripción de funciones",
+  "requisitoscompetencias": "Requisitos y competencias",
+  "horario_inicio": "08:00",
+  "horario_fin": "17:00",
+  "fechasolicitud": "2023-10-22",
+  "estadoconvocatoria": {
+    "id": 1
+  },
+  "institucion": {
+    "id": 1
+  },
+  "tiempoacumplir": {
+    "id": 1
+  }
+}
+
+### PUT Convocatoria
+PUT http://{{host}}/convocatoria/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "areapasantia": "Área actualizada",
+  "descripcionfunciones": "Descripción actualizada",
+  // ... otros campos
+}
+
+### DELETE Convocatoria
+DELETE http://{{host}}/convocatoria/1
+Accept: application/json

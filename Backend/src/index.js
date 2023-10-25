@@ -12,6 +12,8 @@ const sectorPertenenciaAPI = require("./API/sectorPertenenciaAPI");
 const carreraAPI = require("./API/carreraAPI");
 const institucionAPI = require("./API/institucionAPI");
 const estadoConvocatoriaAPI = require("./API/estadoConvocatoriaAPI");
+const tiempoAcumplirAPI = require("./API/tiempoacumplirAPI");
+const convocatoriaAPI = require("./API/convocatoriaAPI");
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
 
@@ -25,7 +27,8 @@ app.use("/sectorPertenencia", sectorPertenenciaAPI);
 app.use("/carrera", carreraAPI);
 app.use("/institucion", institucionAPI);
 app.use("/estadoConvocatoria", estadoConvocatoriaAPI);
-
+app.use("/tiempoacumplir", tiempoAcumplirAPI);
+app.use("/convocatoria", convocatoriaAPI);
 
 // Ruta de inicio
 app.get("/", (req, res) => {
