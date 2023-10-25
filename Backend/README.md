@@ -38,6 +38,17 @@ npm i sequelize
 npm i mysql2
 ```
 
+7. Instalamos el cors para que funcione con el front:
+
+```
+npm install cors
+```
+
+8. Instalacion de swagger-jsdoc y swagger-ui-express:
+
+```
+npm install swagger-jsdoc swagger-ui-express
+```
 
 ## Comandos para compilación:
 

@@ -18,6 +18,7 @@ const tiempoAcumplirAPI = require("./API/tiempoacumplirAPI");
 const convocatoriaAPI = require("./API/convocatoriaAPI");
 const adminuseiAPI = require("./API/adminuseiAPI");
 const historicoUsuarioAPI = require("./API/historicoUsuarioAPI");
+const historicoConvocatoriasAPI = require("./API/historicoConvocatoriasAPI");
 
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
@@ -39,6 +40,7 @@ app.use("/tiempoacumplir", tiempoAcumplirAPI);
 app.use("/convocatoria", convocatoriaAPI);
 app.use("/adminUSEI", adminuseiAPI);
 app.use("/historicoUsuario", historicoUsuarioAPI);
+app.use("/historicoConvocatorias", historicoConvocatoriasAPI);
 
 // Ruta de inicio
 app.get("/", (req, res) => {

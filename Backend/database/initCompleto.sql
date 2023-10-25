@@ -155,19 +155,21 @@ CREATE TABLE postulacion (
 -- Realizar procedimiento almacenado
 CREATE TABLE historico_convocatorias (
     id_h int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_c int NOT NULL,
-    institucion_id int NOT NULL,
+    id_c int NOT NULL, -- No tiene restricción de clave foránea
     areapasantia varchar(100) NOT NULL,
     descripcionfunciones text NOT NULL,
     requisitoscompetencias text NOT NULL,
-    horario text NOT NULL,
-    tiempoacumplir text NOT NULL,
+    horario_inicio TIME NOT NULL,
+    horario_fin TIME NOT NULL,
     fechasolicitud date NOT NULL,
-    fechaseleccionpasante date NOT NULL,
+    fechaseleccionpasante date NULL,
     estadoconvocatoria_id int NOT NULL,
-    FOREIGN KEY (id_c) REFERENCES convocatoria (id),
+    institucion_id int NOT NULL,
+    tiempoacumplir_id int NOT NULL,
+    -- Las siguientes claves foráneas no incluyen a id_c
     FOREIGN KEY (estadoconvocatoria_id) REFERENCES estadoconvocatoria (id),
-    FOREIGN KEY (institucion_id) REFERENCES institucion (id)
+    FOREIGN KEY (institucion_id) REFERENCES institucion (id),
+    FOREIGN KEY (tiempoacumplir_id) REFERENCES tiempoacumplir (id)
 );
 
 -- Table: historico_postulaciones

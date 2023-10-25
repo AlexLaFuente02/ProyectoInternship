@@ -167,6 +167,8 @@ CREATE TABLE historico_convocatorias (
     FOREIGN KEY (tiempoacumplir_id) REFERENCES tiempoacumplir (id)
 );
 
+--Se agregan automaticamente despues de un post, put, delete de convocatoria
+
 CREATE TABLE adminusei (
     id int AUTO_INCREMENT PRIMARY KEY,
     usuario_id int NOT NULL UNIQUE,
