@@ -2,12 +2,21 @@
 
 ## 📌 Descripción del proyecto:
 
-Este backend ha sido desarrollado como parte del proyecto internship y tiene como objetivo proporcionar servicios y funcionalidades para una aplicación web. Esta API gestiona datos relacionados con [el contexto de tu proyecto, ej. usuarios, productos, pedidos, etc.].
+**Internship by Cato** es una plataforma integral diseñada para transformar la forma en que se manejan las prácticas pre-profesionales y pasantías no curriculares. No solo optimiza y simplifica el proceso de publicación de convocatorias, sino que también ofrece un conjunto de herramientas robustas para diversas partes interesadas:
+
+- **Para los Estudiantes**: Se convierte en un centro unificado donde pueden obtener información detallada sobre las convocatorias y seguir de cerca sus postulaciones, todo desde una sola página web.
+
+- **Para las Instituciones y Empresas**: Les brinda una plataforma eficiente para gestionar sus convocatorias, desde la creación hasta la recepción de solicitudes de postulación, facilitando así la selección de candidatos ideales.
+
+- **Para el Admin USEI**: Actúa como superusuario, otorgándole la capacidad de gestionar y aprobar empresas, así como validar y dar luz verde a sus convocatorias. Adicionalmente, se está trabajando en incorporar características analíticas, que ofrecerán estadísticas valiosas sobre estudiantes e instituciones para una mejor toma de decisiones.
+
+Este enfoque multipropósito asegura que cada usuario, ya sea un estudiante, una institución o el administrador, tenga una experiencia personalizada y eficiente en la plataforma.
+
 
 ## 🎯 Objetivos del proyecto:
 
-- Proporcionar endpoints para gestionar [ej. usuarios, productos, etc.].
-- Asegurar la data mediante cifrado de contraseñas y autenticación. 
+- Proporcionar endpoints para gestionar [ej. usuarios, estudiantes, instituciones, convocatorias, postulaciones, etc.].
+- Asegurar la información del usuario mediante cifrado de contraseñas y autenticación. 
 - Facilitar la integración con un frontend a través de CORS.
 - Ofrecer documentación API a través de Swagger.
 
