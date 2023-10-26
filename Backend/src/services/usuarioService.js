@@ -4,6 +4,8 @@ const Usuario = require("../ENT/UsuarioENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
 const TipoUsuario = require('../ENT/TipoUsuarioENT');
 
+const bcrypt = require('bcrypt');
+
 const getAllUsers = async () => {
     console.log('Obteniendo todos los usuarios...');
     try {
@@ -45,9 +47,12 @@ const getUserById = async (id) => {
 const createUser = async (userData) => {
     console.log('Creando un nuevo usuario...');
     try {
+        // Hashea la contraseña antes de almacenarla en la base de datos
+        const hashedPassword = await bcrypt.hash(userData.contrasenia, 10);
+
         const nuevoUsuario = await Usuario.create({
             idusuario: userData.idusuario,
-            contrasenia: userData.contrasenia,
+            contrasenia: hashedPassword, // Almacenamos la contraseña hasheada
             tipousuario_id: userData.tipousuario.id,
         });
         const tipoUsuarioDTO = new TipoUsuarioDTO(userData.tipousuario.id, userData.tipousuario.tipo);
@@ -68,9 +73,13 @@ const updateUser = async (id, userData) => {
             console.log(`Usuario con ID: ${id} no encontrado.`);
             return new ResponseDTO('U-1004', null, 'Usuario no encontrado');
         }
+
+        // Hashea la contraseña antes de actualizarla en la base de datos
+        const hashedPassword = await bcrypt.hash(userData.contrasenia, 10);
+
         await usuario.update({
             idusuario: userData.idusuario,
-            contrasenia: userData.contrasenia,
+            contrasenia: hashedPassword, // Actualizamos con la contraseña hasheada
             tipousuario_id: userData.tipousuario.id,
         });
         console.log('Usuario actualizado correctamente.');

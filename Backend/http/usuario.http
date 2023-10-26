@@ -15,10 +15,10 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "idusuario": "Quelof82",
-  "contrasenia": "Cami",
+  "idusuario": "user1",
+  "contrasenia": "pass1",
   "tipousuario": {
-    "id": 2
+    "id": 1
   }
 }
 
@@ -28,8 +28,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "idusuario": "QuelitoMod",
-  "contrasenia": "amnesia",
+  "idusuario": "userupdated",
+  "contrasenia": "passupdated",
   "tipousuario": {
     "id": 3
   }

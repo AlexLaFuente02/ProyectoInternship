@@ -50,6 +50,26 @@ npm install cors
 npm install swagger-jsdoc swagger-ui-express
 ```
 
+9. Bcrypt para el cifrado de contraseñas:
+
+   ```
+   npm install bcrypt
+   ```
+
+10. Passport para la autenticación:
+   ```
+   npm install passport
+   ```
+
+11. Passport-local para la estrategia de autenticación local:
+   ```
+   npm install passport-local
+   ```
+
+12. Express-session para gestionar sesiones de usuario:
+   ```
+   npm install express-session
+   ```
 ## Comandos para compilación:
 
 1. SIEMPRE entrar a /Backend:
