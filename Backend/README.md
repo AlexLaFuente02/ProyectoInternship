@@ -38,9 +38,7 @@ Este enfoque multipropósito asegura que cada usuario, ya sea un estudiante, una
 
 ## 📂 Código fuente:
 
-El código fuente del proyecto backend se encuentra alojado en nuestro repositorio GitHub. Se ha puesto especial énfasis en asegurar que el código esté organizado, bien estructurado y comentado para facilitar su lectura y mantenimiento.
-
-Enlace al repositorio: [insertar enlace del repositorio aquí]
+El código fuente del proyecto backend se encuentra alojado en nuestro repositorio GitHub en la carpeta de Backend. Se ha puesto especial énfasis en asegurar que el código esté organizado, bien estructurado para facilitar su lectura y mantenimiento.
 
 ## 🛠 Comandos para instalación:
 
