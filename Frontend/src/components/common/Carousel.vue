@@ -34,22 +34,22 @@
           alt="Mundo laboral"
         />
         <div class="carousel-caption d-none d-md-block">
-          <h5>Mundo Laboral</h5>
-          <p>Mundo Laboral :D</p>
+          <h5>¡Bienvenido al Mundo Laboral!</h5>
+          <p>Explota todas tus habilidades ¡Enhorabuena!</p>
         </div>
       </div>
       <div class="carousel-item">
         <img src="https://idiomasseif.com/wp-content/uploads/2019/04/importancia-del-ingles-en-el-mundo-laboral.jpg" class="d-block w-100" alt="" />
         <div class="carousel-caption d-none d-md-block">
-          <h5>Second Slide</h5>
-          <p>Second Slide Caption goes here</p>
+          <h5>¡Como institución puedes contratar a estudiantes y graduados!</h5>
+          <p>Renueva tu empresa con los mejores estudiantes del país.</p>
         </div>
       </div>
       <div class="carousel-item">
         <img src="https://media.gq.com.mx/photos/642447f1c632255eae24a045/master/w_1920,c_limit/trabajo.jpg" class="d-block w-100" alt="" />
         <div class="carousel-caption d-none d-md-block">
-          <h5>Third Slide</h5>
-          <p>Third Slide Caption goes here</p>
+          <h5>¡Muéstranos todo lo que sabes!</h5>
+          <p>¡Estamos seguros de que pronto encontraras tu lugar...!</p>
         </div>
       </div>
     </div>

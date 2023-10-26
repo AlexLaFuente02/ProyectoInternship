@@ -7,6 +7,10 @@ const sequelize = new Sequelize({
   password: '', 
   database: 'internshipdb', // Cambia esto al nombre de tu base de datos
   port: 3306, // Cambia esto al puerto de tu base de datos si es diferente
+  timezone: '-04:00', // Esto establece la zona horaria para todas las operaciones de Sequelize
+  dialectOptions: {
+    dateStrings: true, // Esto evita que MySQL convierta las fechas a UTC
+  },
 });
 
 sequelize

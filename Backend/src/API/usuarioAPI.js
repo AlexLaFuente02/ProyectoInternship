@@ -1,60 +1,198 @@
 const express = require('express');
 const router = express.Router();
-const usuarioService = require('../services/UsuarioService');
+const usuarioService = require('../services/usuarioService');
 
+/**
+ * @swagger
+ * /usuario/:
+ *   get:
+ *     tags:
+ *       - Usuario
+ *     summary: Obtiene todos los usuarios
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ */
 router.get('/', async (req, res) => {
-    console.log('GET request received for getAll');
-    const response = await usuarioService.getAll();
+    console.log('GET request received for getAllUsers');
+    const response = await usuarioService.getAllUsers();
     res.json({
-        method: 'getAll',
+        method: 'getAllUsers',
         code: response.code,
         result: response.result,
         message: response.message,
     });
-    });
+});
 
+/**
+ * @swagger
+ * /usuario/{id}:
+ *   get:
+ *     tags:
+ *       - Usuario
+ *     summary: Obtiene un usuario por ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del usuario
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: Detalles del usuario
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ */
 router.get('/:id', async (req, res) => {
-    console.log(`GET request received for getById with ID: ${req.params.id}`);
-    const response = await usuarioService.getById(req.params.id);
+    console.log(`GET request received for getUserById with ID: ${req.params.id}`);
+    const response = await usuarioService.getUserById(req.params.id);
     res.json({
-        method: 'getById',
+        method: 'getUserById',
         code: response.code,
         result: response.result,
         message: response.message,
     });
-    });
+});
 
+/**
+ * @swagger
+ * /usuario/:
+ *   post:
+ *     tags:
+ *       - Usuario
+ *     summary: Crea un nuevo usuario
+ *     requestBody:
+ *       description: Datos del usuario
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idusuario:
+ *                 type: string
+ *                 example: usernew
+ *               contrasenia:
+ *                 type: string
+ *                 example: passnew
+ *               tipousuario:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 1
+ *     responses:
+ *       200:
+ *         description: Usuario creado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ */
 router.post('/', async (req, res) => {
-    console.log('POST request received for create with idusuario:', req.body.idusuario);
-    const response = await usuarioService.create(req.body.idusuario, req.body.contrasenia, req.body.tipousuario);
+    console.log('POST request received for createUser with data:', req.body);
+    const response = await usuarioService.createUser(req.body);
     res.json({
-        method: 'create',
+        method: 'createUser',
         code: response.code,
         result: response.result,
         message: response.message,
     });
-    });
+});
 
+/**
+ * @swagger
+ * /usuario/{id}:
+ *   put:
+ *     tags:
+ *       - Usuario
+ *     summary: Actualiza un usuario por ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del usuario
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     requestBody:
+ *       description: Datos actualizados del usuario
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idusuario:
+ *                 type: string
+ *                 example: userupdated
+ *               contrasenia:
+ *                 type: string
+ *                 example: passupdated
+ *               tipousuario:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 3
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ */
 router.put('/:id', async (req, res) => {
-    console.log(`PUT request received for update with ID: ${req.params.id}, idusuario: ${req.body.idusuario}, contrasenia: ${req.body.contrasenia}, idtipousuario: ${req.body.tipousuario}`);
-    const response = await usuarioService.update(req.params.id, req.body.idusuario, req.body.contrasenia, req.body.tipousuario);
+    console.log(`PUT request received for updateUser with ID: ${req.params.id} and data:`, req.body);
+    const response = await usuarioService.updateUser(req.params.id, req.body);
     res.json({
-        method: 'update',
+        method: 'updateUser',
         code: response.code,
         result: response.result,
         message: response.message,
     });
-    });
+});
 
+/**
+ * @swagger
+ * /usuario/{id}:
+ *   delete:
+ *     tags:
+ *       - Usuario
+ *     summary: Elimina un usuario por ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del usuario
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Usuario eliminado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ */
 router.delete('/:id', async (req, res) => {
-    console.log(`DELETE request received for remove with ID: ${req.params.id}`);
-    const response = await usuarioService.remove(req.params.id);
+    console.log(`DELETE request received for deleteUser with ID: ${req.params.id}`);
+    const response = await usuarioService.deleteUser(req.params.id);
     res.json({
-        method: 'remove',
+        method: 'deleteUser',
         code: response.code,
         result: response.result,
         message: response.message,
     });
-    });
+});
 
 module.exports = router;
