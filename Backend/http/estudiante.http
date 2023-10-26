@@ -49,5 +49,5 @@ Accept: application/json
 }
 
 ### DELETE de Estudiante
-DELETE http://{{host}}/estudiante/18
+DELETE http://{{host}}/estudiante/2
 Accept: application/json

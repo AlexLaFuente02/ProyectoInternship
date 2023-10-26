@@ -32,11 +32,8 @@ const estudianteService = require('../services/estudianteService');
  *             type: object
  *             properties:
  *               usuario_id:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                     example: 2
+ *                 type: integer
+ *                 example: 2
  *               nombres:
  *                 type: string
  *                 example: Juan
@@ -55,19 +52,19 @@ const estudianteService = require('../services/estudianteService');
  *               graduado:
  *                 type: boolean
  *                 example: true
- *               carrera_id:
+ *               carrera:
  *                 type: object
  *                 properties:
  *                   id:
  *                     type: integer
- *                     example: 2
- *               semestre_id:
+ *                     example: 1
+ *               semestre:
  *                 type: object
  *                 properties:
  *                   id:
  *                     type: integer
- *                     example: 3
- *               sede_id:
+ *                     example: 1
+ *               sede:
  *                 type: object
  *                 properties:
  *                   id:
@@ -128,7 +125,51 @@ const estudianteService = require('../services/estudianteService');
  *           schema:
  *             type: object
  *             properties:
- *               // Aquí puedes repetir las propiedades del POST, pero con los valores de "example" actualizados
+ *               usuario_id:
+ *                 type: integer
+ *                 example: 1
+ *               nombres:
+ *                 type: string
+ *                 example: Juan Modificado
+ *               apellidos:
+ *                 type: string
+ *                 example: Pérez Modificado
+ *               carnetidentidad:
+ *                 type: string
+ *                 example: 987654321
+ *               correoelectronico:
+ *                 type: string
+ *                 example: juan.modificado@email.com
+ *               celularcontacto:
+ *                 type: string
+ *                 example: 555-555-5556
+ *               graduado:
+ *                 type: boolean
+ *                 example: false
+ *               carrera:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 3
+ *               semestre:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 2
+ *               sede:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 1
+ *               aniograduacion:
+ *                 type: number
+ *                 example: 2023
+ *               linkcurriculumvitae:
+ *                 type: string
+ *                 example: http://example.com/juan_modificado_cv.pdf
  *     responses:
  *       200:
  *         description: Estudiante actualizado exitosamente
