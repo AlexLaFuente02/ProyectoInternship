@@ -1,9 +1,15 @@
 const PostulacionDTO = require('../DTO/PostulacionDTO');
 const ResponseDTO = require('../DTO/ResponseDTO');
 const PostulacionENT = require('../ENT/PostulacionENT');
-const EstadoPostulacionENT = require('../ENT/estadoPostulacionENT');
+const EstadoPostulacionENT = require('../ENT/EstadoPostulacionENT');
 const EstudianteENT = require('../ENT/EstudianteENT');
 const ConvocatoriaENT = require('../ENT/ConvocatoriaENT');
+const Carrera = require('../ENT/carreraENT');
+const Sede = require('../ENT/SedeENT');
+const Semestre = require('../ENT/semestreENT');
+const EstadoPostulacionDTO = require('../DTO/EstadoPostulacionDTO');
+const EstudianteDTO = require('../DTO/EstudianteDTO');
+const ConvocatoriaDTO = require('../DTO/ConvocatoriaDTO');
 
 const getAllPostulaciones = async () => {
     console.log('Obteniendo todas las postulaciones...');
@@ -128,53 +134,68 @@ const getPostulacionById = async (id) => {
 const createPostulacion = async (postulacionData) => {
     console.log('Creando una nueva postulación...');
     try {
-        const nuevaPostulacion = await PostulacionENT.create(postulacionData);
-        const estadoPostulacionDTO = {
-            id: postulacionData.estadopostulacion.id,
-            nombreestadopostulacion: nuevaPostulacion.estadopostulacion.nombreestadopostulacion,
-        };
-        const estudianteDTO = {
-            id: postulacionData.estudiante.id,
-            usuario_id: postulacionData.estudiante.usuario_id,
-            nombres: postulacionData.estudiante.nombres,
-            apellidos: postulacionData.estudiante.apellidos,
-            carnetidentidad: postulacionData.estudiante.carnetidentidad,
-            correoelectronico: postulacionData.estudiante.correoelectronico,
-            celularcontacto: postulacionData.estudiante.celularcontacto,
-            graduado: postulacionData.estudiante.graduado,
-            carrera_id: postulacionData.estudiante.carrera_id,
-            semestre_id: postulacionData.estudiante.semestre_id,
-            sede_id: postulacionData.estudiante.sede_id,
-            aniograduacion: postulacionData.estudiante.aniograduacion,
-            linkcurriculumvitae: postulacionData.estudiante.linkcurriculumvitae,
-        };
-        const convocatoriaDTO = {
-            id: postulacionData.convocatoria.id,
-            areapasantia: postulacionData.convocatoria.areapasantia,
-            descripcionfunciones: postulacionData.convocatoria.descripcionfunciones,
-            requisitoscompetencias: postulacionData.convocatoria.requisitoscompetencias,
-            horario_inicio: postulacionData.convocatoria.horario_inicio,
-            horario_fin: postulacionData.convocatoria.horario_fin,
-            fechasolicitud: postulacionData.convocatoria.fechasolicitud,
-            fechaseleccionpasante: postulacionData.convocatoria.fechaseleccionpasante,
-            estadoconvocatoria: postulacionData.convocatoria.estadoconvocatoria,
-            institucion: postulacionData.convocatoria.institucion,
-            tiempoacumplir: postulacionData.convocatoria.tiempoacumplir,
-        };
 
-        console.log('Postulación creada correctamente.');
-        return new ResponseDTO('P-0000', new PostulacionDTO(
-            postulacionData.id,
-            postulacionData.fechapostulacion,
+        let nuevaPostulacionData = {
+            fechapostulacion: postulacionData.fechapostulacion,
+            estadopostulacion_id: postulacionData.EstadoPostulacionENT.id,
+estudiante_id: postulacionData.EstudianteENT.id,
+convocatoria_id: postulacionData.ConvocatoriaENT.id,
+};
+
+          const nuevaPostulacion = await PostulacionENT.create(nuevaPostulacionData);
+
+          const estadoPostulacionDTO = new EstadoPostulacionDTO (
+            postulacionData.EstadoPostulacionENT.id,
+            postulacionData.EstadoPostulacionENT.nombreestadopostulacion,
+        );
+        
+        // Estructura similar a createStudent
+        const estudianteDTO =new EstudianteDTO (
+             postulacionData.EstudianteENT.id,
+             postulacionData.EstudianteENT.usuario_id,
+             postulacionData.EstudianteENT.nombres,
+             postulacionData.EstudianteENT.apellidos,
+            postulacionData.EstudianteENT.carnetidentidad,
+            postulacionData.EstudianteENT.correoelectronico,
+             postulacionData.EstudianteENT.celularcontacto,
+             postulacionData.EstudianteENT.graduado,
+             postulacionData.EstudianteENT.carrera_id,
+            postulacionData.EstudianteENT.semestre_id,
+             postulacionData.EstudianteENT.sede_id,
+            postulacionData.EstudianteENT.aniograduacion,
+             postulacionData.EstudianteENT.linkcurriculumvitae,
+        );
+        
+        // Estructura similar a createStudent
+        const convocatoriaDTO =new ConvocatoriaDTO (
+             postulacionData.ConvocatoriaENT.id,
+             postulacionData.ConvocatoriaENT.areapasantia,
+            postulacionData.ConvocatoriaENT.descripcionfunciones,
+            postulacionData.ConvocatoriaENT.requisitoscompetencias,
+             postulacionData.ConvocatoriaENT.horario_inicio,
+            postulacionData.ConvocatoriaENT.horario_fin,
+             postulacionData.ConvocatoriaENT.fechasolicitud,
+             postulacionData.ConvocatoriaENT.fechaseleccionpasante,
+             postulacionData.ConvocatoriaENT.estadoconvocatoria_id,
+            postulacionData.ConvocatoriaENT.institucion_id,
+             postulacionData.ConvocatoriaENT.tiempoacumplir_id,
+        );
+        const postulacionDTO=new PostulacionDTO(
+            nuevaPostulacion.id,
+            nuevaPostulacion.fechapostulacion,
             estadoPostulacionDTO,
             estudianteDTO,
             convocatoriaDTO
-        ), 'Postulación creada correctamente');
+        )
+
+        console.log('Postulación creada correctamente.');
+        return new ResponseDTO('P-0000',postulacionDTO , 'Postulación creada correctamente');
     } catch (error) {
         console.error('Error al crear la postulación:', error);
         return new ResponseDTO('P-1003', null, `Error al crear la postulación: ${error}`);
     }
 };
+
 
 const updatePostulacion = async (id, postulacionData) => {
     console.log(`Actualizando la postulación con ID: ${id}...`);

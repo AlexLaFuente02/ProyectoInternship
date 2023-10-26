@@ -40,10 +40,10 @@ const getAllStudents = async () => {
             );
         });
         console.log('Estudiantes obtenidos correctamente.');
-        return new ResponseDTO('U-0000', estudiantesDTO, 'Estudiantes obtenidos correctamente');
+        return new ResponseDTO('E-0000', estudiantesDTO, 'Estudiantes obtenidos correctamente');
     } catch (error) {
         console.error('Error al obtener todos los estudiantes:', error);
-        return new ResponseDTO('U-1001', null, `Error al obtener todos los estudiantes: ${error}`);
+        return new ResponseDTO('E-1001', null, `Error al obtener todos los estudiantes: ${error}`);
     }
 };
 
@@ -58,8 +58,8 @@ const getStudentById = async (id) => {
             ]
         });
         if (!estudiante) {
-            console.log(`Estudiante con ID: ${id} no encontrado.`);
-            return new ResponseDTO('U-1002', null, 'Estudiante no encontrado');
+            console.error(`Estudiante con ID: ${id} no encontrado.`);
+            return new ResponseDTO('E-1002', null, 'Estudiante no encontrado');
         }
         const carreraDTO = new CarreraDTO(estudiante.carrera.id, estudiante.carrera.nombrecarrera);
         const semestreDTO = new SemestreDTO(estudiante.semestre.id, estudiante.semestre.codigosemestre);
@@ -81,10 +81,10 @@ const getStudentById = async (id) => {
             estudiante.linkcurriculumvitae
         );
         console.log('Estudiante obtenido correctamente.');
-        return new ResponseDTO('U-0000', estudianteDTO, 'Estudiante obtenido correctamente');
+        return new ResponseDTO('E-0000', estudianteDTO, 'Estudiante obtenido correctamente');
     } catch (error) {
         console.error(`Error al obtener el estudiante con ID: ${id}.`, error);
-        return new ResponseDTO('U-1002', null, `Error al obtener el estudiante: ${error}`);
+        return new ResponseDTO('E-1002', null, `Error al obtener el estudiante: ${error}`);
     }
 };
 
@@ -149,16 +149,52 @@ const updateStudent = async (id, estudianteData) => {
         const estudiante = await EstudianteENT.findByPk(id);
         if (!estudiante) {
             console.log(`Estudiante con ID: ${id} no encontrado.`);
-            return new ResponseDTO('U-1004', null, 'Estudiante no encontrado');
+            return new ResponseDTO('E-1004', null, 'Estudiante no encontrado');
         }
+        
+        // Realiza la actualización del estudiante con los datos proporcionados
         await estudiante.update(estudianteData);
+        
+        // Vuelve a buscar el estudiante actualizado
+        const estudianteActualizado = await EstudianteENT.findByPk(id, {
+            include: [
+                { model: Carrera, as: 'carrera' },
+                { model: Semestre, as: 'semestre' },
+                { model: Sede, as: 'sede' }
+            ]
+        });
+        
+        // Crea un nuevo objeto estudianteDTO con los datos actualizados
+        const carreraDTO = new CarreraDTO(estudianteActualizado.carrera.id, estudianteActualizado.carrera.nombrecarrera);
+        const semestreDTO = new SemestreDTO(estudianteActualizado.semestre.id, estudianteActualizado.semestre.codigosemestre);
+        const sedeDTO = new SedeDTO(estudianteActualizado.sede.id, estudianteActualizado.sede.nombresede);
+
+        const estudianteDTO = new EstudianteDTO(
+            estudianteActualizado.id,
+            estudianteActualizado.usuario_id,
+            estudianteActualizado.nombres,
+            estudianteActualizado.apellidos,
+            estudianteActualizado.carnetidentidad,
+            estudianteActualizado.correoelectronico,
+            estudianteActualizado.celularcontacto,
+            estudianteActualizado.graduado,
+            carreraDTO,
+            semestreDTO,
+            sedeDTO,
+            estudianteActualizado.aniograduacion,
+            estudianteActualizado.linkcurriculumvitae
+        );
+
         console.log('Estudiante actualizado correctamente.');
-        return new ResponseDTO('U-0000', null, 'Estudiante actualizado correctamente');
+        
+        // Retorna el estudianteDTO actualizado
+        return new ResponseDTO('E-0000', estudianteDTO, 'Estudiante actualizado correctamente');
     } catch (error) {
         console.error(`Error al actualizar el estudiante con ID: ${id}.`, error);
-        return new ResponseDTO('U-1004', null, `Error al actualizar el estudiante: ${error}`);
+        return new ResponseDTO('E-1004', null, `Error al actualizar el estudiante: ${error}`);
     }
 };
+
 
 const deleteStudent = async (id) => {
     console.log(`Eliminando el estudiante con ID: ${id}...`);
@@ -166,14 +202,14 @@ const deleteStudent = async (id) => {
         const estudiante = await EstudianteENT.findByPk(id);
         if (!estudiante) {
             console.log(`Estudiante con ID: ${id} no encontrado.`);
-            return new ResponseDTO('U-1005', null, 'Estudiante no encontrado');
+            return new ResponseDTO('E-1005', null, 'Estudiante no encontrado');
         }
-        await estudiante.destroy();
+        await estudiante.destroy();        
         console.log('Estudiante eliminado correctamente.');
-        return new ResponseDTO('U-0000', null, 'Estudiante eliminado correctamente');
+        return new ResponseDTO('E-0000', "OK", 'Estudiante eliminado correctamente');
     } catch (error) {
         console.error(`Error al eliminar el estudiante con ID: ${id}.`, error);
-        return new ResponseDTO('U-1005', null, `Error al eliminar el estudiante: ${error}`);
+        return new ResponseDTO('E-1005', null, `Error al eliminar el estudiante: ${error}`);
     }
 };
 

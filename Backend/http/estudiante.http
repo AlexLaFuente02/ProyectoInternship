@@ -15,20 +15,19 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "usuario_id": 1,
+  "usuario_id": 2,
   "nombres": "Juan",
   "apellidos": "Pérez",
   "carnetidentidad": "123456789",
   "correoelectronico": "juan.perez@email.com",
   "celularcontacto": "555-555-5555",
   "graduado": true,
-  "carrera_id": 2,
-  "semestre_id": 3,
-  "sede_id": 1,
+  "carrera": { "id": 1 },
+  "semestre": { "id": 1 },
+  "sede": { "id": 1 },
   "aniograduacion": 2022,
   "linkcurriculumvitae": "http://example.com/juan_perez_cv.pdf"
 }
-
 ### PUT de Estudiante
 PUT http://{{host}}/estudiante/1
 Content-Type: application/json
@@ -42,13 +41,13 @@ Accept: application/json
   "correoelectronico": "juan.modificado@email.com",
   "celularcontacto": "555-555-5556",
   "graduado": false,
-  "carrera_id": 1,
-  "semestre_id": 4,
-  "sede_id": null,
-  "aniograduacion": null,
+  "carrera_id": 3,
+  "semestre_id": 2,
+  "sede_id": 1,
+  "aniograduacion": 2023,
   "linkcurriculumvitae": "http://example.com/juan_modificado_cv.pdf"
 }
 
 ### DELETE de Estudiante
-DELETE http://{{host}}/estudiante/2
+DELETE http://{{host}}/estudiante/18
 Accept: application/json
