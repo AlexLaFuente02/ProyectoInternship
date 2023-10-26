@@ -1,7 +1,7 @@
 const PostulacionDTO = require('../DTO/PostulacionDTO');
 const ResponseDTO = require('../DTO/ResponseDTO');
 const PostulacionENT = require('../ENT/PostulacionENT');
-const EstadoPostulacionENT = require('../ENT/EstadoPostulacionENT');
+const EstadoPostulacionENT = require('../ENT/estadoPostulacionENT');
 const EstudianteENT = require('../ENT/EstudianteENT');
 const ConvocatoriaENT = require('../ENT/ConvocatoriaENT');
 
@@ -130,42 +130,42 @@ const createPostulacion = async (postulacionData) => {
     try {
         const nuevaPostulacion = await PostulacionENT.create(postulacionData);
         const estadoPostulacionDTO = {
-            id: nuevaPostulacion.estadopostulacion.id,
+            id: postulacionData.estadopostulacion.id,
             nombreestadopostulacion: nuevaPostulacion.estadopostulacion.nombreestadopostulacion,
         };
         const estudianteDTO = {
-            id: nuevaPostulacion.estudiante.id,
-            usuario_id: nuevaPostulacion.estudiante.usuario_id,
-            nombres: nuevaPostulacion.estudiante.nombres,
-            apellidos: nuevaPostulacion.estudiante.apellidos,
-            carnetidentidad: nuevaPostulacion.estudiante.carnetidentidad,
-            correoelectronico: nuevaPostulacion.estudiante.correoelectronico,
-            celularcontacto: nuevaPostulacion.estudiante.celularcontacto,
-            graduado: nuevaPostulacion.estudiante.graduado,
-            carrera_id: nuevaPostulacion.estudiante.carrera_id,
-            semestre_id: nuevaPostulacion.estudiante.semestre_id,
-            sede_id: nuevaPostulacion.estudiante.sede_id,
-            aniograduacion: nuevaPostulacion.estudiante.aniograduacion,
-            linkcurriculumvitae: nuevaPostulacion.estudiante.linkcurriculumvitae,
+            id: postulacionData.estudiante.id,
+            usuario_id: postulacionData.estudiante.usuario_id,
+            nombres: postulacionData.estudiante.nombres,
+            apellidos: postulacionData.estudiante.apellidos,
+            carnetidentidad: postulacionData.estudiante.carnetidentidad,
+            correoelectronico: postulacionData.estudiante.correoelectronico,
+            celularcontacto: postulacionData.estudiante.celularcontacto,
+            graduado: postulacionData.estudiante.graduado,
+            carrera_id: postulacionData.estudiante.carrera_id,
+            semestre_id: postulacionData.estudiante.semestre_id,
+            sede_id: postulacionData.estudiante.sede_id,
+            aniograduacion: postulacionData.estudiante.aniograduacion,
+            linkcurriculumvitae: postulacionData.estudiante.linkcurriculumvitae,
         };
         const convocatoriaDTO = {
-            id: nuevaPostulacion.convocatoria.id,
-            areapasantia: nuevaPostulacion.convocatoria.areapasantia,
-            descripcionfunciones: nuevaPostulacion.convocatoria.descripcionfunciones,
-            requisitoscompetencias: nuevaPostulacion.convocatoria.requisitoscompetencias,
-            horario_inicio: nuevaPostulacion.convocatoria.horario_inicio,
-            horario_fin: nuevaPostulacion.convocatoria.horario_fin,
-            fechasolicitud: nuevaPostulacion.convocatoria.fechasolicitud,
-            fechaseleccionpasante: nuevaPostulacion.convocatoria.fechaseleccionpasante,
-            estadoconvocatoria: nuevaPostulacion.convocatoria.estadoconvocatoria,
-            institucion: nuevaPostulacion.convocatoria.institucion,
-            tiempoacumplir: nuevaPostulacion.convocatoria.tiempoacumplir,
+            id: postulacionData.convocatoria.id,
+            areapasantia: postulacionData.convocatoria.areapasantia,
+            descripcionfunciones: postulacionData.convocatoria.descripcionfunciones,
+            requisitoscompetencias: postulacionData.convocatoria.requisitoscompetencias,
+            horario_inicio: postulacionData.convocatoria.horario_inicio,
+            horario_fin: postulacionData.convocatoria.horario_fin,
+            fechasolicitud: postulacionData.convocatoria.fechasolicitud,
+            fechaseleccionpasante: postulacionData.convocatoria.fechaseleccionpasante,
+            estadoconvocatoria: postulacionData.convocatoria.estadoconvocatoria,
+            institucion: postulacionData.convocatoria.institucion,
+            tiempoacumplir: postulacionData.convocatoria.tiempoacumplir,
         };
 
         console.log('Postulación creada correctamente.');
         return new ResponseDTO('P-0000', new PostulacionDTO(
-            nuevaPostulacion.id,
-            nuevaPostulacion.fechapostulacion,
+            postulacionData.id,
+            postulacionData.fechapostulacion,
             estadoPostulacionDTO,
             estudianteDTO,
             convocatoriaDTO

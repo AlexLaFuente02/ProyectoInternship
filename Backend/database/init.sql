@@ -154,10 +154,9 @@ VALUES
 ('Area 3', 'Descripcion 3', 'Requisitos 3', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 1, 1, 1);
 
 
--- Table: historico_convocatorias
 CREATE TABLE historico_convocatorias (
     id_h int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_c int NOT NULL, -- No tiene restricción de clave foránea
+    id_c int NOT NULL, 
     areapasantia varchar(100) NOT NULL,
     descripcionfunciones text NOT NULL,
     requisitoscompetencias text NOT NULL,
@@ -169,14 +168,12 @@ CREATE TABLE historico_convocatorias (
     institucion_id int NOT NULL,
     tiempoacumplir_id int NOT NULL,
     accion ENUM('post', 'put', 'delete') NOT NULL,
-    fecha_accion DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    -- Las siguientes claves foráneas no incluyen a id_c
+    fecha_accion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (estadoconvocatoria_id) REFERENCES estadoconvocatoria (id),
     FOREIGN KEY (institucion_id) REFERENCES institucion (id),
     FOREIGN KEY (tiempoacumplir_id) REFERENCES tiempoacumplir (id)
 );
 
---Insercion despues de post,put,delete de convocatoria
 
 CREATE TABLE estudiante (
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -198,10 +195,8 @@ CREATE TABLE estudiante (
     CONSTRAINT estudiantes_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
 );
 
--- Insertar un nuevo estudiante
 INSERT INTO estudiante (usuario_id, nombres, apellidos, carnetidentidad, correoelectronico, celularcontacto, graduado, carrera_id, semestre_id, sede_id, aniograduacion, linkcurriculumvitae)
 VALUES (1, 'Juan', 'Pérez', '1234567', 'juan@example.com', '123-456-7890', 1, 2, 3, 1, 2022, 'https://example.com/juan_cv.pdf');
-
 
 
 CREATE TABLE postulacion (
@@ -215,7 +210,6 @@ CREATE TABLE postulacion (
     CONSTRAINT postulacion_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
 );
 
--- Insertar una nueva postulación
 INSERT INTO postulacion (fechapostulacion, estadopostulacion_id, estudiante_id, convocatoria_id)
 VALUES ('2023-10-25', 1, 1, 3);
 
@@ -227,14 +221,14 @@ CREATE TABLE historico_postulaciones (
     estudiante_id int NOT NULL,
     convocatoria_id int NOT NULL,
     accion ENUM('post', 'put', 'delete') NOT NULL,
-    fecha_accion DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    fecha_accion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (id_p) REFERENCES postulacion (id),
     FOREIGN KEY (estadopostulacion_id) REFERENCES estadopostulacion (id),
     FOREIGN KEY (estudiante_id) REFERENCES estudiante (id),
     FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
 );
------------------------------------------------------------------------------------------------------------------
--- Historico de usuario
+
+
 CREATE TABLE historico_usuario (
     id_h int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_u int NOT NULL,
@@ -243,7 +237,3 @@ CREATE TABLE historico_usuario (
     tipousuario_id int NOT NULL
 );
 
-
--- insercion despues usuario
-
------------------------------------------------------------------------------------------------------------------

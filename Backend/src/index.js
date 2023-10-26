@@ -19,6 +19,8 @@ const convocatoriaAPI = require("./API/convocatoriaAPI");
 const adminuseiAPI = require("./API/adminuseiAPI");
 const historicoUsuarioAPI = require("./API/historicoUsuarioAPI");
 const historicoConvocatoriasAPI = require("./API/historicoConvocatoriasAPI");
+const estudianteAPI = require("./API/estudianteAPI");
+const postulacionAPI = require("./API/postulacionAPI");
 
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
@@ -41,6 +43,8 @@ app.use("/convocatoria", convocatoriaAPI);
 app.use("/adminUSEI", adminuseiAPI);
 app.use("/historicoUsuario", historicoUsuarioAPI);
 app.use("/historicoConvocatorias", historicoConvocatoriasAPI);
+app.use("/estudiante", estudianteAPI);
+app.use("/postulaciones", postulacionAPI);
 
 // Ruta de inicio
 app.get("/", (req, res) => {
