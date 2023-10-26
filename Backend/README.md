@@ -80,10 +80,8 @@ npm i sequelize
 npm i mysql2
 ```
 
+7. Instalamos cors para hacer el consumo de la API en el frontend:
 
-<<<<<<< Updated upstream
-## Comandos para compilación:
-=======
 ```
 npm install cors
 ```
@@ -116,7 +114,6 @@ npm install swagger-jsdoc swagger-ui-express
    ```
 
 ## ⚙ Comandos para compilación:
->>>>>>> Stashed changes
 
 1. SIEMPRE entrar a /Backend:
 
