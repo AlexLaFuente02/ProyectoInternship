@@ -1,12 +1,51 @@
 const express = require('express');
-const { passport, isAuthenticated } = require('../services/authService'); // Importa la instancia de passport y el middleware isAuthenticated
-
+const { passport, isAuthenticated } = require('../services/authService');
 const LoginDTO = require('../DTO/LoginDTO');
 const ResponseDTO = require('../DTO/ResponseDTO');
-
 const router = express.Router();
 
-// Ruta para iniciar sesión
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     summary: Iniciar sesión
+ *     description: Inicia sesión de usuario con las credenciales proporcionadas.
+ *     requestBody:
+ *       description: Credenciales de inicio de sesión
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idusuario:
+ *                 type: string
+ *                 example: user1
+ *               password:
+ *                 type: string
+ *                 example: pass1
+ *     responses:
+ *       200:
+ *         description: Inicio de sesión exitoso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ *       401:
+ *         description: Autenticación fallida
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ *       500:
+ *         description: Error en el servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ */
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, usuario, response) => {
     if (err || !usuario) {
@@ -25,7 +64,28 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-// Ruta para cerrar sesión
+/**
+ * @swagger
+ * /auth/logout:
+ *   get:
+ *     tags:
+ *       - Authentication
+ *     summary: Cerrar sesión
+ *     description: Cierra la sesión del usuario actualmente autenticado.
+ *     responses:
+ *       200:
+ *         description: Cierre de sesión exitoso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ *       500:
+ *         description: Error en el servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ */
 router.get('/logout', isAuthenticated, (req, res) => {
   req.logout(function (err) {
     if (err) {
@@ -35,7 +95,28 @@ router.get('/logout', isAuthenticated, (req, res) => {
   });
 });
 
-// Ruta para verificar el estado de autenticación
+/**
+ * @swagger
+ * /auth/status:
+ *   get:
+ *     tags:
+ *       - Authentication
+ *     summary: Verificar estado de autenticación
+ *     description: Verifica si el usuario está autenticado y devuelve información del usuario.
+ *     responses:
+ *       200:
+ *         description: Usuario autenticado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ *       401:
+ *         description: Usuario no autenticado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ */
 router.get('/status', isAuthenticated, (req, res) => {
   if (req.isAuthenticated()) {
     const userDTO = new LoginDTO(req.user.id, req.user.idusuario);

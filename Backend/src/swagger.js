@@ -11,10 +11,11 @@ const options = {
     },
   },
   apis: [
+    "src/API/authAPI.js",
     "./API/tipoUsuarioAPI.js",
     "./services/tipoUsuarioService.js",
-    "./API/usuarioAPI.js",
-    "./services/usuarioService.js",
+    "src/API/usuarioAPI.js",
+    "src/ENT/UsuarioENT.js",
     "./API/adminuseiAPI.js",
     "./services/adminuseiService.js",
     "./API/carreraAPI.js",
@@ -25,7 +26,7 @@ const options = {
     "./services/estadoConvocatoriaService.js",
     "./API/estadoPostulacionAPI.js",
     "./services/estadoPostulacionService.js",
-    "./API/estudianteAPI.js",
+    "src/API/estudianteAPI.js",
     "./services/estudianteService.js",
     "./API/historicoUsuarioAPI.js",
     "./services/historicoUsuarioService.js",
@@ -41,6 +42,7 @@ const options = {
     "./services/semestreService.js",
     "./API/tiempoacumplirAPI.js",
     "./services/tiempoacumplirService.js",
+    "src/DTO/ResponseDTO.js",
 
     // Add more API and service pairs as needed
   ],

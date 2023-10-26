@@ -7,7 +7,7 @@ Accept: application/json
 
 {
   "idusuario": "user1",
-  "password": "asasd"
+  "password": "pass1"
 }
 
 ### Cierre de Sesión

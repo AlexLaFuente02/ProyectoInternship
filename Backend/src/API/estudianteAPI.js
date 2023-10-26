@@ -2,6 +2,162 @@ const express = require('express');
 const router = express.Router();
 const estudianteService = require('../services/estudianteService');
 
+/**
+ * @openapi
+ * /estudiante/:
+ *   get:
+ *     tags:
+ *       - Estudiante
+ *     summary: Obtener todos los estudiantes
+ *     description: Devuelve una lista de todos los estudiantes.
+ *     responses:
+ *       200:
+ *         description: Lista de estudiantes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ * 
+ *   post:
+ *     tags:
+ *       - Estudiante
+ *     summary: Crear un nuevo estudiante
+ *     description: Crea un nuevo estudiante con la información proporcionada.
+ *     requestBody:
+ *       description: Datos del estudiante
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               usuario_id:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 2
+ *               nombres:
+ *                 type: string
+ *                 example: Juan
+ *               apellidos:
+ *                 type: string
+ *                 example: Pérez
+ *               carnetidentidad:
+ *                 type: string
+ *                 example: 123456789
+ *               correoelectronico:
+ *                 type: string
+ *                 example: juan.perez@email.com
+ *               celularcontacto:
+ *                 type: string
+ *                 example: 555-555-5555
+ *               graduado:
+ *                 type: boolean
+ *                 example: true
+ *               carrera_id:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 2
+ *               semestre_id:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 3
+ *               sede_id:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 1
+ *               aniograduacion:
+ *                 type: number
+ *                 example: 2022
+ *               linkcurriculumvitae:
+ *                 type: string
+ *                 example: http://example.com/juan_perez_cv.pdf
+ *     responses:
+ *       200:
+ *         description: Estudiante creado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ * 
+ * /estudiante/{id}:
+ *   get:
+ *     tags:
+ *       - Estudiante
+ *     summary: Obtener un estudiante por ID
+ *     description: Devuelve la información de un estudiante basado en su ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID del estudiante
+ *         required: true
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Información del estudiante
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ * 
+ *   put:
+ *     tags:
+ *       - Estudiante
+ *     summary: Actualizar un estudiante por ID
+ *     description: Actualiza la información de un estudiante basado en su ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID del estudiante
+ *         required: true
+ *         schema:
+ *           type: number
+ *     requestBody:
+ *       description: Datos actualizados del estudiante
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               // Aquí puedes repetir las propiedades del POST, pero con los valores de "example" actualizados
+ *     responses:
+ *       200:
+ *         description: Estudiante actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ * 
+ *   delete:
+ *     tags:
+ *       - Estudiante
+ *     summary: Eliminar un estudiante por ID
+ *     description: Elimina un estudiante basado en su ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID del estudiante
+ *         required: true
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Estudiante eliminado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/GeneralResponse"
+ */
+
 router.get('/', async (req, res) => {
     console.log('GET request received for getAllStudents');
     const response = await estudianteService.getAllStudents();

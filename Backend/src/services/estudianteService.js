@@ -91,10 +91,32 @@ const getStudentById = async (id) => {
 const createStudent = async (estudianteData) => {
     console.log('Creando un nuevo estudiante...');
     try {
-        const nuevoEstudiante = await EstudianteENT.create(estudianteData);
+        let newStudentData = {
+            usuario_id: estudianteData.usuario_id,
+            nombres: estudianteData.nombres,
+            apellidos: estudianteData.apellidos,
+            carnetidentidad: estudianteData.carnetidentidad,
+            correoelectronico: estudianteData.correoelectronico,
+            celularcontacto: estudianteData.celularcontacto,
+            graduado: estudianteData.graduado,
+            carrera_id: estudianteData.carrera.id,
+            semestre_id: estudianteData.semestre.id,
+            linkcurriculumvitae: estudianteData.linkcurriculumvitae
+        };
+
+        if (estudianteData.sede && estudianteData.sede.id) {
+            newStudentData.sede_id = estudianteData.sede.id;
+        }
+
+        if (estudianteData.aniograduacion) {
+            newStudentData.aniograduacion = estudianteData.aniograduacion;
+        }
+
+        const nuevoEstudiante = await EstudianteENT.create(newStudentData);
+
         const carreraDTO = new CarreraDTO(estudianteData.carrera.id, estudianteData.carrera.nombrecarrera);
         const semestreDTO = new SemestreDTO(estudianteData.semestre.id, estudianteData.semestre.codigosemestre);
-        const sedeDTO = new SedeDTO(estudianteData.sede.id, estudianteData.sede.nombresede);
+        const sedeDTO = estudianteData.sede ? new SedeDTO(estudianteData.sede.id, estudianteData.sede.nombresede) : null;
 
         const estudianteDTO = new EstudianteDTO(
             nuevoEstudiante.id,
@@ -111,13 +133,15 @@ const createStudent = async (estudianteData) => {
             nuevoEstudiante.aniograduacion,
             nuevoEstudiante.linkcurriculumvitae
         );
+
         console.log('Estudiante creado correctamente.');
-        return new ResponseDTO('U-0000', estudianteDTO, 'Estudiante creado correctamente');
+        return new ResponseDTO('E-0000', estudianteDTO, 'Estudiante creado correctamente');
     } catch (error) {
         console.error('Error al crear el estudiante:', error);
-        return new ResponseDTO('U-1003', null, `Error al crear el estudiante: ${error}`);
+        return new ResponseDTO('E-1003', null, `Error al crear el estudiante: ${error}`);
     }
 };
+
 
 const updateStudent = async (id, estudianteData) => {
     console.log(`Actualizando el estudiante con ID: ${id}...`);
