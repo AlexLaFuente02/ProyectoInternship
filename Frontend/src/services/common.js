@@ -5,4 +5,8 @@ export const loadCampuses = async () => {
     const response = await axios.get(`${rutaApi}/sede`);
     return response.data;
 }
+export const loadCareers = async () => {
+    const response = await axios.get(`${rutaApi}/carrera`);
+    return response.data;
+}
 
