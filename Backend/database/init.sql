@@ -232,7 +232,9 @@ CREATE TABLE historico_usuario (
     id_u int NOT NULL,
     idusuario varchar(50) NOT NULL,
     contrasenia varchar(255) NOT NULL,
-    tipousuario_id int NOT NULL
+    tipousuario_id int NOT NULL,
+    FOREIGN KEY (id_u) REFERENCES usuario (id),
+    FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
 );
 
 CREATE TABLE aprobacionconvocatoria (

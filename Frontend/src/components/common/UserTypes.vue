@@ -33,7 +33,8 @@
 <style scoped>
 .container{
     padding: 5% 10%;
-    border: 1px solid #000;
+    background-color: #FFF;
+    border-radius: 10px;
 }
 .container__types__cards{
     display: flex;

@@ -45,6 +45,7 @@ const routes = [
     //Student
     {name: 'StudentRegister', path: '/student/register', component: StudentRegister},
     //Institution
+    
 
     //Usei-Admin
 ];
