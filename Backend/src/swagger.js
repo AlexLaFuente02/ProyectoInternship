@@ -13,8 +13,19 @@ const options = {
   apis: [
     "src/API/authAPI.js",
     "src/API/usuarioAPI.js",
-    "src/DTO/UsuarioDTO.js",
+    "src/API/historicoConvocatoriasAPI.js",
+    "src/API/historicoPostulacionesAPI.js",
+    "src/API/estudianteAPI.js",
+    "src/API/tiempoACumplirAPI.js",
+    "src/API/TipoUsuarioAPI.js",
+    "src/API/estadoConvocatoriaAPI.js",
     "src/DTO/ResponseDTO.js",
+    "src/DTO/UsuarioDTO.js",
+    "src/DTO/historicoConvocatoriasDTO.js",
+    "src/DTO/historicoPostulacionesDTO.js",
+    "src/DTO/TiempoACumplirDTO.js",
+    "src/DTO/TipoUsuarioDTO.js",
+    "src/DTO/EstadoConvocatoriaDTO.js",
 
     // Add more API and service pairs as needed
   ],
