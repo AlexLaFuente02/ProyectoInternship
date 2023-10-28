@@ -7,7 +7,7 @@ GET http://{{host}}/postulaciones
 Accept: application/json
 
 ### Obtener una postulación por ID (reemplaza {id} con un ID válido)
-GET http://{{host}}/postulaciones/{id}
+GET http://{{host}}/postulaciones/1
 Accept: application/json
 
 ### Crear una nueva postulación (proporciona los datos de la postulación en el cuerpo de la solicitud)
@@ -18,7 +18,7 @@ Accept: application/json
 {
     "fechapostulacion": "2023-10-25",
     "estadopostulacion": { "id": 1 },
-    "estudiante": { "id": 19 },
+    "estudiante": { "id": 1 },
     "convocatoria": { "id": 1 }  
 }
 

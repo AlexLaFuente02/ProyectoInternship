@@ -18,10 +18,9 @@ CREATE TABLE usuario (
     CONSTRAINT usuario_tipousuario FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
 );
 
-INSERT INTO usuario (idusuario,contrasenia, tipousuario_id) VALUES
-('admin1','admin1', 1),
-('admin2','admin2', 2),
-('admin3','admin3', 3);
+INSERT INTO usuario (idusuario, contrasenia, tipousuario_id) VALUES
+('alex', 'alex123', 1);
+#insertar el resto de un request la contrasenia porque la contraseña debe estar hasheada
 
 CREATE TABLE estadopostulacion (
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -78,7 +77,7 @@ CREATE TABLE institucion (
     id int AUTO_INCREMENT PRIMARY KEY,
     nombreinstitucion varchar(100) NOT NULL,
     reseniainstitucion text NULL,
-    logoinstitucion BLOB NULL,  -- Cambiado a BLOB ya que MySQL no tiene tipo image
+    logoinstitucion BLOB NULL,  
     nombrecontacto varchar(100) NOT NULL,
     correocontacto varchar(100) NOT NULL,
     celularcontacto varchar(15) NOT NULL,
@@ -95,7 +94,7 @@ VALUES
 ('EMAPA', 'Somos la institucion de agua de la ciudad de La Paz', NULL, 'Juan Pérez',
 'juan.perez@utech.edu', '123-456-7890', null, 1);
 
- /*Hacer trigger para asignar valor a usuario_id cuando USEI aprobar institucion*/
+#Hacer trigger para asignar valor a usuario_id cuando USEI aprobar institucion
 
 
 CREATE TABLE estadoconvocatoria (
@@ -237,3 +236,15 @@ CREATE TABLE historico_usuario (
     tipousuario_id int NOT NULL
 );
 
+CREATE TABLE aprobacionconvocatoria (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    fechaaprobacion date NOT NULL,
+    estado varchar(100) NOT NULL,
+    adminusei_id int NOT NULL,
+    convocatoria_id int NOT NULL,
+    CONSTRAINT aprobacionconvocatoria_adminusei FOREIGN KEY (adminusei_id) REFERENCES adminusei (id),
+    CONSTRAINT aprobacionconvocatoria_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
+);
+
+INSERT INTO aprobacionconvocatoria (fechaaprobacion, estado, adminusei_id, convocatoria_id)
+VALUES ('2023-10-25', 'APROBADO', 1, 3);

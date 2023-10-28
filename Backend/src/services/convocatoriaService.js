@@ -174,7 +174,7 @@ const deleteConvocatoria = async (id) => {
         await historicoService.insertHistoricoConvocatoria(convocatoria.dataValues, 'DELETE');
         await convocatoria.destroy();
         console.log('Convocatoria eliminada correctamente.');
-        return new ResponseDTO('C-0000', null, 'Convocatoria eliminada correctamente');
+        return new ResponseDTO('C-0000', convocatoria, 'Convocatoria eliminada correctamente');
     } catch (error) {
         console.error(`Error al eliminar la convocatoria con ID: ${id}.`, error);
         return new ResponseDTO('C-1005', null, `Error al eliminar la convocatoria: ${error}`);
