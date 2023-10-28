@@ -182,9 +182,10 @@ router.put("/:id", async (req, res) => {
  */
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
+  console.log(`DELETE request received for deleteCarrera with ID: ${req.params.id}`);
   try {
     const response = await carreraService.deleteCarrera(id);
-    res.status(204).json({
+    res.json({
       method: 'deleteCarrera',
       code: response.code,
       result: response.result,
