@@ -63,7 +63,7 @@ app.use("/adminUSEI", adminuseiAPI);
 app.use("/historicoUsuario", historicoUsuarioAPI);
 app.use("/historicoConvocatorias", historicoConvocatoriasAPI);
 app.use("/estudiante", estudianteAPI);
-app.use("/postulaciones", postulacionAPI);
+app.use("/postulacion", postulacionAPI);
 app.use("/aprobacionConvocatoria", aprobacionConvocatoriaAPI);
 app.use("/estadosolicitudinstitucion", estadoSolicitudInstitucionAPI);
 app.use("/historicoPostulaciones", historicoPostulacionesAPI);

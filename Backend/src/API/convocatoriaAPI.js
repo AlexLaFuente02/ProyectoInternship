@@ -2,6 +2,141 @@ const express = require('express');
 const router = express.Router();
 const convocatoriaService = require('../services/convocatoriaService');
 
+/**
+ * @openapi
+ * /convocatoria/:
+ *   get:
+ *     tags:
+ *       - Convocatoria
+ *     summary: Obtener todas las convocatorias
+ *     description: Devuelve una lista de todas las convocatorias.
+ *     responses:
+ *       200:
+ *         description: Lista de convocatorias
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/Convocatoria"
+ * 
+ *   post:
+ *     tags:
+ *       - Convocatoria
+ *     summary: Crear una nueva convocatoria
+ *     description: Crea una nueva convocatoria con la información proporcionada.
+ *     requestBody:
+ *       description: Datos de la convocatoria
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Convocatoria"
+ *           example:
+ *             areapasantia: "Área de prueba"
+ *             descripcionfunciones: "Descripción de funciones"
+ *             requisitoscompetencias: "Requisitos y competencias"
+ *             horario_inicio: "08:00"
+ *             horario_fin: "17:00"
+ *             fechasolicitud: "2023-10-22"
+ *             fechaseleccionpasante: "2025-12-12"
+ *             estadoconvocatoria: 
+ *               id: 2
+ *             institucion: 
+ *               id: 1
+ *             tiempoacumplir: 
+ *               id: 2
+ *     responses:
+ *       200:
+ *         description: Convocatoria creada exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Convocatoria"
+ * 
+ * /convocatoria/{id}:
+ *   get:
+ *     tags:
+ *       - Convocatoria
+ *     summary: Obtener una convocatoria por ID
+ *     description: Devuelve la información de una convocatoria basada en su ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID de la convocatoria
+ *         required: true
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Información de la convocatoria
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Convocatoria"
+ * 
+ *   put:
+ *     tags:
+ *       - Convocatoria
+ *     summary: Actualizar una convocatoria por ID
+ *     description: Actualiza la información de una convocatoria basada en su ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID de la convocatoria
+ *         required: true
+ *         schema:
+ *           type: number
+ *     requestBody:
+ *       description: Datos actualizados de la convocatoria
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Convocatoria"
+ *           example:
+ *             areapasantia: "Area actualizada"
+ *             descripcionfunciones: "Descripción actualizada"
+ *             requisitoscompetencias: "Requisitos y competencias"
+ *             horario_inicio: "08:00"
+ *             horario_fin: "17:00"
+ *             fechasolicitud: "2023-10-22"
+ *             fechaseleccionpasante: "2025-12-12"
+ *             estadoconvocatoria: 
+ *               id: 2
+ *             institucion: 
+ *               id: 1
+ *             tiempoacumplir: 
+ *               id: 2
+ *     responses:
+ *       200:
+ *         description: Convocatoria actualizada exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Convocatoria"
+ * 
+ *   delete:
+ *     tags:
+ *       - Convocatoria
+ *     summary: Eliminar una convocatoria por ID
+ *     description: Elimina una convocatoria basada en su ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID de la convocatoria
+ *         required: true
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Convocatoria eliminada exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Convocatoria"
+ */
+
 router.get('/', async (req, res) => {
     console.log('GET request received for getAllConvocatorias');
     const response = await convocatoriaService.getAllConvocatorias();

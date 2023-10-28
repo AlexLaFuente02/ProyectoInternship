@@ -59,7 +59,7 @@ const deleteCarrera = async (id) => {
       return new ResponseDTO('C-1005', null, `Carrera con ID: ${id} no encontrada`);
     }
     await carrera.destroy();
-    return new ResponseDTO('C-0000', null, 'Carrera eliminada correctamente');
+    return new ResponseDTO('C-0000', carrera, 'Carrera eliminada correctamente');
   } catch (error) {
     return new ResponseDTO('C-1005', null, `Error al eliminar la carrera con ID: ${id}`);
   }

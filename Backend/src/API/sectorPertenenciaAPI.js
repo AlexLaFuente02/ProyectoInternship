@@ -2,6 +2,115 @@ const express = require('express');
 const router = express.Router();
 const sectorPertenenciaService = require('../services/sectorPertenenciaService');
 
+/**
+ * @openapi
+ * /sectorPertenencia/:
+ *   get:
+ *     tags:
+ *       - SectorPertenencia
+ *     summary: Obtener todos los sectores de pertenencia
+ *     description: Devuelve una lista de todos los sectores de pertenencia.
+ *     responses:
+ *       200:
+ *         description: Lista de sectores de pertenencia
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/SectorPertenencia"
+ * 
+ *   post:
+ *     tags:
+ *       - SectorPertenencia
+ *     summary: Crear un nuevo sector de pertenencia
+ *     description: Crea un nuevo sector de pertenencia con la información proporcionada.
+ *     requestBody:
+ *       description: Datos del sector de pertenencia
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/SectorPertenencia"
+ *           example:
+ *             nombresectorpertenencia: "Sector 4"
+ *     responses:
+ *       200:
+ *         description: Sector de pertenencia creado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/SectorPertenencia"
+ * 
+ * /sectorPertenencia/{id}:
+ *   get:
+ *     tags:
+ *       - SectorPertenencia
+ *     summary: Obtener un sector de pertenencia por ID
+ *     description: Devuelve la información de un sector de pertenencia basado en su ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID del sector de pertenencia
+ *         required: true
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Información del sector de pertenencia
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/SectorPertenencia"
+ * 
+ *   put:
+ *     tags:
+ *       - SectorPertenencia
+ *     summary: Actualizar un sector de pertenencia por ID
+ *     description: Actualiza la información de un sector de pertenencia basado en su ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID del sector de pertenencia
+ *         required: true
+ *         schema:
+ *           type: number
+ *     requestBody:
+ *       description: Datos actualizados del sector de pertenencia
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/SectorPertenencia"
+ *           example:
+ *             nombresectorpertenencia: "Sector 2"
+ *     responses:
+ *       200:
+ *         description: Sector de pertenencia actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/SectorPertenencia"
+ * 
+ *   delete:
+ *     tags:
+ *       - SectorPertenencia
+ *     summary: Eliminar un sector de pertenencia por ID
+ *     description: Elimina un sector de pertenencia basado en su ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID del sector de pertenencia
+ *         required: true
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Sector de pertenencia eliminado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/SectorPertenencia"
+ */
+
 router.get('/', async (req, res) => {
   console.log('GET request received for getAll');
   const response = await sectorPertenenciaService.getAll();

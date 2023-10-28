@@ -2,16 +2,16 @@
 @port = 3000
 @host = {{hostname}}:{{port}}
 
-### Obtener todas las postulaciones
-GET http://{{host}}/postulaciones
+### Obtener todas las postulacion
+GET http://{{host}}/postulacion
 Accept: application/json
 
 ### Obtener una postulación por ID (reemplaza {id} con un ID válido)
-GET http://{{host}}/postulaciones/1
+GET http://{{host}}/postulacion/1
 Accept: application/json
 
 ### Crear una nueva postulación (proporciona los datos de la postulación en el cuerpo de la solicitud)
-POST http://{{host}}/postulaciones
+POST http://{{host}}/postulacion
 Content-Type: application/json
 Accept: application/json
 
@@ -23,7 +23,7 @@ Accept: application/json
 }
 
 ### Actualizar una postulación por ID (reemplaza {id} con un ID válido y proporciona los datos actualizados en el cuerpo de la solicitud)
-PUT http://{{host}}/postulaciones/12
+PUT http://{{host}}/postulacion/12
 Content-Type: application/json
 Accept: application/json
 
@@ -35,5 +35,5 @@ Accept: application/json
 }
 
 ### Eliminar una postulación por ID (reemplaza {id} con un ID válido)
-DELETE http://{{host}}/postulaciones/{id}
+DELETE http://{{host}}/postulacion/12
 Accept: application/json

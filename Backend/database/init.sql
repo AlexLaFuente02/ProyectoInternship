@@ -221,7 +221,6 @@ CREATE TABLE historico_postulaciones (
     convocatoria_id int NOT NULL,
     accion ENUM('post', 'put', 'delete') NOT NULL,
     fecha_accion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    FOREIGN KEY (id_p) REFERENCES postulacion (id),
     FOREIGN KEY (estadopostulacion_id) REFERENCES estadopostulacion (id),
     FOREIGN KEY (estudiante_id) REFERENCES estudiante (id),
     FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
