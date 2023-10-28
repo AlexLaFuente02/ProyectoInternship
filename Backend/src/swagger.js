@@ -26,6 +26,10 @@ const options = {
     "src/API/institucionAPI.js",
     "src/API/sectorPertenenciaAPI.js",
     "src/API/convocatoriaAPI.js",
+    "src/API/adminuseiAPI.js",
+    "src/API/estadoPostulacionAPI.js",
+    "src/API/sedeAPI.js",
+    "src/API/semestreAPI.js",
     "src/API/historicoUsuarioAPI.js",
     "src/DTO/ResponseDTO.js",
     "src/DTO/UsuarioDTO.js",
@@ -42,8 +46,12 @@ const options = {
     "src/DTO/InstitucionDTO.js",
     "src/DTO/SectorPertenenciaDTO.js",
     "src/DTO/ConvocatoriaDTO.js",
-    "src/DTO/HistoricoUsuarioDTO.js"
-
+    "src/DTO/HistoricoUsuarioDTO.js",
+    "src/DTO/AdminuseiDTO.js",
+    "src/DTO/EstadoPostulacionDTO.js",
+    "src/DTO/SedeDTO.js",
+    "src/DTO/SemestreDTO.js",
+    
     // Add more API and service pairs as needed
   ],
 };
