@@ -29,6 +29,7 @@ const historicoConvocatoriasAPI = require("./API/historicoConvocatoriasAPI");
 const estudianteAPI = require("./API/estudianteAPI");
 const postulacionAPI = require("./API/postulacionAPI");
 const aprobacionConvocatoriaAPI = require("./API/aprobacionConvocatoriaAPI");
+const historicoPostulacionesAPI = require("./API/historicoPostulacionesAPI");
 
 const authAPI = require("./API/authAPI");
 
@@ -62,6 +63,8 @@ app.use("/historicoConvocatorias", historicoConvocatoriasAPI);
 app.use("/estudiante", estudianteAPI);
 app.use("/postulaciones", postulacionAPI);
 app.use("/aprobacionConvocatoria", aprobacionConvocatoriaAPI);
+app.use("/historicoPostulaciones", historicoPostulacionesAPI);
+
 
 app.use("/auth", authAPI);
 
