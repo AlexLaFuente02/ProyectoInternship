@@ -1,4 +1,4 @@
-const EstadoPostulacionENT = require("../ENT/estadoPostulacionENT");
+const EstadoPostulacionENT = require("../ENT/EstadoPostulacionENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
 const EstadoPostulacionDTO = require("../DTO/EstadoPostulacionDTO");
 
