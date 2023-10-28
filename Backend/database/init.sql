@@ -258,3 +258,5 @@ CREATE TABLE estadosolicitudinstitucion (
     CONSTRAINT estadosolicitudinstitucion_adminusei FOREIGN KEY (adminusei_id) REFERENCES adminusei (id),
     CONSTRAINT estadosolicitudinstitucion_institucion FOREIGN KEY (institucion_id) REFERENCES institucion (id)
 );
+
+INSERT INTO estadosolicitudinstitucion (fechaaprobacion, estadosolicitud, adminusei_id, institucion_id) VALUES ('2023-10-22', 'Aprobado', 1, 1);
