@@ -19,6 +19,7 @@ const options = {
     "src/API/tiempoACumplirAPI.js",
     "src/API/TipoUsuarioAPI.js",
     "src/API/estadoConvocatoriaAPI.js",
+    "src/API/historicoUsuarioAPI.js",
     "src/DTO/ResponseDTO.js",
     "src/DTO/UsuarioDTO.js",
     "src/DTO/historicoConvocatoriasDTO.js",
@@ -26,6 +27,7 @@ const options = {
     "src/DTO/TiempoACumplirDTO.js",
     "src/DTO/TipoUsuarioDTO.js",
     "src/DTO/EstadoConvocatoriaDTO.js",
+    "src/DTO/HistoricoUsuarioDTO.js"
 
     // Add more API and service pairs as needed
   ],
