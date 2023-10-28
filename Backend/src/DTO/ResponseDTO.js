@@ -2,7 +2,7 @@
  * @swagger
  * components:
  *   schemas:
- *     GeneralResponse:
+ *     ResponseDTO:
  *       type: object
  *       properties:
  *         method:

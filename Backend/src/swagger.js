@@ -15,7 +15,6 @@ const options = {
     "./API/tipoUsuarioAPI.js",
     "./services/tipoUsuarioService.js",
     "src/API/usuarioAPI.js",
-    "src/ENT/UsuarioENT.js",
     "src/DTO/UsuarioDTO.js",
     "./API/adminuseiAPI.js",
     "./services/adminuseiService.js",

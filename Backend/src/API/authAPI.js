@@ -32,19 +32,19 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  *       401:
  *         description: Autenticación fallida
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  *       500:
  *         description: Error en el servidor
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, usuario, response) => {
@@ -78,13 +78,13 @@ router.post('/login', (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  *       500:
  *         description: Error en el servidor
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.get('/logout', isAuthenticated, (req, res) => {
   req.logout(function (err) {
@@ -109,13 +109,13 @@ router.get('/logout', isAuthenticated, (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  *       401:
  *         description: Usuario no autenticado
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.get('/status', isAuthenticated, (req, res) => {
   if (req.isAuthenticated()) {

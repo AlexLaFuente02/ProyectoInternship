@@ -16,7 +16,7 @@ const estudianteService = require('../services/estudianteService');
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  * 
  *   post:
  *     tags:
@@ -82,7 +82,7 @@ const estudianteService = require('../services/estudianteService');
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  * 
  * /estudiante/{id}:
  *   get:
@@ -103,7 +103,7 @@ const estudianteService = require('../services/estudianteService');
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  * 
  *   put:
  *     tags:
@@ -176,7 +176,7 @@ const estudianteService = require('../services/estudianteService');
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  * 
  *   delete:
  *     tags:
@@ -196,7 +196,7 @@ const estudianteService = require('../services/estudianteService');
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  */
 
 router.get('/', async (req, res) => {

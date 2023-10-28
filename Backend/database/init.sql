@@ -248,3 +248,13 @@ CREATE TABLE aprobacionconvocatoria (
 
 INSERT INTO aprobacionconvocatoria (fechaaprobacion, estado, adminusei_id, convocatoria_id)
 VALUES ('2023-10-25', 'APROBADO', 1, 3);
+
+CREATE TABLE estadosolicitudinstitucion (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    fechaaprobacion date NOT NULL,
+    estadosolicitud varchar(100) NOT NULL,
+    adminusei_id int NOT NULL,
+    institucion_id int NOT NULL,
+    CONSTRAINT estadosolicitudinstitucion_adminusei FOREIGN KEY (adminusei_id) REFERENCES adminusei (id),
+    CONSTRAINT estadosolicitudinstitucion_institucion FOREIGN KEY (institucion_id) REFERENCES institucion (id)
+);
