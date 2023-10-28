@@ -15,7 +15,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "usuario_id": 2,
+  "usuario_id": 3,
   "nombres": "Juan",
   "apellidos": "Pérez",
   "carnetidentidad": "123456789",
@@ -28,6 +28,7 @@ Accept: application/json
   "aniograduacion": 2022,
   "linkcurriculumvitae": "http://example.com/juan_perez_cv.pdf"
 }
+
 ### PUT de Estudiante
 PUT http://{{host}}/estudiante/1
 Content-Type: application/json
@@ -49,5 +50,5 @@ Accept: application/json
 }
 
 ### DELETE de Estudiante
-DELETE http://{{host}}/estudiante/2
+DELETE http://{{host}}/estudiante/21
 Accept: application/json

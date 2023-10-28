@@ -23,13 +23,15 @@ Accept: application/json
 }
 
 ### Actualizar una postulación por ID (reemplaza {id} con un ID válido y proporciona los datos actualizados en el cuerpo de la solicitud)
-PUT http://{{host}}/postulaciones/{id}
+PUT http://{{host}}/postulaciones/12
 Content-Type: application/json
 Accept: application/json
 
 {
-    "fechapostulacion": "2023-10-26"
-    // Agrega otros campos necesarios
+    "fechapostulacion": "2023-10-26",
+    "estadopostulacion_id": 1,
+    "estudiante_id": 1,
+    "convocatoria_id": 1  
 }
 
 ### Eliminar una postulación por ID (reemplaza {id} con un ID válido)
