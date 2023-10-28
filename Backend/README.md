@@ -110,6 +110,43 @@ npm install swagger-jsdoc swagger-ui-express
    ```
    npm install express-session
    ```
+## Instalación de la Base de Datos con Docker 💾
+
+Para facilitar la gestión de la base de datos y garantizar que el entorno sea consistente para todos los desarrolladores, recomendamos usar Docker. A continuación se detallan los pasos para inicializar la base de datos `internshipdb` con Docker:
+
+1. **Iniciar una instancia de MySQL en Docker**:
+   Esta instancia utilizará el puerto `3306` en tu máquina local, que corresponde al puerto configurado en tu aplicación. Asegúrate de que ningún otro servicio esté utilizando este puerto.
+   
+   ```bash
+   docker run --name internshipdb-container -e MYSQL_ROOT_PASSWORD=admin -p 3306:3306 -d mysql:8
+   ```
+
+2. **Conéctate a la base de datos**:
+
+   ```bash
+   docker exec -it internshipdb-container mysql -u root -p
+   ```
+
+   Se te pedirá la contraseña. Introduce la que configuraste en el paso anterior ("admin").
+
+3. **Crea la base de datos**:
+
+   ```sql
+   CREATE DATABASE internshipdb;
+   ```
+
+4. **Usa la base de datos**:
+
+   ```sql
+   USE internshipdb;
+   ```
+
+5. **Ejecuta el script de inicialización**:
+   
+   Copia el archivo `init.sql` (que se encuentra en la carpeta `database`) al contenedor:
+
+Con estos pasos, tendrás tu base de datos internshipdb configurada y lista para ser utilizada.
+
 
 ## ⚙ Comandos para compilación:
 
