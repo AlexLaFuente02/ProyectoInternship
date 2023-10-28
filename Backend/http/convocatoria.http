@@ -7,7 +7,7 @@ GET http://{{host}}/convocatoria/
 Accept: application/json
 
 ### GET Convocatoria by ID
-GET http://{{host}}/convocatoria/7
+GET http://{{host}}/convocatoria/1
 Accept: application/json
 
 ### POST Convocatoria
@@ -35,7 +35,7 @@ Accept: application/json
 }
 
 ### PUT Convocatoria
-PUT http://{{host}}/convocatoria/8
+PUT http://{{host}}/convocatoria/2
 Content-Type: application/json
 Accept: application/json
 

@@ -43,23 +43,26 @@ const getAllHistoricos = async () => {
                 { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
             ]
         });
-
-        return historicos.map(historico => new HistoricoConvocatoriasDTO(
-            historico.id_h,
-            historico.id_c,
-            historico.areapasantia,
-            historico.descripcionfunciones,
-            historico.requisitoscompetencias,
-            historico.horario_inicio,
-            historico.horario_fin,
-            historico.fechasolicitud,
-            historico.fechaseleccionpasante,
-            historico.accion,
-            historico.fecha_accion,
-            new EstadoConvocatoriaDTO(historico.estadoconvocatoria.id, historico.estadoconvocatoria.nombreestadoconvocatoria),
-            new InstitucionDTO(historico.institucion.id, historico.institucion.nombreinstitucion),
-            new TiempoAcumplirDTO(historico.tiempoacumplir.id, historico.tiempoacumplir.descripcion)
-        ));
+        return {
+            code: 'HC-0000',
+            result: historicos.map(historico => new HistoricoConvocatoriasDTO(
+                historico.id_h,
+                historico.id_c,
+                historico.areapasantia,
+                historico.descripcionfunciones,
+                historico.requisitoscompetencias,
+                historico.horario_inicio,
+                historico.horario_fin,
+                historico.fechasolicitud,
+                historico.fechaseleccionpasante,
+                historico.accion,
+                historico.fecha_accion,
+                new EstadoConvocatoriaDTO(historico.estadoconvocatoria.id, historico.estadoconvocatoria.nombreestadoconvocatoria),
+                new InstitucionDTO(historico.institucion.id, historico.institucion.nombreinstitucion),
+                new TiempoAcumplirDTO(historico.tiempoacumplir.id, historico.tiempoacumplir.descripcion)
+            )),
+            message: 'Registros históricos obtenidos correctamente.'
+        };
     } catch (error) {
         console.error('Error al obtener todos los registros históricos:', error);
         return new ResponseDTO('H-1002', null, `Error al obtener todos los registros históricos: ${error}`);
@@ -79,23 +82,26 @@ const getHistoricoById = async (id_h) => {
         if (!historico) {
             return new ResponseDTO('H-1003', null, 'Registro histórico no encontrado');
         }
-
-        return new HistoricoConvocatoriasDTO(
-            historico.id_h,
-            historico.id_c,
-            historico.areapasantia,
-            historico.descripcionfunciones,
-            historico.requisitoscompetencias,
-            historico.horario_inicio,
-            historico.horario_fin,
-            historico.fechasolicitud,
-            historico.fechaseleccionpasante,
-            historico.accion,
-            historico.fecha_accion,
-            new EstadoConvocatoriaDTO(historico.estadoconvocatoria.id, historico.estadoconvocatoria.nombreestadoconvocatoria),
-            new InstitucionDTO(historico.institucion.id, historico.institucion.nombreinstitucion),
-            new TiempoAcumplirDTO(historico.tiempoacumplir.id, historico.tiempoacumplir.descripcion)
-        );
+        return {
+            code: 'HC-0000',
+            result: new HistoricoConvocatoriasDTO(
+                historico.id_h,
+                historico.id_c,
+                historico.areapasantia,
+                historico.descripcionfunciones,
+                historico.requisitoscompetencias,
+                historico.horario_inicio,
+                historico.horario_fin,
+                historico.fechasolicitud,
+                historico.fechaseleccionpasante,
+                historico.accion,
+                historico.fecha_accion,
+                new EstadoConvocatoriaDTO(historico.estadoconvocatoria.id, historico.estadoconvocatoria.nombreestadoconvocatoria),
+                new InstitucionDTO(historico.institucion.id, historico.institucion.nombreinstitucion),
+                new TiempoAcumplirDTO(historico.tiempoacumplir.id, historico.tiempoacumplir.descripcion)
+            ),
+            message: 'Registro histórico obtenido correctamente.'
+        };
     } catch (error) {
         console.error(`Error al obtener el registro histórico con ID: ${id_h}.`, error);
         return new ResponseDTO('H-1003', null, `Error al obtener el registro histórico: ${error}`);

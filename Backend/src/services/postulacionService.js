@@ -7,6 +7,8 @@ const ConvocatoriaENT = require("../ENT/ConvocatoriaENT");
 const EstadoPostulacionDTO = require("../DTO/EstadoPostulacionDTO");
 const EstudianteDTO = require("../DTO/EstudianteDTO");
 const ConvocatoriaDTO = require("../DTO/ConvocatoriaDTO");
+//para el trigger
+const historicoService = require('./historicoPostulacionesService');
 
 const getAllPostulaciones = async () => {
   console.log("Obteniendo todas las postulaciones...");
@@ -207,6 +209,8 @@ const createPostulacion = async (postulationData) => {
             estudianteDTO,
             convocatoriaDTO
         );
+        // Insertar en historico después de crear la postulación
+        await historicoService.insertHistoricoPostulacion(postulation.dataValues, 'POST');
         console.log('Postulación creada correctamente.');
         return new ResponseDTO('P-0000', postulacionDTO,'Postulación creada correctamente');
 
@@ -225,6 +229,8 @@ const updatePostulacion = async (id, postulacionData) => {
       return new ResponseDTO("P-1004", null, "Postulación no encontrada");
     }
     await postulacion.update(postulacionData);
+    // Insertar en historico después de actualizar una postulación
+    await historicoService.insertHistoricoPostulacion(postulacion.dataValues, 'PUT');
     console.log("Postulación actualizada correctamente.");
     return new ResponseDTO(
       "P-0000",
@@ -249,6 +255,8 @@ const deletePostulacion = async (id) => {
       console.log(`Postulación con ID: ${id} no encontrada.`);
       return new ResponseDTO("P-1005", null, "Postulación no encontrada");
     }
+    // Insertar en historico después de eliminar una postulación
+    await historicoService.insertHistoricoPostulacion(postulacion.dataValues, 'DELETE');
     await postulacion.destroy();
     console.log("Postulación eliminada correctamente.");
     return new ResponseDTO(
