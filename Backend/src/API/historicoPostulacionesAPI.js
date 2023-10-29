@@ -1,27 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const historicoConvocatoriasService = require('../services/historicoConvocatoriasService');
+const historicoPostulacionesService = require('../services/historicoPostulacionesService');
 
 /**
  * @swagger
- * /historicoConvocatorias/:
+ * /historicoPostulaciones/:
  *   get:
  *     tags:
- *       - HistoricoConvocatorias
- *     summary: Obtiene todos los registros históricos de convocatorias
+ *       - HistoricoPostulaciones
+ *     summary: Obtiene todos los registros históricos de postulaciones
  *     responses:
  *       200:
- *         description: Lista de registros históricos de convocatorias
+ *         description: Lista de registros históricos de postulaciones
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.get('/', async (req, res) => {
-    console.log('GET request received for getAllHistoricosConvocatorias');
-    const response = await historicoConvocatoriasService.getAllHistoricos();
+    console.log('GET request received for getAllHistoricosPostulaciones');
+    const response = await historicoPostulacionesService.getAllHistoricosPostulaciones();
     res.json({
-        method: 'getAllHistoricosConvocatorias',
+        method: 'getAllHistoricosPostulaciones',
         code: response.code,
         result: response.result,
         message: response.message,
@@ -30,11 +30,11 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
- * /historicoConvocatorias/{id_h}:
+ * /historicoPostulaciones/{id_h}:
  *   get:
  *     tags:
- *       - HistoricoConvocatorias
- *     summary: Obtiene un registro histórico de convocatoria por ID
+ *       - HistoricoPostulaciones
+ *     summary: Obtiene un registro histórico de postulación por ID
  *     parameters:
  *       - in: path
  *         name: id_h
@@ -52,10 +52,10 @@ router.get('/', async (req, res) => {
  *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.get('/:id_h', async (req, res) => {
-    console.log(`GET request received for getHistoricoConvocatoriaById with ID: ${req.params.id_h}`);
-    const response = await historicoConvocatoriasService.getHistoricoById(req.params.id_h);
+    console.log(`GET request received for getHistoricoPostulacionById with ID: ${req.params.id_h}`);
+    const response = await historicoPostulacionesService.getHistoricoPostulacionById(req.params.id_h);
     res.json({
-        method: 'getHistoricoConvocatoriaById',
+        method: 'getHistoricoPostulacionById',
         code: response.code,
         result: response.result,
         message: response.message,

@@ -4,7 +4,7 @@ const SedeDTO = require('../DTO/SedeDTO');
 const SemestreDTO = require('../DTO/SemestreDTO');
 const EstudianteENT = require("../ENT/EstudianteENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
-const Carrera = require('../ENT/carreraENT');
+const Carrera = require('../ENT/CarreraENT');
 const Sede = require('../ENT/SedeENT');
 const Semestre = require('../ENT/semestreENT');
 

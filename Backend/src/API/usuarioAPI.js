@@ -15,7 +15,7 @@ const usuarioService = require('../services/usuarioService');
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.get('/', async (req, res) => {
     console.log('GET request received for getAllUsers');
@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.get('/:id', async (req, res) => {
     console.log(`GET request received for getUserById with ID: ${req.params.id}`);
@@ -95,7 +95,7 @@ router.get('/:id', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.post('/', async (req, res) => {
     console.log('POST request received for createUser with data:', req.body);
@@ -149,7 +149,7 @@ router.post('/', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.put('/:id', async (req, res) => {
     console.log(`PUT request received for updateUser with ID: ${req.params.id} and data:`, req.body);
@@ -182,7 +182,7 @@ router.put('/:id', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/GeneralResponse"
+ *               $ref: "#/components/schemas/ResponseDTO"
  */
 router.delete('/:id', async (req, res) => {
     console.log(`DELETE request received for deleteUser with ID: ${req.params.id}`);

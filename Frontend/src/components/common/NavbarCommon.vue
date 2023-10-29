@@ -1,10 +1,9 @@
 <template>
   <header class="sticky-top">
-    <nav class="navbar navbar-expand-lg bg-body-secondary bg-opacity-50 shadow-lg">
+    <nav class="navbar navbar-expand-lg  shadow-lg">
       <div class="container-md">
         <div class="navbar-brand p-0 me-0 me-lg-2">
           <img
-            class="img-fluid py-3 w-16rem"
             src="../images/USEI.png"
             alt="Unidad de Servicios Estudiantiles Integrales"
           />
@@ -38,7 +37,7 @@
             >
           </div>
         </div>
-        <div class="mx-auto my-2">
+        <div class="navbar__button">
           <router-link type="button" class="btn btn-warning me-3" to="/userRegister">Crear una Cuenta</router-link>
           <router-link type="button" class="btn btn-primary" to="/login">Iniciar Sesi&oacute;n</router-link>
           <input type="checkbox" name="darkModeToggle" class="switch"
@@ -71,27 +70,37 @@ export default {
 
 .sticky-top{
     box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
-    background-color: #FDFEFF;
-    
+}
+img{
+    width: 280px;
+    height: auto;
+  }
+nav{
+  background-color: #FDFEFF;
+  border-radius: 5px;
 }
 /*Modo oscuro*/
-.dark-theme .sticky-top{
+.dark-theme nav{
     background-color: #434B54;
+}
+.dark-theme .navbar-brand {
+    filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 .container-md{
     width: 100%;
 }
 @media (max-width: 1400px){
-    .img-fluid{
-        width: 10rem;
-    }
+  img{
+    width: 240px;
+    height: auto;
+  }
 }
 
 /*Bajar de tamaño el logo*/
 @media (max-width: 768px){
-    .img-fluid{
-        width: 5rem;
-        max-width: 70%;
+    img{
+      width: 200px;
+      height: auto;
     }
     /*Bajar el tamaño de los botones*/
     .btn{
