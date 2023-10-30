@@ -1,159 +1,170 @@
 /* Estilos generales */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    color: #515C66;
-    -webkit-font-smoothing: antialiased;
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    background: linear-gradient(99deg, #F6F9FE 0%, #E8F1F8 100%);
-  }
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  color: #515c66;
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  background: linear-gradient(99deg, #f6f9fe 0%, #e8f1f8 100%);
+}
 
-input{
+input {
   font-size: 1rem;
   padding: 0.5rem;
   border-radius: 5px;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+    box-shadow 0.2s;
   border: 1px solid #dfe7f1;
   background-color: #fff;
 }
-input:focus{
+input:focus {
   outline: none;
   border-color: #a8c0ff;
   box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
-input:hover{
+input:hover {
   border-color: #91c5ff;
 }
 
-select{
+select {
   font-size: 1rem;
   padding: 0.5rem;
   border-radius: 5px;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+    box-shadow 0.2s;
   border: 1px solid #dfe7f1;
   background-color: #fff;
 }
-select:focus{
+select:focus {
   outline: none;
   border-color: #a8c0ff;
   box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
-select:hover{
+select:hover {
   border-color: #91c5ff;
 }
-option{
+option {
   font-size: 1rem;
   padding: 0.5rem;
   border-radius: 5px;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+    box-shadow 0.2s;
   border: 1px solid #dfe7f1;
   background-color: #fff;
 }
-option:focus{
+option:focus {
   outline: none;
   border-color: #a8c0ff;
   box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
-
-
-
 
 /* Estilos para el tema oscuro del input*/
-.dark-theme input{
-  background-color: #2F363F;
+.dark-theme input {
+  background-color: #2f363f;
   color: #eff3f8;
   border-color: #4a5568;
-
 }
-.dark-theme input:focus{
+.dark-theme input:focus {
   border-color: #63b3ed;
   box-shadow: 0 0 0 0.2rem rgba(82, 196, 255, 0.25);
 }
-.dark-theme input:hover{
+.dark-theme input:hover {
   border-color: #63b3ed;
 }
-.dark-theme select{
-  background-color: #2F363F;
+.dark-theme select {
+  background-color: #2f363f;
   color: #eff3f8;
   border-color: #4a5568;
 }
-.dark-theme select:focus{
-  border-color: #63b3ed;
-  box-shadow: 0 0 0 0.2rem rgba(82, 196, 255, 0.25);
-}
-
-.dark-theme option{
-  background-color: #2F363F;
-  color: #eff3f8;
-  border-color: #4a5568;
-}	
-.dark-theme option:focus{
+.dark-theme select:focus {
   border-color: #63b3ed;
   box-shadow: 0 0 0 0.2rem rgba(82, 196, 255, 0.25);
 }
 
-
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+.dark-theme option {
+  background-color: #2f363f;
+  color: #eff3f8;
+  border-color: #4a5568;
+}
+.dark-theme option:focus {
+  border-color: #63b3ed;
+  box-shadow: 0 0 0 0.2rem rgba(82, 196, 255, 0.25);
 }
 
-input[type=number] { -moz-appearance:textfield; }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 
+/* Estilos para el tema claro */
+body.main-body {
+  background: linear-gradient(99deg, #f6f9fe 0%, #e8f1f8 100%);
+  color: #515c67;
+}
+/* Estilos para el tema oscuro */
+.dark-theme {
+  background: #2f363f;
+  color: #eff3f8;
+}
 
-  
-  
-  /* Estilos para el tema claro */
-  body.main-body {
-    background: linear-gradient(99deg, #F6F9FE 0%, #E8F1F8 100%);
-    color: #515C67;
-  }
-  /* Estilos para el tema oscuro */
-  .dark-theme {
-    background: #2F363F;
-    color: #eff3f8; 
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1.5rem 0 1rem 0;
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  color: inherit;
+}
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+  margin-top: 0;
+}
 
+h1 {
+  font-size: 2.5rem;
+}
 
+h2 {
+  font-size: 2rem;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    margin: 1.5rem 0 1rem 0;
-    font-family: inherit;
-    font-weight: 600;
-    line-height: 1.2;
-    color: inherit;
-  }
-  h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
-    margin-top: 0;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-  }
-  
-  h2 {
-    font-size: 2rem;
-  }
-  
-  h3 {
-    font-size: 1.75rem;
-  }
-  
-  h4 {
-    font-size: 1.5rem;
-  }
-  
-  h5 {
-    font-size: 1.25rem;
-  }
-  
-  h6 {
-    font-size: 1rem;
-  }
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
 
 /* Ajustar tamaños de fuente para pantallas más pequeñas */
 @media screen and (max-width: 768px) {
