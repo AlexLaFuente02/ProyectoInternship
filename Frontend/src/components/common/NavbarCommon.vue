@@ -1,20 +1,26 @@
 <template>
   <header class="header">
-          <div class="logo">
-              <img src="../images/USEI.png" alt="Logo de la marca">
-          </div>
-            <a class="btn" href="/"><button>Inicio</button></a>
-            <a class="btn" href="/moreInformation"><button>M&aacute;s informaci&oacute;n</button></a>
-            <a class="btn" href="/institutionsCommon"><button>Instituciones</button></a>
-            <a class="btn" href="/internshipsCommon"><button>Pasantias</button></a>
-          <input
-            type="checkbox"
-            name="darkModeToggle"
-            class="switch"
-            @change="toggleDarkMode()"
-          />
+    <div class="logo">
+      <img src="../images/USEI.png" alt="Logo de la marca" />
+    </div>
+    <router-link class="btn" to="/"><button>Inicio</button></router-link>
+    <router-link class="btn" to="/moreInformation"
+      ><button>M&aacute;s informaci&oacute;n</button></router-link
+    >
+    <router-link class="btn" to="/institutionsCommon"
+      ><button>Instituciones</button></router-link
+    >
+    <router-link class="btn" to="/internshipsCommon"
+      ><button>Pasantias</button></router-link
+    >
+    <input
+      type="checkbox"
+      name="darkModeToggle"
+      class="switch"
+      @change="toggleDarkMode()"
+    />
   </header>
-  </template>
+</template>
 <script>
 import { useThemeStore } from "@/store/common/useThemeStore";
 export default {
@@ -35,83 +41,95 @@ export default {
 };
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap");
 
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Nunito', sans-serif;
-    font-size: 20px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 20px;
 }
 
-body{
-    background-color: #fff59d;
+body {
+  background-color: #fff59d;
 }
 
-.header{
-    background-color: #1b3039;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 85px;
-    padding: 5px 10%;
+.header {
+  box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
+    0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+  background-color: #fdfeff;
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 120px;
+  padding: 5px 10%;
 }
 
-.header .logo{
-    cursor: pointer;
-    margin-right: auto;
+.header .logo {
+  cursor: pointer;
+  margin-right: auto;
 }
 
-.header .logo img{
-    height: 70px;
-    width: auto;
-    transition: all 0.3s;
+.header .logo img {
+  height: 70px;
+  width: auto;
+  transition: all 0.3s;
 }
 
-.header .logo img:hover{
-    transform: scale(1.2);
+.header .logo img:hover {
+  transform: scale(1.2);
 }
 
-.header .nav-links{
-    list-style: none;
+.switch:hover {
+  transform: scale(1.1);
 }
 
-.header .nav-links li{
-    display: inline-block;
-    padding: 0 20px;
+.header .nav-links {
+  list-style: none;
 }
 
-.header .nav-links li:hover{
-    transform: scale(1.1);
+.header .nav-links li {
+  display: inline-block;
+  padding: 0 20px;
 }
 
-.header .nav-links a{
-    font-size: 700;
-    color: #eceff1;
-    text-decoration: none;
+.header .nav-links li:hover {
+  transform: scale(1.1);
 }
 
-.header .nav-links li a:hover{
-    color: #ffbc0e;
+.header .nav-links a {
+  font-size: 700;
+  color: #eceff1;
+  text-decoration: none;
 }
 
-.header .btn button{
-    margin-left: 20px;
-    font-weight: 700;
-    color: #1b3039;
-    padding: 9px 25px;
-    background: #eceff1;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
+.header .nav-links li a:hover {
+  color: #ffbc0e;
 }
 
-.header .btn button:hover{
-    background-color: #e2f1f8;
-    color: #ffbc0e;
-    transform: scale(1.1);
+.header .btn button {
+  margin-left: 20px;
+  font-weight: 700;
+  color: #1b3039;
+  padding: 9px 25px;
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.dark-theme .header .btn button {
+  color: #e7f7ff;
+}
+
+.header .btn button:hover {
+  background-color: #e2f1f8;
+  color: #ffbc0e;
+  transform: scale(1.1);
 }
 .sticky-top {
   box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
@@ -154,19 +172,12 @@ a {
   background-color: cornflowerblue;
   color: #fff;
 }
-/* .pages-links {
-  display: flex;
-  justify-content: center;
-} */
-.navbar-buttons {
-  width: 50%;
-}
 
 /*Modo oscuro*/
-.dark-theme nav {
+.dark-theme .header {
   background-color: #434b54;
 }
-.dark-theme .navbar-brand {
+.dark-theme .logo {
   filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 .dark-theme .nav-link {
@@ -246,9 +257,9 @@ a {
 }
 
 .switch {
-  position:  relative;
-  width: 160px;
-  height: 52%;
+  position: relative;
+  width: 100%;
+  height: 42%;
   margin: 10px;
   appearance: none;
   -webkit-appearance: none;
@@ -376,7 +387,6 @@ a {
   animation: moon 0.7s forwards ease;
 }
 
-
 @keyframes moon {
   0% {
     transform: rotate(0deg);
@@ -396,11 +406,5 @@ a {
     box-shadow: 5px -1px 0px #fff;
     filter: blur(0px);
   }
-
-  
 }
-
-
-
-
 </style>
