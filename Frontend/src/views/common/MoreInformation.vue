@@ -1,116 +1,150 @@
-<template >
-    
-    <div class="container4">
-        <div class="wrapper">
-            <div class="container" id="c2">
-                 <div class="image" id="i2">
-                    <div class="city">
-                        <img src="https://www.la-razon.com/wp-content/uploads/2022/07/26/13/Campus-U.C.B..jpg" alt="Descripción de la imagen">
-                    </div>
-                </div>
-                <div class="story" id="s2">
-                    <div class="city">
-                        <h3>Más información sobre <br>Internship by Cato</h3>
-                        <p>¡Bienvenido a Internship by Cato, la Bolsa de Trabajo de la Universidad Católica Boliviana "San Pablo" - Sede La Paz! ¿Por qué elegirnos? Te lo explicamos a continuación.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="container" id="c0">
-                 <div class="image" id="i0">
-                    <div class="city">
-                        <img src="https://www.ucb.edu.bo/wp-content/uploads/2022/05/graduacion.cbba_.jpg" alt="Descripción de la imagen">
-                    </div>
-                </div>
-                <div class="story" id="s0">
-                    <div class="city">
-                        <h3>Conexión y Oportunidades</h3>
-                        <p>En el mundo de las prácticas pre profesionales y pasantías no
-curriculares, la conexión adecuada es esencial. En Internship by Cato,
-te ofrecemos una plataforma que agiliza el proceso de publicación de
-convocatorias, lo que signifca que puedes acceder a oportunidades
-más rápido que nunca. Además, nuestras herramientas de orientación
-personalizan las publicaciones para adaptarse a tus necesidades,
-asegurando que encuentres las ofertas que te interesan.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="container" id="c1">
-                 <div class="image" id="i1">
-                    <div class="city">
-                        <img class="imagen-centrada" src="https://boliviaemprende.com/wp-content/uploads/2020/02/ucb.jpg" alt="Descripción de la imagen">
-                    </div>
-                </div>
-                <div class="story" id="s1">
-                    <div class="city">
-                        <h3>Datos Útiles para tu Futuro</h3>
-                        <p>Sabemos lo importante que es el seguimiento y la recopilación de
-datos en tu camino académico y profesional. Internship by Cato te
-permite registrar tu información de manera sencilla, lo que facilita la
-posterior generación de reportes para tu desarrollo y crecimiento.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="container" id="c3">
-                 <div class="image" id="i3">
-                    <div class="city">
-                        <img src="https://www.noticiasfides.com/images/news/2021/01/c-ucb1-407738-27D1.jpg" alt="Descripción de la imagen">
-                    </div>
-                </div>
-                <div class="story" id="s3">
-                    <div class="city">
-                        <h3> Interacción Simplifcada</h3>
-                        <p>Nuestra aplicación se basa en cinco actividades clave: registro de
-datos, registro de convocatorias, aprobación de convocatorias,
-respuesta a convocatorias y generación de reportes. Estas actividades
-interactúan en tres procesos fundamentales, cada uno con su
-propósito y tiempo de acción defnidos.</p>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <br>
-            <br>
-            <div class="container" id="c2">
-                 <div class="image" id="i2">
-                    <div class="city">
-                        <img src="https://lpz.ucb.edu.bo/wp-content/uploads/2023/07/ucb-inscripciones-6-estudiamos-webucb-1.jpg" alt="Descripción de la imagen">
-                    </div>
-                </div>
-                <div class="story" id="s2">
-                    <div class="city">
-                        <h3>Contacto y Soporte</h3>
-                        <p>Para cualquier consulta o asistencia, no dudes en ponerte en contacto con la Unidad de Servicios Estudiantiles Integrales (USEI). Aquí tienes sus datos de contacto:
-Unidad de Servicios Estudiantiles Integrales
-	Bloque N, Subsuelo – Lado Unidad de Recursos Humanos
-	Teléfono: 2782222 Interno 2723
-	Directo: 2692723
-	Celular: 76521445
-En Internship by Cato, estamos comprometidos con brindarte las herramientas necesarias para impulsar tu futuro profesional. Únete a nosotros y descubre un mundo de oportunidades. ¡Comienza ahora!</p>
-                    </div>
-                </div>
-            </div>
-        </div> 
+<template>
+  <div class="principal-container">
+    <div class="wrapper">
+      <div class="container" id="c2">
+        <div class="image" id="i2">
+          <div class="city">
+            <img
+              src="https://www.la-razon.com/wp-content/uploads/2022/07/26/13/Campus-U.C.B..jpg"
+              alt="Descripción de la imagen"
+            />
+          </div>
+        </div>
+        <div class="story" id="s2">
+          <div class="city">
+            <h3>Más información sobre <br />Internship by Cato</h3>
+            <p>
+              ¡Bienvenido a Internship by Cato, la Bolsa de Trabajo de la
+              Universidad Católica Boliviana "San Pablo" - Sede La Paz! ¿Por qué
+              elegirnos? Te lo explicamos a continuación.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="container" id="c0">
+        <div class="image" id="i0">
+          <div class="city">
+            <img
+              src="https://www.ucb.edu.bo/wp-content/uploads/2022/05/graduacion.cbba_.jpg"
+              alt="Descripción de la imagen"
+            />
+          </div>
+        </div>
+        <div class="story" id="s0">
+          <div class="city">
+            <h3>Conexión y Oportunidades</h3>
+            <p>
+              En el mundo de las prácticas pre profesionales y pasantías no
+              curriculares, la conexión adecuada es esencial. En Internship by
+              Cato, te ofrecemos una plataforma que agiliza el proceso de
+              publicación de convocatorias, lo que signifca que puedes acceder a
+              oportunidades más rápido que nunca. Además, nuestras herramientas
+              de orientación personalizan las publicaciones para adaptarse a tus
+              necesidades, asegurando que encuentres las ofertas que te
+              interesan.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="container" id="c1">
+        <div class="image" id="i1">
+          <div class="city">
+            <img
+              class="imagen-centrada"
+              src="https://boliviaemprende.com/wp-content/uploads/2020/02/ucb.jpg"
+              alt="Descripción de la imagen"
+            />
+          </div>
+        </div>
+        <div class="story" id="s1">
+          <div class="city">
+            <h3>Datos Útiles para tu Futuro</h3>
+            <p>
+              Sabemos lo importante que es el seguimiento y la recopilación de
+              datos en tu camino académico y profesional. Internship by Cato te
+              permite registrar tu información de manera sencilla, lo que
+              facilita la posterior generación de reportes para tu desarrollo y
+              crecimiento.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="container" id="c3">
+        <div class="image" id="i3">
+          <div class="city">
+            <img
+              src="https://www.noticiasfides.com/images/news/2021/01/c-ucb1-407738-27D1.jpg"
+              alt="Descripción de la imagen"
+            />
+          </div>
+        </div>
+        <div class="story" id="s3">
+          <div class="city">
+            <h3>Interacción Simplifcada</h3>
+            <p>
+              Nuestra aplicación se basa en cinco actividades clave: registro de
+              datos, registro de convocatorias, aprobación de convocatorias,
+              respuesta a convocatorias y generación de reportes. Estas
+              actividades interactúan en tres procesos fundamentales, cada uno
+              con su propósito y tiempo de acción defnidos.
+            </p>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+      <br />
+      <div class="container" id="c2">
+        <div class="image" id="i2">
+          <div class="city">
+            <img
+              src="https://lpz.ucb.edu.bo/wp-content/uploads/2023/07/ucb-inscripciones-6-estudiamos-webucb-1.jpg"
+              alt="Descripción de la imagen"
+            />
+          </div>
+        </div>
+        <div class="story" id="s2">
+          <div class="city">
+            <h3>Contacto y Soporte</h3>
+            <p>
+              Para cualquier consulta o asistencia, no dudes en ponerte en
+              contacto con la Unidad de Servicios Estudiantiles Integrales
+              (USEI). Aquí tienes sus datos de contacto: Unidad de Servicios
+              Estudiantiles Integrales Bloque N, Subsuelo – Lado Unidad de
+              Recursos Humanos Teléfono: 2782222 Interno 2723 Directo: 2692723
+              Celular: 76521445 En Internship by Cato, estamos comprometidos con
+              brindarte las herramientas necesarias para impulsar tu futuro
+              profesional. Únete a nosotros y descubre un mundo de
+              oportunidades. ¡Comienza ahora!
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    
-    </template>
+  </div>
+</template>
+
 <script>
-export default {}
+export default {};
 </script>
+
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Raleway:200');
+@import url("https://fonts.googleapis.com/css?family=Raleway:200");
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   background: #eee;
+}
+
+.principal-container {
+  margin-top: 3%; /* Agrega margen superior para separar del navbar */
+  margin-bottom: 10%; /* Agrega margen inferior para separar del footer */
 }
 
 .wrapper {
   position: relative;
-  top: 20%;
-  left: 50%;
-  width:300%;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   perspective: 1500px;
 }
 
@@ -121,125 +155,94 @@ body {
   height: 100%;
   transition: 0.5s all ease;
   transform: rotateX(40deg) scale(0.5);
-  margin-bottom: -2%; /* Agrega margen inferior para separar los cont */
+  margin-bottom: -2%; /* Agrega margen inferior para separar los cont  */
+}
 
-}
-.container1 {
-    position: auto;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-  transition: 0.5s all ease;
-  transform: rotateX(40deg) scale(0.7);
-  margin-bottom: 2%; /* Agrega margen inferior para separar los cont */
-}
-img{
+img {
   width: 100%; /* Esto permite que la imagen se ajuste automáticamente al ancho máximo */
-  height:200px; /* Esto permite que la imagen se ajuste automáticamente al alto máximo */
+  height: 200px; /* Esto permite que la imagen se ajuste automáticamente al alto máximo */
   justify-content: center; /* Centra horizontalmente */
-}
-.container2 {
-    position: auto;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-  margin-bottom: 1%; /* Agrega margen inferior para separar los cont */
-}
-
-
-
-
-
-.container4 {
-    margin-top: 20%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: 2200px; /* Agrega margen inferior para separar del footer */
 }
 
 @media (max-width: 1200px) {
-    .container4 {
-        margin-bottom: 1700px; /* Agrega margen inferior para separar del footer */
-        margin-top: 30%; /* Aumenta el margen superior en pantallas pequeñas */
+  .container4 {
+    margin-bottom: 1700px; /* Agrega margen inferior para separar del footer */
+    margin-top: 30%; /* Aumenta el margen superior en pantallas pequeñas */
   }
-  p{
+  p {
     font-size: 10px;
   }
-  img{
-  width: 100%; /* Esto permite que la imagen se ajuste automáticamente al ancho máximo */
-  justify-content: center; /* Centra horizontalmente */
+  img {
+    width: 100%; /* Esto permite que la imagen se ajuste automáticamente al ancho máximo */
+    justify-content: center; /* Centra horizontalmente */
+  }
+  .wrapper {
+    height: 530px;
+  }
 }
-.wrapper {
-  height: 530px;
-}
-
-}
-
 
 @media (max-width: 550px) {
-  p{
+  p {
     font-size: 10px;
   }
-  
+
   .wrapper {
-  position: relative;
-  top: 10%;
-  left: 50%;
-  width:100%;
-  height: 770px;
-  perspective: 1500px;
-}
-img{
-  width: 100%; /* Esto permite que la imagen se ajuste automáticamente al ancho máximo */
-  height:300px; /* Esto permite que la imagen se ajuste automáticamente al alto máximo */
-  justify-content: center; /* Centra horizontalmente */
-}
+    position: relative;
+    top: 10%;
+    left: 50%;
+    width: 100%;
+    height: 770px;
+    perspective: 1500px;
+  }
+  img {
+    width: 100%; /* Esto permite que la imagen se ajuste automáticamente al ancho máximo */
+    height: 300px; /* Esto permite que la imagen se ajuste automáticamente al alto máximo */
+    justify-content: center; /* Centra horizontalmente */
+  }
 
-    
-.container4 {
+  .container4 {
     margin-top: 50%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: 3000px; /* Agrega margen inferior para separar del footer */
-}
-.container {
+    margin-bottom: 3000px; /* Agrega margen inferior para separar del footer */
+  }
+  .container {
     margin-top: 10%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: 10px; /* Agrega margen inferior para separar del footer */
-
-}
+    margin-bottom: 10px; /* Agrega margen inferior para separar del footer */
+  }
 }
 
 @media (max-width: 494px) {
-  p{
+  p {
     font-size: 4px;
   }
-  img{
-  height:500px; /* Esto permite que la imagen se ajuste automáticamente al alto máximo */
-  justify-content: center; /* Centra horizontalmente */
-}
+  img {
+    height: 500px; /* Esto permite que la imagen se ajuste automáticamente al alto máximo */
+    justify-content: center; /* Centra horizontalmente */
+  }
   .wrapper {
-  position: relative;
-  top: 0%;
-  left: 50%;
-  width:100%;
-  height: 1330px;
-  perspective: 3000px;
-}
-    
-.container4 {
+    position: relative;
+    top: 0%;
+    left: 50%;
+    width: 100%;
+    height: 1330px;
+    perspective: 3000px;
+  }
+
+  .container4 {
     margin-top: 20%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: 2500px; /* Agrega margen inferior para separar del footer */
-}
+    margin-bottom: 2500px; /* Agrega margen inferior para separar del footer */
+  }
 
-.container {
-  position: auto;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-  transition: 0.5s all ease;
-  transform: rotateX(0deg) scale(0.5);
-  margin-top: 100%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: -800px; /* Agrega margen inferior para separar del footer */
-
+  .container {
+    position: auto;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    transition: 0.5s all ease;
+    transform: rotateX(0deg) scale(0.5);
+    margin-top: 100%; /* Agrega margen superior para separar del navbar */
+    margin-bottom: -800px; /* Agrega margen inferior para separar del footer */
+  }
 }
-}
-
 
 #c0 {
   position: relative;
@@ -256,7 +259,6 @@ img{
   box-shadow: 0px 20px 100px #555;
   left: 100%;
   z-index: 0;
-  
 }
 
 #c2 {

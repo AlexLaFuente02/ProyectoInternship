@@ -1,63 +1,60 @@
 <template>
   <header class="sticky-top">
-    <nav class="navbar navbar-expand-lg shadow-lg">
-      <div class="container-md">
-        <div class="navbar-brand p-0 me-0 me-lg-2">
-          <img
-            src="../images/USEI.png"
-            alt="Unidad de Servicios Estudiantiles Integrales"
-          />
-        </div>
-        <div class="bd-navbar-toggle">
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+    <nav class="navigation-menu">
+      <div class="navbar-brand">
+        <img
+          src="../images/USEI.png"
+          alt="Unidad de Servicios Estudiantiles Integrales"
+        />
+      </div>
+      <div class="bd-navbar-toggle">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="pages-links">
+          <router-link class="nav-link" to="/">Inicio</router-link>
+          <router-link class="nav-link" to="/moreInformation"
+            >M&aacute;s informaci&oacute;n</router-link
           >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <div
-            class="pages-links"
+          <router-link class="nav-link" to="/institutionsCommon"
+            >Instituciones</router-link
           >
-            <router-link class="nav-item nav-link" to="/">Inicio</router-link>
-            <router-link class="nav-item nav-link" to="/moreInformation"
-              >M&aacute;s informaci&oacute;n</router-link
-            >
-            <router-link class="nav-item nav-link" to="/institutionsCommon"
-              >Instituciones</router-link
-            >
-            <router-link class="nav-item nav-link" to="/internshipsCommon"
-              >Pasant&iacute;as</router-link
-            >
-          </div>
-        </div>
-        <div class="navbar__button">
-          <router-link
-            type="button"
-            class="btn btn-warning me-3"
-            to="/userRegister"
-            >Crear una Cuenta</router-link
+          <router-link class="nav-link" to="/internshipsCommon"
+            >Pasant&iacute;as</router-link
           >
-          <router-link type="button" class="btn btn-primary" to="/login"
-            >Iniciar Sesi&oacute;n</router-link
-          >
-          <input
-            type="checkbox"
-            name="darkModeToggle"
-            class="switch"
-            @change="toggleDarkMode()"
-          />
         </div>
+      </div>
+      <div class="navbar-buttons">
+        <router-link
+          type="button"
+          class="btn btn-create-account"
+          to="/userRegister"
+          >Crear una Cuenta</router-link
+        >
+        <router-link type="button" class="btn btn-login" to="/login"
+          >Iniciar Sesi&oacute;n</router-link
+        >
+        <input
+          type="checkbox"
+          name="darkModeToggle"
+          class="switch"
+          @change="toggleDarkMode()"
+        />
       </div>
     </nav>
   </header>
 </template>
+
 <script>
 import { useThemeStore } from "@/store/common/useThemeStore";
 export default {
@@ -77,6 +74,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .sticky-top {
   box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
@@ -90,9 +88,32 @@ nav {
   background-color: #fdfeff;
   border-radius: 5px;
 }
-div .pages-links {
-  color: black;
+a {
+  text-decoration: none;
 }
+.nav-link {
+  color: cornflowerblue;
+  margin-right: 5px;
+}
+.btn {
+  padding: 2%;
+}
+.btn-create-account {
+  background-color: yellow;
+  color: rgb(61, 61, 61);
+}
+.btn-login {
+  background-color: cornflowerblue;
+  color: #fff;
+}
+/* .pages-links {
+  display: flex;
+  justify-content: center;
+} */
+.navbar-buttons {
+  width: 50%;
+}
+
 /*Modo oscuro*/
 .dark-theme nav {
   background-color: #434b54;
@@ -100,9 +121,17 @@ div .pages-links {
 .dark-theme .navbar-brand {
   filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
-.container-md {
-  width: 100%;
+.dark-theme .nav-link {
+  color: #fff;
 }
+
+.navigation-menu {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
 @media (max-width: 1400px) {
   img {
     width: 240px;
@@ -170,7 +199,7 @@ div .pages-links {
 
 .switch {
   position: relative;
-  width: 37%;
+  width: 46%;
   height: 40px;
   margin: 30px;
   appearance: none;
