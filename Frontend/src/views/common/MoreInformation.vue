@@ -1,8 +1,7 @@
 <template >
-    
     <div class="container4">
         <div class="wrapper">
-            <div class="container" id="c2">
+            <div class="container"  id="c2">
                  <div class="image" id="i2">
                     <div class="city">
                         <img src="https://www.la-razon.com/wp-content/uploads/2022/07/26/13/Campus-U.C.B..jpg" alt="Descripción de la imagen">
@@ -15,8 +14,8 @@
                     </div>
                 </div>
             </div>
-            <div class="container" id="c0">
-                 <div class="image" id="i0">
+            <div class="container" id="c3">
+                 <div class="image" id="i3">
                     <div class="city">
                         <img src="https://www.ucb.edu.bo/wp-content/uploads/2022/05/graduacion.cbba_.jpg" alt="Descripción de la imagen">
                     </div>
@@ -95,7 +94,9 @@ En Internship by Cato, estamos comprometidos con brindarte las herramientas nece
     
     </template>
 <script>
-export default {}
+ export default {
+  
+};
 </script>
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Raleway:200');
@@ -106,137 +107,167 @@ body {
 }
 
 .wrapper {
-  position: relative;
-  top: 20%;
-  left: 50%;
-  width:300%;
-  height: 500px;
-  perspective: 1500px;
+  position: absolute;
+  top: 10%;
+  left:25%;
+  width:50%;
+  height: 50%;
 }
+
 
 .container {
   position: auto;
   top: 0%;
-  width: 100%;
+  width: 300%;
   height: 100%;
   transition: 0.5s all ease;
-  transform: rotateX(40deg) scale(0.5);
-  margin-bottom: -2%; /* Agrega margen inferior para separar los cont */
-
-}
-.container1 {
-    position: auto;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-  transition: 0.5s all ease;
-  transform: rotateX(40deg) scale(0.7);
-  margin-bottom: 2%; /* Agrega margen inferior para separar los cont */
-}
-img{
-  width: 100%; /* Esto permite que la imagen se ajuste automáticamente al ancho máximo */
-  height:200px; /* Esto permite que la imagen se ajuste automáticamente al alto máximo */
-  justify-content: center; /* Centra horizontalmente */
-}
-.container2 {
-    position: auto;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-  margin-bottom: 1%; /* Agrega margen inferior para separar los cont */
-}
-
-
-
-
-
-.container4 {
-    margin-top: 20%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: 2200px; /* Agrega margen inferior para separar del footer */
-}
-
-@media (max-width: 1200px) {
-    .container4 {
-        margin-bottom: 1700px; /* Agrega margen inferior para separar del footer */
-        margin-top: 30%; /* Aumenta el margen superior en pantallas pequeñas */
-  }
-  p{
-    font-size: 10px;
-  }
-  img{
-  width: 100%; /* Esto permite que la imagen se ajuste automáticamente al ancho máximo */
-  justify-content: center; /* Centra horizontalmente */
-}
-.wrapper {
-  height: 530px;
-}
-
-}
-
-
-@media (max-width: 550px) {
-  p{
-    font-size: 10px;
-  }
+  margin-bottom: 5%;
+  transform:  scale(0.5);
   
-  .wrapper {
-  position: relative;
-  top: 10%;
-  left: 50%;
-  width:100%;
-  height: 770px;
-  perspective: 1500px;
 }
+
+
+
+/**prueba */
+.container45 {
+  position: auto;
+  width: 100%;
+  height: 100%;
+  transition: 0.5s all ease;
+  margin-bottom: 20%;
+  transform: rotate(0deg); /* Elimina la rotación actual */
+}
+
+.rotate-animation3 {
+  animation: rotate 1s linear infinite; /* Establece la animación de rotación */
+}
+
 img{
   width: 100%; /* Esto permite que la imagen se ajuste automáticamente al ancho máximo */
-  height:300px; /* Esto permite que la imagen se ajuste automáticamente al alto máximo */
-  justify-content: center; /* Centra horizontalmente */
-}
-
-    
-.container4 {
-    margin-top: 50%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: 3000px; /* Agrega margen inferior para separar del footer */
-}
-.container {
-    margin-top: 10%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: 10px; /* Agrega margen inferior para separar del footer */
-
-}
-}
-
-@media (max-width: 494px) {
-  p{
-    font-size: 4px;
-  }
-  img{
   height:500px; /* Esto permite que la imagen se ajuste automáticamente al alto máximo */
   justify-content: center; /* Centra horizontalmente */
 }
-  .wrapper {
-  position: relative;
-  top: 0%;
-  left: 50%;
-  width:100%;
-  height: 1330px;
-  perspective: 3000px;
-}
-    
+
+
 .container4 {
-    margin-top: 20%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: 2500px; /* Agrega margen inferior para separar del footer */
+    margin-top: 10%; /* Agrega margen superior para separar del navbar */
+  margin-bottom: 110%; /* Agrega margen inferior para separar del footer */
 }
 
-.container {
-  position: auto;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-  transition: 0.5s all ease;
-  transform: rotateX(0deg) scale(0.5);
-  margin-top: 100%; /* Agrega margen superior para separar del navbar */
-  margin-bottom: -800px; /* Agrega margen inferior para separar del footer */
+@media (max-width: 1900px) {
+    .container4 {
+        margin-bottom: 180%; /* Agrega margen inferior para separar del footer */
+        margin-top: 10%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+  
+  .wrapper {
+  left:20%;
+}
 
+}
+
+@media (max-width: 1550px) {
+  .container4 {
+        margin-bottom: 180%; /* Agrega margen inferior para separar del footer */
+        margin-top: 10%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+  
+  .wrapper {
+  left:10%;
+}
+}
+
+@media (max-width: 1550px) {
+  .container4 {
+        margin-bottom: 220%; /* Agrega margen inferior para separar del footer */
+        margin-top: 10%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+  
+  .wrapper {
+  left:10%;
+}
+}
+
+@media (max-width: 1300px) {
+  .container4 {
+        margin-bottom: 240%; /* Agrega margen inferior para separar del footer */
+        margin-top: 0%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+
+}
+
+@media (max-width: 1120px) {
+  .container4 {
+        margin-bottom: 260%; /* Agrega margen inferior para separar del footer */
+        margin-top: 0%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+
+}
+
+
+@media (max-width: 1070px) {
+  .container4 {
+        margin-bottom: 280%; /* Agrega margen inferior para separar del footer */
+        margin-top: 0%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+
+}
+
+@media (max-width: 930px) {
+  .container4 {
+        margin-bottom: 310%; /* Agrega margen inferior para separar del footer */
+        margin-top: 0%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+
+}
+
+@media (max-width: 850px) {
+  .container4 {
+        margin-bottom: 350%; /* Agrega margen inferior para separar del footer */
+        margin-top: 0%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+
+}
+@media (max-width: 830px) {
+  .container4 {
+        margin-bottom: 380%; /* Agrega margen inferior para separar del footer */
+        margin-top: 0%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+
+}
+
+@media (max-width: 670px) {
+  .container4 {
+        margin-bottom: 460%; /* Agrega margen inferior para separar del footer */
+        margin-top: 0%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+
+}
+
+/* Eo */
+@media (max-width: 590px) {
+  .container4 {
+        margin-bottom: 670%; /* Agrega margen inferior para separar del footer */
+        margin-top: 0%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+  
+  .wrapper {
+  left:0%;
+  width:50%;
+  height: 69%;
+}
+}
+
+@media (max-width: 520px) {
+  .container4 {
+        margin-bottom: 730%; /* Agrega margen inferior para separar del footer */
+        margin-top: 0%; /* Aumenta el margen superior en pantallas pequeñas */
+  }
+  
+  .wrapper {
+  left:0%;
+  width:50%;
+  height: 69%;
 }
 }
 
@@ -270,7 +301,7 @@ img{
   cursor: pointer;
   transform: rotate(0deg) scale(1) translateY(10px);
   transition: 0.5s all ease;
-  z-index: 400;
+  z-index: 1000;
 }
 
 .image {
@@ -328,7 +359,7 @@ span {
 }
 
 #sh3 {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .st6 {
@@ -347,13 +378,12 @@ span {
 
 #sh1 {
   fill: #f8c56f;
-  opacity: 0.4;
+  opacity: 0.5;
 }
 
 .st0 {
   fill: #a25a62;
   stroke: none;
-  stroke-miterlimit: 10;
 }
 
 .st1 {
@@ -372,7 +402,7 @@ span {
   opacity: 0.3;
 }
 
-.story {
+.story {/*parte del texto de las tarejta */
   position: absolute;
   top: 45%;
   left: 0%;
@@ -392,7 +422,7 @@ span {
 
 .info {
   position: absolute;
-  top: 10%;
+  top: 0%;
 }
 
 h3 {
