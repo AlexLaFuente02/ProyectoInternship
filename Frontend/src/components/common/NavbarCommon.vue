@@ -8,7 +8,7 @@
        />
       </router-link>
     </div>
-    <nav class="container__nav">
+    <nav class="container__nav" >
       <div class="nav__links">
           <router-link class="link" to="/">
             Inicio
@@ -23,30 +23,48 @@
             Pasant&iacute;as
           </router-link>
       </div>
-      <div class="navbar-buttons">
-        <router-link
-          type="button"
-          class="btn btn-create-account"
-          to="/userRegister"
-          >Crear una Cuenta</router-link
-        >
-        <router-link type="button" class="btn btn-login" to="/login"
-          >Iniciar Sesi&oacute;n</router-link
-        >
-        <input
+      
+      <div class="navbar__buttons">
+        <input 
           type="checkbox"
           name="darkModeToggle"
           class="switch"
           @change="toggleDarkMode()"
         />
+        <div class="buttons">
+         
+          <div class="container__button">
+          <Button 
+            text="Crear Cuenta" 
+            :color="0" 
+            :disabled="false"
+            @option-selected="createAccount"
+            >
+          </Button>
+        </div>
+        <div class="container__button">
+          <Button 
+            text="Iniciar Sesi&oacute;n" 
+            :color="1" 
+            :disabled="false"
+            @option-selected="login"
+            >
+          </Button>
+        </div>
+        </div>
       </div>
+      
     </nav>
   </header>
   </template>
 <script>
 import { useThemeStore } from "@/store/common/useThemeStore";
+import Button from "@/components/common/Button.vue";
 export default {
   name: "NavbarCommon",
+  components:{
+    Button,
+  },
   data() {
     return {
       isDarkMode: false,
@@ -59,6 +77,18 @@ export default {
       darkModeStore.toggleDarkMode();
       console.log(darkModeStore.$event);
     },
+    createAccount(option) {
+      if (option) {
+        console.log("createAccount");
+        this.$router.push("/UserRegister");
+      }
+    },
+    login(option) {
+      if (option) {
+        console.log("login");
+        this.$router.push("/Login");
+      }
+    },
   },
 };
 </script>
@@ -67,17 +97,25 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   padding: 0.5rem;
   border-radius: 7px;
   box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
     0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease 0s;
+ /*Hacer que el header se vea por encima de los demás elementos y 
+ que te acompañe al hacer scroll*/
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #FDFEFF;
+  color: #515c67;
+  
+  
 }
 /*Modo oscuro*/
 .dark-theme header{
     background-color: #434B54;
     color: #CACFDB;
-    box-shadow: 0 24px 64px -2px rgba(255, 255, 255, 0.02), 0 6px 16px -2px rgba(255, 255, 255, 0.06), 0 2px 6px -2px rgba(255, 255, 255, 0.08);
 }
 /*Estilo del logo*/
 .container__header .container__logo img{
@@ -97,14 +135,15 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
     align-items: center;
     flex-wrap: wrap;
     margin-bottom: 0.3rem;
+    margin-left: 5px;
 }
 
-
 .container__header .container__nav .nav__links .link{
-    margin-right: 20px;
+    margin-right: 10px;
     font-weight: 700;
     text-align: center;
     text-decoration: none;
@@ -131,6 +170,23 @@ export default {
 .dark-theme .container__nav .nav__links .link:hover{
   background-color: rgba(90, 97, 106, 0.7);
 }
+.navbar__buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+
+}
+.navbar__buttons .buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+.navbar__buttons input{
+  display: flex;
+  
+} 
 
 @media (max-width: 768px) {
   header{
@@ -145,9 +201,9 @@ export default {
 /*Toggle*/
 .switch {
   position:  relative;
-  width: 160px;
-  height: 52%;
-  margin: 10px;
+  width: 170px;
+  height: 50px;
+  margin: 5px;
   appearance: none;
   -webkit-appearance: none;
 
@@ -297,4 +353,37 @@ export default {
 
   
 }
+
+/*Media queries*/
+@media screen and (max-width: 1250px){
+  .container__header .container__nav .nav__links .link{
+    font-size: 13px;
+  }
+    .switch{
+        width: 50px;
+        height: 25px;
+    }
+    .switch:after{
+        width: 0;
+        height: 0;
+        left: 0;
+        top: 0;
+    }
+    .switch:checked:before{
+        left: 5px;
+        top: 2px;
+    }
+    .switch:checked:after{
+        left: 5px;
+        top: 2px;
+    }
+}
+@media screen and (max-width: 1000x){
+  .container__header{
+    display: none;
+  }
+}
+
+
+
 </style>
