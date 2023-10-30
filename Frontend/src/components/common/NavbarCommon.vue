@@ -1,18 +1,46 @@
 <template>
-  <header class="header">
-          <div class="logo">
-              <img src="../images/USEI.png" alt="Logo de la marca">
-          </div>
-            <a class="btn" href="/"><button>Inicio</button></a>
-            <a class="btn" href="/moreInformation"><button>M&aacute;s informaci&oacute;n</button></a>
-            <a class="btn" href="/institutionsCommon"><button>Instituciones</button></a>
-            <a class="btn" href="/internshipsCommon"><button>Pasantias</button></a>
-          <input
-            type="checkbox"
-            name="darkModeToggle"
-            class="switch"
-            @change="toggleDarkMode()"
-          />
+  <header class="container__header">
+    <div class="container__logo">
+      <router-link to="/">
+        <img
+        src="../images/USEI.png"
+        alt="Unidad de Servicios Estudiantiles Integrales"
+       />
+      </router-link>
+    </div>
+    <nav class="container__nav">
+      <div class="nav__links">
+          <router-link class="link" to="/">
+            Inicio
+          </router-link>
+          <router-link class="link" to="/moreInformation">
+            M&aacute;s informaci&oacute;n
+          </router-link>
+          <router-link class="link" to="/institutionsCommon">
+            Instituciones
+          </router-link>
+          <router-link class="link" to="/internshipsCommon">
+            Pasant&iacute;as
+          </router-link>
+      </div>
+      <div class="navbar-buttons">
+        <router-link
+          type="button"
+          class="btn btn-create-account"
+          to="/userRegister"
+          >Crear una Cuenta</router-link
+        >
+        <router-link type="button" class="btn btn-login" to="/login"
+          >Iniciar Sesi&oacute;n</router-link
+        >
+        <input
+          type="checkbox"
+          name="darkModeToggle"
+          class="switch"
+          @change="toggleDarkMode()"
+        />
+      </div>
+    </nav>
   </header>
   </template>
 <script>
@@ -34,217 +62,87 @@ export default {
   },
 };
 </script>
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap');
-
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Nunito', sans-serif;
-    font-size: 20px;
+<style>
+.container__header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-radius: 7px;
+  box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
+    0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+}
+/*Modo oscuro*/
+.dark-theme header{
+    background-color: #434B54;
+    color: #CACFDB;
+    box-shadow: 0 24px 64px -2px rgba(255, 255, 255, 0.02), 0 6px 16px -2px rgba(255, 255, 255, 0.06), 0 2px 6px -2px rgba(255, 255, 255, 0.08);
+}
+/*Estilo del logo*/
+.container__header .container__logo img{
+    width: 150px;
+    height: auto;
+    transition: all 0.3s ease 0s;
+}
+.dark-theme .container__logo{
+    filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 
-body{
-    background-color: #fff59d;
-}
-
-.header{
-    background-color: #1b3039;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 85px;
-    padding: 5px 10%;
-}
-
-.header .logo{
-    cursor: pointer;
-    margin-right: auto;
-}
-
-.header .logo img{
-    height: 70px;
-    width: auto;
-    transition: all 0.3s;
-}
-
-.header .logo img:hover{
-    transform: scale(1.2);
-}
-
-.header .nav-links{
-    list-style: none;
-}
-
-.header .nav-links li{
-    display: inline-block;
-    padding: 0 20px;
-}
-
-.header .nav-links li:hover{
+.container__header .container__logo img:hover{
     transform: scale(1.1);
 }
-
-.header .nav-links a{
-    font-size: 700;
-    color: #eceff1;
-    text-decoration: none;
+/*Fin del estilo del logo*/
+.container__header .container__nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.3rem;
 }
 
-.header .nav-links li a:hover{
-    color: #ffbc0e;
-}
 
-.header .btn button{
-    margin-left: 20px;
+.container__header .container__nav .nav__links .link{
+    margin-right: 20px;
     font-weight: 700;
-    color: #1b3039;
-    padding: 9px 25px;
-    background: #eceff1;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    color: #515c67;
+    transition: all 0.3s ease 0s;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease 0s;
+    padding: 9px 25px;
+}
+.dark-theme .container__nav .nav__links .link{
+    color: #CACFDB;
+    background-color: #434B54;
+    border: 1px solid #434B54;
 }
 
-.header .btn button:hover{
-    background-color: #e2f1f8;
-    color: #ffbc0e;
-    transform: scale(1.1);
-}
-.sticky-top {
-  box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
-    0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
-}
-img {
-  width: 280px;
-  height: auto;
-}
-nav {
-  background-color: #fdfeff;
-  border-radius: 5px;
-}
-div .pages-links {
-  color: black;
-}
-img {
-  width: 280px;
-  height: auto;
-}
-nav {
-  background-color: #fdfeff;
-  border-radius: 5px;
-}
-a {
-  text-decoration: none;
-}
-.nav-link {
-  color: cornflowerblue;
-  margin-right: 5px;
-}
-.btn {
-  padding: 2%;
-}
-.btn-create-account {
-  background-color: yellow;
-  color: rgb(61, 61, 61);
-}
-.btn-login {
-  background-color: cornflowerblue;
+.container__header .container__nav .nav__links .link:hover{
+  background-color: rgba(90, 97, 106, 0.7);
   color: #fff;
+  transform: scale(1.1);
 }
-/* .pages-links {
-  display: flex;
-  justify-content: center;
-} */
-.navbar-buttons {
-  width: 50%;
+.dark-theme .container__nav .nav__links .link:hover{
+  background-color: rgba(90, 97, 106, 0.7);
 }
 
-/*Modo oscuro*/
-.dark-theme nav {
-  background-color: #434b54;
-}
-.dark-theme .navbar-brand {
-  filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
-}
-.dark-theme .nav-link {
-  color: #fff;
-}
-
-.navigation-menu {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-}
-
-@media (max-width: 1400px) {
-  img {
-    width: 240px;
-    height: auto;
-  }
-}
-
-/*Bajar de tamaño el logo*/
 @media (max-width: 768px) {
-  img {
+  header{
+    flex-direction: column;
+  }
+  .container__logo img{
     width: 200px;
     height: auto;
   }
-  /*Bajar el tamaño de los botones*/
-  .btn {
-    font-size: 0.5rem;
-  }
-  /*Bajar el tamano del toggle*/
-  .navbar-toggler-icon {
-    width: 1rem;
-    height: 1rem;
-  }
-}
-/*Bajar de tamaño el logo*/
-@media (max-width: 576px) {
-  .img-fluid {
-    width: 3rem;
-    max-width: 50%;
-  }
-  /*Bajar el tamaño de los botones*/
-  .btn {
-    font-size: 0.3rem;
-  }
-  /*Bajar el tamano del toggle*/
-  .navbar-toggler-icon {
-    width: 0.6rem;
-    height: 0.6rem;
-  }
-}
-/*Bajar de tamaño el logo*/
-@media (max-width: 420px) {
-  .img-fluid {
-    width: 0.5rem;
-    max-width: 30%;
-  }
-  /*Bajar el tamaño de los botones*/
-  .btn {
-    font-size: 0.2rem;
-  }
-  /*Bajar el tamano del toggle*/
-  .navbar-toggler-icon {
-    width: 0.4rem;
-    height: 0.4rem;
-  }
 }
 
-.wrapper {
-  width: 15%;
-  height: 40%;
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  transform: translate(-50%, -50%);
-}
-
+/*Toggle*/
 .switch {
   position:  relative;
   width: 160px;
@@ -399,8 +297,4 @@ a {
 
   
 }
-
-
-
-
 </style>
