@@ -10,31 +10,34 @@
       </div>
 
       <form class="form-group">
-        <h4>Por favor incia sesión a continuación:</h4>
+        <h4>Por favor inicia sesión a continuación:</h4>
         <div class="form-outline mb-4">
           <input
-            type="email"
-            id="form2Example11"
+            type="text"
+            id="idusuario"
             class="form-control"
             placeholder="Ingresa tu usuario"
+            v-model="userData.idusuario"
           />
-          <label class="form-label" for="form2Example11"> </label>
+          <label class="form-label" for="idusuario">Usuario</label>
         </div>
 
         <div class="form-outline mb-4">
           <input
             type="password"
-            id="form2Example22"
+            id="password"
             class="form-control"
             placeholder="Ingresa tu contraseña"
+            v-model="userData.password"
           />
-          <label class="form-label" for="form2Example22"></label>
+          <label class="form-label" for="password">Contraseña</label>
         </div>
 
         <div class="text-center pt-1 mb-5 pb-1">
           <button
             class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
             type="button"
+            @click="login"
           >
             Iniciar sesión
           </button>
@@ -51,8 +54,45 @@
     </div>
   </div>
 </template>
+
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      userData: {
+        idusuario: '',
+        password: '',
+      },
+    };
+  },
+  methods: {
+    login() {
+      // Realiza la solicitud POST a la API
+      fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(this.userData),
+      })
+        .then(response => {
+          if (response.ok) {
+            // La solicitud fue exitosa, puedes redirigir o realizar otras acciones
+            console.log('Inicio de sesión exitoso');
+            this.$router.push({ name: 'PrincipalPage' });
+
+          } else {
+            // La solicitud falló, puedes manejar el error aquí
+            console.error('Inicio de sesión fallido');
+          }
+        })
+        .catch(error => {
+          console.error('Error de red: ', error);
+        });
+    },
+  },
+};
 </script>
 <style>
 body {

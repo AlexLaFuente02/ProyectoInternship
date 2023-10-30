@@ -1,30 +1,70 @@
 <template>
-  <header class="header">
-    <div class="logo">
-      <img src="../images/USEI.png" alt="Logo de la marca" />
+  <header class="container__header">
+    <div class="container__logo">
+      <router-link to="/">
+        <img
+        src="../images/USEI.png"
+        alt="Unidad de Servicios Estudiantiles Integrales"
+       />
+      </router-link>
     </div>
-    <router-link class="btn" to="/"><button>Inicio</button></router-link>
-    <router-link class="btn" to="/moreInformation"
-      ><button>M&aacute;s informaci&oacute;n</button></router-link
-    >
-    <router-link class="btn" to="/institutionsCommon"
-      ><button>Instituciones</button></router-link
-    >
-    <router-link class="btn" to="/internshipsCommon"
-      ><button>Pasantias</button></router-link
-    >
-    <input
-      type="checkbox"
-      name="darkModeToggle"
-      class="switch"
-      @change="toggleDarkMode()"
-    />
+    <nav class="container__nav" >
+      <div class="nav__links">
+          <router-link class="link" to="/">
+            Inicio
+          </router-link>
+          <router-link class="link" to="/moreInformation">
+            M&aacute;s informaci&oacute;n
+          </router-link>
+          <router-link class="link" to="/institutionsCommon">
+            Instituciones
+          </router-link>
+          <router-link class="link" to="/internshipsCommon">
+            Pasant&iacute;as
+          </router-link>
+      </div>
+      
+      <div class="navbar__buttons">
+        <input 
+          type="checkbox"
+          name="darkModeToggle"
+          class="switch"
+          @change="toggleDarkMode()"
+        />
+        <div class="buttons">
+         
+          <div class="container__button">
+          <Button 
+            text="Crear Cuenta" 
+            :color="0" 
+            :disabled="false"
+            @option-selected="createAccount"
+            >
+          </Button>
+        </div>
+        <div class="container__button">
+          <Button 
+            text="Iniciar Sesi&oacute;n" 
+            :color="1" 
+            :disabled="false"
+            @option-selected="login"
+            >
+          </Button>
+        </div>
+        </div>
+      </div>
+      
+    </nav>
   </header>
 </template>
 <script>
 import { useThemeStore } from "@/store/common/useThemeStore";
+import Button from "@/components/common/Button.vue";
 export default {
   name: "NavbarCommon",
+  components:{
+    Button,
+  },
   data() {
     return {
       isDarkMode: false,
@@ -37,230 +77,133 @@ export default {
       darkModeStore.toggleDarkMode();
       console.log(darkModeStore.$event);
     },
+    createAccount(option) {
+      if (option) {
+        console.log("createAccount");
+        this.$router.push("/UserRegister");
+      }
+    },
+    login(option) {
+      if (option) {
+        console.log("login");
+        this.$router.push("/Login");
+      }
+    },
   },
 };
 </script>
-<style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap");
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Nunito", sans-serif;
-  font-size: 20px;
-}
-
-body {
-  background-color: #fff59d;
-}
-
-.header {
-  box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
-    0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
-  background-color: #fdfeff;
-  position: fixed;
+<style>
+.container__header{
   display: flex;
-  justify-content: flex-end;
+  flex-direction: row;
   align-items: center;
-  width: 100%;
-  height: 120px;
-  padding: 5px 10%;
-}
-
-.header .logo {
-  cursor: pointer;
-  margin-right: auto;
-}
-
-.header .logo img {
-  height: 70px;
-  width: auto;
-  transition: all 0.3s;
-}
-
-.header .logo img:hover {
-  transform: scale(1.2);
-}
-
-.switch:hover {
-  transform: scale(1.1);
-}
-
-.header .nav-links {
-  list-style: none;
-}
-
-.header .nav-links li {
-  display: inline-block;
-  padding: 0 20px;
-}
-
-.header .nav-links li:hover {
-  transform: scale(1.1);
-}
-
-.header .nav-links a {
-  font-size: 700;
-  color: #eceff1;
-  text-decoration: none;
-}
-
-.header .nav-links li a:hover {
-  color: #ffbc0e;
-}
-
-.header .btn button {
-  margin-left: 20px;
-  font-weight: 700;
-  color: #1b3039;
-  padding: 9px 25px;
-  background: transparent;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease 0s;
-}
-
-.dark-theme .header .btn button {
-  color: #e7f7ff;
-}
-
-.header .btn button:hover {
-  background-color: #e2f1f8;
-  color: #ffbc0e;
-  transform: scale(1.1);
-}
-.sticky-top {
+  padding: 0.5rem;
+  border-radius: 7px;
   box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
     0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease 0s;
+ /*Hacer que el header se vea por encima de los demás elementos y 
+ que te acompañe al hacer scroll*/
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #FDFEFF;
+  color: #515c67;
+  
+  
 }
-img {
-  width: 280px;
-  height: auto;
-}
-nav {
-  background-color: #fdfeff;
-  border-radius: 5px;
-}
-div .pages-links {
-  color: black;
-}
-img {
-  width: 280px;
-  height: auto;
-}
-nav {
-  background-color: #fdfeff;
-  border-radius: 5px;
-}
-a {
-  text-decoration: none;
-}
-.nav-link {
-  color: cornflowerblue;
-  margin-right: 5px;
-}
-.btn {
-  padding: 2%;
-}
-.btn-create-account {
-  background-color: yellow;
-  color: rgb(61, 61, 61);
-}
-.btn-login {
-  background-color: cornflowerblue;
-  color: #fff;
-}
-
 /*Modo oscuro*/
-.dark-theme .header {
-  background-color: #434b54;
+.dark-theme header{
+    background-color: #434B54;
+    color: #CACFDB;
 }
-.dark-theme .logo {
-  filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
-}
-.dark-theme .nav-link {
-  color: #fff;
-}
-
-.navigation-menu {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-}
-
-@media (max-width: 1400px) {
-  img {
-    width: 240px;
+/*Estilo del logo*/
+.container__header .container__logo img{
+    width: 150px;
     height: auto;
-  }
+    transition: all 0.3s ease 0s;
+}
+.dark-theme .container__logo{
+    filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 
-/*Bajar de tamaño el logo*/
+.container__header .container__logo img:hover{
+    transform: scale(1.1);
+}
+/*Fin del estilo del logo*/
+.container__header .container__nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.3rem;
+    margin-left: 5px;
+}
+
+.container__header .container__nav .nav__links .link{
+    margin-right: 10px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    color: #515c67;
+    transition: all 0.3s ease 0s;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    padding: 9px 25px;
+}
+.dark-theme .container__nav .nav__links .link{
+    color: #CACFDB;
+    background-color: #434B54;
+    border: 1px solid #434B54;
+}
+
+.container__header .container__nav .nav__links .link:hover{
+  background-color: rgba(90, 97, 106, 0.7);
+  color: #fff;
+  transform: scale(1.1);
+}
+.dark-theme .container__nav .nav__links .link:hover{
+  background-color: rgba(90, 97, 106, 0.7);
+}
+.navbar__buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+
+}
+.navbar__buttons .buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+.navbar__buttons input{
+  display: flex;
+  
+} 
+
 @media (max-width: 768px) {
-  img {
+  header{
+    flex-direction: column;
+  }
+  .container__logo img{
     width: 200px;
     height: auto;
   }
-  /*Bajar el tamaño de los botones*/
-  .btn {
-    font-size: 0.5rem;
-  }
-  /*Bajar el tamano del toggle*/
-  .navbar-toggler-icon {
-    width: 1rem;
-    height: 1rem;
-  }
-}
-/*Bajar de tamaño el logo*/
-@media (max-width: 576px) {
-  .img-fluid {
-    width: 3rem;
-    max-width: 50%;
-  }
-  /*Bajar el tamaño de los botones*/
-  .btn {
-    font-size: 0.3rem;
-  }
-  /*Bajar el tamano del toggle*/
-  .navbar-toggler-icon {
-    width: 0.6rem;
-    height: 0.6rem;
-  }
-}
-/*Bajar de tamaño el logo*/
-@media (max-width: 420px) {
-  .img-fluid {
-    width: 0.5rem;
-    max-width: 30%;
-  }
-  /*Bajar el tamaño de los botones*/
-  .btn {
-    font-size: 0.2rem;
-  }
-  /*Bajar el tamano del toggle*/
-  .navbar-toggler-icon {
-    width: 0.4rem;
-    height: 0.4rem;
-  }
 }
 
-.wrapper {
-  width: 15%;
-  height: 40%;
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  transform: translate(-50%, -50%);
-}
-
+/*Toggle*/
 .switch {
-  position: relative;
-  width: 100%;
-  height: 42%;
-  margin: 10px;
+  position:  relative;
+  width: 170px;
+  height: 50px;
+  margin: 5px;
   appearance: none;
   -webkit-appearance: none;
 
@@ -407,4 +350,37 @@ a {
     filter: blur(0px);
   }
 }
+
+/*Media queries*/
+@media screen and (max-width: 1250px){
+  .container__header .container__nav .nav__links .link{
+    font-size: 13px;
+  }
+    .switch{
+        width: 50px;
+        height: 25px;
+    }
+    .switch:after{
+        width: 0;
+        height: 0;
+        left: 0;
+        top: 0;
+    }
+    .switch:checked:before{
+        left: 5px;
+        top: 2px;
+    }
+    .switch:checked:after{
+        left: 5px;
+        top: 2px;
+    }
+}
+@media screen and (max-width: 1000x){
+  .container__header{
+    display: none;
+  }
+}
+
+
+
 </style>
