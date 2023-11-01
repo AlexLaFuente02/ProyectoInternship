@@ -18,6 +18,7 @@ import UserRegister from '@/views/common/UserRegister.vue';
 //Paginas Student
 import StudentRegister from '@/views/student/StudentRegister.vue';
 import StudentApplications from '@/views/student/StudentApplications.vue';
+import StudentProfile from '@/views/student/StudentProfile.vue';
 //Paginas Institution
 //Paginas Admin
 //Librerias de PrimeVue
@@ -46,6 +47,7 @@ const routes = [
     //Student
     {name: 'StudentRegister', path: '/student/register', component: StudentRegister},
     {name: 'StudentApplications', path: '/student/applications', component: StudentApplications},
+    {name: 'StudentProfile', path: '/student/profile', component: StudentProfile},
     //Institution
     
 
