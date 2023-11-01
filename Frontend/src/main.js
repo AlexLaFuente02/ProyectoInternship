@@ -18,6 +18,8 @@ import UserRegister from "@/views/common/UserRegister.vue";
 //Paginas Student
 import StudentRegister from "@/views/student/StudentRegister.vue";
 import ApplyForAnInternship from "@/views/student/ApplyForAnInternship.vue";
+import StudentApplications from '@/views/student/StudentApplications.vue';
+import StudentProfile from '@/views/student/StudentProfile.vue';
 //Paginas Institution
 //Paginas Admin
 
@@ -33,37 +35,20 @@ import "./assets/main.css";
 
 //Rutas
 const routes = [
-  //Common
-  { name: "PrincipalPage", path: "/", component: PrincipalPage },
-  { name: "LoginPage", path: "/login", component: LoginPage },
-  {
-    name: "MoreInformation",
-    path: "/moreInformation",
-    component: MoreInformation,
-  },
-  {
-    name: "InstitutionsCommon",
-    path: "/institutionsCommon",
-    component: InstitutionsCommon,
-  },
-  {
-    name: "InternshipsCommon",
-    path: "/internshipsCommon",
-    component: InternshipsCommon,
-  },
-  { name: "UserRegister", path: "/userRegister", component: UserRegister },
-  //Student
-  {
-    name: "StudentRegister",
-    path: "/student/register",
-    component: StudentRegister,
-  },
-  {
-    name: "ApplyForAnInternship",
-    path: "/student/ApplyForAnInternship",
-    component: ApplyForAnInternship,
-  },
-  //Institution
+    //Common
+    {name: 'PrincipalPage', path: '/', component: PrincipalPage},
+    {name: 'LoginPage', path: '/login', component: LoginPage},
+    {name: 'MoreInformation', path: '/moreInformation', component: MoreInformation},
+    {name: 'InstitutionsCommon', path: '/institutionsCommon', component: InstitutionsCommon},
+    {name: 'InternshipsCommon', path: '/internshipsCommon', component: InternshipsCommon},
+    {name: 'UserRegister', path: '/userRegister', component: UserRegister},
+    //Student
+    {name: 'StudentRegister', path: '/student/register', component: StudentRegister},
+    {name: 'StudentApplications', path: '/student/applications', component: StudentApplications},
+    {name: 'StudentProfile', path: '/student/profile', component: StudentProfile},
+    {name: "ApplyForAnInternship",path: "/student/ApplyForAnInternship",component: ApplyForAnInternship,},
+    //Institution
+    
 
   //Usei-Admin
 ];
