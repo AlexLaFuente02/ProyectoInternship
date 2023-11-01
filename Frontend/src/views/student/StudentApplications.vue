@@ -191,6 +191,19 @@
     
     }
     }
+    @media (max-width: 380px) {
+      .text-content2 {
+      position: relative;
+      margin-bottom:40%;
+    }
+   
+    }
+    @media (max-width: 290px) {
+      .text-content2 {
+      margin-bottom:90%;
+    
+    }
+    }
     .content-text {
       margin-right: 80px; /* Ajusta el espacio para el botón de reserva */
     }
