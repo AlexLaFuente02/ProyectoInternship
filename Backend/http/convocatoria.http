@@ -22,28 +22,43 @@ Accept: application/json
   "horario_inicio": "08:00",
   "horario_fin": "17:00",
   "fechasolicitud": "2023-10-22",
+  "fechaseleccionpasante": "2025-12-12",
   "estadoconvocatoria": {
-    "id": 1
+    "id": 2
   },
   "institucion": {
     "id": 1
   },
   "tiempoacumplir": {
-    "id": 1
+    "id": 2
   }
 }
 
 ### PUT Convocatoria
-PUT http://{{host}}/convocatoria/1
+PUT http://{{host}}/convocatoria/2
 Content-Type: application/json
 Accept: application/json
 
 {
-  "areapasantia": "Área actualizada",
+  "areapasantia": "Area actualizada",
   "descripcionfunciones": "Descripción actualizada",
-  // ... otros campos
+  "requisitoscompetencias": "Requisitos y competencias",
+  "horario_inicio": "08:00",
+  "horario_fin": "17:00",
+  "fechasolicitud": "2023-10-22",
+  "fechaseleccionpasante": "2025-12-12",
+  "estadoconvocatoria": {
+    "id": 2
+  },
+  "institucion": {
+    "id": 1
+  },
+  "tiempoacumplir": {
+    "id": 2
+  }
 }
 
+
 ### DELETE Convocatoria
-DELETE http://{{host}}/convocatoria/1
+DELETE http://{{host}}/convocatoria/18
 Accept: application/json

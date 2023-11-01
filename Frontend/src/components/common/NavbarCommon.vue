@@ -1,18 +1,50 @@
 <template>
-  <header class="header">
-          <div class="logo">
-              <img src="../images/USEI.png" alt="Logo de la marca">
-          </div>
-            <a class="btn" href="/"><button>Inicio</button></a>
-            <a class="btn" href="/moreInformation"><button>M&aacute;s informaci&oacute;n</button></a>
-            <a class="btn" href="/institutionsCommon"><button>Instituciones</button></a>
-            <a class="btn" href="/internshipsCommon"><button>Pasantias</button></a>
-          <input
-            type="checkbox"
-            name="darkModeToggle"
-            class="switch"
-            @change="toggleDarkMode()"
+  <header class="sticky-top">
+    <nav class="navbar navbar-expand-lg  shadow-lg">
+      <div class="container-md">
+        <div class="navbar-brand p-0 me-0 me-lg-2">
+          <img
+            src="../images/USEI.png"
+            alt="Unidad de Servicios Estudiantiles Integrales"
           />
+        </div>
+        <div class="bd-navbar-toggle">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <div
+            class="nav col-6 col-md-auto mb-lg-0 mx-auto justify-content-center mb-md-0 mb-3"
+          >
+            <router-link class="nav-item nav-link" to="/">Inicio</router-link>
+            <router-link class="nav-item nav-link" to="/moreInformation"
+              >M&aacute;s informaci&oacute;n</router-link
+            >
+            <router-link class="nav-item nav-link" to="/institutionsCommon"
+              >Instituciones</router-link
+            >
+            <router-link class="nav-item nav-link" to="/internshipsCommon"
+              >Pasant&iacute;as</router-link
+            >
+          </div>
+        </div>
+        <div class="navbar__button">
+          <router-link type="button" class="btn btn-warning me-3" to="/userRegister">Crear una Cuenta</router-link>
+          <router-link type="button" class="btn btn-primary" to="/login">Iniciar Sesi&oacute;n</router-link>
+          <input type="checkbox" name="darkModeToggle" class="switch"
+          @change="toggleDarkMode()" />
+        </div>
+      </div>
+    </nav>
   </header>
   </template>
 <script>
@@ -37,115 +69,39 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap');
 
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Nunito', sans-serif;
-    font-size: 20px;
+.sticky-top{
+    box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
 }
-
-body{
-    background-color: #fff59d;
-}
-
-.header{
-    background-color: #1b3039;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 85px;
-    padding: 5px 10%;
-}
-
-.header .logo{
-    cursor: pointer;
-    margin-right: auto;
-}
-
-.header .logo img{
-    height: 70px;
-    width: auto;
-    transition: all 0.3s;
-}
-
-.header .logo img:hover{
-    transform: scale(1.2);
-}
-
-.header .nav-links{
-    list-style: none;
-}
-
-.header .nav-links li{
-    display: inline-block;
-    padding: 0 20px;
-}
-
-.header .nav-links li:hover{
-    transform: scale(1.1);
-}
-
-.header .nav-links a{
-    font-size: 700;
-    color: #eceff1;
-    text-decoration: none;
-}
-
-.header .nav-links li a:hover{
-    color: #ffbc0e;
-}
-
-.header .btn button{
-    margin-left: 20px;
-    font-weight: 700;
-    color: #1b3039;
-    padding: 9px 25px;
-    background: #eceff1;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-}
-
-.header .btn button:hover{
-    background-color: #e2f1f8;
-    color: #ffbc0e;
-    transform: scale(1.1);
-}
-.sticky-top {
-  box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
-    0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
-}
-img {
-  width: 280px;
-  height: auto;
-}
-nav {
-  background-color: #fdfeff;
+img{
+    width: 280px;
+    height: auto;
+  }
+nav{
+  background-color: #FDFEFF;
   border-radius: 5px;
 }
-div .pages-links {
-  color: black;
-}
 /*Modo oscuro*/
-.dark-theme .sticky-top{
+.dark-theme nav{
     background-color: #434B54;
+}
+.dark-theme .navbar-brand {
+    filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 .container-md{
     width: 100%;
 }
 @media (max-width: 1400px){
-    .img-fluid{
-        width: 10rem;
-    }
+  img{
+    width: 240px;
+    height: auto;
+  }
 }
 
 /*Bajar de tamaño el logo*/
 @media (max-width: 768px){
-    .img-fluid{
-        width: 5rem;
-        max-width: 70%;
+    img{
+      width: 200px;
+      height: auto;
     }
     /*Bajar el tamaño de los botones*/
     .btn{

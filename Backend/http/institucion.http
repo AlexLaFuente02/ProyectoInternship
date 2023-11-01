@@ -7,7 +7,7 @@ GET http://{{host}}/institucion/
 Accept: application/json
 
 ### GET de Institucion por ID
-GET http://{{host}}/institucion/2
+GET http://{{host}}/institucion/1
 Accept: application/json
 
 ### POST de Institucion

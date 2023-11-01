@@ -1,26 +1,9 @@
 <template>
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-5 px-6 border-top-1 bg-body-tertiary text-bg-light">
-    <div class="col-md-4 d-flex align-items-center">
-      <div class="mb-3 mb-md-0 d-none d-md-block">
-        <img src="../images/USEI.png" class="w-100" alt="Unidad de Servicios Estudiantiles Integrales"/>
-      </div>
-      <div class="col-12 col-md-4 mb-4 mb-md-0 col-md-8 d-none d-md-block text-center">
-        <span>Todos los Derechos Reservados &copy; Universidad Católica Boliviana"San Pablo". 2023.</span>
-      </div>
+  <footer>
+    <div class="footer__logo">
+      <img src="../images/USEI.png"  alt="Unidad de Servicios Estudiantiles Integrales"/>
     </div>
-    <div class="col-12 mb-3 d-md-none">
-      <img src="../images/USEI.png" class="w-100" alt="Unidad de Servicios Estudiantiles Integrales" />
-    </div>
-    <div class="col-12 d-md-none text-center mb-4">
-      <span>Todos los Derechos Reservados &copy; Universidad Católica Boliviana "San Pablo". 2023.</span>
-    </div>
-    <div class="col-md-4 d-flex align-items-center justify-content-center mb-4 mb-md-0 me-md-auto" >
-      <font-awesome-icon :icon="['fas', 'earth-americas']" size="2x" class="me-3" />
-      <span class="text-3xl text-center">INTERNSHIP BY UCB</span>
-    </div>
-    <div class="text-center justify-content-center">
-      <h3>Nuestras Redes Sociales:</h3>
-      <div class="container p-3 pb-0">
+    <div class="footer__links">
         <a
           class="btn text-white btn-floating rounded-circle m-1"
           style="background-color: #3b5998"
@@ -63,7 +46,6 @@
           role="button"
           ><font-awesome-icon :icon="['fab', 'tiktok']"
         /></a>
-      </div>
     </div>
   </footer>
 </template>
@@ -74,61 +56,52 @@ export default {};
 footer{
     background-color: #FDFEFF;
     box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
-    padding: 50px 0;
+    padding: 1rem;
     border-radius: 5px;
-  
-}
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 
+}
 /*Modo oscuro*/
-.dark-theme ::after footer{
-    background-color: #515C66;
+.dark-theme footer{
+    background-color: #434B54;
     box-shadow: 0 24px 64px -2px rgba(255, 255, 255, 0.02), 0 6px 16px -2px rgba(255, 255, 255, 0.06), 0 2px 6px -2px rgba(255, 255, 255, 0.08);
 }
-.footer__bottom{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.dark-theme .footer__logo {
+    filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
+}
+/*Reducir el tamaño del img*/
+img{
+  width: 280px;
+  height: auto;
+}
+.footer__links{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
   
 }
-
-
-.copy__right{
-    display: flex;
-    align-items: center;
+@media (max-width: 768px) {
+  footer{
+    flex-direction: column-reverse;
+  }
+  .footer__links{
+    margin-top: 1rem;
+  }
+  img{
+    width: 200px;
+    height: auto;
+  }
 }
-.copy__right span{
-    margin-left: 10px;
-}
-.content__footer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.profil{
-    width: 30%;
-}
-.logo__area{
-    display: flex;
-    align-items: center;
-}
-.logo__name{
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-left: 10px;
-}
-.social_media{
-    margin-top: 20px;
-}
-.social_media a{
-    margin-right: 20px;
-}
-@media screen and (max-width: 768px){
-    .content__footer{
-        flex-direction: column;
-    }
-    .profil{
-        width: 100%;
-    }
+@media (max-width: 576px) {
+  .footer__links{
+    margin-top: 0.5rem;
+  }
 }
 
 </style>

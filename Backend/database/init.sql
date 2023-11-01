@@ -10,7 +10,6 @@ INSERT INTO tipousuario (tipo) VALUES
 ('Institución');
 
 CREATE TABLE usuario (
-    /*id varchar(36) PRIMARY KEY,  -- Cambiado a VARCHAR para usar UUID Comentado por ahora*/
     id INT AUTO_INCREMENT PRIMARY KEY,
     idusuario varchar(50) NOT NULL,
     contrasenia varchar(255) NOT NULL,
@@ -20,7 +19,8 @@ CREATE TABLE usuario (
 );
 
 INSERT INTO usuario (idusuario, contrasenia, tipousuario_id) VALUES
-('admin', 'admin', 1);
+('alex', 'alex123', 1);
+#insertar el resto de un request la contrasenia porque la contraseña debe estar hasheada
 
 CREATE TABLE estadopostulacion (
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -77,7 +77,7 @@ CREATE TABLE institucion (
     id int AUTO_INCREMENT PRIMARY KEY,
     nombreinstitucion varchar(100) NOT NULL,
     reseniainstitucion text NULL,
-    logoinstitucion BLOB NULL,  -- Cambiado a BLOB ya que MySQL no tiene tipo image
+    logoinstitucion BLOB NULL,  
     nombrecontacto varchar(100) NOT NULL,
     correocontacto varchar(100) NOT NULL,
     celularcontacto varchar(15) NOT NULL,
@@ -94,13 +94,22 @@ VALUES
 ('EMAPA', 'Somos la institucion de agua de la ciudad de La Paz', NULL, 'Juan Pérez',
 'juan.perez@utech.edu', '123-456-7890', null, 1);
 
- /*Hacer trigger para asignar valor a usuario_id cuando USEI aprobar institucion*/
+#Hacer trigger para asignar valor a usuario_id cuando USEI aprobar institucion
 
 
 CREATE TABLE estadoconvocatoria (
     id int AUTO_INCREMENT PRIMARY KEY,
     nombreestadoconvocatoria varchar(100) NOT NULL
 );
+CREATE TABLE adminusei (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    usuario_id int NOT NULL UNIQUE,
+    CONSTRAINT adminusei_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
+);
+
+INSERT INTO adminusei (usuario_id) VALUES (1);
+
+
 
 INSERT INTO estadoconvocatoria (nombreestadoconvocatoria) VALUES
 ('ACTIVA'),
@@ -144,10 +153,9 @@ VALUES
 ('Area 3', 'Descripcion 3', 'Requisitos 3', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 1, 1, 1);
 
 
--- Table: historico_convocatorias
 CREATE TABLE historico_convocatorias (
     id_h int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_c int NOT NULL, -- No tiene restricción de clave foránea
+    id_c int NOT NULL, 
     areapasantia varchar(100) NOT NULL,
     descripcionfunciones text NOT NULL,
     requisitoscompetencias text NOT NULL,
@@ -158,44 +166,98 @@ CREATE TABLE historico_convocatorias (
     estadoconvocatoria_id int NOT NULL,
     institucion_id int NOT NULL,
     tiempoacumplir_id int NOT NULL,
-    -- Las siguientes claves foráneas no incluyen a id_c
+    accion ENUM('post', 'put', 'delete') NOT NULL,
+    fecha_accion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (estadoconvocatoria_id) REFERENCES estadoconvocatoria (id),
     FOREIGN KEY (institucion_id) REFERENCES institucion (id),
     FOREIGN KEY (tiempoacumplir_id) REFERENCES tiempoacumplir (id)
 );
 
-/*triggers historico convocatoria*/
-DELIMITER //
-CREATE TRIGGER after_convocatoria_insert
-AFTER INSERT ON convocatoria
-FOR EACH ROW
-BEGIN
-    INSERT INTO historico_convocatorias (id_c, areapasantia, descripcionfunciones, requisitoscompetencias, horario_inicio, horario_fin, fechasolicitud, fechaseleccionpasante, estadoconvocatoria_id, institucion_id, tiempoacumplir_id)
-    VALUES (NEW.id, NEW.areapasantia, NEW.descripcionfunciones, NEW.requisitoscompetencias, NEW.horario_inicio, NEW.horario_fin, NEW.fechasolicitud, NEW.fechaseleccionpasante, NEW.estadoconvocatoria_id, NEW.institucion_id, NEW.tiempoacumplir_id);
-END;
-//
-DELIMITER ;
+
+CREATE TABLE estudiante (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    usuario_id int NOT NULL UNIQUE,
+    nombres varchar(50) NOT NULL,
+    apellidos varchar(50) NOT NULL,
+    carnetidentidad varchar(15) NOT NULL,
+    correoelectronico varchar(100) NOT NULL,
+    celularcontacto varchar(15) NOT NULL,
+    graduado bit NOT NULL,
+    carrera_id int NOT NULL,
+    semestre_id int NULL,
+    sede_id int NULL,
+    aniograduacion int NULL,
+    linkcurriculumvitae varchar(255) NOT NULL,
+    CONSTRAINT estudiantes_carrera FOREIGN KEY (carrera_id) REFERENCES carrera (id),
+    CONSTRAINT estudiantes_semestre FOREIGN KEY (semestre_id) REFERENCES semestre (id),
+    CONSTRAINT estudiantes_sede FOREIGN KEY (sede_id) REFERENCES sede (id),
+    CONSTRAINT estudiantes_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
+);
+
+INSERT INTO estudiante (usuario_id, nombres, apellidos, carnetidentidad, correoelectronico, celularcontacto, graduado, carrera_id, semestre_id, sede_id, aniograduacion, linkcurriculumvitae)
+VALUES (1, 'Juan', 'Pérez', '1234567', 'juan@example.com', '123-456-7890', 1, 2, 3, 1, 2022, 'https://example.com/juan_cv.pdf');
 
 
-DELIMITER //
-CREATE TRIGGER after_convocatoria_update
-AFTER UPDATE ON convocatoria
-FOR EACH ROW
-BEGIN
-    INSERT INTO historico_convocatorias (id_c, areapasantia, descripcionfunciones, requisitoscompetencias, horario_inicio, horario_fin, fechasolicitud, fechaseleccionpasante, estadoconvocatoria_id, institucion_id, tiempoacumplir_id)
-    VALUES (NEW.id, NEW.areapasantia, NEW.descripcionfunciones, NEW.requisitoscompetencias, NEW.horario_inicio, NEW.horario_fin, NEW.fechasolicitud, NEW.fechaseleccionpasante, NEW.estadoconvocatoria_id, NEW.institucion_id, NEW.tiempoacumplir_id);
-END;
-//
-DELIMITER ;
+CREATE TABLE postulacion (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    fechapostulacion date NOT NULL,
+    estadopostulacion_id int NOT NULL,
+    estudiante_id int NOT NULL,
+    convocatoria_id int NOT NULL,
+    CONSTRAINT postulacion_estadopostulacion FOREIGN KEY (estadopostulacion_id) REFERENCES estadopostulacion (id),
+    CONSTRAINT postulacion_estudiante FOREIGN KEY (estudiante_id) REFERENCES estudiante (id),
+    CONSTRAINT postulacion_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
+);
+
+INSERT INTO postulacion (fechapostulacion, estadopostulacion_id, estudiante_id, convocatoria_id)
+VALUES ('2023-10-25', 1, 1, 3);
+
+CREATE TABLE historico_postulaciones (
+    id_h int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_p int NOT NULL,
+    fechapostulacion date NOT NULL,
+    estadopostulacion_id int NOT NULL,
+    estudiante_id int NOT NULL,
+    convocatoria_id int NOT NULL,
+    accion ENUM('post', 'put', 'delete') NOT NULL,
+    fecha_accion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (estadopostulacion_id) REFERENCES estadopostulacion (id),
+    FOREIGN KEY (estudiante_id) REFERENCES estudiante (id),
+    FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
+);
 
 
-DELIMITER //
-CREATE TRIGGER after_convocatoria_delete
-AFTER DELETE ON convocatoria
-FOR EACH ROW
-BEGIN
-    INSERT INTO historico_convocatorias (id_c, areapasantia, descripcionfunciones, requisitoscompetencias, horario_inicio, horario_fin, fechasolicitud, fechaseleccionpasante, estadoconvocatoria_id, institucion_id, tiempoacumplir_id)
-    VALUES (OLD.id, OLD.areapasantia, OLD.descripcionfunciones, OLD.requisitoscompetencias, OLD.horario_inicio, OLD.horario_fin, OLD.fechasolicitud, OLD.fechaseleccionpasante, OLD.estadoconvocatoria_id, OLD.institucion_id, OLD.tiempoacumplir_id);
-END;
-//
-DELIMITER ;
+CREATE TABLE historico_usuario (
+    id_h int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_u int NOT NULL,
+    idusuario varchar(50) NOT NULL,
+    contrasenia varchar(255) NOT NULL,
+    tipousuario_id int NOT NULL,
+    FOREIGN KEY (id_u) REFERENCES usuario (id),
+    FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
+);
+
+CREATE TABLE aprobacionconvocatoria (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    fechaaprobacion date NOT NULL,
+    estado varchar(100) NOT NULL,
+    adminusei_id int NOT NULL,
+    convocatoria_id int NOT NULL,
+    CONSTRAINT aprobacionconvocatoria_adminusei FOREIGN KEY (adminusei_id) REFERENCES adminusei (id),
+    CONSTRAINT aprobacionconvocatoria_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
+);
+
+INSERT INTO aprobacionconvocatoria (fechaaprobacion, estado, adminusei_id, convocatoria_id)
+VALUES ('2023-10-25', 'APROBADO', 1, 3);
+
+CREATE TABLE estadosolicitudinstitucion (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    fechaaprobacion date NOT NULL,
+    estadosolicitud varchar(100) NOT NULL,
+    adminusei_id int NOT NULL,
+    institucion_id int NOT NULL,
+    CONSTRAINT estadosolicitudinstitucion_adminusei FOREIGN KEY (adminusei_id) REFERENCES adminusei (id),
+    CONSTRAINT estadosolicitudinstitucion_institucion FOREIGN KEY (institucion_id) REFERENCES institucion (id)
+);
+
+INSERT INTO estadosolicitudinstitucion (fechaaprobacion, estadosolicitud, adminusei_id, institucion_id) VALUES ('2023-10-22', 'Aprobado', 1, 1);

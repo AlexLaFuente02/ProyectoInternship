@@ -3,10 +3,12 @@ const EstadoConvocatoriaDTO = require('../DTO/EstadoConvocatoriaDTO');
 const EstadoConvocatoriaENT = require('../ENT/EstadoConvocatoriaENT');
 const InstitucionDTO = require('../DTO/InstitucionDTO');
 const InstitucionENT = require('../ENT/InstitucionENT');
-const TiempoAcumplirDTO = require('../DTO/TiempoACumplirDTO');
+const TiempoAcumplirDTO = require('../DTO/TiempoAcumplirDTO');
 const TiempoAcumplirENT = require('../ENT/TiempoACumplirENT');
 const ConvocatoriaENT = require("../ENT/ConvocatoriaENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
+//Para el trigger:
+const historicoService = require('./historicoConvocatoriasService');
 
 const getAllConvocatorias = async () => {
     console.log('Obteniendo todas las convocatorias...');
@@ -96,6 +98,8 @@ const createConvocatoria = async (data) => {
             institucion_id: data.institucion.id,
             tiempoacumplir_id: data.tiempoacumplir.id
         });
+        // Insertar en historico después de crear la convocatoria
+        await historicoService.insertHistoricoConvocatoria(convocatoria.dataValues, 'POST');
         console.log('Convocatoria creada correctamente.');
         return new ResponseDTO('C-0000', new ConvocatoriaDTO(
             convocatoria.id,
@@ -136,6 +140,8 @@ const updateConvocatoria = async (id, data) => {
             institucion_id: data.institucion.id,
             tiempoacumplir_id: data.tiempoacumplir.id
         });
+        // Insertar en historico después de actualizar una convocatoria
+        await historicoService.insertHistoricoConvocatoria(convocatoria.dataValues, 'PUT');
         console.log('Convocatoria actualizada correctamente.');
         return new ResponseDTO('C-0000', new ConvocatoriaDTO(
             convocatoria.id,
@@ -164,9 +170,11 @@ const deleteConvocatoria = async (id) => {
             console.log(`Convocatoria con ID: ${id} no encontrada.`);
             return new ResponseDTO('C-1005', null, 'Convocatoria no encontrada');
         }
+        // Insertar en historico antes de eliminar la convocatoria
+        await historicoService.insertHistoricoConvocatoria(convocatoria.dataValues, 'DELETE');
         await convocatoria.destroy();
         console.log('Convocatoria eliminada correctamente.');
-        return new ResponseDTO('C-0000', null, 'Convocatoria eliminada correctamente');
+        return new ResponseDTO('C-0000', convocatoria, 'Convocatoria eliminada correctamente');
     } catch (error) {
         console.error(`Error al eliminar la convocatoria con ID: ${id}.`, error);
         return new ResponseDTO('C-1005', null, `Error al eliminar la convocatoria: ${error}`);

@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../../database/db");
 const TipoUsuarioENT = require("./TipoUsuarioENT");
 
+
 const UsuarioENT = sequelize.define(
   "Usuario",
   {
@@ -27,7 +28,7 @@ const UsuarioENT = sequelize.define(
 );
 
 UsuarioENT.belongsTo(TipoUsuarioENT, {
-  foreignKey: "tipousuario_id", // Mantén la columna para la relación
+  foreignKey: "tipousuario_id",
   as: "tipousuario",
   targetKey: "id",
 });
