@@ -102,8 +102,6 @@ export default {
   box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
     0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease 0s;
- /*Hacer que el header se vea por encima de los demás elementos y 
- que te acompañe al hacer scroll*/
   position: sticky;
   top: 0;
   z-index: 1000;

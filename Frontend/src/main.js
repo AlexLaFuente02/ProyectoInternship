@@ -25,7 +25,7 @@ import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
-
+import Galleria from 'primevue/galleria';
 //Main
 import './assets/main.css';
 
@@ -66,5 +66,6 @@ app.use(PrimeVue);
 app.component('font-awesome-icon', FontAwesomeIcon);
 //Componentes de PrimeVue
 app.component('ButtonPrime', ButtonPrime);
+app.component('Galleria', Galleria);
 //Montar la aplicacion
 app.mount('#app');
