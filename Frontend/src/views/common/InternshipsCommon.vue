@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="informaciónInternship">
+    <div class="Pasantías Disponibles">
       <h1>Pasantías Disponibles <br />Internship by Cato</h1>
       <p>
         ¡Bienvenido a la sección de Pasantías en Internship by Cato! Aquí puedes
@@ -11,7 +11,7 @@
       </p>
       <br />
     </div>
-    <div class="PasantíasDestacadas">
+    <div class="Empresas Destacadas">
       <h1>Empresas Destacadas</h1>
       <p>
         Descubre algunas de las pasantías destacadas que están disponibles en
