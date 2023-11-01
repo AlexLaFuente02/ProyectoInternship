@@ -58,9 +58,11 @@
     </div>
   </footer>
 </template>
+
 <script>
 export default {};
 </script>
+
 <style scoped>
 footer{
     background-color: #FDFEFF;
@@ -68,9 +70,8 @@ footer{
     padding: 1rem;
     border-radius: 5px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
 }
 /*Modo oscuro*/
@@ -95,7 +96,7 @@ footer{
 .container__logo__footer  img:hover{
   transform: scale(1.1);
 }
-.footer__links{
+.footer__links {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

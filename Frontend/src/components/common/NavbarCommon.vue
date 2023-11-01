@@ -56,7 +56,7 @@
       
     </nav>
   </header>
-  </template>
+</template>
 <script>
 import { useThemeStore } from "@/store/common/useThemeStore";
 import Button from "@/components/common/Button.vue";
@@ -319,7 +319,6 @@ export default {
   animation: moon 0.7s forwards ease;
 }
 
-
 @keyframes moon {
   0% {
     transform: rotate(0deg);
@@ -339,8 +338,6 @@ export default {
     box-shadow: 5px -1px 0px #fff;
     filter: blur(0px);
   }
-
-  
 }
 
 /*Media queries*/
