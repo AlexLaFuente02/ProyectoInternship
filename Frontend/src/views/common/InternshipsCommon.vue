@@ -74,7 +74,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Karla|Space+Mono");
 
 :root {
-  --contentHeight: 30vh;
+  --contentHeight: 10%;
   --sectionWidth: 700px;
 }
 
@@ -83,8 +83,8 @@ export default {
   box-sizing: border-box;
 }
 img{
-  width: 70%;
-  height: auto;
+  width: auto;
+  height: 200px;
 }
 .box1,
   .box2,
