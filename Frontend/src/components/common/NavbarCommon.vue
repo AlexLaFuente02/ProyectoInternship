@@ -186,15 +186,6 @@ export default {
   
 } 
 
-@media (max-width: 768px) {
-  header{
-    flex-direction: column;
-  }
-  .container__logo img{
-    width: 200px;
-    height: auto;
-  }
-}
 
 /*Toggle*/
 .switch {
