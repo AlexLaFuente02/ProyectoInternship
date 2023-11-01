@@ -155,7 +155,7 @@ img {
 input {
   display: block;
   width: 100%;
-  transition: 0.4s;
+  transition: 0.4s all ease;
 }
 
 .form-label {
