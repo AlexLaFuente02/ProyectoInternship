@@ -222,9 +222,8 @@
     /**colores de texto de si esta aporbado o no */
     .text-a{
         position: relative;
-        
-        top: 20px; 
-        right: 45%;
+        left: 10%; 
+        right: 60%;
         transform: translate(50%,-50%);
         text-transform: uppercase;
         font-family: verdana;
@@ -248,9 +247,8 @@
     }
     .text-p {
         position: relative;
-        
-        top: 20px; 
-        right: 45%;
+        left: 10%; 
+        right: 60%;
         transform: translate(50%,-50%);
         text-transform: uppercase;
         font-family: verdana;
@@ -274,9 +272,8 @@
     }
     .text-r {
         position: relative;
-        
-        top: 20px; 
-        right: 45%;
+        left: 10%; 
+        right: 60%;
         transform: translate(50%,-50%);
         text-transform: uppercase;
         font-family: verdana;
@@ -304,6 +301,7 @@
       border-radius: 8px;
       overflow: hidden;
       margin: 20px;
+      right: 100%;
     }
     
     .content {
