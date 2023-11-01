@@ -17,7 +17,7 @@ import InternshipsCommon from '@/views/common/InternshipsCommon.vue';
 import UserRegister from '@/views/common/UserRegister.vue';
 //Paginas Student
 import StudentRegister from '@/views/student/StudentRegister.vue';
-import StudentApplications from '@/views/student/ StudentApplications.vue';
+import StudentApplications from '@/views/student/StudentApplications.vue';
 //Paginas Institution
 //Paginas Admin
 //Librerias de PrimeVue
