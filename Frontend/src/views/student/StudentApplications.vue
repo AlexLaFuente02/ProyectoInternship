@@ -264,14 +264,14 @@
       margin-bottom: 15px;
     }
     .card-individual {
-      border: 1px solid #ccc;
+      border: 3px solid #ccc;
       border-radius: 8px;
       overflow: hidden;
-      border: 3px solid #000000;
       margin-bottom: 7px;
     }
     .card-inicio{
-      border: 3px solid #000000;
+      border: 3px solid #ffffff;
+      background-color:  #434B54;
       border-radius: 8px;
       overflow: hidden;
       margin-top: 15px;
