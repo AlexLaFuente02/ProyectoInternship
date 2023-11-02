@@ -8,8 +8,8 @@
        />
       </router-link>
     </div>
-    <div class="footer__links">
-        <div class="links__pack">
+    <div class="footer__links1">
+      <div class="links__pack">
             <a
             class="link"
             style="background-color: #3b5998"
@@ -69,10 +69,11 @@ footer{
     box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
     padding: 1rem;
     border-radius: 5px;
-    display: flex;
     align-items: center;
     justify-content: space-between;
-
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 /*Modo oscuro*/
 .dark-theme footer{
@@ -96,13 +97,14 @@ footer{
 .container__logo__footer  img:hover{
   transform: scale(1.1);
 }
-.footer__links {
+.footer__links1{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1rem;
+
 }
 .links__pack{
   display: flex;
@@ -135,7 +137,7 @@ footer{
   footer{
     flex-direction: column-reverse;
   }
-  .footer__links{
+  .footer__links1{
     margin-top: 0.3rem;
   }
   img{
@@ -144,16 +146,19 @@ footer{
   }
 }
 @media (max-width: 576px) {
-  .footer__links{
+  .footer__links1{
     margin-top: 0.2rem;
   }
 }
 @media (max-width: 430px) {
-  .footer__links{
+  .footer__links1{
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     margin-bottom: 0.5rem;
   }
-  .footer__links .links__pack{
+  .footer__links1 .links__pack{
     margin-bottom: 0.5rem;
   }
 }
