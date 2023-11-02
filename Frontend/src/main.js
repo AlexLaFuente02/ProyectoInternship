@@ -22,7 +22,8 @@ import StudentApplications from '@/views/student/StudentApplications.vue';
 import StudentProfile from '@/views/student/StudentProfile.vue';
 //Paginas Institution
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
-//Paginas Admin
+import InstitutionAddConvocatoria from '@/views/institution/InstitutionAddConvocatoria.vue'
+ //Paginas Admin
 
 //Librerias de PrimeVue
 import ButtonPrime from "primevue/button";
@@ -50,8 +51,7 @@ const routes = [
     {name: 'ApplyForAnInternship',path: '/student/ApplyForAnInternship',component: ApplyForAnInternship},
     //Institution
     {name: 'InstitutionRegister', path : '/institution/register', component:InstitutionRegister},
-    
-
+    {name: 'InstitutionAddConvocatoria', path : '/institution/addConvocatoria', component:InstitutionAddConvocatoria},
   //Usei-Admin
 ];
 // Router
