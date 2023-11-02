@@ -1,0 +1,162 @@
+<template>
+  <!--Form de registro de Estudiantes-->
+  <div class="formVue">
+      <div class="form__tittle">
+          <h1>SOLICITUD ADICION NUEVA INSTITUCION</h1>
+      </div>
+      <div class="form__description">
+          <p>Por favor complete el formulario a continuación:</p>
+      </div>
+      <div class="form__container">
+          <div class="container__field">
+              <label>Nombre de la Institucion *:</label>
+              <input placeholder="Introduzca el nombre"
+              v-model="formStore.nameInstitucion" type="text" class="field">
+          </div>
+      <div class="form__tittle">
+          <h1>Datos generales</h1>
+      </div>
+          <div class="container__field">
+              <label>Sector al que pertenece *:</label>
+              <input placeholder="Introduzca el sector al que pertenece"
+              
+              v-model="formStore.sector" type="text" class="field">
+          </div>
+          <div class="container__field">
+              <label>Reseña de la Institucion *:</label>
+              <input placeholder="Introduzca su segundo apellido"
+              
+              v-model="formStore.resenia" type="text" class="field">
+          </div>
+          <div class="container__field">
+              <label>Logo de la Institucion *:</label>
+              <input placeholder type="file" @change="onFileChange" accept="image/*">
+              
+          </div>
+          <div class="form__tittle">
+          <h1>Datos del contacto</h1>
+      </div>
+          <div class="container__field">
+              <label>Nombre del contacto *:</label>
+              <input placeholder="Introduzca el nombre del contacto"
+              
+              v-model="formStore.nameContac" type="text" class="field">
+          </div>
+          <div class="container__field">
+              <label>Correo electronico *:</label>
+              <input placeholder="Introduzca el correo electronico"
+              
+              v-model="formStore.correo" type="text" class="field">
+          </div>
+          <div class="container__field">
+              <label>Celular del contacto *:</label>
+              <input placeholder="Introduzca el correo electronico"
+              v-model="formStore.phone" type="text" class="field">
+          </div>
+          <div class="buttons">
+         
+         <div class="container__button">
+         <Button 
+           text="Volver atras" 
+           :color="0" 
+           :disabled="false"
+           @option-selected="login"
+           >
+         </Button>
+       </div>
+       <div class="container__button">
+         <Button 
+           text="Enviar solicitud" 
+           :color="1" 
+           :disabled="false"
+           @option-selected="EnviarSolicitud"
+           >
+         </Button>
+       </div>
+      </div>
+      </div>
+  </div>
+</template>
+<script>
+import { useFormRegisterStore } from "@/store/student/formRegisterStore";
+import Dropdown from '../common/Dropdown.vue';
+import Button from "@/components/common/Button.vue";
+export default {
+  components:{
+    Button,
+      Dropdown
+  },
+  data(){
+      return{
+          formStore: useFormRegisterStore(),      
+      }
+  },
+  
+  //subir archivo joijo
+  onFileChange(e) {
+      const file = e.target.files[0];
+      if (file) {
+        // Aquí puedes procesar el archivo
+        // Por ejemplo, puedes mostrar una vista previa de la imagen seleccionada
+        this.showPreview(file);
+      }
+    },
+    showPreview(file) {
+      // Lógica para mostrar una vista previa de la imagen
+      // Podría ser asignar el archivo a una propiedad de datos y mostrar la vista previa en tu template
+    }
+  }
+  
+
+</script>
+<style>
+.formVue{
+  background-color: #FFF;
+  padding: 5% 10%;
+  border-radius: 10px;
+}
+
+/*Modo oscuro*/
+.dark-theme .formVue{
+  background-color: #434B54;
+}
+
+.form__tittle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form__tittle h1{
+  font-size: 1.5rem;
+  text-align: center;
+}
+.form__description{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+/*CSS del input*/
+.container__field{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.container__field label{
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+/*Fin del css*/
+.container__select{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.container__select label{
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+</style>
