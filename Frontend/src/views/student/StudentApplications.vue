@@ -2,10 +2,10 @@
     <div class="inicio">
       <h1>TUS SOLICITUDES DE PASANTIAS</h1> 
       <p>Te mostramos tus pasantias</p>
-      <div class="card">
+      <div class="card-inicio">
       <span class="text-a">PASANTIAS APROBADAS</span>
         <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card">
+          <div v-for="card in cards" :key="card.id" class="card-individual">
             <div class="content">
               <div class="image">
                 <img :src="card.imageUrl" alt="Card image" class="card-image">
@@ -22,7 +22,7 @@
         </div>
         <span class="text-p">PASANTIAS EN ESPERA</span>
         <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card">
+          <div v-for="card in cards" :key="card.id" class="card-individual">
             <div class="content">
               <div class="image">
                 <img :src="card.imageUrl" alt="Card image" class="card-image">
@@ -40,7 +40,6 @@
                     <span class="review-count">{{ card.reviews }} reviews</span>
                   </div>
                 </div>
-          
                 <div class="disclaimer">*Prices may vary depending on selected date.</div>
               </div>
             </div>
@@ -48,7 +47,7 @@
         </div>
         <span class="text-r">PASANTIAS RECHAZADAS</span>
         <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card">
+          <div v-for="card in cards" :key="card.id" class="card-individual">
             <div class="content">
               <div class="image">
                 <img :src="card.imageUrl" alt="Card image" class="card-image">
@@ -171,6 +170,7 @@
     }
     .text-content2 {
       position: relative;
+
     }
     @media (max-width: 585px) {
       .text-content2 {
@@ -200,12 +200,12 @@
     }
     @media (max-width: 290px) {
       .text-content2 {
-      margin-bottom:90%;
+      margin-bottom:60%;
     
     }
     }
     .content-text {
-      margin-right: 80px; /* Ajusta el espacio para el botón de reserva */
+      margin-right: 10%; /* Ajusta el espacio para el botón de reserva */
     }
     
     .book-btn {
@@ -220,7 +220,7 @@
       left: 10px;
     }
     /**colores de texto de si esta aporbado o no */
-    .text-a{
+    .text-a,.text-p,.text-r{
         position: relative;
         left: 10%; 
         right: 60%;
@@ -229,7 +229,6 @@
         font-family: verdana;
         font-size: 200%;
         font-weight: 50%;
-        color: #00c123;
         text-shadow: 1px 1px 1px #919191,
             1px 2px 1px #919191,
             1px 3px 1px #919191,
@@ -244,64 +243,41 @@
         1px 22px 10px rgba(16,16,16,0.2),
         1px 25px 35px rgba(16,16,16,0.2),
         1px 30px 60px rgba(16,16,16,0.4);
+    }
+    .text-a{
+        color: #00c123;
     }
     .text-p {
-        position: relative;
-        left: 10%; 
-        right: 60%;
-        transform: translate(50%,-50%);
-        text-transform: uppercase;
-        font-family: verdana;
-        font-size: 200%;
-        font-weight: 50%;
         color: #fee900;
-        text-shadow: 1px 1px 1px #919191,
-            1px 2px 1px #919191,
-            1px 3px 1px #919191,
-            1px 4px 1px #919191,
-            1px 5px 1px #919191,
-            1px 6px 1px #919191,
-            1px 7px 1px #919191,
-            1px 8px 1px #919191,
-            1px 9px 1px #919191,
-            1px 10px 1px #919191,
-        1px 18px 6px rgba(16,16,16,0.4),
-        1px 22px 10px rgba(16,16,16,0.2),
-        1px 25px 35px rgba(16,16,16,0.2),
-        1px 30px 60px rgba(16,16,16,0.4);
-    }
+      }
     .text-r {
-        position: relative;
-        left: 10%; 
-        right: 60%;
-        transform: translate(50%,-50%);
-        text-transform: uppercase;
-        font-family: verdana;
-        font-size: 200%;
-        font-weight: 50%;
-        color: #dc0c0c;
-        text-shadow: 1px 1px 1px #919191,
-            1px 2px 1px #919191,
-            1px 3px 1px #919191,
-            1px 4px 1px #919191,
-            1px 5px 1px #919191,
-            1px 6px 1px #919191,
-            1px 7px 1px #919191,
-            1px 8px 1px #919191,
-            1px 9px 1px #919191,
-            1px 10px 1px #919191,
-        1px 18px 6px rgba(16,16,16,0.4),
-        1px 22px 10px rgba(16,16,16,0.2),
-        1px 25px 35px rgba(16,16,16,0.2),
-        1px 30px 60px rgba(16,16,16,0.4);
-    }
+       color: #dc0c0c;
+       }
     /**finnnnnnnnnnnnnnnnnnnnnnnn*/
-    .card {
+    .card {/**contenedore de indivialues */
+      border: 0px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 30px;
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-bottom: 15px;
+    }
+    .card-individual {
       border: 1px solid #ccc;
       border-radius: 8px;
       overflow: hidden;
-      margin: 20px;
-      right: 100%;
+      border: 3px solid #000000;
+      margin-bottom: 7px;
+    }
+    .card-inicio{
+      border: 3px solid #000000;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 15px;
+      margin-right: 10%;
+      margin-left: 1%;
+       /* Ajusta este valor según el espacio que desees */
     }
     
     .content {
@@ -315,6 +291,7 @@
     .image .card-image {
       width: 200px; /* Tamaño fijo para la imagen */
       height: auto;
+      border-radius: 8px;
     }
     
     .text-content {
@@ -322,7 +299,7 @@
       padding: 20px;
     }
     /* Estilos responsivos */
-    @media (max-width: 768px) {
+    @media (max-width: 880px) {
       .content {
         flex-direction: column;
       }
@@ -349,7 +326,7 @@
     
     .book-btn {
       padding: 10px 20px;
-      background-color: #007bff;
+      background-color: #5a99dd;
       color: white;
       border: none;
       border-radius: 5px;
