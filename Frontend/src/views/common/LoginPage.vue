@@ -18,7 +18,9 @@
             class="form-control"
             placeholder="Ingresa tu usuario"
             :style="
-              userIdErrorMessage ? 'border: 3px solid red;' : 'border: none;'
+              loginMessages.userIdErrorMessage
+                ? 'border: 3px solid red;'
+                : 'border: none;'
             "
             v-model="userData.idusuario"
           />
@@ -29,7 +31,7 @@
             <input
               :type="showPassword ? 'text' : 'password'"
               :style="
-                passwordErrorMessage
+                loginMessages.passwordErrorMessage
                   ? 'border: 3px solid red;'
                   : 'border: none;'
               "
@@ -49,8 +51,21 @@
           </div>
         </div>
         <div class="submit-container">
-          <span class="submitMessage" v-text="loginMessage"></span>
-          <Button text="Iniciar sesión" :color="3"></Button>
+          <div class="message-container">
+            <span
+              class="submitMessage"
+              v-text="loginMessages.loginMessage"
+            ></span>
+            <span v-if="loginMessages.manyAttempts"
+              >Alcanzaste el limite de intentos para acceder a tu cuenta, espera
+              {{ formattedTime }} minutos para volver a intentarlo.</span
+            >
+          </div>
+          <Button
+            text="Iniciar sesión"
+            :color="3"
+            :class="{ 'button-disabled': buttonDisabled }"
+          ></Button>
         </div>
       </form>
       <div class="account-container">
@@ -74,10 +89,19 @@ export default {
         idusuario: "",
         password: "",
       },
+      attempts: 0,
       showPassword: false,
-      loginMessage: "",
-      userIdErrorMessage: false,
-      passwordErrorMessage: false,
+      buttonDisabled: false,
+      timer: {
+        minutes: 0,
+        seconds: 0,
+      },
+      loginMessages: {
+        loginMessage: "",
+        manyAttempts: false,
+        userIdErrorMessage: false,
+        passwordErrorMessage: false,
+      },
     };
   },
   methods: {
@@ -85,21 +109,25 @@ export default {
       const userIdRegEx = /^[A-Za-z0-9-_.&]{5,}$/;
       const passwordRegEx = /^[A-Za-z0-9@#$-_.%^&*()!~?]{2,}$/;
       if (this.userData.idusuario === "") {
-        this.userIdErrorMessage = true;
-        this.loginMessage = "Ingresa tu usuario por favor.";
+        this.loginMessages.userIdErrorMessage = true;
+        this.loginMessages.loginMessage = "Ingresa tu usuario por favor.";
       } else if (!userIdRegEx.test(this.userData.idusuario)) {
-        this.userIdErrorMessage = true;
-        this.loginMessage = "Error, el usuario introducido es inválido.";
+        this.loginMessages.userIdErrorMessage = true;
+        this.loginMessages.loginMessage =
+          "Error, el usuario introducido es inválido.";
       } else if (this.userData.password === "") {
-        this.userIdErrorMessage = false;
-        this.passwordErrorMessage = true;
-        this.loginMessage = "Ingresa tu contraseña por favor.";
+        this.loginMessages.userIdErrorMessage = false;
+        this.loginMessages.passwordErrorMessage = true;
+        this.loginMessages.loginMessage = "Ingresa tu contraseña por favor.";
       } else if (!passwordRegEx.test(this.userData.password)) {
-        this.userIdErrorMessage = false;
-        this.passwordErrorMessage = true;
-        this.loginMessage = "Error, la contraseña introducida es inválida.";
+        this.loginMessages.userIdErrorMessage = false;
+        this.loginMessages.passwordErrorMessage = true;
+        this.loginMessages.loginMessage =
+          "Error, la contraseña introducida es inválida.";
       } else {
-        this.passwordErrorMessage = false;
+        this.loginMessages.userIdErrorMessage = false;
+        this.loginMessages.passwordErrorMessage = false;
+        this.attempts++;
         // Realiza la solicitud POST a la API
         fetch("http://localhost:3000/auth/login", {
           method: "POST",
@@ -111,12 +139,22 @@ export default {
         })
           .then((response) => {
             if (response.ok) {
-              // La solicitud fue exitosa, puedes redirigir o realizar otras acciones
+              // La solicitud fue exitosa
               console.log("Inicio de sesión exitoso");
               this.$router.push({ name: "PrincipalPage" });
-            } else {
-              // La solicitud falló, puedes manejar el error aquí
+            } else if (this.attempts <= 2) {
+              this.loginMessages.loginMessage =
+                "Usuario o contraseña incorrectos, inténtalo nuevamente.";
+              console.log("attempts: " + this.attempts);
+              // La solicitud falló
               console.error("Inicio de sesión fallido");
+            } else {
+              console.error("¡Realizaste demasiados intentos!");
+              this.timer.minutes = 3;
+              this.loginMessages.loginMessage = "";
+              this.buttonDisabled = true;
+              this.loginMessages.manyAttempts = true;
+              this.startTimer();
             }
           })
           .catch((error) => {
@@ -127,17 +165,44 @@ export default {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },
+    startTimer() {
+      const totalSeconds = this.timer.minutes * 60 + this.timer.seconds;
+      let remainingSeconds = totalSeconds;
+      const timerInterval = setInterval(() => {
+        if (remainingSeconds > 0) {
+          remainingSeconds--;
+          this.timer.minutes = Math.floor(remainingSeconds / 60);
+          this.timer.seconds = remainingSeconds % 60;
+        } else {
+          clearInterval(timerInterval);
+          this.loginMessages.manyAttempts = false;
+          this.buttonDisabled = false;
+          this.userData.idusuario = "";
+          this.userData.password = "";
+          this.attempts = 0;
+        }
+      }, 1000);
+    },
+  },
+  computed: {
+    formattedTime() {
+      const min =
+        this.timer.minutes < 10 ? `0${this.timer.minutes}` : this.timer.minutes;
+      const sec =
+        this.timer.seconds < 10 ? `0${this.timer.seconds}` : this.timer.seconds;
+      return `${min}:${sec}`;
+    },
   },
 };
 </script>
 
 <style scoped>
 img {
-  width: 260px;
+  width: 60%;
 }
 
 .container {
-  background-image: url("../../components/images/USEI.png");
+  background-image: url("@/components/images/USEI.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -145,14 +210,15 @@ img {
 
 .principal-container {
   background-color: #f8f7f7;
+  width: 55%;
   padding: 7%;
   text-align: center;
   border-radius: 30px;
   border: 2px solid black;
-  box-shadow: 15px 15px 15px;
+  box-shadow: 15px 15px 55px;
 }
 
-input {
+.form-control {
   display: block;
   width: 100%;
   transition: 0.4s all ease;
@@ -177,10 +243,14 @@ input {
   justify-content: space-between;
 }
 
-span {
+.message-container {
   color: red;
-  margin-bottom: 90%;
-  /* font-size: 16em; */
+  margin-bottom: 5%;
+  font-size: medium;
+}
+
+.button-disabled {
+  display: none;
 }
 
 .password-input-container {
@@ -190,8 +260,8 @@ span {
 .showPasswordButton {
   position: absolute;
   appearance: none;
-  width: 9%;
-  height: 70%;
+  width: 7%;
+  height: 77%;
   right: 5px;
   top: 50%;
   transform: translateY(-50%);
@@ -208,6 +278,17 @@ span {
   background-image: url("@/components/images/hidePassword.png");
 }
 
+@media screen and (max-width: 768px) {
+  .principal-container {
+    width: 95%;
+  }
+
+  .showPasswordButton {
+    width: 15%;
+    height: 55%;
+  }
+}
+
 /* DARK THEME */
 .dark-theme img {
   filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
@@ -220,7 +301,11 @@ span {
 .dark-theme .principal-container {
   background-color: #353e48;
   border: 2px solid white;
-  box-shadow: 15px 15px 15px #8d8d8d;
+  box-shadow: 15px 15px 35px #8d8d8d;
+}
+
+.dark-theme .message-container {
+  color: rgb(253, 97, 97);
 }
 
 .dark-theme .showPasswordButton {
