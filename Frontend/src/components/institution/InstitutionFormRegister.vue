@@ -28,9 +28,9 @@
               
               v-model="formStore.resenia" type="text" class="field">
           </div>
-          <div class="container__field">
+          <div class="container__field2">
               <label>Logo de la Institucion *:</label>
-              <input placeholder type="file" @change="onFileChange" accept="image/*">
+              <input type="file" @change="onFileChange" accept="image/*">
               
           </div>
           <div class="form__tittle">
@@ -55,24 +55,24 @@
           </div>
           <div class="buttons">
          
-         <div class="container__button">
-         <Button 
-           text="Volver atras" 
-           :color="0" 
-           :disabled="false"
-           @option-selected="login"
-           >
-         </Button>
-       </div>
-       <div class="container__button">
-         <Button 
-           text="Enviar solicitud" 
-           :color="1" 
-           :disabled="false"
-           @option-selected="EnviarSolicitud"
-           >
-         </Button>
-       </div>
+            <div class="buttons">
+      <div class="button-left">
+        <Button 
+          text="Volver atras" 
+          :color="0" 
+          :disabled="false"
+          @option-selected="inicio"
+        ></Button>
+      </div>
+      <div class="button-right">
+        <Button 
+          text="Enviar solicitud" 
+          :color="1" 
+          :disabled="false"
+          @option-selected="EnviarSolicitud"
+        ></Button>
+      </div>
+    </div>
       </div>
       </div>
   </div>
@@ -86,11 +86,32 @@ export default {
     Button,
       Dropdown
   },
+  methods: {
+    toggleDarkMode() {
+      const darkModeStore = useThemeStore();
+      this.isDarkMode = !this.isDarkMode;
+      darkModeStore.toggleDarkMode();
+      console.log(darkModeStore.$event);
+    },
+    inicio(option) {
+      if (option) {
+        console.log("inicio");
+        this.$router.push("/");
+      }
+    },
+    EnviarSolicitud(option) {
+      if (option) {
+        console.log(":)");
+        this.$router.push("/");
+      }
+    },
+  },
   data(){
       return{
           formStore: useFormRegisterStore(),      
       }
   },
+
   
   //subir archivo joijo
   onFileChange(e) {
@@ -110,6 +131,28 @@ export default {
 
 </script>
 <style>
+* Tu estilo actual */
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.button-left,
+.button-right {
+  width: 48%; /* Establece un ancho para cada botón */
+}
+
+.button-left {
+  float: left; /* Alinea el botón "Volver atrás" a la izquierda */
+}
+
+.button-right {
+  float: right; /* Alinea el botón "Enviar solicitud" a la derecha */
+}
+
 .formVue{
   background-color: #FFF;
   padding: 5% 10%;
@@ -144,6 +187,17 @@ export default {
   margin-bottom: 10px;
 }
 .container__field label{
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.container__field2{
+  display: flex;
+  border: 0px solid #ccc;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.container__field2 label{
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 5px;
