@@ -97,7 +97,7 @@ En Internship by Cato, estamos comprometidos con brindarte las herramientas nece
 export default {
 
 };
-</script>
+</script >
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Raleway:200');
 

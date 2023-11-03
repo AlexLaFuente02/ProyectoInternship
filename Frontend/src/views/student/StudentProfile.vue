@@ -79,10 +79,18 @@
   };
   </script>
   
-  <style>
+  <style scoped>
   /*contendores para ordenas*/
   .personal-description,
   .social-media,
+  .container{
+    padding: 5% 10%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
   .user-details {
     flex: 1; /* Permite que los contenedores ocupen el mismo ancho */
     margin: 10px; /* Espaciado entre contenedores */

@@ -106,7 +106,7 @@ export default {
     
 }
 </script>
-<style>
+<style scoped>
 .formVue{
     background-color: #FFF;
     padding: 5% 10%;

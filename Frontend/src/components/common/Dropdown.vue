@@ -37,7 +37,7 @@
     },
   };
 </script>
-<style>
+<style scoped>
 .dropdown {
     position: relative;
     display: inline-block;

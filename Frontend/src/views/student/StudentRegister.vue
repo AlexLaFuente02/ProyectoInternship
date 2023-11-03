@@ -75,7 +75,14 @@ export default {
     },
 }
 </script>
-<style>
+<style scoped>
+.container{
+    padding: 5% 10%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .container__stepper{
     padding: 1rem;
     border-radius: 10px;

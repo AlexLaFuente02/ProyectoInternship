@@ -16,7 +16,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300);
 
 /* Variables */
