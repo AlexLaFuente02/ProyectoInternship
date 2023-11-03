@@ -113,22 +113,17 @@
     };
     </script>
     
-    <style>
+    <style scoped>
     /** estilo eltra de titulo*/
     h1 {
-      font-size: calc( 1em + 30vmin );
       font-weight: 900;
       color: tomato;
-      
-      
       --x-offset: -0.0625em;
       --y-offset: 0.0625em;
       --stroke: 0.025em;
       --background-color: white;
       --stroke-color: lightblue;
-      
-      text-shadow: 
-        
+      text-shadow:
         var(--x-offset)
         var(--y-offset)
         0px

@@ -92,7 +92,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .container__header{
   display: flex;
   flex-direction: row;

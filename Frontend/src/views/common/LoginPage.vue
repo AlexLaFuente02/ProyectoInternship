@@ -202,6 +202,11 @@ img {
 }
 
 .container {
+  padding: 5% 10%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-image: url("@/components/images/USEI.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
