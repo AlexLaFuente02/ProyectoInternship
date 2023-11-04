@@ -98,10 +98,23 @@
               </div>
               <div class="upload-CV">
                 <h6>Subir CV:</h6>
-                <Button text="Subir PDF" :color="4"></Button>
+                <Button text="Subir PDF" :color="4" @click="openFileInput">
+                  <input
+                    type="file"
+                    ref="fileInput"
+                    name="PDF-CV"
+                    id="PDF-CV"
+                    @change="handleFileChange"
+                  />
+                </Button>
               </div>
               <div class="insert-curriculum">
-                <input type="text" name="uploadCV" id="uploadCV" />
+                <input
+                  type="text"
+                  name="uploadCV"
+                  id="uploadCV"
+                  placeholder="Link de Curriculum Vitae"
+                />
               </div>
               <div class="submit-container">
                 <p>
@@ -114,6 +127,7 @@
                   id="userDescription"
                   cols="25"
                   rows="10"
+                  placeholder="Breve carta de presentación"
                 ></textarea>
                 <Button text="POSTULAR" :color="2"></Button>
               </div>
@@ -132,6 +146,17 @@ export default {
   components: {
     Button,
   },
+  methods: {
+    openFileInput() {
+      this.$refs.fileInput.click();
+    },
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        console.log("Archivo seleccionado: " + file.name);
+      }
+    },
+  },
 };
 </script>
 
@@ -142,7 +167,7 @@ export default {
 }
 
 img {
-  width: 80%;
+  width: 100%;
 }
 
 .internship-container {
