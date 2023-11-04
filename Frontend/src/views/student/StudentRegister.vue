@@ -14,27 +14,47 @@
         <component :is="steps[currentStep - 1].component"></component>
       </div>
       <div class="controls">
-        <button class="btn btn-primary" @click="prevStep" :disabled="currentStep === 1">Anterior</button>
-        <button class="btn btn-primary" @click="nextStep" v-if="currentStep !== steps.length">Siguiente</button>
-        <button class="btn btn-primary" @click="register"
-        v-else 
-        >REGISTRARSE</button>
+        <div class="container__button">
+            <Button 
+                text="Anterior" 
+                :color="0" 
+                :disabled="false"
+                @option-selected="prevStep"
+                >
+            </Button>
+        </div>
+        <div class="container__button" v-if="currentStep !== steps.length">
+            <Button 
+                text="Siguiente" 
+                :color="0" 
+                :disabled="false"
+                @option-selected="nextStep"
+                >
+            </Button>
+        </div>
+        <div class="container__button" v-else>
+            <Button 
+                text="Registrarse" 
+                :color="0" 
+                :disabled="false"
+                @option-selected="register"
+                >
+            </Button>
+        </div>
       </div>
     </div>
 </template>
+
 <script>
-import FooterCommon from '../../components/common/FooterCommon.vue';
-import NavbarCommon from '../../components/common/NavbarCommon.vue';
-import StudentFormRegister from '../../components/student/StudentFormRegister.vue';
-import StudentValidationRegister from '../../components/student/StudentValidationRegister.vue';
-import { useThemeStore } from "@/store/common/useThemeStore";
+import StudentFormRegister from '@/components/student/StudentFormRegister.vue';
+import StudentValidationRegister from '@/components/student/StudentValidationRegister.vue';
 import { useFormRegisterStore } from "@/store/student/formRegisterStore";
+import Button from '@/components/common/Button.vue';
 export default {
     components:{
-        NavbarCommon,
-        FooterCommon,
         StudentFormRegister,
-        StudentValidationRegister
+        StudentValidationRegister,
+        Button,
     },
     data(){
         return{
@@ -65,12 +85,6 @@ export default {
         register(){
             console.log(this.formStore);
             //Enviar datos al backend
-        }
-    },
-    computed: {
-        //Obtener el modo oscuro
-        darkTheme(){
-            return useThemeStore().darkTheme;
         }
     },
 }
@@ -107,7 +121,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    z-index: 1;
+    z-index: 0;
 }
 .stepper__item{
     display: flex;
@@ -126,8 +140,12 @@ export default {
     border: 2px solid #000;
     border-radius: 100%;
     position: relative;
-    z-index: 1;
+    transition: all 0.3s ease 0s;
 }
+.item__number :hover{
+    transform: scale(1.1);
+}
+
 .stepper__item.active .item__number{
     color: #fff;
     background: #0d6efd;
@@ -145,6 +163,19 @@ export default {
     width: 90%;
     margin-top: 2%;
 }
-
+.container__content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container__button{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
 </style>
 

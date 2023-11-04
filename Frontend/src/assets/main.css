@@ -66,6 +66,13 @@ option:focus {
   border-color: #a8c0ff;
   box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
+label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
 
 /* Estilos para el tema oscuro del input*/
 .dark-theme input {
@@ -194,6 +201,9 @@ h6 {
   h6 {
     font-size: 0.8rem;
   }
+  label {
+    font-size: 1rem;
+  }
 }
 /*Ajustar tamaños de fuente para pantallas más pequeñas*/
 @media screen and (max-width: 576px) {
@@ -219,5 +229,8 @@ h6 {
 
   h6 {
     font-size: 0.8rem;
+  }
+  label {
+    font-size: 0.7rem;
   }
 }
