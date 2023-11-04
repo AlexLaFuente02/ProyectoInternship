@@ -14,7 +14,7 @@
                 </div>
                 <div class="container__types__cards__card">
                     <div class="container__types__cards__card__logo">
-                        <router-link to="">
+                        <router-link to="/institution/register">
                             <font-awesome-icon :icon="['fas', 'suitcase']" style="color: #838b8e;" size="6x"/>
                         </router-link>
                         
