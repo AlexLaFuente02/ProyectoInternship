@@ -75,7 +75,6 @@ export default {
       const darkModeStore = useThemeStore();
       this.isDarkMode = !this.isDarkMode;
       darkModeStore.toggleDarkMode();
-      console.log(darkModeStore.$event);
     },
     createAccount(option) {
       if (option) {
@@ -364,7 +363,7 @@ export default {
         top: 2px;
     }
 }
-@media screen and (max-width: 1000x){
+@media screen and (max-width: 1024px){
   .container__header{
     display: none;
   }

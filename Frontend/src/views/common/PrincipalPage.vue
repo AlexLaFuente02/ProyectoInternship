@@ -93,6 +93,7 @@ export default {
       }
     },
   },
+  
 };
 </script>
 <style scoped>
@@ -148,6 +149,7 @@ export default {
   justify-content: center;
   width: 600px;
   height: 400px;
+  z-index: 0;
 }
 .container__problem{
   display: flex;

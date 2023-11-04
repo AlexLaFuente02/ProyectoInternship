@@ -34,6 +34,14 @@ completa el siguiente formulario para registrarte como estudiante o graduado.</p
                 
                 v-model="formStore.documentNumber" type="text" class="field">
             </div>
+
+
+
+            <div class="container__">
+                <label>Validación *:</label>
+                <CheckBox :options="checkboxOptions" @selected="handleSelectedOption" />
+                <p>La opción seleccionada es: {{ selectedOption }}</p>
+            </div>
             <div class="container__select">
                 <label>Sede *:</label>
                 <Dropdown :options="this.listCampus" :selectedValue="formStore.campus" placeholderValue="Seleccione una sede"
@@ -44,6 +52,11 @@ completa el siguiente formulario para registrarte como estudiante o graduado.</p
                 <Dropdown :options="this.listCareers" :selectedValue="formStore.career" placeholderValue="Seleccione una carrera"
                 @option-selected="updateCareer" />
             </div>
+            <div class="container__select">
+                <label>Semestre de ingreso *:</label>
+                <Dropdown :options="this.formStore.semesters" :selectedValue="formStore.semester" placeholderValue="Seleccione un semestre"
+                @option-selected="formStore.semester = $event" />
+            </div>
         </div>
     </div>
 </template>
@@ -52,9 +65,11 @@ import { useFormRegisterStore } from "@/store/student/formRegisterStore";
 import { useCampusStore } from "@/store/common/campusStore";
 import { useCareersStore } from "@/store/common/careersStore";
 import Dropdown from '../common/Dropdown.vue';
+import CheckBox from "../common/CheckBox.vue";
 export default {
     components:{
-        Dropdown
+        Dropdown,
+        CheckBox,
     },
     data(){
         return{
@@ -63,6 +78,8 @@ export default {
             careerStore: useCareersStore(),
             listCampus: [],
             listCareers: [],
+            checkboxOptions: ["Opción 1", "Opción 2"],
+            selectedOption: null,
         }
     },
     methods:{
@@ -97,6 +114,9 @@ export default {
         updateCareer (option) {
             this.formStore.career = option.label;
         },
+        handleSelectedOption(option) {
+            this.selectedOption = option;
+        },
     },
     //Tercer paso, obtener todas las sedes cuando se crea el componente
     created(){
@@ -108,6 +128,9 @@ export default {
 </script>
 <style scoped>
 .formVue{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     background-color: #FFF;
     padding: 5% 10%;
     border-radius: 10px;
@@ -151,9 +174,52 @@ export default {
     flex-direction: column;
     margin-bottom: 10px;
 }
-.container__select label{
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 5px;
+
+/*Media queries*/
+@media screen and (max-width: 768px){
+    .formVue{
+        padding: 5% 5%;
+    }
+    .form__tittle h1{
+        font-size: 1.25rem;
+    }
+    .form__description p{
+        font-size: 0.8rem;
+    }
+    .container__field label{
+        font-size: 1rem;
+    }
+    .field{
+        font-size: 0.8rem;
+    }
+    .form__button button{
+        font-size: 0.8rem;
+    }
+    .form__button h6{
+        font-size: 0.8rem;
+    }
+}
+@media screen and (max-width: 576px){
+    .formVue{
+        padding: 5% 5%;
+    }
+    .form__tittle h1{
+        font-size: 0.75rem;
+    }
+    .form__description p{
+        font-size: 0.7rem;
+    }
+    .container__field label{
+        font-size: 0.7rem;
+    }
+    .field{
+        font-size: 0.7rem;
+    }
+    .form__button button{
+        font-size: 0.7rem;
+    }
+    .form__button h6{
+        font-size: 0.7rem;
+    }
 }
 </style>

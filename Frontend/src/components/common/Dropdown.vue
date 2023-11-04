@@ -107,4 +107,27 @@
 .dark-theme .dropdown-content li:hover{
     background-color: rgba(78, 86, 95, 0.7);
 }
+/*Media queries*/
+@media screen and (max-width: 768px){
+    .dropdown__value span{
+        font-size: 0.75rem;
+    }
+    .dropdown__value svg{
+        font-size: 0.75rem;
+    }
+    .dropdown-content li{
+        font-size: 0.75rem;
+    }
+}
+@media screen and (max-width: 576px){
+    .dropdown__value span{
+        font-size: 0.5rem;
+    }
+    .dropdown__value svg{
+        font-size: 0.5rem;
+    }
+    .dropdown-content li{
+        font-size: 0.5rem;
+    }
+}
 </style>

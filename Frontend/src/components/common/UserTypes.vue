@@ -36,6 +36,9 @@
     background-color: #FFF;
     border-radius: 10px;
 }
+.dark-theme .container{
+    background-color: #434B54;
+}
 .container__types__cards{
     display: flex;
     flex-direction: row;
@@ -54,6 +57,7 @@
     align-items: center;
 }
 .container__types__cards__card__description{
+    margin-top: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,8 +67,10 @@
 @media screen and (max-width: 768px){
     .container__types__cards{
         flex-direction: column;
+        
     }
     .container__types__cards__card{
+        margin-bottom: 10%;
         width: 100%;
         height: 100%;
     }

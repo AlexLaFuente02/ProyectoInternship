@@ -12,17 +12,22 @@ correo electrónico de la UCB y confírmala.</p>
         <div class="form__container">
             <div class="container__field">
                 <label>Correo Electrónico</label>
-                <input placeholder="Introduzca su correo electrónico de la UCB"
+                <input placeholder="Introduzca su correo UCB"
                 
                 v-model="formStore.ucbEmail" type="email" class="field">
             </div>
             <br>
-            <div class="form__button">
-                <button type="button" class="btn btn-primary" @click="sendEmail" v-if="send"
-            >Enviar código</button>
-            <h6 v-if="!send">{{ this.seconds}} segundos para volver a enviar el código
-            </h6>
+            <div class="form__button" v-if="send">
+                <Button 
+                    text="Enviar código" 
+                    :color="5" 
+                    :disabled="false"
+                    @option-selected="sendEmail"
+                    >
+                </Button>
             </div>
+            <h6 v-else>{{ this.seconds}} segundos para volver a enviar el código
+                    </h6>
             <br>
             <div class="container__field">
                 <label>Código de verificación</label>
@@ -34,8 +39,10 @@ correo electrónico de la UCB y confírmala.</p>
 </template>
 <script>
 import { useFormRegisterStore } from "@/store/student/formRegisterStore";
+import Button from '@/components/common/Button.vue';
 export default {
     components:{
+        Button
     },
     data(){
         return{
@@ -66,6 +73,10 @@ export default {
 </script>
 <style scoped>
 .formVue{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: #FFF;
     padding: 5% 10%;
     border-radius: 10px;
@@ -96,6 +107,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
 }
 .form__button{
     display: flex;
@@ -103,17 +115,65 @@ export default {
     flex-direction: row;
     justify-content: center;
     gap: 1.2rem;
+    
 }
 .container__field{
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
 }
 .container__field label{
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 5px;
 }
- 
+/*Media queries*/
+@media screen and (max-width: 768px){
+    .formVue{
+        padding: 5% 5%;
+    }
+    .form__tittle h1{
+        font-size: 1.25rem;
+    }
+    .form__description p{
+        font-size: 0.8rem;
+    }
+    .container__field label{
+        font-size: 1rem;
+    }
+    .field{
+        font-size: 0.8rem;
+    }
+    .form__button button{
+        font-size: 0.8rem;
+    }
+    .form__button h6{
+        font-size: 0.8rem;
+    }
+}
+@media screen and (max-width: 576px){
+    .formVue{
+        padding: 5% 5%;
+    }
+    .form__tittle h1{
+        font-size: 0.75rem;
+    }
+    .form__description p{
+        font-size: 0.7rem;
+    }
+    .container__field label{
+        font-size: 0.7rem;
+    }
+    .field{
+        font-size: 0.7rem;
+    }
+    .form__button button{
+        font-size: 0.7rem;
+    }
+    .form__button h6{
+        font-size: 0.7rem;
+    }
+}
+
+
     
 </style>
