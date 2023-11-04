@@ -51,10 +51,16 @@
                             </router-link>
                         </li>
                         <!--Modo oscuro-->
-                        <li class="container__menu--options__item" @click="toggleDarkMode">
+                        <li class="container__menu--options__item" @click="toggleDarkMode" v-if="isDarkMode">
                             <div class="container__menu--options__item__dark-mode">
                                 <font-awesome-icon :icon="['fas', 'moon']" />
                                 <span>Modo oscuro</span>
+                            </div>
+                        </li>
+                        <li class="container__menu--options__item" @click="toggleDarkMode" v-else>
+                            <div class="container__menu--options__item__dark-mode">
+                                <font-awesome-icon :icon="['fas', 'sun']" />
+                                <span>Modo claro</span>
                             </div>
                         </li>
                         <li>
@@ -123,6 +129,7 @@ export default {
             }
         },
         toggleDarkMode() {
+            this.isDarkMode = !this.isDarkMode;
             useThemeStore().toggleDarkMode();
         },
     },
