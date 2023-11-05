@@ -14,11 +14,13 @@ import PrincipalPage from "@/views/common/PrincipalPage.vue";
 import MoreInformation from "@/views/common/MoreInformation.vue";
 import InstitutionsCommon from "@/views/common/InstitutionsCommon.vue";
 import InternshipsCommon from "@/views/common/InternshipsCommon.vue";
+import InternshipInformation from "@/views/common/InternshipInformation.vue";
 import UserRegister from "@/views/common/UserRegister.vue";
 //Paginas Student
 import StudentRegister from "@/views/student/StudentRegister.vue";
 import ApplyForAnInternship from "@/views/student/ApplyForAnInternship.vue";
 import StudentApplications from '@/views/student/StudentApplications.vue';
+import PostulationStatus from "../src/views/student/PostulationStatus.vue"
 import StudentProfile from '@/views/student/StudentProfile.vue';
 //Paginas Institution
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
@@ -43,10 +45,12 @@ const routes = [
     {name: 'MoreInformation', path: '/moreInformation', component: MoreInformation},
     {name: 'InstitutionsCommon', path: '/institutionsCommon', component: InstitutionsCommon},
     {name: 'InternshipsCommon', path: '/internshipsCommon', component: InternshipsCommon},
+    {name: "InternshipInformation", path: "/internshipsCommon/InternshipInformation", component: InternshipInformation},
     {name: 'UserRegister', path: '/userRegister', component: UserRegister},
     //Student
     {name: 'StudentRegister', path: '/student/register', component: StudentRegister},
     {name: 'StudentApplications', path: '/student/applications', component: StudentApplications},
+    {name: "PostulationStatus", path: "/student/applications/PostulationStatus", component: PostulationStatus},
     {name: 'StudentProfile', path: '/student/profile', component: StudentProfile},
     {name: 'ApplyForAnInternship',path: '/student/ApplyForAnInternship',component: ApplyForAnInternship},
     //Institution
