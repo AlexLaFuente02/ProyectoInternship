@@ -5,7 +5,7 @@
       <div class="first-grid-container">
         <img
           src="https://www.cainco.org.bo/empresaydesarrollo/wp-content/uploads/2021/05/1550703145451.png"
-          alt=""
+          alt="Logo de la Empresa"
         />
       </div>
       <div class="second-grid-container">
@@ -23,45 +23,47 @@
         </div>
         <div class="institution_name">
           <h4>Empresa:</h4>
-          <p>Jala soft</p>
+          <p>JALA SOFT</p>
         </div>
       </div>
       <div class="third-grid-container">
         <div class="internship-information-grid">
           <div class="first-information-grid">
             <div class="title-grid">
-              <h4>Detalles</h4>
+              <h4 class="title">Detalles</h4>
             </div>
             <div class="information-grid">
-              <div class="information-title">
-                <h4>Detalles de la Pasantía:</h4>
-              </div>
+              <h4 class="information-title">Detalles de la Pasantía:</h4>
               <div class="i_details">
                 <ul class="internship-details">
-                  <li>Empresa: Jala Soft</li>
-                  <li>Ubicación: Ubicación de la empresa</li>
-                  <li>Duración: Duración de la pasantía</li>
-                  <li>Fecha de Inicio: Fecha de inicio</li>
-                  <li>Fecha de Finalización: Fecha de finalización</li>
-                  <li>Tipo de Pasantía: Pasantía de Desarrollo Web Backend</li>
-                  <li>Tecnologías: Spring, Java, SQL, etc.</li>
-                  <li>Ciudad: Cochabamba</li>
+                  <li><strong>Empresa: </strong>Jala Soft</li>
+                  <li><strong>Ubicación: </strong>Ubicación de la empresa</li>
+                  <li><strong>Duración: </strong>Duración de la pasantía</li>
+                  <li><strong>Fecha de Inicio: </strong>Fecha de inicio</li>
+                  <li>
+                    <strong>Fecha de Finalización: </strong>Fecha de
+                    finalización
+                  </li>
+                  <li>
+                    <strong>Tipo de Pasantía: </strong>Pasantía de Desarrollo
+                    Web Backend
+                  </li>
+                  <li><strong>Tecnologías: </strong>Spring, Java, SQL, etc.</li>
+                  <li><strong>Ciudad: </strong>Cochabamba</li>
                 </ul>
               </div>
               <div class="download-internship">
-                <p>Descargar aplicativo:</p>
+                <p class="i_download"><strong>Descargar aplicativo:</strong></p>
                 <Button text="Descargar" :color="0"></Button>
               </div>
             </div>
           </div>
           <div class="second-information-grid">
             <div class="title-grid">
-              <h4>Requisitos</h4>
+              <h4 class="title">Requisitos</h4>
             </div>
             <div class="information-grid">
-              <div class="information-title">
-                <h4>Requisitos de Postulación:</h4>
-              </div>
+              <h4 class="information-title">Requisitos de Postulación:</h4>
               <div class="i_details">
                 <ul class="internship-details">
                   <li>Conocimiento básico de programación en Java.</li>
@@ -69,12 +71,10 @@
                   <li>Habilidades de comunicación y trabajo en equipo.</li>
                 </ul>
               </div>
-              <div class="information-title">
-                <h4>Carreras a las que va dirigida:</h4>
-              </div>
+              <h4 class="information-title">Carreras a las que va dirigida:</h4>
               <div class="i_details">
-                <ul>
-                  <li class="internship-details">
+                <ul class="internship-details">
+                  <li>
                     Estudiantes de carreras relacionadas con la informática o
                     desarrollo de software.
                   </li>
@@ -84,12 +84,10 @@
           </div>
           <div class="third-information-grid">
             <div class="title-grid">
-              <h4>Postular</h4>
+              <h4 class="title">Postular</h4>
             </div>
             <div class="information-grid">
-              <div class="information-title">
-                <h4>¿Cómo Postular?</h4>
-              </div>
+              <h4 class="information-title">¿Cómo Postular?</h4>
               <div class="i_details">
                 <p>
                   Si estás interesado en esta pasantía, por favor, sigue estos
@@ -98,15 +96,18 @@
               </div>
               <div class="upload-CV">
                 <h6>Subir CV:</h6>
-                <Button text="Subir PDF" :color="4" @click="openFileInput">
-                  <input
-                    type="file"
-                    ref="fileInput"
-                    name="PDF-CV"
-                    id="PDF-CV"
-                    @change="handleFileChange"
-                  />
-                </Button>
+                <Button
+                  text="Subir PDF"
+                  :color="4"
+                  @click="openFileInput"
+                ></Button>
+                <input
+                  type="file"
+                  id="fileInput"
+                  ref="fileInput"
+                  style="display: none"
+                  @change="handleFileChange"
+                />
               </div>
               <div class="insert-curriculum">
                 <input
@@ -114,14 +115,18 @@
                   name="uploadCV"
                   id="uploadCV"
                   placeholder="Link de Curriculum Vitae"
+                  v-model="CurriculumVitae.fileName"
                 />
               </div>
               <div class="submit-container">
-                <p>
-                  Escribe una breve carta de presentación en la que expliques
-                  por qué estás interesado en esta pasantía y cómo tu formación
-                  y habilidades pueden contribuir al equipo de Jala Soft.
-                </p>
+                <div class="presentation-letter">
+                  <p>
+                    Escribe una breve carta de presentación en la que expliques
+                    por qué estás interesado en esta pasantía y cómo tu
+                    formación y habilidades pueden contribuir al equipo de Jala
+                    Soft.
+                  </p>
+                </div>
                 <textarea
                   name="userDescription"
                   id="userDescription"
@@ -146,14 +151,23 @@ export default {
   components: {
     Button,
   },
+  data() {
+    return {
+      CurriculumVitae: {
+        fileName: "",
+      },
+    };
+  },
   methods: {
     openFileInput() {
       this.$refs.fileInput.click();
     },
-    handleFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        console.log("Archivo seleccionado: " + file.name);
+    handleFileChange() {
+      const fileInput = this.$refs.fileInput;
+      if (fileInput.files.length > 0) {
+        const selectedFile = fileInput.files[0];
+        this.CurriculumVitae.fileName = selectedFile.name;
+        console.log("Archivo seleccionado:", this.CurriculumVitae.fileName);
       }
     },
   },
@@ -176,20 +190,18 @@ img {
   grid-template-columns: 41% 1fr;
   background-color: rgb(255, 255, 255);
   text-align: center;
-  border: 1px solid black;
+  border: 2px solid black;
 }
 
-.first-grid-container {
-  border: 1px solid black;
-}
-
-.second-grid-container {
+.first-information-grid,
+.second-information-grid,
+.third-information-grid {
   border: 1px solid black;
 }
 
 .third-grid-container {
   grid-column: span 2;
-  border: 1px solid black;
+  border-top: 2px solid black;
 }
 
 .internship-information-grid {
@@ -201,18 +213,36 @@ img {
   border: 1px solid black;
 }
 
-.first-information-grid {
-  border: 1px solid black;
-}
-.second-information-grid {
-  border: 1px solid black;
-}
-.third-information-grid {
-  border: 1px solid black;
-}
 .title-grid {
   background-color: rgb(223, 255, 255);
   border-bottom: 2px solid black;
+}
+
+.second-grid-container {
+  margin: auto;
+}
+
+.i_description {
+  width: 80%;
+  margin: 0 auto;
+}
+.institution_name {
+  margin-top: 2%;
+}
+
+.title {
+  margin: 0;
+  padding: 5% 0;
+}
+
+.information-title {
+  margin: 4% auto;
+}
+
+.i_details,
+.presentation-letter {
+  width: 90%;
+  margin: 5% auto;
 }
 
 .internship-details {
@@ -224,26 +254,40 @@ img {
   display: flex;
   justify-content: space-between;
   width: 70%;
-  margin: 3% auto;
+  margin: 4% auto;
+}
+
+.i_download {
+  margin: 7% auto 5%;
+}
+
+.download-internship,
+.submit-container {
+  margin-bottom: 5%;
 }
 
 #uploadCV,
 #userDescription {
-  border: 2px solid cadetblue;
+  border: 1px solid cadetblue;
   resize: none;
 }
-#uploadCV:focus,
-#userDescription:focus {
-  border: none;
+
+#userDescription {
+  margin-bottom: 4%;
 }
 
 @media screen and (max-width: 768px) {
-  .internship-container {
+  .internship-container,
+  .internship-information-grid {
     display: block;
   }
 
-  .internship-information-grid {
-    display: block;
+  .second-grid-container {
+    margin: 3% auto 8%;
+  }
+
+  .i_description {
+    margin-bottom: 7%;
   }
 }
 
@@ -253,36 +297,22 @@ img {
 }
 
 .dark-theme .internship-container {
-  border: 1px solid white;
-}
-
-.dark-theme .first-grid-container {
-  border: 1px solid white;
-}
-
-.dark-theme .second-grid-container {
-  border: 1px solid white;
+  border: 2px solid white;
 }
 
 .dark-theme .third-grid-container {
-  border: 1px solid white;
+  border-top: 2px solid white;
 }
 
-.dark-theme .internship-information-grid {
-  border: 1px solid white;
-}
-
-.dark-theme .first-information-grid {
-  border: 1px solid white;
-}
-.dark-theme .second-information-grid {
-  border: 1px solid white;
-}
+.dark-theme .internship-information-grid,
+.dark-theme .first-information-grid,
+.dark-theme .second-information-grid,
 .dark-theme .third-information-grid {
   border: 1px solid white;
 }
+
 .dark-theme .title-grid {
-  background-color: rgb(123, 188, 188);
+  background-color: rgb(0, 169, 169);
   border-bottom: 2px solid white;
 }
 </style>
