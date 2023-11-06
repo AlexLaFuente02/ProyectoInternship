@@ -24,7 +24,9 @@ import StudentProfile from '@/views/student/StudentProfile.vue';
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
 import InstitutionAddConvocatoria from '@/views/institution/InstitutionAddConvocatoria.vue'
 import InstitutionConvocatoria from '@/views/institution/InstitutionConvocatoria.vue'
- //Paginas Admin
+import InstitutionPrincipalPage from '@/views/institution/InstitutionPrincipalPage.vue'
+
+//Paginas Admin
 
 //Librerias de PrimeVue
 import ButtonPrime from "primevue/button";
@@ -54,6 +56,7 @@ const routes = [
     {name: 'InstitutionRegister', path : '/institution/register', component:InstitutionRegister},
     {name: 'InstitutionAddConvocatoria', path : '/institution/addConvocatoria', component:InstitutionAddConvocatoria},
     {name: 'InstitutionConvocatoria', path : '/institution/Convocatoria', component:InstitutionConvocatoria},
+    {name: 'InstitutionPrincipalPage', path : '/institution/Principal', component:InstitutionPrincipalPage},
     //Usei-Admin
 ];
 // Router

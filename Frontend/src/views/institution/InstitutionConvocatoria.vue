@@ -76,7 +76,7 @@
 };
     </script>
     
-    <style>
+    <style scoped>
     /** estilo eltra de titulo*/
     h1 {
       font-size: calc( 1em + 30vmin );
