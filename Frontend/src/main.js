@@ -23,6 +23,7 @@ import StudentProfile from '@/views/student/StudentProfile.vue';
 //Paginas Institution
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
 import InstitutionAddConvocatoria from '@/views/institution/InstitutionAddConvocatoria.vue'
+import InstitutionConvocatoria from '@/views/institution/InstitutionConvocatoria.vue'
  //Paginas Admin
 
 //Librerias de PrimeVue
@@ -52,7 +53,8 @@ const routes = [
     //Institution
     {name: 'InstitutionRegister', path : '/institution/register', component:InstitutionRegister},
     {name: 'InstitutionAddConvocatoria', path : '/institution/addConvocatoria', component:InstitutionAddConvocatoria},
-  //Usei-Admin
+    {name: 'InstitutionConvocatoria', path : '/institution/Convocatoria', component:InstitutionConvocatoria},
+    //Usei-Admin
 ];
 // Router
 const router = createRouter({
