@@ -4,37 +4,46 @@ const UsuarioENT = require('../ENT/UsuarioENT');
 const LoginDTO = require('../DTO/LoginDTO');
 const ResponseDTO = require('../DTO/ResponseDTO');
 
+const TipoUsuario = require('../ENT/TipoUsuarioENT');
+const TipoUsuarioDTO = require('../DTO/TipoUsuarioDTO');
+
 const { Strategy: LocalStrategy } = require('passport-local'); // Importa LocalStrategy desde passport-local
 
+//Metodo LOGIN
 passport.use(new LocalStrategy(
-  { usernameField: 'idusuario' }, // Ajusta el campo de nombre de usuario para que coincida con tu modelo
+  { usernameField: 'idusuario' },
   async (idusuario, password, done) => {
     try {
-      const usuario = await UsuarioENT.findOne({ where: { idusuario: idusuario } });
+      // Asegúrate de que la consulta incluya la información del tipo de usuario
+      const usuario = await UsuarioENT.findOne({
+        where: { idusuario: idusuario },
+        include: [{ model: TipoUsuario, as: 'tipousuario' }] // Esto debe coincidir con cómo has definido la relación en tus modelos
+      });
 
       let response;
       if (!usuario) {
         response = new ResponseDTO('AUTH-1001', null, 'Usuario no encontrado');
-        return done(null, false, response); // Autenticación fallida
+        return done(null, false, response);
       } else {
         const isPasswordValid = await bcrypt.compare(password, usuario.contrasenia);
         if (!isPasswordValid) {
           response = new ResponseDTO('AUTH-1002', null, 'Contraseña incorrecta');
-          return done(null, false, response); // Autenticación fallida
+          return done(null, false, response);
         } else {
-          const loginDTO = new LoginDTO(usuario.id, usuario.idusuario);
+          // Aquí creas el LoginDTO incluyendo el tipo de usuario
+          const tipoUsuarioDTO = new TipoUsuarioDTO(usuario.tipousuario.id, usuario.tipousuario.tipo);
+          const loginDTO = new LoginDTO(usuario.id, usuario.idusuario, tipoUsuarioDTO);
           response = new ResponseDTO('AUTH-0000', loginDTO, 'Inicio de sesión exitoso');
-          return done(null, usuario, response); // Autenticación exitosa
+          return done(null, usuario, response);
         }
       }
-
-      return done(null, usuario, response);
     } catch (error) {
       const response = new ResponseDTO('AUTH-1003', null, 'Error en la autenticación: ' + error);
       return done(error, false, response);
     }
   }
 ));
+
 
 // AUTENTICACION:
 passport.serializeUser((usuario, done) => {
