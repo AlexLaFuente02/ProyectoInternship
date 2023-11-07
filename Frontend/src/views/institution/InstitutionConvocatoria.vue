@@ -79,9 +79,9 @@
     <style scoped>
     /** estilo eltra de titulo*/
     h1 {
-      font-size: calc( 1em + 30vmin );
-      font-weight: 900;
-      color: tomato;
+      font-size: calc( 1em + 10vmin );
+      font-weight: 100;
+      color: rgb(71, 135, 255);
       
       
       --x-offset: -0.0625em;
