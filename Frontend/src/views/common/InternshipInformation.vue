@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <h1>POSTULAR A UNA PASANTÍA</h1>
+    <h1>INFORMACIÓN - PASANTÍA</h1>
     <div class="internship-container">
       <div class="first-grid-container">
         <img
@@ -82,62 +82,6 @@
               </div>
             </div>
           </div>
-          <div class="third-information-grid">
-            <div class="title-grid">
-              <h4 class="title">Postular</h4>
-            </div>
-            <div class="information-grid">
-              <h4 class="information-title">¿Cómo Postular?</h4>
-              <div class="i_details">
-                <p>
-                  Si estás interesado en esta pasantía, por favor, sigue estos
-                  pasos:
-                </p>
-              </div>
-              <div class="upload-CV">
-                <h6>Subir CV:</h6>
-                <Button
-                  text="Subir PDF"
-                  :color="4"
-                  @click="openFileInput"
-                ></Button>
-                <input
-                  type="file"
-                  id="fileInput"
-                  ref="fileInput"
-                  style="display: none"
-                  @change="handleFileChange"
-                />
-              </div>
-              <div class="insert-curriculum">
-                <input
-                  type="text"
-                  name="uploadCV"
-                  id="uploadCV"
-                  placeholder="Link de Curriculum Vitae"
-                  v-model="CurriculumVitae.fileName"
-                />
-              </div>
-              <div class="submit-container">
-                <div class="presentation-letter">
-                  <p>
-                    Escribe una breve carta de presentación en la que expliques
-                    por qué estás interesado en esta pasantía y cómo tu
-                    formación y habilidades pueden contribuir al equipo de Jala
-                    Soft.
-                  </p>
-                </div>
-                <textarea
-                  name="userDescription"
-                  id="userDescription"
-                  cols="25"
-                  rows="10"
-                  placeholder="Breve carta de presentación"
-                ></textarea>
-                <Button text="POSTULAR" :color="2"></Button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -147,29 +91,9 @@
 <script>
 import Button from "@/components/common/Button.vue";
 export default {
-  name: "ApplyForAnInternshipPage",
+  name: "InternshipInformationPage",
   components: {
     Button,
-  },
-  data() {
-    return {
-      CurriculumVitae: {
-        fileName: "",
-      },
-    };
-  },
-  methods: {
-    openFileInput() {
-      this.$refs.fileInput.click();
-    },
-    handleFileChange() {
-      const fileInput = this.$refs.fileInput;
-      if (fileInput.files.length > 0) {
-        const selectedFile = fileInput.files[0];
-        this.CurriculumVitae.fileName = selectedFile.name;
-        console.log("Archivo seleccionado:", this.CurriculumVitae.fileName);
-      }
-    },
   },
 };
 </script>
@@ -194,8 +118,7 @@ img {
 }
 
 .first-information-grid,
-.second-information-grid,
-.third-information-grid {
+.second-information-grid {
   border: 1px solid black;
 }
 
@@ -207,7 +130,7 @@ img {
 .internship-information-grid {
   display: grid;
   grid-template-rows: auto auto;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   margin: 2% auto;
   width: 92%;
   border: 1px solid black;
@@ -232,17 +155,16 @@ img {
 
 .title {
   margin: 0;
-  padding: 5% 0;
+  padding: 2% 0;
 }
 
 .information-title {
-  margin: 4% auto;
+  margin: 4% auto 0;
 }
 
-.i_details,
-.presentation-letter {
-  width: 90%;
-  margin: 5% auto;
+.i_details {
+  width: 70%;
+  margin: 4% auto;
 }
 
 .internship-details {
@@ -250,30 +172,12 @@ img {
   list-style: none;
 }
 
-.upload-CV {
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  margin: 4% auto;
-}
-
 .i_download {
-  margin: 7% auto 5%;
+  margin: 5% auto 4%;
 }
 
-.download-internship,
-.submit-container {
+.download-internship {
   margin-bottom: 5%;
-}
-
-#uploadCV,
-#userDescription {
-  border: 1px solid cadetblue;
-  resize: none;
-}
-
-#userDescription {
-  margin-bottom: 4%;
 }
 
 @media screen and (max-width: 768px) {
@@ -288,6 +192,10 @@ img {
 
   .i_description {
     margin-bottom: 7%;
+  }
+
+  .i_download {
+    margin: 8% auto 5%;
   }
 }
 
@@ -306,8 +214,7 @@ img {
 
 .dark-theme .internship-information-grid,
 .dark-theme .first-information-grid,
-.dark-theme .second-information-grid,
-.dark-theme .third-information-grid {
+.dark-theme .second-information-grid {
   border: 1px solid white;
 }
 

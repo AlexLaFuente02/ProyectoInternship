@@ -1,11 +1,12 @@
 <template>
   <div class="main-container">
-    <h1>POSTULAR A UNA PASANTÍA</h1>
+    <h1>ESTADO DE POSTULACIÓN</h1>
     <div class="internship-container">
       <div class="first-grid-container">
         <img
           src="https://www.cainco.org.bo/empresaydesarrollo/wp-content/uploads/2021/05/1550703145451.png"
           alt="Logo de la Empresa"
+          class="company-logo"
         />
       </div>
       <div class="second-grid-container">
@@ -84,57 +85,67 @@
           </div>
           <div class="third-information-grid">
             <div class="title-grid">
-              <h4 class="title">Postular</h4>
+              <h4 class="title">Estado de Postulación</h4>
             </div>
             <div class="information-grid">
-              <h4 class="information-title">¿Cómo Postular?</h4>
-              <div class="i_details">
-                <p>
-                  Si estás interesado en esta pasantía, por favor, sigue estos
-                  pasos:
+              <div
+                class="postulation-status"
+                v-if="postulationStatus.status === 'APROBADO'"
+              >
+                <h4 class="status approved-status">APROBADO</h4>
+                <img
+                  src="@/components/images/approved.png"
+                  alt="Estado de Postulación"
+                  class="status-image"
+                />
+                <p class="status-text">
+                  Usted ha sido contratado. ¡Bienvenido! En los próximos días
+                  nos estaremos contactando con usted.
                 </p>
               </div>
-              <div class="upload-CV">
-                <h6>Subir CV:</h6>
-                <Button
-                  text="Subir PDF"
-                  :color="4"
-                  @click="openFileInput"
-                ></Button>
-                <input
-                  type="file"
-                  id="fileInput"
-                  ref="fileInput"
-                  style="display: none"
-                  @change="handleFileChange"
+              <div
+                class="postulation-status"
+                v-if="postulationStatus.status === 'EN ESPERA'"
+              >
+                <h4 class="status on-hold-status">EN ESPERA</h4>
+                <img
+                  src="@/components/images/onHold.png"
+                  alt="Estado de Postulación"
+                  class="status-image"
                 />
+                <p class="status-text">
+                  Aun estamos procesando su postulación, vuelva mañana por
+                  favor.
+                </p>
               </div>
-              <div class="insert-curriculum">
-                <input
-                  type="text"
-                  name="uploadCV"
-                  id="uploadCV"
-                  placeholder="Link de Curriculum Vitae"
-                  v-model="CurriculumVitae.fileName"
+              <div
+                class="postulation-status"
+                v-if="postulationStatus.status === 'RECHAZADO'"
+              >
+                <h4 class="status rejected-status">RECHAZADO</h4>
+                <img
+                  src="@/components/images/rejected.png"
+                  alt="Estado de Postulación"
+                  class="status-image"
                 />
+                <p class="status-text">
+                  Usted NO ha sido contratado, debido a que no cumple plenamente
+                  con los requisitos de la pasantía.
+                </p>
               </div>
-              <div class="submit-container">
-                <div class="presentation-letter">
-                  <p>
-                    Escribe una breve carta de presentación en la que expliques
-                    por qué estás interesado en esta pasantía y cómo tu
-                    formación y habilidades pueden contribuir al equipo de Jala
-                    Soft.
-                  </p>
-                </div>
+              <div
+                class="submit-container"
+                v-if="postulationStatus.status !== 'RECHAZADO'"
+              >
+                <label for="userDescription">Comentario:</label>
                 <textarea
                   name="userDescription"
                   id="userDescription"
                   cols="25"
-                  rows="10"
-                  placeholder="Breve carta de presentación"
+                  rows="5"
+                  placeholder="Comentario..."
                 ></textarea>
-                <Button text="POSTULAR" :color="2"></Button>
+                <Button text="Enviar" :color="3"></Button>
               </div>
             </div>
           </div>
@@ -147,30 +158,18 @@
 <script>
 import Button from "@/components/common/Button.vue";
 export default {
-  name: "ApplyForAnInternshipPage",
+  name: "PostulationStatusPage",
   components: {
     Button,
   },
   data() {
     return {
-      CurriculumVitae: {
-        fileName: "",
+      postulationStatus: {
+        status: "APROBADO", // APROBADO | EN ESPERA | RECHAZADO
       },
     };
   },
-  methods: {
-    openFileInput() {
-      this.$refs.fileInput.click();
-    },
-    handleFileChange() {
-      const fileInput = this.$refs.fileInput;
-      if (fileInput.files.length > 0) {
-        const selectedFile = fileInput.files[0];
-        this.CurriculumVitae.fileName = selectedFile.name;
-        console.log("Archivo seleccionado:", this.CurriculumVitae.fileName);
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -180,8 +179,11 @@ export default {
   width: 90%;
 }
 
-img {
+.company-logo {
   width: 100%;
+}
+.status-image {
+  width: 25%;
 }
 
 .internship-container {
@@ -239,8 +241,8 @@ img {
   margin: 4% auto;
 }
 
-.i_details,
-.presentation-letter {
+.status-text,
+.i_details {
   width: 90%;
   margin: 5% auto;
 }
@@ -250,15 +252,26 @@ img {
   list-style: none;
 }
 
-.upload-CV {
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  margin: 4% auto;
-}
-
 .i_download {
   margin: 7% auto 5%;
+}
+
+.status {
+  margin: 0;
+  padding: 5% 0;
+  font-size: 3em;
+}
+
+.approved-status {
+  color: limegreen;
+}
+
+.on-hold-status {
+  color: gold;
+}
+
+.rejected-status {
+  color: red;
 }
 
 .download-internship,
@@ -266,14 +279,10 @@ img {
   margin-bottom: 5%;
 }
 
-#uploadCV,
 #userDescription {
   border: 1px solid cadetblue;
-  resize: none;
-}
-
-#userDescription {
   margin-bottom: 4%;
+  resize: none;
 }
 
 @media screen and (max-width: 768px) {
@@ -288,6 +297,10 @@ img {
 
   .i_description {
     margin-bottom: 7%;
+  }
+
+  .status {
+    font-size: 2.2em;
   }
 }
 

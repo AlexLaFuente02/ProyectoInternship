@@ -1,9 +1,8 @@
 <template>
     <div class="inicio">
-      <h1>TUS SOLICITUDES DE PASANTIAS</h1> 
-      <p>Te mostramos tus pasantias</p>
+      <h1>TUS CONVOCATORIAS</h1>
+      <p>Te mostramos tus convocatorias</p>
       <div class="card-inicio">
-      <span class="text-a">PASANTIAS APROBADAS</span>
         <div class="card">
           <div v-for="card in cards" :key="card.id" class="card-individual">
             <div class="content">
@@ -11,67 +10,22 @@
                 <img :src="card.imageUrl" alt="Card image" class="card-image">
               </div>
               <div class="text-content">
-                <div class="text-content2">
-                  <button class="book-btn">Mas informacion</button>
+                <div class="button-container">
+                  <div class="button-group">
+                    <button class="edit-btn" @click="editCard(card.id)">Editar</button>
+                    <button class="delete-btn" @click="deleteCard(card.id)">Borrar</button>
+                  </div>
                 </div>
                 <div class="title">{{ card.empresa }}</div>
                 <div class="description">{{ card.descripcion }}</div>
-                </div>
-            </div>
-          </div>
-        </div>
-        <span class="text-p">PASANTIAS EN ESPERA</span>
-        <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card-individual">
-            <div class="content">
-              <div class="image">
-                <img :src="card.imageUrl" alt="Card image" class="card-image">
-              </div>
-              <div class="text-content">
-                <div class="text-content2">
-                  <button class="book-btn">Mas informacion</button>
-                </div>
-                <div class="title">{{ card.title }}</div>
-                <div class="description">{{ card.description }}</div>
-                <div class="info">
-                  <div class="price">{{ card.price }} per person*</div>
-                  <div class="ratings">
-                    <span v-for="i in 5" :key="i" class="star"></span>
-                    <span class="review-count">{{ card.reviews }} reviews</span>
-                  </div>
-                </div>
-                <div class="disclaimer">*Prices may vary depending on selected date.</div>
               </div>
             </div>
           </div>
         </div>
-        <span class="text-r">PASANTIAS RECHAZADAS</span>
-        <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card-individual">
-            <div class="content">
-              <div class="image">
-                <img :src="card.imageUrl" alt="Card image" class="card-image">
-              </div>
-              <div class="text-content">
-                <div class="title">{{ card.title }}</div>
-                <div class="description">{{ card.description }}</div>
-                <div class="info">
-                  <div class="price">{{ card.price }} per person*</div>
-                  <div class="ratings">
-                    <span v-for="i in 5" :key="i" class="star"></span>
-                    <span class="review-count">{{ card.reviews }} reviews</span>
-                  </div>
-                </div>
-                <button class="book-btn">Book now</button>
-                <div class="disclaimer">*Prices may vary depending on selected date.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-       </div> 
+      </div>
     </div>
-    </template>
-    
+  </template>
+  
     
     <script>
     export default {
@@ -108,21 +62,36 @@
             // Agrega más objetos para mostrar más tarjetas si lo necesitas
           ]
         };
-      }
-    };
+      },
+      methods: {
+    editCard(cardId) {
+      // Lógica para editar la tarjeta con el ID proporcionado
+      console.log(`Editar tarjeta con ID: ${cardId}`);
+    },
+    deleteCard(cardId) {
+      // Lógica para borrar la tarjeta con el ID proporcionado
+      console.log(`Borrar tarjeta con ID: ${cardId}`);
+    }
+  }
+};
     </script>
     
     <style scoped>
     /** estilo eltra de titulo*/
     h1 {
-      font-weight: 900;
-      color: tomato;
+      font-size: calc( 1em + 10vmin );
+      font-weight: 100;
+      color: rgb(71, 135, 255);
+      
+      
       --x-offset: -0.0625em;
       --y-offset: 0.0625em;
       --stroke: 0.025em;
       --background-color: white;
       --stroke-color: lightblue;
-      text-shadow:
+      
+      text-shadow: 
+        
         var(--x-offset)
         var(--y-offset)
         0px
@@ -164,6 +133,10 @@
       
     }
     .text-content2 {
+      position: relative;
+
+    }
+    .text-content3 {
       position: relative;
 
     }
@@ -347,5 +320,27 @@
     .review-count {
       color: #777;
     }
+
+/* Estilos para los botones Editar y Borrar */
+.edit-btn,
+.delete-btn {
+  padding: 10px 20px;
+  background-color: #5a99dd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 5px;
+}
+
+/* Estilos para alinear botones a la derecha */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
     </style>
     
