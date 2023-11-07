@@ -54,8 +54,9 @@ completa el siguiente formulario para registrarte como estudiante o graduado.</p
             </div>
             <div class="container__select">
                 <label>Semestre de ingreso *:</label>
-                <Dropdown :options="this.formStore.semesters" :selectedValue="formStore.semester" placeholderValue="Seleccione un semestre"
-                @option-selected="formStore.semester = $event" />
+                <Dropdown :options="this.listSemester" 
+                :selectedValue="formStore.semester" placeholderValue="Seleccione un semestre"
+                @option-selected="updateSemester" />
             </div>
         </div>
     </div>
@@ -64,6 +65,7 @@ completa el siguiente formulario para registrarte como estudiante o graduado.</p
 import { useFormRegisterStore } from "@/store/student/formRegisterStore";
 import { useCampusStore } from "@/store/common/campusStore";
 import { useCareersStore } from "@/store/common/careersStore";
+import { useSemesterStore } from "@/store/common/semesterStore";
 import Dropdown from '../common/Dropdown.vue';
 import CheckBox from "../common/CheckBox.vue";
 export default {
@@ -76,8 +78,10 @@ export default {
             formStore: useFormRegisterStore(),
             campusStore: useCampusStore(),
             careerStore: useCareersStore(),
+            semesterStore: useSemesterStore(),
             listCampus: [],
             listCareers: [],
+            listSemester: [],
             checkboxOptions: ["Opción 1", "Opción 2"],
             selectedOption: null,
         }
@@ -98,7 +102,7 @@ export default {
         //Obtener todas las carreras
         async getCareers(){
             await this.careerStore.loadCareer();
-            this.listCareers= this.careerStore.careers;
+            this.listCareers= this.careerStore.careers.result;
             //Convertir el array de carreras en un array de objetos con id y label
             this.listCareers = this.listCareers.map((career) => {
                 return {
@@ -106,13 +110,26 @@ export default {
                     label: career.nombrecarrera,
                 };
             });
-            console.log(this.careerStore);
+        },
+        async getSemester(){
+            await this.semesterStore.loadSemester();
+            this.listSemester= this.semesterStore.semesters.result;
+            //Convertir el array de carreras en un array de objetos con id y label
+            this.listSemester = this.listSemester.map((semester) => {
+                return {
+                    id: semester.id,
+                    label: semester.codigosemestre,
+                };
+            });
         },
         updateCampus (option) {
             this.formStore.campus = option.label;
         },
         updateCareer (option) {
             this.formStore.career = option.label;
+        },
+        updateSemester (option) {
+            this.formStore.semester = option.label;
         },
         handleSelectedOption(option) {
             this.selectedOption = option;
@@ -122,6 +139,7 @@ export default {
     created(){
         this.getCampus();
         this.getCareers();
+        this.getSemester();
     }
     
 }

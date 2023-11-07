@@ -6,6 +6,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import VueCookies from 'vue-cookies'
 import PrimeVue from "primevue/config";
 import App from "./App.vue";
 //Paginas
@@ -16,10 +17,12 @@ import InstitutionsCommon from "@/views/common/InstitutionsCommon.vue";
 import InternshipsCommon from "@/views/common/InternshipsCommon.vue";
 import UserRegister from "@/views/common/UserRegister.vue";
 //Paginas Student
+import StudentPrincipalPage from "@/views/student/StudentPrincipalPage.vue";
 import StudentRegister from "@/views/student/StudentRegister.vue";
 import ApplyForAnInternship from "@/views/student/ApplyForAnInternship.vue";
 import StudentApplications from '@/views/student/StudentApplications.vue';
 import StudentProfile from '@/views/student/StudentProfile.vue';
+
 //Paginas Institution
 //Paginas Admin
 
@@ -43,7 +46,9 @@ const routes = [
     {name: 'InternshipsCommon', path: '/internshipsCommon', component: InternshipsCommon},
     {name: 'UserRegister', path: '/userRegister', component: UserRegister},
     //Student
-    {name: 'StudentRegister', path: '/student/register', component: StudentRegister},
+    
+    {name: 'StudentRegister', path: '/student/register', component: StudentRegister },
+    {name: 'StudentPrincipalPage', path: '/student', component: StudentPrincipalPage,},
     {name: 'StudentApplications', path: '/student/applications', component: StudentApplications},
     {name: 'StudentProfile', path: '/student/profile', component: StudentProfile},
     {name: "ApplyForAnInternship",path: "/student/ApplyForAnInternship",component: ApplyForAnInternship,},
@@ -72,6 +77,12 @@ const app = createApp(App);
 app.use(router);
 app.use(pinia);
 app.use(PrimeVue);
+app.use(VueCookies,{
+  expireTimes: "7d",
+  path: "/",
+  httpOnly: false,
+
+});
 
 //Componentes de fontawesome
 app.component("font-awesome-icon", FontAwesomeIcon);

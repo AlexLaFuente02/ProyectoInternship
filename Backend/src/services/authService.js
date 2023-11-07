@@ -22,7 +22,7 @@ passport.use(new LocalStrategy(
           response = new ResponseDTO('AUTH-1002', null, 'Contraseña incorrecta');
           return done(null, false, response); // Autenticación fallida
         } else {
-          const loginDTO = new LoginDTO(usuario.id, usuario.idusuario);
+          const loginDTO = new LoginDTO(usuario.id, usuario.tipousuario_id);
           response = new ResponseDTO('AUTH-0000', loginDTO, 'Inicio de sesión exitoso');
           return done(null, usuario, response); // Autenticación exitosa
         }

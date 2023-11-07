@@ -9,4 +9,8 @@ export const loadCareers = async () => {
     const response = await axios.get(`${rutaApi}/carrera`);
     return response.data;
 }
+export const loadSemester = async () => {
+    const response = await axios.get(`${rutaApi}/semestre`);
+    return response.data;
+}
 

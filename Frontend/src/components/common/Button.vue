@@ -54,7 +54,6 @@ export default {
             this.colorSelected = this.listColors[this.color];
         },
         send() {
-            console.log('send');
             this.$emit("option-selected",true);
         },
     },
