@@ -25,6 +25,9 @@ import StudentNavbar from "@/components/student/StudentNavbar.vue";
 import InstitutionNavbar from "@/components/institution/InstitutionNavbar.vue";
 // USEI
 import UseiNavbar from "@/components/usei/UseiNavbar.vue";
+import UseiNavbarMovile from "@/components/usei/UseiNavbarMovile.vue";
+import UseiFooter from "@/components/usei/UseiFooter.vue";
+
 import { useMobileMenuStore } from "./store/common/mobileMenuStore";
 import { useThemeStore } from "@/store/common/useThemeStore"; 
 import { useLoginStore } from "@/store/common/loginStore";
