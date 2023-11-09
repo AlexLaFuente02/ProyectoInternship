@@ -56,7 +56,7 @@ const routes = [
     //Student
     
     {name: 'StudentRegister', path: '/student/register', component: StudentRegister },
-    {name: 'StudentPrincipalPage', path: '/student', component: StudentPrincipalPage,},
+    {name: 'StudentPrincipalPage', path: '/student/home', component: StudentPrincipalPage,},
     {name: 'StudentApplications', path: '/student/applications', component: StudentApplications},
     {name: "PostulationStatus", path: "/student/applications/PostulationStatus", component: PostulationStatus},
     {name: 'StudentProfile', path: '/student/profile', component: StudentProfile},
@@ -65,7 +65,7 @@ const routes = [
     {name: 'InstitutionRegister', path : '/institution/register', component:InstitutionRegister},
     {name: 'InstitutionAddConvocatoria', path : '/institution/addConvocatoria', component:InstitutionAddConvocatoria},
     {name: 'InstitutionConvocatoria', path : '/institution/Convocatoria', component:InstitutionConvocatoria},
-    {name: 'InstitutionPrincipalPage', path : '/institution/Principal', component:InstitutionPrincipalPage},
+    {name: 'InstitutionPrincipalPage', path : '/institution/home', component:InstitutionPrincipalPage},
     //Usei-Admin
 ];
 // Router

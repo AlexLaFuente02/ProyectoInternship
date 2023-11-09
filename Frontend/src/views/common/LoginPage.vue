@@ -78,7 +78,7 @@
 
 <script>
 import Button from "@/components/common/Button.vue";
-import {useLoginStore} from "@/store/common/loginStore";
+import { useLoginStore } from "@/store/common/loginStore";
 export default {
   name: "LoginPage",
   components: {
@@ -144,15 +144,15 @@ export default {
               console.log("Inicio de sesión exitoso");
               response.json().then((data) => {
                 var result = data.result;
-                $cookies.set('id',result.id);
-                $cookies.set('type',result.username);
-                if(result.username == 1){
+                $cookies.set("id", result.id);
+                $cookies.set("type", result.username);
+                if (result.username == 1) {
                   useLoginStore().setLogin(1);
                   this.$router.push("/student/");
                   console.log("Estudiante");
-                } else if (result.username == 2){
+                } else if (result.username == 2) {
                   useLoginStore().setLogin(2);
-                } else if (result.username == 3){
+                } else if (result.username == 3) {
                   useLoginStore().setLogin(3);
                 } else {
                   useLoginStore().setLogin(0);
@@ -281,8 +281,8 @@ img {
 .showPasswordButton {
   position: absolute;
   appearance: none;
-  width: 7%;
-  height: 77%;
+  /* max-width: 7%; */
+  /* max-height: 77%; */
   right: 5px;
   top: 50%;
   transform: translateY(-50%);
@@ -304,10 +304,12 @@ img {
     width: 95%;
   }
 
-  .showPasswordButton {
+  /* .showPasswordButton {
+    max-width: 15%;
+    max-height: 55%;
     width: 15%;
     height: 55%;
-  }
+  } */
 }
 
 /* DARK THEME */
