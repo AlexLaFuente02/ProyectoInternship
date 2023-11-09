@@ -54,9 +54,8 @@ const routes = [
     {name: "InternshipInformation", path: "/internshipsCommon/InternshipInformation", component: InternshipInformation},
     {name: 'UserRegister', path: '/userRegister', component: UserRegister},
     //Student
-    
     {name: 'StudentRegister', path: '/student/register', component: StudentRegister },
-    {name: 'StudentPrincipalPage', path: '/student/home', component: StudentPrincipalPage,},
+    {name: 'StudentPrincipalPage', path: '/student', component: StudentPrincipalPage,},
     {name: 'StudentApplications', path: '/student/applications', component: StudentApplications},
     {name: "PostulationStatus", path: "/student/applications/PostulationStatus", component: PostulationStatus},
     {name: 'StudentProfile', path: '/student/profile', component: StudentProfile},
@@ -91,7 +90,7 @@ app.use(PrimeVue);
 app.use(VueCookies,{
   expireTimes: "7d",
   path: "/",
-  httpOnly: false,
+  httpOnly: true,
 
 });
 

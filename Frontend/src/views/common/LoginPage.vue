@@ -142,8 +142,11 @@ export default {
             if (response.ok) {
               // La solicitud fue exitosa
               console.log("Inicio de sesión exitoso");
+              //Colocar el token de passport js en las cookies
+              this.$cookies.set("token", response.headers.get("authorization"));
               response.json().then((data) => {
                 var result = data.result;
+                console.log(response);
                 $cookies.set("id", result.id);
                 $cookies.set("type", result.username);
                 if (result.username == 1) {

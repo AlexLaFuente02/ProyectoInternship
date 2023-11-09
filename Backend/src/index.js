@@ -58,7 +58,7 @@ app.use("/carrera", carreraAPI);
 app.use("/institucion", institucionAPI);
 app.use("/estadoConvocatoria", estadoConvocatoriaAPI);
 app.use("/tiempoacumplir", tiempoAcumplirAPI);
-app.use("/convocatoria", convocatoriaAPI);
+app.use("/convocatoria", isAuthenticated, convocatoriaAPI);
 app.use("/adminUSEI", adminuseiAPI);
 app.use("/historicoUsuario", historicoUsuarioAPI);
 app.use("/historicoConvocatorias", historicoConvocatoriasAPI);

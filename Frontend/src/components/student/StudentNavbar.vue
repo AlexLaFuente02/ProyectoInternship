@@ -21,7 +21,7 @@
                             <font-awesome-icon :icon="['fas', 'building']" size="xl"/>
                             <span class="nav__name">Instituciones</span>
                 </router-link>
-                <router-link class="link" to="/student/internships">
+                <router-link class="link" to="/student/applications">
                             <font-awesome-icon :icon="['fas', 'briefcase']" size="xl"/>
                             <span class="nav__name">Pasantías</span>
                 </router-link>

@@ -7,7 +7,7 @@
     :is="getConditionallyRenderedNavbarMobile" 
     v-else/>
     <router-view />
-    <FooterCommon v-if="isFooterVisible"/>
+    <FooterCommon/>
     <div class="overlay" v-show="showMobileMenu" @click="closeMobileMenu"></div>
     <div class="overlay" v-show="isLoading">
       <span class="loader"></span>
@@ -21,6 +21,7 @@ import NavbarCommon from "@/components/common/NavbarCommon.vue";
 import NavbarCommonMobile from "@/components/common/NavbarCommonMobile.vue";
 // Student
 import StudentNavbar from "@/components/student/StudentNavbar.vue";
+import StudentNavbarMobile from "@/components/student/StudentNavbarMobile.vue";
 // Institution
 import InstitutionNavbar from "@/components/institution/InstitutionNavbar.vue";
 // USEI
@@ -37,7 +38,6 @@ export default {
     return {
       mobile: false,
       windowWidth: 0,
-      isFooterVisible: true,
     };
   },
   
@@ -61,10 +61,10 @@ export default {
       },
       getConditionallyRenderedNavbarMobile(){
         if(useLoginStore().isLogged == 1){
-          return "StudentNavbar";
+          return "StudentNavbarMobile";
         } else if (useLoginStore().isLogged== 2){
           return "InstitutionNavbar";
-        } else if (userType == 3){
+        } else if (useLoginStore().isLogged == 3){
           return "UseiNavbarMovile";
         } else {
           return "NavbarCommonMobile";
@@ -72,7 +72,7 @@ export default {
       },
       isLoading(){
         return useLoaderStore().isLoading;
-      }
+      },
   },
   components: {
     FooterCommon,
@@ -82,6 +82,7 @@ export default {
     InstitutionNavbar,
     UseiNavbar,
     UseiNavbarMovile,
+    StudentNavbarMobile,
   },
   created() {
     window.addEventListener("resize", this.handleResize);
@@ -150,59 +151,27 @@ export default {
   z-index: 2;
 }
 .loader {
-  width: 54px;
-  height: 54px;
-  position: relative;
-  border-radius: 4px;
-  background-color: #fff;
-  background-image:
-    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
-    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
-    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
-    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
-    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
-    radial-gradient(circle 5px , #FF3D00 100%, transparent 0);
-    background-repeat: no-repeat;
-  animation: move 4s linear infinite , rotate 2s linear infinite;
-}
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: #FF3D00;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-@keyframes rotate {
-  0% , 20%{ transform: rotate(0deg)}
-  30% , 40% { transform: rotate(90deg)}
-  50% , 60% { transform: rotate(180deg)}
-  70% , 80% { transform: rotate(270deg)}
-  90%,  100% { transform: rotate(360deg)}
-}
-@keyframes move {
-  0% ,  9%{
-      background-position:
-      -12px -15px,  -12px 0px, -12px 15px,
-      12px -15px,  12px 0px,  12px 15px;
-  }
-  10% , 25%{
-      background-position:
-      0px -15px,  -12px 0px, -12px 15px,
-      34px -15px,  12px 0px,  12px 15px;
-  }
-  30% , 45%{
-      background-position:
-      0px -34px, -12px -10px, -12px 12px,
-      34px -15px, 12px -10px, 12px 12px;
-  }
-  50% , 65% {
-      background-position:
-      0px -34px, -12px -34px, -12px 12px,
-      34px -12px, 0px -10px, 12px 12px;
-  }
-  70% , 85% {
-      background-position:
-      0px -34px, -12px -34px, 0px 12px,
-      34px -12px, 0px -10px, 34px 12px;
-  }
- 90% , 100% {
-      background-position:
-      0px -34px, -12px -34px, 0px 0px,
-      34px -12px, 0px 0px, 34px 12px;
-  }
-}
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+  } 
 </style>

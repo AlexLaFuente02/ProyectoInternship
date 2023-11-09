@@ -1,17 +1,25 @@
 <template >
     <header class="container__header">
-        <div class="container__nav">
-            <div class="container__nav--bars">
-                <font-awesome-icon :icon="['fas', 'bars']" @click="toggleMobileMenu" />
+        <div class="container__menu">
+            <div class="container__menu--profile">
+                <font-awesome-icon :icon="['fas', 'bars']" @click="toggleMobileMenuL" size="2xl"/>
             </div>
         </div>
+        <div class="container__logo">
+            <router-link to="/">
+                <img
+                src="../images/USEI.png"
+                alt="Unidad de Servicios Estudiantiles Integrales"
+            />
+            </router-link>
+        </div>
         <div class="container__menu">
-            <div class="container__menu--profile" @click="toggleMobileMenu">
-                <font-awesome-icon :icon="['fas', 'circle-user']" />
+            <div class="container__menu--profile" @click="toggleMobileMenuR" >
+                <font-awesome-icon :icon="['fas', 'circle-user']" size="2xl"/>
             </div>
         </div>
     </header>
-    <div class="menu__student" v-show="showMobileSideBar">
+    <div class="menu__student" v-show="showMobileMenuLeft">
         <div class="container__logo">
             <router-link to="/">
                 <img
@@ -23,7 +31,7 @@
         <nav class="container__nav" >
             <div class="nav__links">
                 <ul class="nav__list" >
-                    <li class="nav__item">
+                    <li class="nav__item" @click="closeMobileMenu">
                         <router-link class="link" to="/student">
                             <font-awesome-icon :icon="['fas', 'house']" 
                             size="xl"
@@ -31,19 +39,19 @@
                             <span class="nav__name">Inicio</span>
                         </router-link>
                     </li>
-                    <li class="nav__item">
+                    <li class="nav__item" @click="closeMobileMenu">
                         <router-link class="link" to="/student/institutions">
                             <font-awesome-icon :icon="['fas', 'building']" size="xl"/>
                             <span class="nav__name">Instituciones</span>
                         </router-link>
                     </li>
-                    <li class="nav__item">
+                    <li class="nav__item" @click="closeMobileMenu">
                         <router-link class="link" to="/student/internships">
                             <font-awesome-icon :icon="['fas', 'briefcase']" size="xl"/>
                             <span class="nav__name">Pasantías</span>
                         </router-link>
                     </li>
-                    <li class="nav__item">
+                    <li class="nav__item" @click="closeMobileMenu">
                         <router-link class="link" to="/student/requests">
                             <font-awesome-icon :icon="['fas', 'file-alt']" size="xl"/>
                             <span class="nav__name">Solicitudes</span>
@@ -53,8 +61,35 @@
             </div>
         </nav>
     </div>
-    <div class="container__sidebar" v-show="showMobileMenu">
-
+    <div class="container__sidebar" v-show="showMobileMenuRight">
+        <div class="navbar__buttons">
+            <div class="buttons">
+                <router-link to="/student/profile">
+                    <button class="link" @click="closeMobileMenu">
+                        <font-awesome-icon :icon="['fas', 'user']" size="xl"/>
+                        <span class="nav__name">Perfil</span>
+                    </button>
+                </router-link>
+                <router-link to="/student/settings">
+                    <button class="link" @click="closeMobileMenu">
+                        <font-awesome-icon :icon="['fas', 'cog']" size="xl"/>
+                        <span class="nav__name">Configuración</span>
+                    </button>
+                </router-link>
+                <router-link to="/student/help">
+                    <button class="link" @click="closeMobileMenu">
+                        <font-awesome-icon :icon="['fas', 'question-circle']" size="xl"/>
+                        <span class="nav__name">Ayuda</span>
+                    </button>
+                </router-link>
+                <router-link to="/student/login">
+                    <button class="link" @click="closeMobileMenu">
+                        <font-awesome-icon :icon="['fas', 'sign-out-alt']" size="xl"/>
+                        <span class="nav__name">Cerrar sesión</span>
+                    </button>
+                </router-link>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -69,21 +104,28 @@ export default {
     data() {
         return {
             isDarkMode: false,
+            showMobileMenuLeft: false,
+            showMobileMenuRight: false,
         };
     },
     methods: {
-        toggleMobileMenu() {
+        toggleMobileMenuL() {
             useMobileMenuStore().toggleMobileMenu();
-            
+            this.showMobileMenuLeft = !this.showMobileMenuLeft;
+        },
+        toggleMobileMenuR() {
+            useMobileMenuStore().toggleMobileMenu();
+            this.showMobileMenuRight = !this.showMobileMenuRight;
         },
         closeMobileMenu() {
             useMobileMenuStore().closeMobileMenu();
+            this.showMobileMenuLeft = false;
+            this.showMobileMenuRight = false;
         },
         createAccount(option) {
             if (option) {
                 console.log("createAccount");
                 this.$router.push("/UserRegister");
-                //Cerrar el menu
                 this.closeMobileMenu();
             }
         },
@@ -91,7 +133,6 @@ export default {
             if (option) {
                 console.log("login");
                 this.$router.push("/Login");
-                //Cerrar el menu
                 this.closeMobileMenu();
             }
         },
@@ -101,9 +142,12 @@ export default {
         },
     },
     computed: {
-        showMobileMenu(){
-            return useMobileMenuStore().mobileMenu;
-        }
+        showMobileMenuLeft() {
+            return this.showMobileMenuLeft;
+        },
+        showMobileMenuRight() {
+            return this.showMobileMenuRight;
+        },
     },
 }
 </script>
@@ -119,11 +163,10 @@ export default {
   transition: all 0.3s ease 0s;
   position: sticky;
   top: 0;
-  z-index: 1000;
   background-color: #FDFEFF;
   color: #515c67;
-  
-  
+  z-index: 1;
+  justify-content: space-between;
 }
 /*Modo oscuro*/
 .dark-theme header{
@@ -147,12 +190,8 @@ export default {
 .container__header .container__nav{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 0.3rem;
-    margin-left: 5px;
 }
 
 .container__header .container__nav .nav__links .link{
@@ -200,4 +239,117 @@ export default {
   display: flex;
   
 } 
+.container__header .container__menu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.container__header .container__menu--profile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+
+}
+.container__header .container__menu--profile:hover{
+    transform: scale(1.1);
+}
+.container__header .container__menu--profile svg{
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #515c67;
+}
+.dark-theme .container__header .container__menu--profile svg{
+    color: #CACFDB;
+}
+.container__sidebar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FDFEFF;
+    z-index: 1;
+    transform: translateX(100%);
+    transition: transform 0.5s ease-in-out;
+}
+.dark-theme .container__sidebar{
+    background-color: #434B54;
+}
+.container__sidebar .navbar__buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.container__sidebar .navbar__buttons .buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.container__sidebar .navbar__buttons .buttons button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #FDFEFF;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+}
+.dark-theme .container__sidebar .navbar__buttons .buttons button{
+    background-color: #434B54;
+    color: #CACFDB;
+}
+.container__sidebar .navbar__buttons .buttons button:hover{
+    background-color: rgba(90, 97, 106, 0.7);
+    color: #fff;
+    transform: scale(1.1);
+}
+.container__sidebar .navbar__buttons .buttons button svg{
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.container__sidebar .navbar__buttons .buttons button span{
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+.container__sidebar .navbar__buttons .buttons button:last-child{
+    margin-bottom: 1rem;
+}
+.container__sidebar .navbar__buttons .buttons button:last-child:hover{
+    background-color: #FDFEFF;
+    color: #515c67;
+}
+.container__sidebar .navbar__buttons .buttons button:last-child svg{
+    color: #515c67;
+}
+.container__sidebar .navbar__buttons .buttons button:last-child span{
+    color: #515c67;
+}
+.container__sidebar .navbar__buttons .buttons button:last-child:hover svg{
+    color: #515c67;
+}
+.container__sidebar .navbar__buttons .buttons button:last-child:hover span{
+    color: #515c67;
+}
+.container__sidebar .navbar__buttons .buttons button:last-child:hover{
+    transform: scale(1);
+}
+
 </style>

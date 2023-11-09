@@ -13,6 +13,7 @@
 import Dropdown from "@/components/common/Dropdown.vue";
 import {useInternshipsByIDStore } from "@/store/student/internshipsByIDStore";
 import CardList from "@/components/common/CardList.vue";
+import {useLoaderStore} from "@/store/common/loaderStore";
 export default {
     data() {
         return {
@@ -27,9 +28,11 @@ export default {
     },
     methods: {
         async getData(){
+            useLoaderStore().activateLoader();
             await useInternshipsByIDStore().loadInternshipsByIdStudent();
             this.listInterships = useInternshipsByIDStore().internships;
             this.everyInternshipsAreLoaded = true;
+            useLoaderStore().desactivateLoader();
         },
     },
     created(){
