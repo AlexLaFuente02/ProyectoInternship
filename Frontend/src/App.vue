@@ -7,7 +7,7 @@
     :is="getConditionallyRenderedNavbarMobile" 
     v-else/>
     <router-view />
-    <FooterCommon/>
+    <FooterCommon v-if="isFooterVisible"/>
     <div class="overlay" v-show="showMobileMenu" @click="closeMobileMenu"></div>
     <div class="overlay" v-show="isLoading">
       <span class="loader"></span>
@@ -37,6 +37,7 @@ export default {
     return {
       mobile: false,
       windowWidth: 0,
+      isFooterVisible: true,
     };
   },
   
@@ -59,10 +60,9 @@ export default {
         }
       },
       getConditionallyRenderedNavbarMobile(){
-        var userType = $cookies.get("type");
-        if(userType == 1){
+        if(useLoginStore().isLogged == 1){
           return "StudentNavbar";
-        } else if (userType == 2){
+        } else if (useLoginStore().isLogged== 2){
           return "InstitutionNavbar";
         } else if (userType == 3){
           return "UseiNavbarMovile";
@@ -112,11 +112,15 @@ export default {
       var userType = $cookies.get("type");
       if(userType == 1){
         useLoginStore().setLogin(1);
+        this.isFooterVisible = false;
       } else if (userType == 2){
+        this.isFooterVisible = true;
         useLoginStore().setLogin(2);
       } else if (userType == 3){
+        this.isFooterVisible = true;
         useLoginStore().setLogin(3);
       } else {
+        this.isFooterVisible = true;
         useLoginStore().setLogin(0);
       }
     },

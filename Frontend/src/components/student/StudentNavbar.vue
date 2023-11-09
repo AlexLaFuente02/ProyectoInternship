@@ -1,5 +1,5 @@
 <template>
-    <header class="menu__student">
+    <header class="container__header">
         <div class="container__logo">
             <router-link to="/">
                 <img
@@ -8,46 +8,90 @@
             />
             </router-link>
         </div>
-        <nav class="container__nav" >
+        <div class="navigator">
+            <nav class="container__nav" >
             <div class="nav__links">
-                <router-link class="link" to="/">
-                    Inicio
+                <router-link class="link" to="/student">
+                            <font-awesome-icon :icon="['fas', 'house']" 
+                            size="xl"
+                            />
+                            <span class="nav__name">Inicio</span>
                 </router-link>
-                <router-link class="link" to="/moreInformation">
-                    M&aacute;s informaci&oacute;n
+                <router-link class="link" to="/student/institutions">
+                            <font-awesome-icon :icon="['fas', 'building']" size="xl"/>
+                            <span class="nav__name">Instituciones</span>
                 </router-link>
-                <router-link class="link" to="/institutionsCommon">
-                    Instituciones
+                <router-link class="link" to="/student/internships">
+                            <font-awesome-icon :icon="['fas', 'briefcase']" size="xl"/>
+                            <span class="nav__name">Pasantías</span>
                 </router-link>
-                <router-link class="link" to="/internshipsCommon">
-                    Pasant&iacute;as
+                <router-link class="link" to="/student/requests">
+                            <font-awesome-icon :icon="['fas', 'file-alt']" size="xl"/>
+                            <span class="nav__name">Solicitudes</span>
                 </router-link>
-            </div>
-            
-            <div class="navbar__buttons">
-                <input 
-                type="checkbox"
-                name="darkModeToggle"
-                class="switch"
-                @change="toggleDarkMode()"
-                />
-                <div class="buttons">
-                
-                <div class="container__button">
-                <Button 
-                    text="Logout" 
-                    :color="0" 
-                    :disabled="false"
-                    @option-selected="logout"
-                    >
-                </Button>
-                </div>
-                </div>
             </div>
         </nav>
+        <div class="container__menu">
+            <div class="container__menu--profile" @click="toggleMobileMenu">
+                <font-awesome-icon :icon="['fas', 'circle-user']" />
+            </div>
+        </div>
+        </div>
     </header>
+    <div class="container__sidebar" v-show="showMobileMenu">
+                <div class="container__sidebar--profile">
+                    <div class="container__sidebar--profile__image">
+                        <font-awesome-icon :icon="['fas', 'circle-user']" />
+                    </div>
+                    <div class="container__sidebar--profile__name">
+                        <span>Invitado</span>
+                    </div>
+                </div>
+                <div class="container__sidebar--options">
+                    <ul class="container__menu--options"  >
+                        <li class="container__menu--options__item" @click="closeMobileMenu">
+                            <router-link class="link" to="/student/profile">
+                                <font-awesome-icon :icon="['fas', 'user']" />
+                                <span>Perfil</span>
+                            </router-link>
+                        </li>
+                        <li class="container__menu--options__item" @click="closeMobileMenu">
+                            <router-link class="link" to="/student">
+                                <font-awesome-icon :icon="['fas', 'gear']" />
+                                <span>Configuración</span>
+                            </router-link>
+                        </li>
+                        <!--Modo oscuro-->
+                        <li class="container__menu--options__item" @click="toggleDarkMode" v-if="isDarkMode">
+                            <div class="container__menu--options__item__dark-mode">
+                                <font-awesome-icon :icon="['fas', 'moon']" />
+                                <span>Modo oscuro</span>
+                            </div>
+                        </li>
+                        <li class="container__menu--options__item" @click="toggleDarkMode" v-else>
+                            <div class="container__menu--options__item__dark-mode">
+                                <font-awesome-icon :icon="['fas', 'sun']" />
+                                <span>Modo claro</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="container__button">
+                                <Button 
+                                    text="Cerrar sesi&oacute;n" 
+                                    :color="1" 
+                                    :disabled="false"
+                                    @option-selected="logout"
+                                    >
+                                </Button>
+                            </div>
+                        </li>
+                
+                    </ul>
+                </div>
+            </div>
 </template>
 <script>
+import { useMobileMenuStore } from "../../store/common/mobileMenuStore";
 import { useThemeStore } from "@/store/common/useThemeStore";
 import Button from "@/components/common/Button.vue";
 export default {
@@ -60,6 +104,11 @@ export default {
       isDarkMode: false,
     };
   },
+  computed: {
+        showMobileMenu(){
+            return useMobileMenuStore().mobileMenu;
+        }
+    },
   methods: {
     toggleDarkMode() {
       const darkModeStore = useThemeStore();
@@ -68,40 +117,283 @@ export default {
     },
     logout(){
     },
+    toggleMobileMenu() {
+            useMobileMenuStore().toggleMobileMenu();
+            
+        },
+        closeMobileMenu() {
+            useMobileMenuStore().closeMobileMenu();
+        },
+        toggleDarkMode() {
+            this.isDarkMode = !this.isDarkMode;
+            useThemeStore().toggleDarkMode();
+        },
   },
 };
 </script>
 <style scoped>
-.menu__student{
-    width: 7rem;
-    z-index: 99;
-    position: fixed;
-    background: #FDFEFF;
-    height: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
-    transition: all 0.3s ease 0s;
-    flex-wrap: wrap;
+.container__header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 7px;
+  box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
+    0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease 0s;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: #515c67;
+  background-color: #FDFEFF;
 }
 /*Modo oscuro*/
-.dark-theme .menu__student{
-    background: #434B54;
+.dark-theme header{
+    background-color: #434B54;
+    color: #CACFDB;
 }
+.navigator{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+}
+/*Estilo del logo*/
 .container__logo img{
-    width: 100px;
+    width: 150px;
     height: auto;
     transition: all 0.3s ease 0s;
 }
+.container__logo{
+    filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
+}
+
 .container__logo img:hover{
     transform: scale(1.1);
 }
-.container__logo{
-    filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
+/*Fin del estilo del logo*/
+.container__nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.3rem;
+    margin-left: 15px;
+}
+
+ .container__nav .nav__links .link{
+    margin-right: 15px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    color: #515c67;
+    transition: all 0.3s ease 0s;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    padding: 9px 25px;
+}
+.link span{
+    padding: 0.2rem;
+}
+.dark-theme .container__nav .nav__links .link{
+    color: #CACFDB;
+    background-color: #434B54;
+    border: 1px solid #434B54;
+}
+
+.container__nav .nav__links .link:hover{
+  background-color: rgba(90, 97, 106, 0.7);
+  color: #fff;
+  transform: scale(1.1);
+}
+.container__header .container__menu--profile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+
+}
+.container__header .container__menu--profile:hover{
+    transform: scale(1.1);
+}
+.container__header .container__menu--profile svg{
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #515c67;
+}
+.dark-theme .container__header .container__menu--profile svg{
+    color: #CACFDB;
+}
+.container__sidebar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #FDFEFF;
+    z-index: 3;
+}
+.dark-theme  .container__sidebar{
+    background-color: #434B54;
+}
+ .container__sidebar .container__sidebar--profile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eaeaea;
+}
+ .container__sidebar .container__sidebar--profile .container__sidebar--profile__image{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+ .container__sidebar .container__sidebar--profile .container__sidebar--profile__image svg{
+    font-size: 2rem;
+    font-weight: 700;
+    color: #515c67;
+}
+.dark-theme  .container__sidebar .container__sidebar--profile .container__sidebar--profile__image svg{
+    color: #CACFDB;
+}
+ .container__sidebar .container__sidebar--profile .container__sidebar--profile__name{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+ .container__sidebar .container__sidebar--profile .container__sidebar--profile__name span{
+    font-size: 1rem;
+    font-weight: 700;
+    color: #515c67;
+}
+.dark-theme .container__sidebar .container__sidebar--profile .container__sidebar--profile__name span{
+    color: #CACFDB;
+}
+ .container__sidebar .container__sidebar--options{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1rem;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item:hover{
+    transform: scale(1.1);
+}
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item svg{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #515c67;
+    margin-right: 1rem;
+}
+.dark-theme  .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item svg{
+    color: #CACFDB;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item span{
+    font-size: 1rem;
+    font-weight: 700;
+    color: #515c67;
+}
+.dark-theme  .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item span{
+    color: #CACFDB;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link{
+    text-decoration: none;
+    color: #515c67;
+}
+.dark-theme .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link{
+    color: #CACFDB;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:hover{
+    text-decoration: underline;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:active{
+    text-decoration: underline;
+}
+.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:visited{
+    text-decoration: underline;
+}
+.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:focus{
+    text-decoration: underline;
+}
+.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:link{
+    text-decoration: underline;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    width: 100%;
+}
+
+
+.container__sidebar .container__sidebar--options .container__menu--options .container__button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+
+/*Media queries*/
+@media screen and (max-width: 1250px){
+ .container__nav .nav__links .link{
+    font-size: 13px;
+  }
+    .switch{
+        width: 50px;
+        height: 25px;
+    }
+    .switch:after{
+        width: 0;
+        height: 0;
+        left: 0;
+        top: 0;
+    }
+    .switch:checked:before{
+        left: 5px;
+        top: 2px;
+    }
+    .switch:checked:after{
+        left: 5px;
+        top: 2px;
+    }
+}
+@media screen and (max-width: 1024px){
+  .container__header{
+    display: none;
+  }
 }
 </style>

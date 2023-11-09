@@ -1,122 +1,92 @@
 <template>
-    <div class="container__student">
-        <h5>Student Principal Page</h5>
-        <div class="dataview">
-            <div class="dataview__title">
-                <h3>Publicaciones:</h3>
-                <Dropdown :options="options" />
-            </div>
-            <div class="dataview__options">
-                <button class="List-view">
-                    <font-awesome-icon :icon="['fas', 'list']" 
-                    size="2xl"
-                    />
-                </button>
-                <button class="Grid-view">
-                    <font-awesome-icon :icon="['fas', 'th-large']" size="2xl"/>
-                </button>
-            </div>
-        </div>
-        <div class="container__cards">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+    <div class="student__principalPage">
+        <div class="student__content__internship">
+            <CardList 
+            :list="listInterships" 
+            :title="title"  
+            v-if="everyInternshipsAreLoaded"
+            />
         </div>
     </div>
 </template>
 <script>
-import Card from "@/components/common/Card.vue";
 import Dropdown from "@/components/common/Dropdown.vue";
+import {useInternshipsByIDStore } from "@/store/student/internshipsByIDStore";
+import CardList from "@/components/common/CardList.vue";
 export default {
     data() {
         return {
-            options: [
-                { id: null, label: "Populares" },
-                { id: "1", label: "Recien publicadas" },
-                { id: "2", label: "Mejor calificadas" },
-                { id: "3", label: "Peor calificadas" },
-            ],
+            listInterships:[],
+            title: "Pasantías",
+            everyInternshipsAreLoaded: false,
         };
     },
     components: {
-        Card,
         Dropdown,
+        CardList,
+    },
+    methods: {
+        async getData(){
+            await useInternshipsByIDStore().loadInternshipsByIdStudent();
+            this.listInterships = useInternshipsByIDStore().internships;
+            this.everyInternshipsAreLoaded = true;
+        },
+    },
+    created(){
+        this.getData();
     },
 }
 </script>
 <style scoped>
-.container__student{
-    margin-left: 7rem;
+.student__principalPage{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5% 10%;
+    padding: 2rem;
+    
 }
-/*Modo oscuro*/
-.dataview{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-.dataview__title{
+
+.student__topbar{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0.5rem;
-
 }
-.dataview__title h3{
-    padding: 0.5rem;
-    font-size: 1.5rem;
-}
-.dataview__options{
+.student__topbar--title{
     display: flex;
-    flex-direction: row-reverse;
-    width: 100%;
-    margin-bottom: 1rem;
-    
+    flex-direction: row;
+    padding: 0.1rem;
+    font-weight: 600;
 }
-.dataview__options button{
+.student__topbar--title h1{
+    font-size: 2rem;
+}
+.topbar--profile button{
     border: none;
     background-color: transparent;
     cursor: pointer;
     font-size: 1.5rem;
-    color: #C8E6C9;
+    color: #434B54;
     transition: 0.4s all ease;
     border-radius: 5px;
     padding: 0.5rem;
+    border: 1px solid #434B54;
 }
-.dataview__options button:hover{
-    color: #434B54;
-    background: #C8E6C9;
+.topbar--profile button:hover{
+    color: #C8E6C9;
+    background: #434B54;
 }
-.container__cards{
+.student__content__internship{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    
+    width: 100%;
 }
-@media screen and (max-width: 768px){
-    .container__student{
-        padding: 5% 5%;
-    }
-    .dataview__title h3{
-        font-size: 1.25rem;
-    }
-    .dataview__options button{
-        font-size: 1.25rem;
-    }
-}
+
+
 
 
 </style>
