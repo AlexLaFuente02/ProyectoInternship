@@ -64,6 +64,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0.3rem;
 }
 .button{
     display: flex;

@@ -1,46 +1,41 @@
 <template>
     <div class="card">
-        
-    <div class="container__card">
-
-        
-        <div class="header__card">
-            <div class="time__card">
-                <font-awesome-icon :icon="['fas', 'calendar-xmark']" size="2xl" />
-                <h4>05/12/2023</h4>
+        <div class="container__card">
+            <div class="header__card">
+                <div class="time__card">
+                    <font-awesome-icon :icon="['fas', 'calendar-xmark']" size="2xl" />
+                    <h4>{{this.informationCard.fechaseleccionpasante}}</h4>
+                </div>
+                <div class="state_card">
+                    <h4>{{ this.informationCard.estadoconvocatoria.nombreestadoconvocatoria }}</h4>
+                </div>
             </div>
-            <div class="state_card">
-                <h4>Activo</h4>
-            </div>
-        </div>
-        <div class="body__card">
-            <div class="img__card">
-                <img src="https://pbs.twimg.com/profile_images/1026937398855389186/1fpmfMrK_400x400.jpg" alt="Imagen de la empresa">
+            <div class="body__card">
+                <div class="img__card">
+                    <img src="https://pbs.twimg.com/profile_images/1026937398855389186/1fpmfMrK_400x400.jpg" alt="Imagen de la empresa">
+                </div>
+                <div class="description__card">
+                    <div class="description__content">
+                        <p>{{ this.informationCard.descripcionfunciones }}</p>
+                    </div>
+                </div>
             </div>
             
-            <div class="title__card">
-                <h3>Prácticas profesionales</h3>
-            </div>
-            <div class="description__card">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+            <div class="footer__card">
+                <div class="company__card">
+                    <font-awesome-icon :icon="['fas', 'building']" size="xl"/>
+                    <p>{{this.informationCard.institucion.nombreinstitucion}}</p>
+                </div>
+                <Button 
+                    text="Más información" 
+                    :color="2" 
+                    :disabled="false"
+                    @option-selected="moreInformation"
+                    >
+                </Button>
+                
             </div>
         </div>
-        
-        <div class="footer__card">
-            <div class="company__card">
-                <h4>Empresa</h4>
-                <p>Nombre de la empresa</p>
-            </div>
-            <Button 
-                text="Más información" 
-                :color="0" 
-                :disabled="false"
-                @option-selected="login"
-                >
-            </Button>
-            
-        </div>
-    </div>
     </div>
 </template>
 <script>
@@ -49,27 +44,47 @@ export default {
     components: {
         Button,
     },
+    data() {
+        return {
+            informationCard:[],
+        };
+    },
+    methods: {
+        getData(){
+            this.informationCard = this.internship;
+        },
+        moreInformation(){
+            this.$router.push({name: "InternshipInformation", params: {id: this.informationCard.id}});
+        }
+    },
+    props: {
+        internship: {
+            type: Object,
+            required: true,
+        },
+    },
+    created(){
+        this.getData();
+    },
 }
 </script>
 <style scoped>
     .card{
-        width: 100%;
-        height: 100%;
+        width: 33.3%;
+        height: 500px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding: 1rem;
     }
     .img__card{
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        width: 100%;
-
     }
     .img__card img{
-        height: 100px;
         object-fit: cover;
         width: 150px!important;
         border-radius: 15px;
@@ -86,6 +101,7 @@ export default {
         justify-content: space-between;
         align-items: center;
         padding: 1rem;
+        border: 1px solid #383838;
     }
     .container__card:hover{
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
@@ -132,19 +148,6 @@ export default {
         justify-content: space-between;
         align-items: center;
     }
-    
-    .title__card{
-        width: 100%;
-        height: 20%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-    .title__card h3{
-        font-size: 1.5rem!important;
-        font-weight: 500;
-    }
     .description__card{
         width: 100%;
         height: 40%;
@@ -152,6 +155,11 @@ export default {
         flex-direction: row;
         justify-content: center;
         align-items: center;
+
+    }
+    .description__content{
+        max-height: 100px; /* Altura máxima que desees */
+        overflow-y: auto;
     }
     .description__card p{
         font-size: 1rem!important;
@@ -165,6 +173,25 @@ export default {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+    }
+    .company__card{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+    .company__card p{
+        margin-left: 14px;
+    }
+    /*Media Queries*/
+    @media screen and (max-width: 768px){
+        .img__card img{
+            height: 100px;
+            object-fit: cover;
+            width: 150px!important;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px #00000008,0 0 2px #0000000f,0 2px 6px #0000001f!important;
+        }
     }
     
 </style>
