@@ -26,7 +26,6 @@ import InstitutionNavbar from "@/components/institution/InstitutionNavbar.vue";
 // USEI
 import UseiNavbar from "@/components/usei/UseiNavbar.vue";
 import UseiNavbarMovile from "@/components/usei/UseiNavbarMovile.vue";
-import UseiFooter from "@/components/usei/UseiFooter.vue";
 
 import { useMobileMenuStore } from "./store/common/mobileMenuStore";
 import { useThemeStore } from "@/store/common/useThemeStore"; 
@@ -66,7 +65,7 @@ export default {
         } else if (userType == 2){
           return "InstitutionNavbar";
         } else if (userType == 3){
-          return "UseiNavbar";
+          return "UseiNavbarMovile";
         } else {
           return "NavbarCommonMobile";
         }
@@ -82,6 +81,7 @@ export default {
     StudentNavbar,
     InstitutionNavbar,
     UseiNavbar,
+    UseiNavbarMovile,
   },
   created() {
     window.addEventListener("resize", this.handleResize);
