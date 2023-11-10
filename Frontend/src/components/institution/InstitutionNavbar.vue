@@ -11,16 +11,18 @@
     <nav class="nav-container">
       <div class="nav-links">
         <router-link class="link" to="/institution/home">Inicio</router-link>
-        <router-link
+        <!-- <router-link
           class="link dropdown-button"
           to="/institution/Convocatoria"
-        >
-          Convocatorias
-          <!-- <ul class="dropdown-menu">
-            <li class="dropdown-item">Tus Convocatorias</li>
-            <li class="dropdown-item">Agregar Convocatoria</li>
-          </ul> -->
-        </router-link>
+        > -->
+        <Dropdown
+          :options="callList"
+          :selectedValue="callList"
+          placeholderValue="Convocatorias"
+          @option-selected="callList"
+          class=""
+        />
+        <!-- </router-link> -->
         <router-link class="link" to="/institution/RequestsTray">
           Bandeja de solicitudes
         </router-link>
@@ -51,14 +53,17 @@
 <script>
 import { useThemeStore } from "@/store/common/useThemeStore";
 import Button from "@/components/common/Button.vue";
+import Dropdown from "../common/Dropdown.vue";
 export default {
   name: "InstitutionNavBar",
   components: {
     Button,
+    Dropdown,
   },
   data() {
     return {
       isDarkMode: false,
+      callList: ["hola", "hola2"],
     };
   },
   methods: {
@@ -73,6 +78,9 @@ export default {
         this.$router.push({ name: "PrincipalPage" });
       }
     },
+    // updateCallList() {
+
+    // }
   },
 };
 </script>
