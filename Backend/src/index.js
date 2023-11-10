@@ -38,8 +38,12 @@ const authAPI = require("./API/authAPI");
 app.use(express.json());
 
 // Middleware para permitir CORS desde cualquier dominio
-app.use(cors()); // Agrega esta línea justo antes de tus rutas
-
+const corsOptions = {
+  // Permitir explícitamente el origen del cliente
+  origin: 'http://localhost:5173',
+  credentials: true, // Esto es necesario para las cookies de sesión y los headers de autenticación
+};
+app.use(cors(corsOptions));
 // Configuración de Passport
 app.use(
   session({ secret: "your-secret-key", resave: false, saveUninitialized: true })

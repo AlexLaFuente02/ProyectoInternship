@@ -43,6 +43,8 @@ import Galleria from 'primevue/galleria';
 //Main
 import "./assets/main.css";
 
+import axios from "axios";
+
 //Rutas
 const routes = [
     //Common
@@ -79,7 +81,8 @@ const pinia = createPinia();
 //Librerias de fontawesome para los iconos
 library.add(fab);
 library.add(fas);
-
+// Configura axios para enviar las cookies
+axios.defaults.withCredentials = true;
 // App
 const app = createApp(App);
 
