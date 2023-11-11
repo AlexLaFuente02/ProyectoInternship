@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="container__logo">
-            <router-link to="/">
+            <router-link to="/student">
                 <img
                 src="../images/USEI.png"
                 alt="Unidad de Servicios Estudiantiles Integrales"
@@ -21,7 +21,7 @@
     </header>
     <div class="menu__student" v-show="showMobileMenuLeft">
         <div class="container__logo">
-            <router-link to="/">
+            <router-link to="/student" @click="closeMobileMenu">
                 <img
                 src="../images/USEI.png"
                 alt="Unidad de Servicios Estudiantiles Integrales"
@@ -29,7 +29,6 @@
             </router-link>
         </div>
         <nav class="container__nav" >
-            <div class="nav__links">
                 <ul class="nav__list" >
                     <li class="nav__item" @click="closeMobileMenu">
                         <router-link class="link" to="/student">
@@ -58,39 +57,59 @@
                         </router-link>
                     </li>
                 </ul>
-            </div>
         </nav>
     </div>
     <div class="container__sidebar" v-show="showMobileMenuRight">
-        <div class="navbar__buttons">
-            <div class="buttons">
-                <router-link to="/student/profile">
-                    <button class="link" @click="closeMobileMenu">
-                        <font-awesome-icon :icon="['fas', 'user']" size="xl"/>
-                        <span class="nav__name">Perfil</span>
-                    </button>
-                </router-link>
-                <router-link to="/student/settings">
-                    <button class="link" @click="closeMobileMenu">
-                        <font-awesome-icon :icon="['fas', 'cog']" size="xl"/>
-                        <span class="nav__name">Configuración</span>
-                    </button>
-                </router-link>
-                <router-link to="/student/help">
-                    <button class="link" @click="closeMobileMenu">
-                        <font-awesome-icon :icon="['fas', 'question-circle']" size="xl"/>
-                        <span class="nav__name">Ayuda</span>
-                    </button>
-                </router-link>
-                <router-link to="/student/login">
-                    <button class="link" @click="closeMobileMenu">
-                        <font-awesome-icon :icon="['fas', 'sign-out-alt']" size="xl"/>
-                        <span class="nav__name">Cerrar sesión</span>
-                    </button>
-                </router-link>
+                <div class="container__sidebar--profile">
+                    <div class="container__sidebar--profile__image">
+                        <font-awesome-icon :icon="['fas', 'circle-user']" />
+                    </div>
+                    <div class="container__sidebar--profile__name">
+                        <span>{{ this.username }}</span>
+                    </div>
+                </div>
+                <div class="container__sidebar--options">
+                    <ul class="container__menu--options"  >
+                        <li class="container__menu--options__item" @click="closeMobileMenu">
+                            <router-link class="link" to="/student/profile">
+                                <font-awesome-icon :icon="['fas', 'user']" />
+                                <span>Perfil</span>
+                            </router-link>
+                        </li>
+                        <li class="container__menu--options__item" @click="closeMobileMenu">
+                            <router-link class="link" to="/student">
+                                <font-awesome-icon :icon="['fas', 'gear']" />
+                                <span>Configuración</span>
+                            </router-link>
+                        </li>
+                        <!--Modo oscuro-->
+                        <li class="container__menu--options__item" @click="toggleDarkMode" v-if="isDarkMode">
+                            <div class="container__menu--options__item__dark-mode">
+                                <font-awesome-icon :icon="['fas', 'moon']" />
+                                <span>Modo oscuro</span>
+                            </div>
+                        </li>
+                        <li class="container__menu--options__item" @click="toggleDarkMode" v-else>
+                            <div class="container__menu--options__item__dark-mode">
+                                <font-awesome-icon :icon="['fas', 'sun']" />
+                                <span>Modo claro</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="container__button">
+                                <Button 
+                                    text="Cerrar sesi&oacute;n" 
+                                    :color="1" 
+                                    :disabled="false"
+                                    @option-selected="logout"
+                                    >
+                                </Button>
+                            </div>
+                        </li>
+                
+                    </ul>
+                </div>
             </div>
-        </div>
-    </div>
 </template>
 <script>
 import { useMobileMenuStore } from "../../store/common/mobileMenuStore";
@@ -104,23 +123,20 @@ export default {
     data() {
         return {
             isDarkMode: false,
-            showMobileMenuLeft: false,
-            showMobileMenuRight: false,
+            username: "Invitado",
         };
     },
     methods: {
         toggleMobileMenuL() {
+            useMobileMenuStore().toggleMenuLeft();
             useMobileMenuStore().toggleMobileMenu();
-            this.showMobileMenuLeft = !this.showMobileMenuLeft;
         },
         toggleMobileMenuR() {
+            useMobileMenuStore().toggleMenuRight();
             useMobileMenuStore().toggleMobileMenu();
-            this.showMobileMenuRight = !this.showMobileMenuRight;
         },
         closeMobileMenu() {
             useMobileMenuStore().closeMobileMenu();
-            this.showMobileMenuLeft = false;
-            this.showMobileMenuRight = false;
         },
         createAccount(option) {
             if (option) {
@@ -143,15 +159,17 @@ export default {
     },
     computed: {
         showMobileMenuLeft() {
-            return this.showMobileMenuLeft;
+            return useMobileMenuStore().menuLeft;
         },
         showMobileMenuRight() {
-            return this.showMobileMenuRight;
+            return useMobileMenuStore().menuRight;
         },
+
     },
 }
 </script>
 <style scoped>
+/*Estilos del header*/
 .container__header{
   display: flex;
   flex-direction: row;
@@ -173,7 +191,6 @@ export default {
     background-color: #434B54;
     color: #CACFDB;
 }
-/*Estilo del logo*/
 .container__header .container__logo img{
     width: 150px;
     height: auto;
@@ -186,74 +203,6 @@ export default {
 .container__header .container__logo img:hover{
     transform: scale(1.1);
 }
-/*Fin del estilo del logo*/
-.container__header .container__nav{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.container__header .container__nav .nav__links .link{
-    margin-right: 10px;
-    font-weight: 700;
-    text-align: center;
-    text-decoration: none;
-    font-size: 15px;
-    color: #515c67;
-    transition: all 0.3s ease 0s;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-    padding: 9px 25px;
-}
-.dark-theme .container__nav .nav__links .link{
-    color: #CACFDB;
-    background-color: #434B54;
-    border: 1px solid #434B54;
-}
-
-.container__header .container__nav .nav__links .link:hover{
-  background-color: rgba(90, 97, 106, 0.7);
-  color: #fff;
-  transform: scale(1.1);
-}
-.dark-theme .container__nav .nav__links .link:hover{
-  background-color: rgba(90, 97, 106, 0.7);
-}
-.navbar__buttons{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-decoration: none;
-
-}
-.navbar__buttons .buttons{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-}
-.navbar__buttons input{
-  display: flex;
-  
-} 
-.container__header .container__menu{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-.container__header .container__menu--profile{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-
-}
 .container__header .container__menu--profile:hover{
     transform: scale(1.1);
 }
@@ -265,91 +214,223 @@ export default {
 .dark-theme .container__header .container__menu--profile svg{
     color: #CACFDB;
 }
-.container__sidebar{
+/*Fin del header*/
+/*Sidebar de la izquierda*/
+.menu__student{
+    position: fixed;
+    transition: all 0.3s ease 0s;
+    z-index: 3;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #FDFEFF;
+    padding: 1rem;
+    border-right: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
+    0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+    
+}
+.dark-theme .menu__student{
+    background-color: #434B54;
+}
+.menu__student .container__logo img{
+    width: 150px;
+    height: auto;
+    transition: all 0.3s ease 0s;
+}
+.menu__student .container__logo img:hover{
+    transform: scale(1.1);
+}
+.menu__student .container__nav{
+    width: 100%;
+    margin-top: 1rem;
+    overflow: auto;
+}
+.menu__student .container__nav .nav__list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.menu__student .container__nav .nav__item{
+    width: 100%;
+    padding: 0.5rem 0;
+    border-radius: 7px;
+}
+.menu__student .container__nav .nav__item:hover{
+    background-color: #CACFDB;
+}
+.dark-theme .menu__student .container__nav .nav__item:hover{
+    background-color: #515c67;
+}
+.menu__student .container__nav .nav__item .link{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 7px;
+}
+.link .nav__name{
+    margin-left: 1rem;
+    text-decoration: none;
+    color: #515c67;
+}
+.dark-theme .link .nav__name{
+    color: #CACFDB;
+}
+
+.menu__student .container__nav .nav__item .link svg{
+    color: #515c67;
+}
+.dark-theme .menu__student .container__nav .nav__item .link svg{
+    color: #CACFDB;
+}
+.menu__student .container__nav .nav__item .link svg:hover{
+    color: #515c67;
+}
+/*Fin del sidebar de la izquierda*/
+/*Sidebar de la derecha*/
+.container__sidebar{
     position: fixed;
     top: 0;
     right: 0;
-    width: 100%;
-    height: 100%;
+    bottom: 0;
     background-color: #FDFEFF;
-    z-index: 1;
-    transform: translateX(100%);
-    transition: transform 0.5s ease-in-out;
+    z-index: 3;
 }
-.dark-theme .container__sidebar{
+.dark-theme  .container__sidebar{
     background-color: #434B54;
 }
-.container__sidebar .navbar__buttons{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-.container__sidebar .navbar__buttons .buttons{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-.container__sidebar .navbar__buttons .buttons button{
+ .container__sidebar .container__sidebar--profile{
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
-    width: 100%;
-    margin: 0.5rem;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #FDFEFF;
-    transition: all 0.3s ease 0s;
-    cursor: pointer;
+    justify-content: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eaeaea;
 }
-.dark-theme .container__sidebar .navbar__buttons .buttons button{
-    background-color: #434B54;
+ .container__sidebar .container__sidebar--profile .container__sidebar--profile__image{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+ .container__sidebar .container__sidebar--profile .container__sidebar--profile__image svg{
+    font-size: 2rem;
+    font-weight: 700;
+    color: #515c67;
+}
+.dark-theme  .container__sidebar .container__sidebar--profile .container__sidebar--profile__image svg{
     color: #CACFDB;
 }
-.container__sidebar .navbar__buttons .buttons button:hover{
-    background-color: rgba(90, 97, 106, 0.7);
-    color: #fff;
+ .container__sidebar .container__sidebar--profile .container__sidebar--profile__name{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+ .container__sidebar .container__sidebar--profile .container__sidebar--profile__name span{
+    font-size: 1rem;
+    font-weight: 700;
+    color: #515c67;
+
+}
+.dark-theme .container__sidebar .container__sidebar--profile .container__sidebar--profile__name span{
+    color: #CACFDB;
+}
+ .container__sidebar .container__sidebar--options{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1rem;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item:hover{
     transform: scale(1.1);
 }
-.container__sidebar .navbar__buttons .buttons button svg{
-    margin-right: 0.5rem;
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item svg{
     font-size: 1.5rem;
     font-weight: 700;
+    color: #515c67;
+    margin-right: 1rem;
 }
-.container__sidebar .navbar__buttons .buttons button span{
-    font-size: 1.2rem;
+.dark-theme  .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item svg{
+    color: #CACFDB;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item span{
+    font-size: 1rem;
     font-weight: 700;
-}
-.container__sidebar .navbar__buttons .buttons button:last-child{
-    margin-bottom: 1rem;
-}
-.container__sidebar .navbar__buttons .buttons button:last-child:hover{
-    background-color: #FDFEFF;
     color: #515c67;
 }
-.container__sidebar .navbar__buttons .buttons button:last-child svg{
+.dark-theme  .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item span{
+    color: #CACFDB;
+}
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link{
+    text-decoration: none;
     color: #515c67;
 }
-.container__sidebar .navbar__buttons .buttons button:last-child span{
-    color: #515c67;
+.dark-theme .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link{
+    color: #CACFDB;
 }
-.container__sidebar .navbar__buttons .buttons button:last-child:hover svg{
-    color: #515c67;
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:hover{
+    text-decoration: underline;
 }
-.container__sidebar .navbar__buttons .buttons button:last-child:hover span{
-    color: #515c67;
+ .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:active{
+    text-decoration: underline;
 }
-.container__sidebar .navbar__buttons .buttons button:last-child:hover{
-    transform: scale(1);
+.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:visited{
+    text-decoration: underline;
 }
+.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:focus{
+    text-decoration: underline;
+}
+.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:link{
+    text-decoration: underline;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    width: 100%;
+}
+
+
+.container__sidebar .container__sidebar--options .container__menu--options .container__button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+/*Fin del sidebar de la derecha*/
+/*Media queries*/
+
+
 
 </style>

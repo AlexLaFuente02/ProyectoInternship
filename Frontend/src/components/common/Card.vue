@@ -20,7 +20,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="footer__card">
                 <div class="company__card">
                     <font-awesome-icon :icon="['fas', 'building']" size="xl"/>
@@ -104,7 +103,9 @@ export default {
         border: 1px solid #383838;
     }
     .container__card:hover{
-        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+        scale: 1.1;
+        transition: 0.5s;
+        letter-spacing: 1px;
     }
     .dark-theme .container__card{
         background-color: #434B54;
@@ -158,7 +159,7 @@ export default {
 
     }
     .description__content{
-        max-height: 100px; /* Altura máxima que desees */
+        max-height: 100px;
         overflow-y: auto;
     }
     .description__card p{
@@ -183,6 +184,18 @@ export default {
     .company__card p{
         margin-left: 14px;
     }
+    @media screen and (max-width: 1400px){
+        .card{
+            width: 50%;
+        
+        }
+    }
+    @media screen and (max-width: 1000px){
+        .card{
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+    }
     /*Media Queries*/
     @media screen and (max-width: 768px){
         .img__card img{
@@ -192,6 +205,36 @@ export default {
             border-radius: 15px;
             box-shadow: 0 4px 10px #00000008,0 0 2px #0000000f,0 2px 6px #0000001f!important;
         }
+    }
+    @media screen and (max-width: 500px){
+        .img__card img{
+            height: 100px;
+            object-fit: cover;
+            width: 100px!important;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px #00000008,0 0 2px #0000000f,0 2px 6px #0000001f!important;
+        }
+        .description__card p{
+            font-size: 0.8rem!important;
+        }
+        .company__card{
+            display: none;
+        }
+        .header__card{
+            height: auto;
+            flex-direction: column;
+        }
+        .body__card{
+            height: auto;
+        }
+        .footer__card{
+            height: auto;
+            flex-direction: column;
+        }
+        .container__card{
+            padding: 0.5rem;
+        }
+
     }
     
 </style>
