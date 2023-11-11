@@ -30,8 +30,10 @@ import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
 import InstitutionAddConvocatoria from '@/views/institution/InstitutionAddConvocatoria.vue'
 import InstitutionConvocatoria from '@/views/institution/InstitutionConvocatoria.vue'
 import InstitutionPrincipalPage from '@/views/institution/InstitutionPrincipalPage.vue'
-
 //Paginas Admin
+import UseiBusinessApplications from '@/views/usei/UseiBusinessApplications.vue'
+import UseiInternshipApplications from '@/views/usei/UseiInternshipApplications.vue'
+
 
 //Librerias de PrimeVue
 import ButtonPrime from "primevue/button";
@@ -66,6 +68,9 @@ const routes = [
     {name: 'InstitutionConvocatoria', path : '/institution/Convocatoria', component:InstitutionConvocatoria},
     {name: 'InstitutionPrincipalPage', path : '/institution/home', component:InstitutionPrincipalPage},
     //Usei-Admin
+    {name: 'UseiBusinessApplications', path : '/usei/Business', component:UseiBusinessApplications},
+    {name: 'UseiInternshipApplications', path : '/usei/Internship', component:UseiInternshipApplications},
+    
 ];
 // Router
 const router = createRouter({
