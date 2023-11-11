@@ -1,7 +1,7 @@
 <template>
     <div class="inicio">
-      <h1>TUS CONVOCATORIAS</h1>
-      <p>Te mostramos tus convocatorias</p>
+      <h1>TUS SOLICITUDES DE EMPRESAS</h1>
+      <p>Te mostramos tus solicitudes de empresas para entrar a la pagina</p>
       <div class="card-inicio">
         <div class="card">
           <div v-for="card in cards" :key="card.id" class="card-individual">
@@ -12,8 +12,8 @@
               <div class="text-content">
                 <div class="button-container">
                   <div class="button-group">
-                    <button class="edit-btn" @click="editCard(card.id)">Editar</button>
-                    <button class="delete-btn" @click="deleteCard(card.id)">Borrar</button>
+                    <button class="edit-btn" @click="editCard(card.id)">Aceptar</button>
+                    <button class="delete-btn" @click="deleteCard(card.id)">Rechazar</button>
                   </div>
                 </div>
                 <div class="title">{{ card.empresa }}</div>
@@ -35,9 +35,8 @@
             {
               id: 1,
               empresa:"JALA",
-              estado:"APROBADO",
               descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              imageUrl: "https://okdiario.com/img/2023/04/10/-es-malo-que-los-gatos-coman-moscas-y-mosquitos-635x358.jpg",
+              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
               title: "Amsterdam Walking Tour",
               description: "Explore popular tourist destinations as well as hidden local favourites.",
               price: 17,
@@ -47,7 +46,9 @@
               id: 2,
               imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
               title: "Card 2",
-              description: "Description for Card 2",
+              empresa:"Empres 2",
+              descripcion:"Breve infromacion sobre la empresa y la pasantia",
+              
               price: 20,
               reviews: 15
             },
@@ -55,7 +56,8 @@
               id: 3,
               imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
               title: "Card 3",
-              description: "Description for Card 3",
+              empresa:"Empresa 3",
+              descripcion:"Breve infromacion sobre la empresa y la pasantia",
               price: 25,
               reviews: 10
             },
@@ -183,39 +185,7 @@
       left: 10px;
     }
     /**colores de texto de si esta aporbado o no */
-    .text-a,.text-p,.text-r{
-        position: relative;
-        left: 10%; 
-        right: 60%;
-        transform: translate(50%,-50%);
-        text-transform: uppercase;
-        font-family: verdana;
-        font-size: 200%;
-        font-weight: 50%;
-        text-shadow: 1px 1px 1px #919191,
-            1px 2px 1px #919191,
-            1px 3px 1px #919191,
-            1px 4px 1px #919191,
-            1px 5px 1px #919191,
-            1px 6px 1px #919191,
-            1px 7px 1px #919191,
-            1px 8px 1px #919191,
-            1px 9px 1px #919191,
-            1px 10px 1px #919191,
-        1px 18px 6px rgba(16,16,16,0.4),
-        1px 22px 10px rgba(16,16,16,0.2),
-        1px 25px 35px rgba(16,16,16,0.2),
-        1px 30px 60px rgba(16,16,16,0.4);
-    }
-    .text-a{
-        color: #00c123;
-    }
-    .text-p {
-        color: #fee900;
-      }
-    .text-r {
-       color: #dc0c0c;
-       }
+    
     /**finnnnnnnnnnnnnnnnnnnnnnnn*/
     .card {/**contenedore de indivialues */
       border: 0px solid #ccc;
@@ -317,10 +287,20 @@
     }
 
 /* Estilos para los botones Editar y Borrar */
-.edit-btn,
+.edit-btn {
+  padding: 10px 20px;
+  background-color: rgb(3, 170, 14);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 5px;
+}
+
 .delete-btn {
   padding: 10px 20px;
-  background-color: #5a99dd;
+  background-color: #ff0000;
   color: white;
   border: none;
   border-radius: 5px;
