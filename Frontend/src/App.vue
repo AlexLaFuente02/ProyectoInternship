@@ -24,6 +24,7 @@ import StudentNavbar from "@/components/student/StudentNavbar.vue";
 import StudentNavbarMobile from "@/components/student/StudentNavbarMobile.vue";
 // Institution
 import InstitutionNavbar from "@/components/institution/InstitutionNavbar.vue";
+import InstitutionNavbarMobile from "@/components/institution/InstitutionNavbarMobile.vue";
 // USEI
 import UseiNavbar from "@/components/usei/UseiNavbar.vue";
 import UseiNavbarMovile from "@/components/usei/UseiNavbarMovile.vue";
@@ -63,7 +64,7 @@ export default {
         if(useLoginStore().isLogged == 1){
           return "StudentNavbarMobile";
         } else if (useLoginStore().isLogged== 2){
-          return "InstitutionNavbar";
+          return "InstitutionNavbarMobile";
         } else if (useLoginStore().isLogged == 3){
           return "UseiNavbarMovile";
         } else {
@@ -80,6 +81,7 @@ export default {
     NavbarCommonMobile,
     StudentNavbar,
     InstitutionNavbar,
+    InstitutionNavbarMobile,
     UseiNavbar,
     UseiNavbarMovile,
     StudentNavbarMobile,

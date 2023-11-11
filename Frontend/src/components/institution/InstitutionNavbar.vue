@@ -11,18 +11,25 @@
     <nav class="nav-container">
       <div class="nav-links">
         <router-link class="link" to="/institution/home">Inicio</router-link>
-        <!-- <router-link
-          class="link dropdown-button"
-          to="/institution/Convocatoria"
-        > -->
-        <Dropdown
-          :options="callList"
-          :selectedValue="callList"
-          placeholderValue="Convocatorias"
-          @option-selected="callList"
-          class=""
-        />
-        <!-- </router-link> -->
+        <button class="dropdown-button" @click="showDropdownCallList">Convocatorias</button>
+          
+          <ul class="dropdown-menu" v-if="dropdownButton.showDropdownMenu">
+            
+              <router-link to="/institution/Convocatoria" class="dropdown-link" @click="showDropdownCallList">
+               <li class="dropdown-item"> Tus Convocatorias </li>
+              </router-link>
+            
+            
+              <router-link
+                to="/institution/addConvocatoria"
+                class="dropdown-link"
+                @click="showDropdownCallList"
+              >
+               <li class="dropdown-item"> Agregar Convocatoria </li>
+              </router-link>
+            
+          </ul>
+        
         <router-link class="link" to="/institution/RequestsTray">
           Bandeja de solicitudes
         </router-link>
@@ -63,7 +70,10 @@ export default {
   data() {
     return {
       isDarkMode: false,
-      callList: ["hola", "hola2"],
+      dropdownButton: {
+        callList: [],
+        showDropdownMenu: false,
+      },
     };
   },
   methods: {
@@ -78,9 +88,10 @@ export default {
         this.$router.push({ name: "PrincipalPage" });
       }
     },
-    // updateCallList() {
-
-    // }
+    showDropdownCallList() {
+      this.dropdownButton.showDropdownMenu =
+        !this.dropdownButton.showDropdownMenu;
+    },
   },
 };
 </script>
@@ -101,6 +112,46 @@ export default {
   background-color: #fdfeff;
   color: #515c67;
 }
+
+.dropdown-button {
+  background: none;
+}
+
+.dropdown-menu {
+  position: absolute;
+  margin: 0;
+  left: 17%;
+  width: 15%;
+  background-color: white;
+  border-radius: 20px;
+  list-style: none;
+  /* overflow: hidden; */
+  text-align: center;
+  border: 1px solid black;
+  /* padding: 1%; */
+}
+
+/* .dropdown-item {
+  padding: 5% 10%;
+} */
+
+.dropdown-link {
+  color: black;
+  text-decoration: none;
+  /* margin-bottom: 30px; */
+  border: 1px solid white;
+}
+
+.dropdown-item:hover {
+  background-color: rgb(220, 220, 220);
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.dropdown-link:active {
+  background-color: aqua;
+}
+
 /*Modo oscuro*/
 .dark-theme header {
   background-color: #434b54;
@@ -131,7 +182,8 @@ export default {
   margin-left: 5px;
 }
 
-.institution-header .nav-container .nav-links .link {
+.institution-header .nav-container .nav-links .link,
+.dropdown-button {
   margin-right: 10px;
   font-weight: 700;
   text-align: center;
@@ -145,18 +197,27 @@ export default {
   transition: all 0.3s ease 0s;
   padding: 9px 25px;
 }
+
 .dark-theme .nav-container .nav-links .link {
   color: #cacfdb;
   background-color: #434b54;
   border: 1px solid #434b54;
 }
 
-.institution-header .nav-container .nav-links .link:hover {
+.dark-theme .dropdown-button {
+  color: #cacfdb;
+  background-color: #434b54;
+  border: 1px solid #434b54;
+}
+
+.institution-header .nav-container .nav-links .link:hover,
+.dropdown-button:hover {
   background-color: rgba(90, 97, 106, 0.7);
   color: #fff;
   transform: scale(1.1);
 }
-.dark-theme .nav-container .nav-links .link:hover {
+.dark-theme .nav-container .nav-links .link:hover,
+.dropdown-button:hover {
   background-color: rgba(90, 97, 106, 0.7);
 }
 .navbar-buttons {
