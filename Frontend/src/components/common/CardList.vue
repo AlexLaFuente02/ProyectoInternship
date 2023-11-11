@@ -6,8 +6,16 @@
             </div>
             <div class="dataview__options">
                 <div class="search__view">
-                    <input type="text" placeholder="Buscar" />
-                    <button><font-awesome-icon :icon="['fas', 'search']" size="2xl"/></button>
+                    <input
+                    type="text" 
+                    placeholder="Buscar por institución" 
+                    v-model="searchTerms"
+                    @input="handleSearch"
+
+                    />
+                    <div class="search__image">
+                        <font-awesome-icon :icon="['fas', 'search']" size="2xl"/>
+                    </div>
                 </div>
                 <div class="toggle__view">
                     <button class="List-view"
@@ -22,13 +30,34 @@
             </div>
         </div>
         <div class="containerList__cards__modeLIST" v-show="getMode">
-            <CardModeList v-for="internship in listInterships" :key="internship.id" :internship="internship" />
+            <CardModeList 
+            v-for="(internship, index) in paginatedData"
+            :key="internship.id" 
+            :internship="internship" />
         </div>
         <div class="containerList__cards__modeGRID" v-show="!getMode">
             
-            <Card v-for="internship in listInterships" :key="internship.id" :internship="internship" />
+            <Card 
+            v-for="(internship, index) in paginatedData"
+            :key="internship.id" 
+            :internship="internship" />
+        </div>
+        <div class="containerList__footer">
+            <div class="containerList__footer__pagination">
+                <button @click="prevPage" :disabled="currentPage === 1">Anterior</button>
+                <div class="containerList__footer__pagination__numbers">
+                    <button 
+                    v-for="page in pagesNumber"
+                    :key="page"
+                    @click="changePage(page)"
+                    :class="{'active': currentPage === page}"
+                    >{{page}}</button>
+                </div>
+                <button @click="nextPage" :disabled="currentPage === totalPages()">Siguiente</button>
+            </div>
         </div>
     </div>
+    
 </template>
 <script>
 import Card from "@/components/common/Card.vue";
@@ -40,6 +69,10 @@ export default {
             listInterships:[],
             mode: true,
             titleList: "Pasantías",
+            itemsPerPage: 6,
+            currentPage: 1,
+            searchTerms: '',
+
         };
     },
     components: {
@@ -58,7 +91,9 @@ export default {
     },
     methods: {
         getData(){
-            this.listInterships = this.list.result;
+            this.listInterships = this.list.result.filter((internship) => {
+                return internship.institucion.nombreinstitucion.toLowerCase().includes(this.searchTerms.toLowerCase());
+            });
             this.titleList =  this.title;
         },
         toggleView(value){
@@ -70,7 +105,28 @@ export default {
         loadModeView(){
             useModeViewStore().loadMode();
             this.mode = useModeViewStore().modeView;
-        }
+        },
+        //Métodos para la paginación
+        totalPages(){
+            return Math.ceil(this.listInterships.length / this.itemsPerPage);
+        },
+        changePage(page){
+            this.currentPage = page;
+        },
+        nextPage(){
+            if(this.currentPage < this.totalPages()){
+                this.currentPage++;
+            }
+        },
+        prevPage(){
+            if(this.currentPage > 1){
+                this.currentPage--;
+            }
+        },
+        handleSearch(){
+            this.currentPage = 1;
+            this.getData();
+        },
     },
     created(){
         this.loadModeView();
@@ -79,11 +135,43 @@ export default {
     computed: {
         getMode(){
             return useModeViewStore().modeView;
-        }
+        },
+        //Métodos para la paginación
+        pagesNumber(){
+            const totalVisiblePages = 3; // Puedes ajustar este valor según tus necesidades
+            const totalAvailablePages = this.totalPages();
+
+            let startPage = this.currentPage - Math.floor(totalVisiblePages / 2);
+            startPage = Math.max(1, startPage);
+
+            let endPage = startPage + totalVisiblePages - 1;
+            endPage = Math.min(totalAvailablePages, endPage);
+
+            const pages = [];
+            for (let i = startPage; i <= endPage; i++) {
+                pages.push(i);
+            }
+
+            return pages;
+        },
+        paginatedData(){
+            const start = (this.currentPage - 1) * this.itemsPerPage;
+            const end = start + this.itemsPerPage;
+            return this.listInterships.slice(start, end);
+        },
+
     },
 }
 </script>
 <style scoped>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
 .containerList{
     display: flex;
     flex-direction: column;
@@ -117,13 +205,13 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    width: 100%;
 }
 .toggle__view{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-left: 0.5rem;
 }
 .toggle__view button{
     background-color: transparent;
@@ -178,6 +266,14 @@ export default {
 .search__view button:hover{
     color: #4D9FDC;
 }
+.search__image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-left: 0.2rem;
+}
+
 .containerList__cards__modeGRID{
     display: flex;
     flex-direction: row;
@@ -191,44 +287,156 @@ export default {
     width: 100%;
     flex-wrap: wrap;
 }
+/*Estilos para la paginación*/
+.containerList__footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+}
+.containerList__footer__pagination{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.containerList__footer__pagination button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.3rem;
+    border: 1px solid #D7D8D9;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 5px;
+    color: #000;
+}
+.containerList__footer__pagination button:hover{
+    background-color: #4D9FDC;
+    color: #fff;
+}
+.containerList__footer__pagination button:disabled{
+    background-color: #D7D8D9;
+    color: #fff;
+    cursor: not-allowed;
+}
+.containerList__footer__pagination button.active{
+    background-color: #4D9FDC;
+    color: #fff;
+}
+.containerList__footer__pagination__numbers{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.containerList__footer__pagination__numbers button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.3rem;
+    border: 1px solid #D7D8D9;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.containerList__footer__pagination__numbers button:hover{
+    background-color: #4D9FDC;
+    color: #fff;
+}
+.containerList__footer__pagination__numbers button.active{
+    background-color: #4D9FDC;
+    color: #fff;
+}
+/*Modo oscuro de la lista*/
+
+.dark-theme .containerList__footer__pagination button{
+    border: 1px solid #fff;
+    color: #fff;
+
+}
+.dark-theme .containerList__footer__pagination button:hover{
+    background-color: #4D9FDC;
+    color: #fff;
+}
+.dark-theme .containerList__footer__pagination button.active{
+    background-color: #4D9FDC;
+    color: #fff;
+}
+.dark-theme .containerList__footer__pagination__numbers button{
+    border: 1px solid #fff;
+}
+.dark-theme .containerList__footer__pagination__numbers button:hover{
+    background-color: #4D9FDC;
+    color: #fff;
+}
+.dark-theme .containerList__footer__pagination__numbers button.active{
+    background-color: #4D9FDC;
+    color: #fff;
+}
+
+
+
+/*Estilos para la paginación*/
+
+
+
+
 /*Media Queries*/
-@media screen and (max-width: 825px){
+/* Estilos para dispositivos pequeños (teléfonos) */
+@media only screen and (max-width: 600px) {
+  /* Estilos específicos para dispositivos pequeños */
+  .search__view input{
+    font-size: 0.5rem;
+  }
+  .toggle__view button{
+    padding: 0.2rem;
+    font-size: 0.5rem;
+}
+.containerList__footer__pagination button{
+        font-size: 0.5rem;
+    }
+
+}
+
+/* Estilos para tabletas */
+@media only screen and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+  .containerList{
+      padding: 0.3rem;
+  }
     .containerList__header{
         flex-direction: column;
     }
     .containerList__title{
-        margin-bottom: 1rem;
+        margin-bottom: 0.2rem;
+        justify-content: center;
+
     }
     .dataview__options{
-        flex-direction: column;
-    }
-    .toggle__view{
-        margin-bottom: 1rem;
-    }
-    .search__view{
-        margin-bottom: 1rem;
-    }
-    input{
-        font-size: 0.8rem;
-    }
-    button{
-        font-size: 0.8rem;
-    }
-    h1{
-        margin: 1.2rem 0 0.8rem 0;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 0.2rem;
     }
 }
-/*Media Queries*/
-@media screen and (max-width: 480px){
-    input{
-        font-size: 0.5rem;
-    }
-    button{
-        font-size: 0.5rem;
-    }
-    h1{
-        margin: 0.8rem 0 0.5rem 0;
-    }
+
+/* Estilos para dispositivos medianos */
+@media only screen and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (max-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
 }
 
 

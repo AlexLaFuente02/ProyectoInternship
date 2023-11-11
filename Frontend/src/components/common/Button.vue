@@ -99,5 +99,10 @@ export default {
         font-size: 0.6rem;
     }
 }
+@media screen and (max-width: 600px) {
+    .button{
+        font-size: 0.4rem;
+    }
+}
    
 </style>

@@ -2,8 +2,8 @@
     <div class="student__principalPage">
         <div class="student__content__internship">
             <CardList 
-            :list="listInterships" 
-            :title="title"  
+            :list="listInterships"
+            :title="title"
             v-if="everyInternshipsAreLoaded"
             />
         </div>
@@ -18,7 +18,7 @@ export default {
     data() {
         return {
             listInterships:[],
-            title: "Pasantías",
+            title: "Tus pasantías",
             everyInternshipsAreLoaded: false,
         };
     },
@@ -88,7 +88,37 @@ export default {
     align-items: center;
     width: 100%;
 }
+/* Estilos para dispositivos pequeños (teléfonos) */
+@media only screen and (max-width: 600px) {
+  /* Estilos específicos para dispositivos pequeños */
+    .student__principalPage{
+            padding: 0.5rem;
+        
+    }
+}
 
+/* Estilos para tabletas */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+  .student__principalPage{
+        padding: 1rem;
+    
+  }
+}
+
+/* Estilos para dispositivos medianos */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+  .student__principalPage{
+        padding: 1.5rem;
+    
+  }
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (min-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
+}
 
 
 

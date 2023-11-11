@@ -5,22 +5,6 @@
             <div class="img__card">
                 <img src="https://pbs.twimg.com/profile_images/1026937398855389186/1fpmfMrK_400x400.jpg" alt="Imagen de la empresa">
             </div>
-            <div class="header__card__responsive">
-                <div class="time__card">
-                    <font-awesome-icon :icon="['fas', 'calendar-xmark']" size="2xl" />
-                    <h4>{{this.informationCard.fechaseleccionpasante}}</h4>
-                </div>
-                <div class="state_card">
-                    <h4>{{ this.informationCard.estadoconvocatoria.nombreestadoconvocatoria }}</h4>
-                </div>
-                <Button 
-                    text="Más información" 
-                    :color="0" 
-                    :disabled="false"
-                    @option-selected="moreInformation"
-                    >
-                </Button>
-            </div>
             <div class="body__card">
                 <div class="company__card">
                     <p>{{this.informationCard.institucion.nombreinstitucion}}</p>
@@ -162,6 +146,7 @@ export default {
         font-weight: 400;
         padding: 0.2rem;
         text-align: center;
+        font-weight: bold;
     }
     .header__card{
         width: 100%;
@@ -204,14 +189,42 @@ export default {
         margin: 0;
     }
 @media only screen and (max-width: 600px) {
-
+    .container__card{
+        flex-direction: column;
+    }
+    .img__card img{
+        width: 100px!important;
+    }
+    .body__card .description__card{
+        height: 100%;
+        border-bottom: none;
+    }
+    .company__card p{
+        font-size: 0.8rem;
+    }
+    .description__content p{
+        font-size: 0.8rem;
+    }
+    .header__card{
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .header__card .time__card{
+        width: auto;
+    }
+    .header__card .time__card svg{
+        width: 20px!important;
+        height: 20px!important;
+    }
+    .header__card .time__card h4{
+        margin-left: 0.1rem;
+    }
+    .header__card h4{
+        font-size: 0.4rem;
+    }
 }
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
-}
-@media only screen and (min-width: 1025px) and (max-width: 1440px) {
-}
-@media only screen and (min-width: 1441px) {
-
 }
 
 </style>
