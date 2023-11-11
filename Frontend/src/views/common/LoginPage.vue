@@ -139,23 +139,21 @@ export default {
           body: JSON.stringify(this.userData),
         })
           .then((response) => {
+            
             if (response.ok) {
               // La solicitud fue exitosa
               console.log("Inicio de sesión exitoso");
-              //Colocar el token de passport js en las cookies
-              this.$cookies.set("token", response.headers.get("authorization"));
               response.json().then((data) => {
                 var result = data.result;
-                console.log(response);
                 $cookies.set("id", result.id);
-                $cookies.set("type", result.username);
-                if (result.username == 1) {
+                $cookies.set("username", result.username);
+                $cookies.set("type", result.tipousuario.id);
+                if (result.tipousuario.id == 1) {
                   useLoginStore().setLogin(1);
                   this.$router.push("/student/");
-                  console.log("Estudiante");
-                } else if (result.username == 2) {
+                } else if (result.tipousuario.id == 2) {
                   useLoginStore().setLogin(2);
-                } else if (result.username == 3) {
+                } else if (result.tipousuario.id == 3) {
                   useLoginStore().setLogin(3);
                 } else {
                   useLoginStore().setLogin(0);

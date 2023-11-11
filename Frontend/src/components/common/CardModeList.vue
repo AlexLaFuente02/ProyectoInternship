@@ -5,13 +5,30 @@
             <div class="img__card">
                 <img src="https://pbs.twimg.com/profile_images/1026937398855389186/1fpmfMrK_400x400.jpg" alt="Imagen de la empresa">
             </div>
-            <div class="body__card">
-                <div class="description__card">
-                    <p>{{ this.informationCard.descripcionfunciones }}</p>
+            <div class="header__card__responsive">
+                <div class="time__card">
+                    <font-awesome-icon :icon="['fas', 'calendar-xmark']" size="2xl" />
+                    <h4>{{this.informationCard.fechaseleccionpasante}}</h4>
                 </div>
+                <div class="state_card">
+                    <h4>{{ this.informationCard.estadoconvocatoria.nombreestadoconvocatoria }}</h4>
+                </div>
+                <Button 
+                    text="Más información" 
+                    :color="0" 
+                    :disabled="false"
+                    @option-selected="moreInformation"
+                    >
+                </Button>
+            </div>
+            <div class="body__card">
                 <div class="company__card">
-                    <font-awesome-icon :icon="['fas', 'building']" />
                     <p>{{this.informationCard.institucion.nombreinstitucion}}</p>
+                </div>
+                <div class="description__card">
+                    <div class="description__content">
+                        <p>{{ this.informationCard.descripcionfunciones }}</p>
+                    </div>
                 </div>
             </div>
             <div class="header__card">
@@ -24,7 +41,7 @@
                 </div>
                 <Button 
                     text="Más información" 
-                    :color="2" 
+                    :color="0" 
                     :disabled="false"
                     @option-selected="moreInformation"
                     >
@@ -32,7 +49,6 @@
             </div>
         </div>
     </div>
-    <hr class="line">
 </template>
 <script>
 import Button from "@/components/common/Button.vue";
@@ -68,6 +84,9 @@ export default {
     .line{
         border: 1px solid #E5E5E5;
         width: 100%;
+    }
+    .dark-theme .line{
+        border: 1px solid rgba(255,255,255,.3);
     }
     .card{
         width: 100%;
@@ -108,10 +127,17 @@ export default {
     }
     .description__card{
         width: 100%;
-        height: 100%;
+        height: 150px;
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+
+    }
+    .description__content{
+        max-height: 130px;
+        overflow-y: auto;
     }
     .description__card p{
         width: 100%;
@@ -119,19 +145,22 @@ export default {
         font-size: 1.2rem;
         font-weight: 400;
         text-align: center;
+        
     }
     .company__card{
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: center;
+        flex-direction: row;
         align-items: center;
+        
     }
     .company__card p{
-        width: 100%;
         height: 100%;
         font-size: 1.2rem;
         font-weight: 400;
+        padding: 0.2rem;
         text-align: center;
     }
     .header__card{
@@ -141,6 +170,9 @@ export default {
         flex-direction: column  ;
         justify-content: space-between;
         align-items: center;
+    }
+    .header__card__responsive{
+        display: none;
     }
     .time__card{
         width: 100%;
@@ -155,6 +187,7 @@ export default {
         margin-left: 14px;
         font-size: 1.2rem;
         font-weight: 400;
+        margin: 0;
     }
     .state_card{
         display: flex;
@@ -170,4 +203,15 @@ export default {
         font-weight: 400;
         margin: 0;
     }
+@media only screen and (max-width: 600px) {
+
+}
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+}
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+}
+@media only screen and (min-width: 1441px) {
+
+}
+
 </style>
