@@ -29,8 +29,11 @@ import StudentProfile from '@/views/student/StudentProfile.vue';
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
 import InstitutionAddConvocatoria from '@/views/institution/InstitutionAddConvocatoria.vue'
 import InstitutionConvocatoria from '@/views/institution/InstitutionConvocatoria.vue'
+import InstitutionRequestsTray from "@/views/institution/InstitutionRequestsTray.vue";
 import InstitutionPrincipalPage from '@/views/institution/InstitutionPrincipalPage.vue'
 //Paginas Admin
+import InternshipList from "@/views/usei/InternshipList.vue";
+import CompaniesList from "@/views/usei/CompaniesList.vue";
 import UseiBusinessApplications from '@/views/usei/UseiBusinessApplications.vue'
 import UseiInternshipApplications from '@/views/usei/UseiInternshipApplications.vue'
 
@@ -66,8 +69,11 @@ const routes = [
     {name: 'InstitutionRegister', path : '/institution/register', component:InstitutionRegister},
     {name: 'InstitutionAddConvocatoria', path : '/institution/addConvocatoria', component:InstitutionAddConvocatoria},
     {name: 'InstitutionConvocatoria', path : '/institution/Convocatoria', component:InstitutionConvocatoria},
+    {name: "InstitutionRequestsTray", path: "/institution/RequestsTray", component: InstitutionRequestsTray},
     {name: 'InstitutionPrincipalPage', path : '/institution/home', component:InstitutionPrincipalPage},
     //Usei-Admin
+    {name: "InternshipList", path: "/usei/Internships", component: InternshipList},
+    {name: "CompaniesList", path: "/usei/Companies", component: CompaniesList},
     {name: 'UseiBusinessApplications', path : '/usei/Business', component:UseiBusinessApplications},
     {name: 'UseiInternshipApplications', path : '/usei/Internship', component:UseiInternshipApplications},
     
