@@ -15,10 +15,10 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "idusuario": "user1",
-  "contrasenia": "pass1",
+  "idusuario": "axel",
+  "contrasenia": "axel",
   "tipousuario": {
-    "id": 1
+    "id": 2
   }
 }
 

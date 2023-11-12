@@ -7,7 +7,7 @@ const cors = require("cors");
 //Seguridad
 const passport = require("passport");
 const session = require("express-session");
-const { isAuthenticated } = require("./services/authService"); // Importa el middleware isAuthenticated
+const { isAuthenticated, checkRole} = require("./services/authService"); // Importa el middleware isAuthenticated
 //Swagger para documentar
 const { swaggerDocs: V1SwaggerDocs } = require("./swagger");
 
@@ -34,6 +34,9 @@ const historicoPostulacionesAPI = require("./API/historicoPostulacionesAPI");
 
 const authAPI = require("./API/authAPI");
 
+const studentRoutes = require('./routes/studentRoutes');
+
+
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
 
@@ -59,20 +62,23 @@ app.use("/semestre", semestreAPI);
 app.use("/sede", sedeAPI);
 app.use("/sectorPertenencia", sectorPertenenciaAPI);
 app.use("/carrera", carreraAPI);
-app.use("/institucion", institucionAPI);
+app.use("/institucion", isAuthenticated, checkRole("INSTITUTION"), institucionAPI);
 app.use("/estadoConvocatoria", estadoConvocatoriaAPI);
 app.use("/tiempoacumplir", tiempoAcumplirAPI);
-app.use("/convocatoria", isAuthenticated, convocatoriaAPI);
+app.use("/convocatoria", isAuthenticated, checkRole("1"), convocatoriaAPI);
+                                      //verificando if admin
 app.use("/adminUSEI", adminuseiAPI);
 app.use("/historicoUsuario", historicoUsuarioAPI);
 app.use("/historicoConvocatorias", historicoConvocatoriasAPI);
 app.use("/estudiante", estudianteAPI);
-app.use("/postulacion", postulacionAPI);
+app.use("/postulacion", isAuthenticated, checkRole("STUDENT"), postulacionAPI);
 app.use("/aprobacionConvocatoria", aprobacionConvocatoriaAPI);
 app.use("/estadosolicitudinstitucion", estadoSolicitudInstitucionAPI);
 app.use("/historicoPostulaciones", historicoPostulacionesAPI);
 
 app.use("/auth", authAPI);
+
+app.use('/student', studentRoutes);
 
 // Ruta de inicio
 app.get("/", (req, res) => {
