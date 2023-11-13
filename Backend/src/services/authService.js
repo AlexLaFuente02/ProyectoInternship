@@ -4,6 +4,9 @@ const UsuarioENT = require('../ENT/UsuarioENT');
 const LoginDTO = require('../DTO/LoginDTO');
 const ResponseDTO = require('../DTO/ResponseDTO');
 
+const TipoUsuario = require('../ENT/TipoUsuarioENT');
+const TipoUsuarioDTO = require('../DTO/TipoUsuarioDTO');
+
 const { Strategy: LocalStrategy } = require('passport-local');
 
 passport.use(new LocalStrategy(
@@ -14,7 +17,10 @@ passport.use(new LocalStrategy(
   async (req, idusuario, password, done) => { // Ahora req es el primer argumento
     try {
       console.log(`Buscando usuario por ID de usuario: ${idusuario}`);
-      const usuario = await UsuarioENT.findOne({ where: { idusuario: idusuario } });
+      const usuario = await UsuarioENT.findOne({
+        where: { idusuario: idusuario },
+        include: [{ model: TipoUsuario, as: 'tipousuario' }] // Esto debe coincidir con cómo has definido la relación en tus modelos
+      });
 
       if (!usuario) {
         console.log('Usuario no encontrado');
@@ -55,7 +61,9 @@ passport.use(new LocalStrategy(
       console.log(`Informacion de usuario almacenada, tipo de usuario: ${role}`);
 
       console.log(`Usuario autenticado exitosamente: ${idusuario}`);
-      const loginDTO = new LoginDTO(usuario.id, usuario.tipousuario_id);
+      // Aquí creas el LoginDTO incluyendo el tipo de usuario
+      const tipoUsuarioDTO = new TipoUsuarioDTO(usuario.tipousuario.id, usuario.tipousuario.tipo);
+      const loginDTO = new LoginDTO(usuario.id, usuario.idusuario, tipoUsuarioDTO);
       return done(null, usuario, new ResponseDTO('AUTH-0000', loginDTO, 'Inicio de sesión exitoso'));
 
     } catch (error) {

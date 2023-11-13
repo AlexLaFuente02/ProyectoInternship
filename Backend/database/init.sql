@@ -5,9 +5,9 @@ CREATE TABLE tipousuario (
 );
 
 INSERT INTO tipousuario (tipo) VALUES
-('Administrador'),
 ('Estudiante'),
-('Institución');
+('Institución'),
+('Administrador');
 
 CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,

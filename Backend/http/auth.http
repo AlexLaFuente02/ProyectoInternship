@@ -6,8 +6,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "idusuario": "ax",
-  "password": "axel"
+  "idusuario": "user1",
+  "password": "pass1"
 }
 
 ### Cierre de Sesión
