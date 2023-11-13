@@ -101,7 +101,7 @@ export default {
 }
 @media screen and (max-width: 600px) {
     .button{
-        font-size: 0.4rem;
+        font-size: 0.6rem;
     }
 }
    

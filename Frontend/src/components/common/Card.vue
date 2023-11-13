@@ -27,7 +27,7 @@
                 </div>
                 <Button 
                     text="Más información" 
-                    :color="2" 
+                    :color="0" 
                     :disabled="false"
                     @option-selected="moreInformation"
                     >
@@ -220,7 +220,14 @@ h6 {
 }
 .container__card{
     padding: 0.5rem;
+    
 }
+.container__card:hover{
+    scale: 1;
+    transition: none;
+    letter-spacing: 0px;
+}
+
 }
 
 /* Estilos para tabletas */
