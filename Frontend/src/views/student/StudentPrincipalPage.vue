@@ -59,16 +59,19 @@
             </div>
         </div>
         
-        <div class="requests__by__student">
+        <!--<div class="requests__by__student">
             <h1>Tus Solicitudes</h1>
-            <div class="container__little__nav">
-                <LittleNav />
+            <div class="container__requests" 
+            v-if="everyInternshipsAreLoaded"
+            >
+                <div class="container__little__nav">
+                    <LittleNav />
+                </div>
+                <div class="container__Arrow">
+                    <ArrowCards />
+                </div>
             </div>
-            
-            <div class="container__Arrow">
-                <ArrowCards />
-            </div>
-        </div>
+        </div>-->
 
 
 
@@ -95,12 +98,14 @@ import {useLoaderStore} from "@/store/common/loaderStore";
 import SimpleCard from "@/components/common/SimpleCard.vue";
 import ArrowCards from "../../components/common/ArrowCards.vue";
 import LittleNav from "../../components/common/LittleNav.vue";
+import {useRequestsByIDStore} from "@/store/student/requestsByIDStore";
 export default {
     data() {
         return {
             listInterships:[],
             title: "Pasantías Populares",
             everyInternshipsAreLoaded: false,
+            listRequests: [],
         };
     },
     components: {
@@ -113,7 +118,9 @@ export default {
         async getData(){
             useLoaderStore().activateLoader();
             await useInternshipsByIDStore().loadInternshipsByIdStudent();
+            await useRequestsByIDStore().loadRequestsByIdStudent();
             this.listInterships = useInternshipsByIDStore().internships;
+            this.listRequests = useRequestsByIDStore().requests.result;
             this.everyInternshipsAreLoaded = true;
             useLoaderStore().desactivateLoader();
         },
@@ -350,6 +357,8 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 
