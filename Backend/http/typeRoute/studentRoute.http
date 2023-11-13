@@ -1,0 +1,46 @@
+@baseURL = http://localhost:3000/student
+
+### GET ALL CONVOCATORIAS
+GET {{baseURL}}/convocatoria/
+Accept: application/json
+
+### GET CONVOCATORIAS POR ID
+GET {{baseURL}}/convocatoria/1
+Accept: application/json
+
+###GET ALL DE Carrera
+GET {{baseURL}}/carrera/
+Accept: application/json
+
+### POST de Usuario
+POST {{baseURL}}/usuario
+Content-Type: application/json
+Accept: application/json
+
+{
+  "idusuario": "axel2232",
+  "contrasenia": "axel222",
+  "tipousuario": {
+    "id": 2
+  }
+}
+
+### Obtener todos los historicos de postulaciones
+GET {{baseURL}}/historicoPostulaciones
+
+
+### Crear una nueva postulación (proporciona los datos de la postulación en el cuerpo de la solicitud)
+POST {{baseURL}}/postulacion
+Content-Type: application/json
+Accept: application/json
+
+{
+    "fechapostulacion": "2023-10-25",
+    "estadopostulacion": { "id": 1 },
+    "estudiante": { "id": 1 },
+    "convocatoria": { "id": 1 }  
+}
+
+###GET ALL DE SEDE
+GET {{baseURL}}/sede/
+Accept: application/json

@@ -29,13 +29,30 @@ passport.use(new LocalStrategy(
         return done(null, false, new ResponseDTO('AUTH-1002', null, 'Contraseña incorrecta'));
       }
 
+      
+      // Asignación de roles en la sesión basado en tipousuario_id
+      let role;
+      switch (usuario.tipousuario_id) {
+        case 1:
+          role = 'ADMIN';
+          break;
+        case 2:
+          role = 'STUDENT';
+          break;
+        case 3:
+          role = 'INSTITUTION';
+          break;
+        default:
+          role = 'UNKNOWN'; 
+      }
+
       // Aquí almacenamos la información en la sesión
       req.session.user = {
         id: usuario.id,
         tipousuario_id: usuario.tipousuario_id,
       };
 
-      console.log(`Informacion de usuario almacenada, tipo de usuario: ${req.session.user.tipousuario_id}`);
+      console.log(`Informacion de usuario almacenada, tipo de usuario: ${role}`);
 
       console.log(`Usuario autenticado exitosamente: ${idusuario}`);
       const loginDTO = new LoginDTO(usuario.id, usuario.tipousuario_id);

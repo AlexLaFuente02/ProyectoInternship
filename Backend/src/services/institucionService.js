@@ -1,5 +1,5 @@
 const InstitucionDTO = require('../DTO/InstitucionDTO');
-const SectorPertenenciaDTO = require('../DTO/SectorPertenenciaDTO');
+const SectorPertenenciaDTO = require('../DTO/sectorPertenenciaDTO');
 const Institucion = require("../ENT/InstitucionENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
 const SectorPertenencia = require('../ENT/sectorPertenenciaENT');
