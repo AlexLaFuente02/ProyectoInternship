@@ -1,6 +1,6 @@
 <template>
-  <header class="container__header">
-    <div class="container__logo">
+  <header class="header-container">
+    <div class="logo-container">
       <router-link to="/institution/home">
         <img
           src="../images/USEI.png"
@@ -9,15 +9,15 @@
       </router-link>
     </div>
     <div class="navigator">
-      <nav class="container__nav">
-        <div class="nav__links">
+      <nav class="nav-container">
+        <div class="nav-links">
           <router-link class="link" to="/institution/home">
             <font-awesome-icon :icon="['fas', 'house']" size="xl" />
-            <span class="nav__name">Inicio</span>
+            <span class="nav-direction">Inicio</span>
           </router-link>
           <span class="link" @click="showDropdownCallList">
             <font-awesome-icon :icon="['fas', 'briefcase']" size="xl" />
-            <span class="nav__name">Convocatorias</span>
+            <span class="nav-direction">Convocatorias</span>
           </span>
           <ul class="dropdown-menu" v-if="dropdownButton.showDropdownMenu">
             <router-link
@@ -38,7 +38,7 @@
           </ul>
           <router-link class="link" to="/institution/RequestsTray">
             <font-awesome-icon :icon="['fas', 'users']" size="xl" />
-            <span class="nav__name">Bandeja de Solicitudes</span>
+            <span class="nav-direction">Bandeja de Solicitudes</span>
           </router-link>
         </div>
       </nav>
@@ -94,7 +94,7 @@
           </div>
         </li>
         <li>
-          <div class="container__button">
+          <div class="button-container">
             <Button
               text="Cerrar sesi&oacute;n"
               :color="1"
@@ -163,7 +163,7 @@ export default {
 </script>
 
 <style scoped>
-.container__header {
+.header-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -232,20 +232,20 @@ export default {
   width: 100%;
 }
 /*Estilo del logo*/
-.container__logo img {
+.logo-container img {
   width: 150px;
   height: auto;
   transition: all 0.3s ease 0s;
 }
-.container__logo {
+.logo-container {
   filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 
-.container__logo img:hover {
+.logo-container img:hover {
   transform: scale(1.1);
 }
 /*Fin del estilo del logo*/
-.container__nav {
+.nav-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -256,7 +256,7 @@ export default {
   margin-left: 15px;
 }
 
-.container__nav .nav__links .link {
+.nav-container .nav-links .link {
   margin-right: 15px;
   font-weight: 700;
   text-align: center;
@@ -273,18 +273,18 @@ export default {
 .link span {
   padding: 0.2rem;
 }
-.dark-theme .container__nav .nav__links .link {
+.dark-theme .nav-container .nav-links .link {
   color: #cacfdb;
   background-color: #434b54;
   border: 1px solid #434b54;
 }
 
-.container__nav .nav__links .link:hover {
+.nav-container .nav-links .link:hover {
   background-color: rgba(90, 97, 106, 0.7);
   color: #fff;
   transform: scale(1.1);
 }
-.container__header .container__menu--profile {
+.header-container .container__menu--profile {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -293,15 +293,15 @@ export default {
   cursor: pointer;
   transition: all 0.3s ease 0s;
 }
-.container__header .container__menu--profile:hover {
+.header-container .container__menu--profile:hover {
   transform: scale(1.1);
 }
-.container__header .container__menu--profile svg {
+.header-container .container__menu--profile svg {
   font-size: 1.7rem;
   font-weight: 700;
   color: #515c67;
 }
-.dark-theme .container__header .container__menu--profile svg {
+.dark-theme .header-container .container__menu--profile svg {
   color: #cacfdb;
 }
 .container__sidebar {
@@ -501,7 +501,7 @@ li {
 .container__sidebar
   .container__sidebar--options
   .container__menu--options
-  .container__button {
+  .button-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -512,12 +512,12 @@ li {
 
 /*Media queries*/
 @media screen and (max-width: 1250px) {
-  .container__nav .nav__links .link {
+  .nav-container .nav-links .link {
     font-size: 13px;
   }
 }
 @media screen and (max-width: 1024px) {
-  .container__header {
+  .header-container {
     display: none;
   }
 }

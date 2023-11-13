@@ -1,5 +1,5 @@
 <template>
-  <header class="container__header">
+  <header class="header-container">
     <div class="container__menu">
       <div class="container__menu--profile">
         <font-awesome-icon
@@ -9,7 +9,7 @@
         />
       </div>
     </div>
-    <div class="container__logo">
+    <div class="logo-container">
       <router-link to="/institution/home">
         <img
           src="../images/USEI.png"
@@ -23,8 +23,8 @@
       </div>
     </div>
   </header>
-  <div class="menu__student" v-show="showMobileMenuLeft">
-    <div class="container__logo">
+  <div class="institution-menu" v-show="showMobileMenuLeft">
+    <div class="logo-container">
       <router-link to="/institution/home" @click="closeMobileMenu">
         <img
           src="../images/USEI.png"
@@ -32,24 +32,41 @@
         />
       </router-link>
     </div>
-    <nav class="container__nav">
-      <ul class="nav__list">
-        <li class="nav__item" @click="closeMobileMenu">
+    <nav class="nav-container">
+      <ul class="nav-list">
+        <li class="nav-item" @click="closeMobileMenu">
           <router-link class="link" to="/institution/home">
             <font-awesome-icon :icon="['fas', 'house']" size="xl" />
-            <span class="nav__name">Inicio</span>
+            <span class="nav-direction">Inicio</span>
           </router-link>
         </li>
-        <li class="nav__item" @click="closeMobileMenu">
-          <router-link class="link" to="/institution/Convocatoria">
+        <li class="nav-item" @click="showDropdownCallList">
+          <span class="link">
             <font-awesome-icon :icon="['fas', 'briefcase']" size="xl" />
-            <span class="nav__name">Convocatorias</span>
-          </router-link>
+            <span class="nav-direction">Convocatorias</span>
+          </span>
+          <ul class="dropdown-menu" v-if="dropdownButton.showDropdownMenu">
+            <router-link
+              to="/institution/Convocatoria"
+              class="dropdown-link"
+              @click="handleClick"
+            >
+              <li class="dropdown-item">Tus Convocatorias</li>
+            </router-link>
+
+            <router-link
+              to="/institution/addConvocatoria"
+              class="dropdown-link"
+              @click="handleClick"
+            >
+              <li class="dropdown-item">Agregar Convocatoria</li>
+            </router-link>
+          </ul>
         </li>
-        <li class="nav__item" @click="closeMobileMenu">
+        <li class="nav-item" @click="closeMobileMenu">
           <router-link class="link" to="/institution/RequestsTray">
             <font-awesome-icon :icon="['fas', 'users']" size="xl" />
-            <span class="nav__name">Bandeja de Solicitudes</span>
+            <span class="nav-direction">Bandeja de Solicitudes</span>
           </router-link>
         </li>
       </ul>
@@ -100,7 +117,7 @@
           </div>
         </li>
         <li>
-          <div class="container__button">
+          <div class="button-container">
             <Button
               text="Cerrar sesi&oacute;n"
               :color="1"
@@ -127,6 +144,9 @@ export default {
   data() {
     return {
       isDarkMode: false,
+      dropdownButton: {
+        showDropdownMenu: false,
+      },
       username: "Invitado",
     };
   },
@@ -153,6 +173,15 @@ export default {
       this.isDarkMode = !this.isDarkMode;
       useThemeStore().toggleDarkMode();
     },
+    showDropdownCallList() {
+      this.dropdownButton.showDropdownMenu =
+        !this.dropdownButton.showDropdownMenu;
+    },
+    handleClick() {
+      if (this.showDropdownCallList) {
+        this.closeMobileMenu();
+      }
+    },
   },
   computed: {
     showMobileMenuLeft() {
@@ -167,7 +196,7 @@ export default {
 
 <style scoped>
 /*Estilos del header*/
-.container__header {
+.header-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -183,38 +212,39 @@ export default {
   z-index: 1;
   justify-content: space-between;
 }
+
 /*Modo oscuro*/
 .dark-theme header {
   background-color: #434b54;
   color: #cacfdb;
 }
-.container__header .container__logo img {
+.header-container .logo-container img {
   width: 150px;
   height: auto;
   transition: all 0.3s ease 0s;
 }
-.dark-theme .container__logo {
+.dark-theme .logo-container {
   filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 
-.container__header .container__logo img:hover {
+.header-container .logo-container img:hover {
   transform: scale(1.1);
 }
-.container__header .container__menu--profile:hover {
+.header-container .container__menu--profile:hover {
   transform: scale(1.1);
 }
-.container__header .container__menu--profile svg {
+.header-container .container__menu--profile svg {
   font-size: 1.7rem;
   font-weight: 700;
   color: #515c67;
 }
-.dark-theme .container__header .container__menu--profile svg {
+.dark-theme .header-container .container__menu--profile svg {
   color: #cacfdb;
 }
 /*Fin del header*/
 
 /*Sidebar de la izquierda*/
-.menu__student {
+.institution-menu {
   position: fixed;
   transition: all 0.3s ease 0s;
   z-index: 3;
@@ -230,39 +260,45 @@ export default {
   box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
     0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
 }
-.dark-theme .menu__student {
+.dark-theme .institution-menu {
   background-color: #434b54;
 }
-.menu__student .container__logo img {
+.institution-menu .logo-container img {
   width: 150px;
   height: auto;
   transition: all 0.3s ease 0s;
 }
-.menu__student .container__logo img:hover {
+.institution-menu .logo-container img:hover {
   transform: scale(1.1);
 }
-.menu__student .container__nav {
+.institution-menu .nav-container {
   width: 100%;
   margin-top: 1rem;
   overflow: auto;
 }
-.menu__student .container__nav .nav__list {
+.institution-menu .nav-container .nav-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.menu__student .container__nav .nav__item {
+.institution-menu .nav-container .nav-item {
   width: 100%;
   padding: 0.5rem 0;
   border-radius: 7px;
 }
-.menu__student .container__nav .nav__item:hover {
-  background-color: #cacfdb;
+.institution-menu .nav-container .nav-item:hover {
+  background-color: #e4e4e4;
 }
-.dark-theme .menu__student .container__nav .nav__item:hover {
+.institution-menu .nav-container .nav-item:active {
+  background: none;
+}
+.dark-theme .institution-menu .nav-container .nav-item:hover {
   background-color: #515c67;
 }
-.menu__student .container__nav .nav__item .link {
+.dark-theme .institution-menu .nav-container .nav-item:active {
+  background: none;
+}
+.institution-menu .nav-container .nav-item .link {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -270,22 +306,22 @@ export default {
   padding: 0.5rem 1rem;
   border-radius: 7px;
 }
-.link .nav__name {
+.link .nav-direction {
   margin-left: 1rem;
   text-decoration: none;
   color: #515c67;
 }
-.dark-theme .link .nav__name {
+.dark-theme .link .nav-direction {
   color: #cacfdb;
 }
 
-.menu__student .container__nav .nav__item .link svg {
+.institution-menu .nav-container .nav-item .link svg {
   color: #515c67;
 }
-.dark-theme .menu__student .container__nav .nav__item .link svg {
+.dark-theme .institution-menu .nav-container .nav-item .link svg {
   color: #cacfdb;
 }
-.menu__student .container__nav .nav__item .link svg:hover {
+.institution-menu .nav-container .nav-item .link svg:hover {
   color: #515c67;
 }
 /*Fin del sidebar de la izquierda*/
@@ -299,6 +335,34 @@ export default {
   background-color: #fdfeff;
   z-index: 3;
 }
+
+.dropdown-menu {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  background-color: white;
+  list-style: none;
+  text-align: center;
+}
+
+.dropdown-item {
+  padding: 7% 10%;
+}
+
+.dropdown-link {
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(90, 97, 106, 0.7);
+  color: #fff;
+}
+
+.dropdown-link:active {
+  background-color: aqua;
+}
+
 .dark-theme .container__sidebar {
   background-color: #434b54;
 }
@@ -435,6 +499,15 @@ export default {
   text-decoration: none;
   color: #515c67;
 }
+
+.dark-theme .dropdown-menu {
+  background-color: #434b54;
+}
+
+.dark-theme .dropdown-item {
+  color: #cacfdb;
+}
+
 .dark-theme
   .container__sidebar
   .container__sidebar--options
@@ -488,7 +561,7 @@ li {
 .container__sidebar
   .container__sidebar--options
   .container__menu--options
-  .container__button {
+  .button-container {
   display: flex;
   flex-direction: row;
   align-items: center;
