@@ -1,103 +1,135 @@
 <template>
-  <header class="ins-header">
-    <h1>Institution Mobile Navbar</h1>
-    <header class="institution-mobile-header">
-      <div class="logo-container">
-        <router-link to="/">
-          <img
-            src="../images/USEI.png"
-            alt="Unidad de Servicios Estudiantiles Integrales"
-          />
-        </router-link>
+  <header class="header-container">
+    <div class="container__menu">
+      <div class="container__menu--profile">
+        <font-awesome-icon
+          :icon="['fas', 'bars']"
+          @click="toggleMobileMenuL"
+          size="2xl"
+        />
       </div>
-      <div class="menu-container">
-        <div class="container__menu--profile" @click="toggleMobileMenu">
-          <font-awesome-icon :icon="['fas', 'circle-user']" />
-        </div>
-      </div>
-    </header>
-    <div class="container__sidebar" v-show="showMobileMenu">
-      <div class="container__sidebar--profile">
-        <div class="container__sidebar--profile__image">
-          <font-awesome-icon :icon="['fas', 'circle-user']" />
-        </div>
-        <div class="container__sidebar--profile__name">
-          <span>Hola</span>
-        </div>
-      </div>
-      <div class="container__sidebar--options">
-        <ul class="container__menu--options">
-          <li class="container__menu--options__item" @click="closeMobileMenu">
-            <router-link class="link" to="/">
-              <font-awesome-icon :icon="['fas', 'home']" />
-              <span>Inicio</span>
-            </router-link>
-          </li>
-          <li class="container__menu--options__item" @click="closeMobileMenu">
-            <router-link class="link" to="/moreInformation">
-              <font-awesome-icon :icon="['fas', 'info-circle']" />
-              <span>M&aacute;s informaci&oacute;n</span>
-            </router-link>
-          </li>
-          <li class="container__menu--options__item" @click="closeMobileMenu">
-            <router-link class="link" to="/institutionsCommon">
-              <font-awesome-icon :icon="['fas', 'university']" />
-              <span>Instituciones</span>
-            </router-link>
-          </li>
-          <li class="container__menu--options__item" @click="closeMobileMenu">
-            <router-link class="link" to="/internshipsCommon">
-              <font-awesome-icon :icon="['fas', 'briefcase']" />
-              <span>Pr&aacute;cticas</span>
-            </router-link>
-          </li>
-          <!--Modo oscuro-->
-          <li
-            class="container__menu--options__item"
-            @click="toggleDarkMode"
-            v-if="isDarkMode"
-          >
-            <div class="container__menu--options__item__dark-mode">
-              <font-awesome-icon :icon="['fas', 'moon']" />
-              <span>Modo oscuro</span>
-            </div>
-          </li>
-          <li
-            class="container__menu--options__item"
-            @click="toggleDarkMode"
-            v-else
-          >
-            <div class="container__menu--options__item__dark-mode">
-              <font-awesome-icon :icon="['fas', 'sun']" />
-              <span>Modo claro</span>
-            </div>
-          </li>
-          <li>
-            <div class="container__button">
-              <Button
-                text="Crear Cuenta"
-                :color="0"
-                :disabled="false"
-                @option-selected="createAccount"
-              >
-              </Button>
-            </div>
-          </li>
-          <li>
-            <div class="container__button">
-              <Button
-                text="Cerrar Sesi&oacute;n"
-                :color="1"
-                :disabled="false"
-                @option-selected="logout"
-              >
-              </Button>
-            </div>
-          </li>
-        </ul>
+    </div>
+    <div class="logo-container">
+      <router-link to="/institution/home">
+        <img
+          src="../images/USEI.png"
+          alt="Unidad de Servicios Estudiantiles Integrales"
+        />
+      </router-link>
+    </div>
+    <div class="container__menu">
+      <div class="container__menu--profile" @click="toggleMobileMenuR">
+        <font-awesome-icon :icon="['fas', 'circle-user']" size="2xl" />
       </div>
     </div>
   </header>
+  <div class="institution-menu" v-show="showMobileMenuLeft">
+    <div class="logo-container">
+      <router-link to="/institution/home" @click="closeMobileMenu">
+        <img
+          src="../images/USEI.png"
+          alt="Unidad de Servicios Estudiantiles Integrales"
+        />
+      </router-link>
+    </div>
+    <nav class="nav-container">
+      <ul class="nav-list">
+        <li class="nav-item" @click="closeMobileMenu">
+          <router-link class="link" to="/institution/home">
+            <font-awesome-icon :icon="['fas', 'house']" size="xl" />
+            <span class="nav-direction">Inicio</span>
+          </router-link>
+        </li>
+        <li class="nav-item" @click="showDropdownCallList">
+          <span class="link">
+            <font-awesome-icon :icon="['fas', 'briefcase']" size="xl" />
+            <span class="nav-direction">Convocatorias</span>
+          </span>
+          <ul class="dropdown-menu" v-if="dropdownButton.showDropdownMenu">
+            <router-link
+              to="/institution/Convocatoria"
+              class="dropdown-link"
+              @click="handleClick"
+            >
+              <li class="dropdown-item">Tus Convocatorias</li>
+            </router-link>
+
+            <router-link
+              to="/institution/addConvocatoria"
+              class="dropdown-link"
+              @click="handleClick"
+            >
+              <li class="dropdown-item">Agregar Convocatoria</li>
+            </router-link>
+          </ul>
+        </li>
+        <li class="nav-item" @click="closeMobileMenu">
+          <router-link class="link" to="/institution/RequestsTray">
+            <font-awesome-icon :icon="['fas', 'users']" size="xl" />
+            <span class="nav-direction">Bandeja de Solicitudes</span>
+          </router-link>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="container__sidebar" v-show="showMobileMenuRight">
+    <div class="container__sidebar--profile">
+      <div class="container__sidebar--profile__image">
+        <font-awesome-icon :icon="['fas', 'circle-user']" />
+      </div>
+      <div class="container__sidebar--profile__name">
+        <span>{{ this.username }}</span>
+      </div>
+    </div>
+    <div class="container__sidebar--options">
+      <ul class="container__menu--options">
+        <li class="container__menu--options__item" @click="closeMobileMenu">
+          <router-link class="link" to="/institution/Profile">
+            <font-awesome-icon :icon="['fas', 'user']" />
+            <span>Perfil</span>
+          </router-link>
+        </li>
+        <li class="container__menu--options__item" @click="closeMobileMenu">
+          <router-link class="link" to="/institution/Settings">
+            <font-awesome-icon :icon="['fas', 'gear']" />
+            <span>Configuración</span>
+          </router-link>
+        </li>
+        <!--Modo oscuro-->
+        <li
+          class="container__menu--options__item"
+          @click="toggleDarkMode"
+          v-if="isDarkMode"
+        >
+          <div class="container__menu--options__item__dark-mode">
+            <font-awesome-icon :icon="['fas', 'moon']" />
+            <span>Modo oscuro</span>
+          </div>
+        </li>
+        <li
+          class="container__menu--options__item"
+          @click="toggleDarkMode"
+          v-else
+        >
+          <div class="container__menu--options__item__dark-mode">
+            <font-awesome-icon :icon="['fas', 'sun']" />
+            <span>Modo claro</span>
+          </div>
+        </li>
+        <li>
+          <div class="button-container">
+            <Button
+              text="Cerrar sesi&oacute;n"
+              :color="1"
+              :disabled="false"
+              @option-selected="logout"
+            >
+            </Button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -105,17 +137,26 @@ import { useMobileMenuStore } from "../../store/common/mobileMenuStore";
 import { useThemeStore } from "@/store/common/useThemeStore";
 import Button from "@/components/common/Button.vue";
 export default {
-  name: "InstitutionNavBarMobile",
+  name: "InstitutionNavbarMobile",
   components: {
     Button,
   },
   data() {
     return {
       isDarkMode: false,
+      dropdownButton: {
+        showDropdownMenu: false,
+      },
+      username: "Invitado",
     };
   },
   methods: {
-    toggleMobileMenu() {
+    toggleMobileMenuL() {
+      useMobileMenuStore().toggleMenuLeft();
+      useMobileMenuStore().toggleMobileMenu();
+    },
+    toggleMobileMenuR() {
+      useMobileMenuStore().toggleMenuRight();
       useMobileMenuStore().toggleMobileMenu();
     },
     closeMobileMenu() {
@@ -132,17 +173,30 @@ export default {
       this.isDarkMode = !this.isDarkMode;
       useThemeStore().toggleDarkMode();
     },
+    showDropdownCallList() {
+      this.dropdownButton.showDropdownMenu =
+        !this.dropdownButton.showDropdownMenu;
+    },
+    handleClick() {
+      if (this.showDropdownCallList) {
+        this.closeMobileMenu();
+      }
+    },
   },
   computed: {
-    showMobileMenu() {
-      return useMobileMenuStore().mobileMenu;
+    showMobileMenuLeft() {
+      return useMobileMenuStore().menuLeft;
+    },
+    showMobileMenuRight() {
+      return useMobileMenuStore().menuRight;
     },
   },
 };
 </script>
 
 <style scoped>
-.institution-mobile-header {
+/*Estilos del header*/
+.header-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -156,13 +210,15 @@ export default {
   background-color: #fdfeff;
   color: #515c67;
   z-index: 1;
+  justify-content: space-between;
 }
+
 /*Modo oscuro*/
 .dark-theme header {
   background-color: #434b54;
   color: #cacfdb;
 }
-.institution-mobile-header .logo-container img {
+.header-container .logo-container img {
   width: 150px;
   height: auto;
   transition: all 0.3s ease 0s;
@@ -171,37 +227,106 @@ export default {
   filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 
-.institution-mobile-header .logo-container img:hover {
+.header-container .logo-container img:hover {
   transform: scale(1.1);
 }
-
-.institution-mobile-header .menu-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-left: auto;
-}
-.institution-mobile-header .container__menu--profile {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-right: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease 0s;
-}
-.institution-mobile-header .container__menu--profile:hover {
+.header-container .container__menu--profile:hover {
   transform: scale(1.1);
 }
-.institution-mobile-header .container__menu--profile svg {
+.header-container .container__menu--profile svg {
   font-size: 1.7rem;
   font-weight: 700;
   color: #515c67;
 }
-.dark-theme .institution-mobile-header .container__menu--profile svg {
+.dark-theme .header-container .container__menu--profile svg {
   color: #cacfdb;
 }
+/*Fin del header*/
+
+/*Sidebar de la izquierda*/
+.institution-menu {
+  position: fixed;
+  transition: all 0.3s ease 0s;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #fdfeff;
+  padding: 1rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
+    0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+}
+.dark-theme .institution-menu {
+  background-color: #434b54;
+}
+.institution-menu .logo-container img {
+  width: 150px;
+  height: auto;
+  transition: all 0.3s ease 0s;
+}
+.institution-menu .logo-container img:hover {
+  transform: scale(1.1);
+}
+.institution-menu .nav-container {
+  width: 100%;
+  margin-top: 1rem;
+  overflow: auto;
+}
+.institution-menu .nav-container .nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.institution-menu .nav-container .nav-item {
+  width: 100%;
+  padding: 0.5rem 0;
+  border-radius: 7px;
+}
+.institution-menu .nav-container .nav-item:hover {
+  background-color: #e4e4e4;
+}
+.institution-menu .nav-container .nav-item:active {
+  background: none;
+}
+.dark-theme .institution-menu .nav-container .nav-item:hover {
+  background-color: #515c67;
+}
+.dark-theme .institution-menu .nav-container .nav-item:active {
+  background: none;
+}
+.institution-menu .nav-container .nav-item .link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 7px;
+}
+.link .nav-direction {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: #515c67;
+}
+.dark-theme .link .nav-direction {
+  color: #cacfdb;
+}
+
+.institution-menu .nav-container .nav-item .link svg {
+  color: #515c67;
+}
+.dark-theme .institution-menu .nav-container .nav-item .link svg {
+  color: #cacfdb;
+}
+.institution-menu .nav-container .nav-item .link svg:hover {
+  color: #515c67;
+}
+/*Fin del sidebar de la izquierda*/
+
+/*Sidebar de la derecha*/
 .container__sidebar {
   position: fixed;
   top: 0;
@@ -210,6 +335,34 @@ export default {
   background-color: #fdfeff;
   z-index: 3;
 }
+
+.dropdown-menu {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  background-color: white;
+  list-style: none;
+  text-align: center;
+}
+
+.dropdown-item {
+  padding: 7% 10%;
+}
+
+.dropdown-link {
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(90, 97, 106, 0.7);
+  color: #fff;
+}
+
+.dropdown-link:active {
+  background-color: aqua;
+}
+
 .dark-theme .container__sidebar {
   background-color: #434b54;
 }
@@ -249,8 +402,8 @@ export default {
   .container__sidebar--profile
   .container__sidebar--profile__name {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   justify-content: center;
 }
 .container__sidebar
@@ -346,6 +499,15 @@ export default {
   text-decoration: none;
   color: #515c67;
 }
+
+.dark-theme .dropdown-menu {
+  background-color: #434b54;
+}
+
+.dark-theme .dropdown-item {
+  color: #cacfdb;
+}
+
 .dark-theme
   .container__sidebar
   .container__sidebar--options
@@ -399,7 +561,7 @@ li {
 .container__sidebar
   .container__sidebar--options
   .container__menu--options
-  .container__button {
+  .button-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -407,45 +569,5 @@ li {
   margin-bottom: 0.5rem;
   width: 100%;
 }
-
-/*Media Queries*/
-@media screen and (max-width: 512px) {
-  .institution-mobile-header {
-    padding: 0.5rem 0.5rem;
-  }
-  .institution-mobile-header .logo-container img {
-    width: 100px;
-  }
-  .institution-mobile-header .container__menu--profile {
-    margin-right: 0.5rem;
-  }
-  .institution-mobile-header .container__menu--profile svg {
-    font-size: 1.5rem;
-  }
-  .container__sidebar .container__sidebar--profile {
-    padding: 0.5rem;
-  }
-  .container__sidebar
-    .container__sidebar--profile
-    .container__sidebar--profile__image
-    svg {
-    font-size: 1.5rem;
-  }
-  .container__sidebar
-    .container__sidebar--profile
-    .container__sidebar--profile__name
-    span {
-    font-size: 0.8rem;
-  }
-  .container__sidebar .container__sidebar--options {
-    padding: 0.5rem;
-  }
-  .container__sidebar
-    .container__sidebar--options
-    .container__menu--options
-    .container__menu--options__item
-    svg {
-    font-size: 1.3rem;
-  }
-}
+/*Fin del sidebar de la derecha*/
 </style>

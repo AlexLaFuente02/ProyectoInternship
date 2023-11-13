@@ -139,7 +139,6 @@ export default {
           body: JSON.stringify(this.userData),
         })
           .then((response) => {
-            
             if (response.ok) {
               // La solicitud fue exitosa
               console.log("Inicio de sesión exitoso");
@@ -153,8 +152,10 @@ export default {
                   this.$router.push("/student/");
                 } else if (result.tipousuario.id == 2) {
                   useLoginStore().setLogin(2);
+                  this.$router.push("/institution/home");
                 } else if (result.tipousuario.id == 3) {
                   useLoginStore().setLogin(3);
+                  //this.$router.push("");
                 } else {
                   useLoginStore().setLogin(0);
                 }

@@ -29,6 +29,8 @@ import StudentProfile from '@/views/student/StudentProfile.vue';
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
 import InstitutionAddConvocatoria from '@/views/institution/InstitutionAddConvocatoria.vue'
 import InstitutionConvocatoria from '@/views/institution/InstitutionConvocatoria.vue'
+import InstitutionProfile from "@/views/institution/InstitutionProfile.vue";
+import InstitutionSettings from "@/views/institution/InstitutionSettings.vue";
 import InstitutionRequestsTray from "@/views/institution/InstitutionRequestsTray.vue";
 import InstitutionPrincipalPage from '@/views/institution/InstitutionPrincipalPage.vue'
 //Paginas Admin
@@ -70,6 +72,8 @@ const routes = [
     {name: 'InstitutionRegister', path : '/institution/register', component:InstitutionRegister},
     {name: 'InstitutionAddConvocatoria', path : '/institution/addConvocatoria', component:InstitutionAddConvocatoria},
     {name: 'InstitutionConvocatoria', path : '/institution/Convocatoria', component:InstitutionConvocatoria},
+    {name: 'InstitutionProfile', path: '/institution/Profile', component: InstitutionProfile},
+    {name: "InstitutionSettings", path: "/institution/Settings", component: InstitutionSettings},
     {name: "InstitutionRequestsTray", path: "/institution/RequestsTray", component: InstitutionRequestsTray},
     {name: 'InstitutionPrincipalPage', path : '/institution/home', component:InstitutionPrincipalPage},
     //Usei-Admin
