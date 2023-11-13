@@ -27,7 +27,7 @@
                 </div>
                 <Button 
                     text="Más información" 
-                    :color="2" 
+                    :color="0" 
                     :disabled="false"
                     @option-selected="moreInformation"
                     >
@@ -68,15 +68,23 @@ export default {
 }
 </script>
 <style scoped>
-    .card{
-        width: 33.3%;
-        height: 500px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-    }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+.card{
+    width: 33.3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    height: 500px;
+}
     .img__card{
         display: flex;
         flex-direction: row;
@@ -159,7 +167,7 @@ export default {
 
     }
     .description__content{
-        max-height: 100px;
+        height: 100px;
         overflow-y: auto;
     }
     .description__card p{
@@ -183,58 +191,76 @@ export default {
     }
     .company__card p{
         margin-left: 14px;
+        font-weight: bold;
     }
-    @media screen and (max-width: 1400px){
-        .card{
-            width: 50%;
-        
-        }
+/* Estilos para dispositivos pequeños (teléfonos) */
+@media only screen and (max-width: 600px) {
+  /* Estilos específicos para dispositivos pequeños */
+    .card{
+        width: 100%;
+        height: 350px;
+        padding: 0.5rem;
     }
-    @media screen and (max-width: 1000px){
-        .card{
-            width: 100%;
-            margin-bottom: 1rem;
-        }
-    }
-    /*Media Queries*/
-    @media screen and (max-width: 768px){
-        .img__card img{
-            height: 100px;
-            object-fit: cover;
-            width: 150px!important;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px #00000008,0 0 2px #0000000f,0 2px 6px #0000001f!important;
-        }
-    }
-    @media screen and (max-width: 500px){
-        .img__card img{
-            height: 100px;
-            object-fit: cover;
-            width: 100px!important;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px #00000008,0 0 2px #0000000f,0 2px 6px #0000001f!important;
-        }
-        .description__card p{
-            font-size: 0.8rem!important;
-        }
-        .company__card{
-            display: none;
-        }
-        .header__card{
-            height: auto;
-            flex-direction: column;
-        }
-        .body__card{
-            height: auto;
-        }
-        .footer__card{
-            height: auto;
-            flex-direction: column;
-        }
-        .container__card{
-            padding: 0.5rem;
-        }
-
-    }
+.img__card img{
+    height: 100px;
+    width: 100px!important;
+}
+.description__card p{
+    font-size: 0.8rem!important;
+}
+.header__card{
+    display: none;
+}
+.body__card{
+    height: auto;
+}
+.footer__card{
+    height: auto;
+    flex-direction: column;
+}
+.container__card{
+    padding: 0.5rem;
     
+}
+.container__card:hover{
+    scale: 1;
+    transition: none;
+    letter-spacing: 0px;
+}
+
+}
+
+/* Estilos para tabletas */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+    .card{
+        width: 50%;
+        height: 400px;
+    }
+    .header__card{
+        height: auto;
+    }
+    .header__card h4{
+        font-size: 0.6rem;
+    }
+    .img__card img{
+        height: 100px;
+        object-fit: cover;
+        width: 150px!important;
+    }
+}
+
+/* Estilos para dispositivos medianos */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+    .card{
+        width: 50%;
+    }
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (min-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
+
+}
 </style>
