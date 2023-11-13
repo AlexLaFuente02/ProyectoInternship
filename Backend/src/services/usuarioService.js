@@ -59,7 +59,7 @@ const createUser = async (userData) => {
         });
         const tipoUsuarioDTO = new TipoUsuarioDTO(userData.tipousuario.id, userData.tipousuario.tipo);
         const nuevoUsuarioDTO = new UsuarioDTO(nuevoUsuario.id, nuevoUsuario.idusuario, tipoUsuarioDTO);
-        await HistoricoUsuarioService.insertHistoricoUsuario(nuevoUsuarioDTO);
+        await HistoricoUsuarioService.insertHistoricoUsuario(nuevoUsuario.dataValues);
         console.log('Usuario creado correctamente.');
         return new ResponseDTO('U-0000', nuevoUsuarioDTO, 'Usuario creado correctamente');
     } catch (error) {
