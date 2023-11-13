@@ -128,7 +128,6 @@ summary {
   display: block;
   cursor: pointer;
   padding: 10px;
-  font-family: "Space Mono", monospace;
   font-size: 22px;
   transition: .3s;
   border-bottom: 2px solid;
@@ -142,7 +141,6 @@ details > div {
   height: 100%;
   user-select: none;
   padding: 0 20px;
-  font-family: "Karla", sans-serif;
   line-height: 1.5;
 }
 

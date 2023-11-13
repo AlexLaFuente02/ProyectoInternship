@@ -1,7 +1,7 @@
 <template>
     <header class="container__header">
         <div class="container__logo">
-            <router-link to="/">
+            <router-link to="/student">
                 <img
                 src="../images/USEI.png"
                 alt="Unidad de Servicios Estudiantiles Integrales"
@@ -372,24 +372,6 @@ li {
  .container__nav .nav__links .link{
     font-size: 13px;
   }
-    .switch{
-        width: 50px;
-        height: 25px;
-    }
-    .switch:after{
-        width: 0;
-        height: 0;
-        left: 0;
-        top: 0;
-    }
-    .switch:checked:before{
-        left: 5px;
-        top: 2px;
-    }
-    .switch:checked:after{
-        left: 5px;
-        top: 2px;
-    }
 }
 @media screen and (max-width: 1024px){
   .container__header{

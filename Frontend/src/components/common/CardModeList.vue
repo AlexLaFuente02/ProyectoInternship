@@ -6,12 +6,13 @@
                 <img src="https://pbs.twimg.com/profile_images/1026937398855389186/1fpmfMrK_400x400.jpg" alt="Imagen de la empresa">
             </div>
             <div class="body__card">
-                <div class="description__card">
-                    <p>{{ this.informationCard.descripcionfunciones }}</p>
-                </div>
                 <div class="company__card">
-                    <font-awesome-icon :icon="['fas', 'building']" />
                     <p>{{this.informationCard.institucion.nombreinstitucion}}</p>
+                </div>
+                <div class="description__card">
+                    <div class="description__content">
+                        <p>{{ this.informationCard.descripcionfunciones }}</p>
+                    </div>
                 </div>
             </div>
             <div class="header__card">
@@ -24,7 +25,7 @@
                 </div>
                 <Button 
                     text="Más información" 
-                    :color="2" 
+                    :color="0" 
                     :disabled="false"
                     @option-selected="moreInformation"
                     >
@@ -32,7 +33,6 @@
             </div>
         </div>
     </div>
-    <hr class="line">
 </template>
 <script>
 import Button from "@/components/common/Button.vue";
@@ -68,6 +68,9 @@ export default {
     .line{
         border: 1px solid #E5E5E5;
         width: 100%;
+    }
+    .dark-theme .line{
+        border: 1px solid rgba(255,255,255,.3);
     }
     .card{
         width: 100%;
@@ -108,10 +111,17 @@ export default {
     }
     .description__card{
         width: 100%;
-        height: 100%;
+        height: 150px;
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+
+    }
+    .description__content{
+        max-height: 130px;
+        overflow-y: auto;
     }
     .description__card p{
         width: 100%;
@@ -119,20 +129,24 @@ export default {
         font-size: 1.2rem;
         font-weight: 400;
         text-align: center;
+        
     }
     .company__card{
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: center;
+        flex-direction: row;
         align-items: center;
+        
     }
     .company__card p{
-        width: 100%;
         height: 100%;
         font-size: 1.2rem;
         font-weight: 400;
+        padding: 0.2rem;
         text-align: center;
+        font-weight: bold;
     }
     .header__card{
         width: 100%;
@@ -141,6 +155,9 @@ export default {
         flex-direction: column  ;
         justify-content: space-between;
         align-items: center;
+    }
+    .header__card__responsive{
+        display: none;
     }
     .time__card{
         width: 100%;
@@ -155,6 +172,7 @@ export default {
         margin-left: 14px;
         font-size: 1.2rem;
         font-weight: 400;
+        margin: 0;
     }
     .state_card{
         display: flex;
@@ -170,4 +188,43 @@ export default {
         font-weight: 400;
         margin: 0;
     }
+@media only screen and (max-width: 600px) {
+    .container__card{
+        flex-direction: column;
+    }
+    .img__card img{
+        width: 100px!important;
+    }
+    .body__card .description__card{
+        height: 100%;
+        border-bottom: none;
+    }
+    .company__card p{
+        font-size: 0.8rem;
+    }
+    .description__content p{
+        font-size: 0.8rem;
+    }
+    .header__card{
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .header__card .time__card{
+        width: auto;
+    }
+    .header__card .time__card svg{
+        width: 20px!important;
+        height: 20px!important;
+    }
+    .header__card .time__card h4{
+        margin-left: 0.1rem;
+    }
+    .header__card h4{
+        font-size: 0.4rem;
+    }
+}
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+}
+
 </style>

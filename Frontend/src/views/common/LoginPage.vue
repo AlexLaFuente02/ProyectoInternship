@@ -79,7 +79,6 @@
 <script>
 import Button from "@/components/common/Button.vue";
 import { useLoginStore } from "@/store/common/loginStore";
-import axios from 'axios';
 export default {
   name: "LoginPage",
   components: {
@@ -115,7 +114,8 @@ export default {
         this.loginMessages.loginMessage = "Ingresa tu usuario por favor.";
       } else if (!userIdRegEx.test(this.userData.idusuario)) {
         this.loginMessages.userIdErrorMessage = true;
-        this.loginMessages.loginMessage = "Error, el usuario introducido es inválido.";
+        this.loginMessages.loginMessage =
+          "Error, el usuario introducido es inválido.";
       } else if (this.userData.password === "") {
         this.loginMessages.userIdErrorMessage = false;
         this.loginMessages.passwordErrorMessage = true;
@@ -123,49 +123,60 @@ export default {
       } else if (!passwordRegEx.test(this.userData.password)) {
         this.loginMessages.userIdErrorMessage = false;
         this.loginMessages.passwordErrorMessage = true;
-        this.loginMessages.loginMessage = "Error, la contraseña introducida es inválida.";
+        this.loginMessages.loginMessage =
+          "Error, la contraseña introducida es inválida.";
       } else {
         this.loginMessages.userIdErrorMessage = false;
         this.loginMessages.passwordErrorMessage = false;
         this.attempts++;
-        // Realiza la solicitud POST a la API con axios
-        axios.post('http://localhost:3000/auth/login', this.userData)
+        // Realiza la solicitud POST a la API
+        fetch("http://localhost:3000/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(this.userData),
+        })
           .then((response) => {
-            console.log("Inicio de sesión exitoso");
-            // Colocar el token en las cookies
-            this.$cookies.set("token", response.data.token);
-            let result = response.data.result;
-            this.$cookies.set("id", result.id);
-            this.$cookies.set("type", result.username);
-            if (result.username === 1) {
-              useLoginStore().setLogin(1);
-              this.$router.push("/student/");
-            } else if (result.username === 2) {
-              useLoginStore().setLogin(2);
-            } else if (result.username === 3) {
-              useLoginStore().setLogin(3);
+            if (response.ok) {
+              // La solicitud fue exitosa
+              console.log("Inicio de sesión exitoso");
+              response.json().then((data) => {
+                var result = data.result;
+                $cookies.set("id", result.id);
+                $cookies.set("username", result.username);
+                $cookies.set("type", result.tipousuario.id);
+                if (result.tipousuario.id == 1) {
+                  useLoginStore().setLogin(1);
+                  this.$router.push("/student/");
+                } else if (result.tipousuario.id == 2) {
+                  useLoginStore().setLogin(2);
+                  this.$router.push("/institution/home");
+                } else if (result.tipousuario.id == 3) {
+                  useLoginStore().setLogin(3);
+                  //this.$router.push("");
+                } else {
+                  useLoginStore().setLogin(0);
+                }
+              });
+            } else if (this.attempts <= 2) {
+              this.loginMessages.loginMessage =
+                "Usuario o contraseña incorrectos, inténtalo nuevamente.";
+              console.log("attempts: " + this.attempts);
+              // La solicitud falló
+              console.error("Inicio de sesión fallido");
             } else {
-              useLoginStore().setLogin(0);
+              console.error("¡Realizaste demasiados intentos!");
+              this.timer.minutes = 3;
+              this.loginMessages.loginMessage = "";
+              this.buttonDisabled = true;
+              this.loginMessages.manyAttempts = true;
+              this.startTimer();
             }
           })
           .catch((error) => {
-            if (error.response && error.response.status === 401) {
-              // Manejo específico de errores de autenticación
-              if (this.attempts <= 2) {
-                this.loginMessages.loginMessage = "Usuario o contraseña incorrectos, inténtalo nuevamente.";
-                console.log("attempts: " + this.attempts);
-              } else {
-                console.error("¡Realizaste demasiados intentos!");
-                this.timer.minutes = 3;
-                this.loginMessages.loginMessage = "";
-                this.buttonDisabled = true;
-                this.loginMessages.manyAttempts = true;
-                this.startTimer();
-              }
-            } else {
-              // Manejo de otros errores de red
-              console.error("Error de red: ", error);
-            }
+            console.error("Error de red: ", error);
           });
       }
     },

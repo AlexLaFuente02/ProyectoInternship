@@ -46,16 +46,9 @@
       <h1>Institutions</h1>
       <p>Information about the institutions will be added here.</p>
     </div>
-    <!-- Prueba de componente PrimeVue -->
-    <div class="card flex flex-wrap gap-3 justify-content-center">
-      <ButtonPrime icon="pi pi-check" aria-label="Submit" />
-      <ButtonPrime label="Submit" icon="pi pi-check" />
-      <ButtonPrime label="Submit" icon="pi pi-check" iconPos="right" />
-    </div>
   </div>
 </template>
 <script>
-//Importar el componente de PrimeVue
 
 export default {};
 </script>

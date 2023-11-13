@@ -10,17 +10,20 @@
       </div>
       <nav class="container__nav" >
         <div class="nav__links">
-            <router-link class="link" to="/">
+          <router-link class="link" to="/usei/principal">
               Inicio
             </router-link>
-            <router-link class="link" to="/moreInformation">
-              M&aacute;s informaci&oacute;n
+            <router-link class="link" to="/usei/Companies">
+              Empresas
             </router-link>
-            <router-link class="link" to="/institutionsCommon">
-              Instituciones
-            </router-link>
-            <router-link class="link" to="/internshipsCommon">
+            <router-link class="link" to="/usei/Internships">
               Pasant&iacute;as
+            </router-link>
+            <router-link class="link" to="/usei/Business">
+              Solicitudes de empresas
+            </router-link>
+            <router-link class="link" to="/usei/InternshipApp">
+              Solicitudes de pasant&iacute;as
             </router-link>
         </div>
         
@@ -35,22 +38,14 @@
            
             <div class="container__button">
             <Button 
-              text="Crear Cuenta" 
+              text="Cerrar de la sesion" 
               :color="0" 
               :disabled="false"
               @option-selected="createAccount"
               >
             </Button>
           </div>
-          <div class="container__button">
-            <Button 
-              text="Iniciar Sesi&oacute;n" 
-              :color="1" 
-              :disabled="false"
-              @option-selected="login"
-              >
-            </Button>
-          </div>
+          
           </div>
         </div>
       </nav>
@@ -78,15 +73,10 @@
       createAccount(option) {
         if (option) {
           console.log("createAccount");
-          this.$router.push("/UserRegister");
+          this.$router.push("/");
         }
       },
-      login(option) {
-        if (option) {
-          console.log("login");
-          this.$router.push("/Login");
-        }
-      },
+      
     },
   };
   </script>

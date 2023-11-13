@@ -94,5 +94,15 @@ export default {
         font-size: 0.8rem;
     }
 }
+@media screen and (max-width: 768px) {
+    .button{
+        font-size: 0.6rem;
+    }
+}
+@media screen and (max-width: 600px) {
+    .button{
+        font-size: 0.6rem;
+    }
+}
    
 </style>

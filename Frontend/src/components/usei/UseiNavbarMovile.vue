@@ -21,33 +21,41 @@
                         <font-awesome-icon :icon="['fas', 'circle-user']" />
                     </div>
                     <div class="container__sidebar--profile__name">
-                        <span>Usewiiii</span>
+                        <span>UseWWwiiii</span>
                     </div>
                 </div>
                 <div class="container__sidebar--options">
                     <ul class="container__menu--options"  >
-                        <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/">
-                                <font-awesome-icon :icon="['fas', 'home']" />
+                      
+                    <li class="container__menu--options__item" @click="closeMobileMenu">
+                            <router-link class="link" to="/usei/principal">
+                                <font-awesome-icon :icon="['fas', 'house']" />
                                 <span>Inicio</span>
                             </router-link>
                         </li>
+
                         <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/moreInformation">
-                                <font-awesome-icon :icon="['fas', 'info-circle']" />
-                                <span>M&aacute;s informaci&oacute;n</span>
-                            </router-link>
-                        </li>
-                        <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/institutionsCommon">
+                            <router-link class="link" to="/usei/Companies">
                                 <font-awesome-icon :icon="['fas', 'university']" />
-                                <span>Instituciones</span>
+                                <span>Empresas</span>
                             </router-link>
                         </li>
                         <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/internshipsCommon">
+                            <router-link class="link" to="/usei/Internships">
                                 <font-awesome-icon :icon="['fas', 'briefcase']" />
-                                <span>Pr&aacute;cticas</span>
+                                <span>Pasant&iacute;as</span>
+                            </router-link>
+                        </li>
+                        <li class="container__menu--options__item" @click="closeMobileMenu">
+                            <router-link class="link" to="/usei/Business">
+                                <font-awesome-icon :icon="['fas', 'university']" />
+                                <span>Solicitudes de empresas</span>
+                            </router-link>
+                        </li>
+                        <li class="container__menu--options__item" @click="closeMobileMenu">
+                            <router-link class="link" to="/usei/InternshipApp">
+                                <font-awesome-icon :icon="['fas', 'briefcase']" />
+                                <span>Solicitudes de Pasant&iacute;as</span>
                             </router-link>
                         </li>
                         <!--Modo oscuro-->
@@ -66,7 +74,7 @@
                         <li>
                             <div class="container__button">
                                 <Button 
-                                    text="Crear Cuenta" 
+                                    text="Cerrar sesion" 
                                     :color="0" 
                                     :disabled="false"
                                     @option-selected="createAccount"
@@ -74,17 +82,7 @@
                                 </Button>
                             </div>
                         </li>
-                        <li>
-                            <div class="container__button">
-                                <Button 
-                                    text="Iniciar Sesi&oacute;n" 
-                                    :color="1" 
-                                    :disabled="false"
-                                    @option-selected="login"
-                                    >
-                                </Button>
-                            </div>
-                        </li>
+                        
                 
                     </ul>
                 </div>
@@ -115,19 +113,12 @@ export default {
         createAccount(option) {
             if (option) {
                 console.log("createAccount");
-                this.$router.push("/UserRegister");
+                this.$router.push("/");
                 //Cerrar el menu
                 this.closeMobileMenu();
             }
         },
-        login(option) {
-            if (option) {
-                console.log("login");
-                this.$router.push("/Login");
-                //Cerrar el menu
-                this.closeMobileMenu();
-            }
-        },
+
         toggleDarkMode() {
             this.isDarkMode = !this.isDarkMode;
             useThemeStore().toggleDarkMode();
