@@ -10,6 +10,10 @@ const session = require("express-session");
 const { isAuthenticated, checkRole} = require("./services/authService"); // Importa el middleware isAuthenticated
 //Swagger para documentar
 const { swaggerDocs: V1SwaggerDocs } = require("./swagger");
+//Fotos
+const path = require('path');
+app.use('/images', express.static(path.join(__dirname, '..', 'images')));
+
 
 // Importa las rutas
 const tipoUsuarioAPI = require("./API/tipoUsuarioAPI");
@@ -69,7 +73,7 @@ app.use("/estudiante", estudianteAPI); //Post utilizado en FRONT para registro S
 app.use("/historicoConvocatorias", historicoConvocatoriasAPI); //futuro uso por ID de INSTITUCION****
 app.use("/historicoPostulaciones", historicoPostulacionesAPI); //futuro uso por ID de STUDENT****
 app.use("/historicoUsuario", historicoUsuarioAPI); //no tiene uso en FRONT, USEI
-app.use("/institucion", isAuthenticated, institucionAPI); //usado en FRONT para POST por INSTITUCION
+app.use("/institucion",  institucionAPI); //usado en FRONT para POST por INSTITUCION
 app.use("/postulacion", isAuthenticated, postulacionAPI); //usado en FRONT por STUDENT(post), GetAll y GetID por INSTITUCION
 app.use("/sectorPertenencia", sectorPertenenciaAPI); //SIN AUTENTICACION usado en FRONT getAll por INSTITUCION
 app.use("/sede", sedeAPI); //SIN AUTENTICACION usado en FRONT getAll por STUDENT

@@ -6,6 +6,12 @@ const SectorPertenencia = require('../ENT/sectorPertenenciaENT');
 const Usuario = require('../ENT/UsuarioENT');
 const UsuarioDTO = require('../DTO/UsuarioDTO');
 
+const { baseURL } = require('../../config/constants');
+
+const getImageUrl = (imageName) => {
+    return imageName ? `${baseURL}/images/${imageName}` : null;
+};
+
 const getAllInstitutions = async () => {
     console.log('Obteniendo todas las instituciones...');
     try {
@@ -15,7 +21,8 @@ const getAllInstitutions = async () => {
         const institucionesDTO = instituciones.map(institucion => {
             const sectorPertenenciaDTO = new SectorPertenenciaDTO(institucion.sectorpertenencia.id, institucion.sectorpertenencia.nombresectorpertenencia);
             const usuarioDTO = new UsuarioDTO(institucion.usuario.id, institucion.usuario.idusuario);
-            return new InstitucionDTO(institucion.id, institucion.nombreinstitucion, institucion.reseniainstitucion, institucion.logoinstitucion, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto, usuarioDTO, sectorPertenenciaDTO);
+            const imageUrl = institucion.logoinstitucion ? `${baseURL}/images/${institucion.logoinstitucion}` : null;
+            return new InstitucionDTO(institucion.id, institucion.nombreinstitucion, institucion.reseniainstitucion, imageUrl, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto, usuarioDTO, sectorPertenenciaDTO);
         });
         console.log('Instituciones obtenidas correctamente.');
         return new ResponseDTO('I-0000', institucionesDTO, 'Instituciones obtenidas correctamente');
@@ -40,7 +47,8 @@ const getInstitutionById = async (id) => {
         }
         const sectorPertenenciaDTO = new SectorPertenenciaDTO(institucion.sectorpertenencia.id, institucion.sectorpertenencia.nombresectorpertenencia);
         const usuarioDTO = new UsuarioDTO(institucion.usuario.id, institucion.usuario.idusuario);
-        const institucionDTO = new InstitucionDTO(institucion.id, institucion.nombreinstitucion, institucion.reseniainstitucion, institucion.logoinstitucion, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto, usuarioDTO, sectorPertenenciaDTO);
+        const imageUrl = getImageUrl(institucion.logoinstitucion);
+        const institucionDTO = new InstitucionDTO(institucion.id, institucion.nombreinstitucion, institucion.reseniainstitucion, imageUrl, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto, usuarioDTO, sectorPertenenciaDTO);
         console.log('Institución obtenida correctamente.');
         return new ResponseDTO('I-0000', institucionDTO, 'Institución obtenida correctamente');
     } catch (error) {
@@ -53,19 +61,24 @@ const getInstitutionById = async (id) => {
 const createInstitution = async (institutionData) => {
     console.log('Creando una nueva institución...');
     try {
+        const fileName = institutionData.logoinstitucion ? institutionData.logoinstitucion : null;
         const nuevaInstitucion = await Institucion.create({
             nombreinstitucion: institutionData.nombreinstitucion,
-            sectorpertenencia_id: institutionData.sectorpertenencia.id,
-            usuario_id: institutionData.usuario.id,
+            sectorpertenencia_id: institutionData.sectorpertenencia_id,
+            usuario_id: institutionData.usuario_id,
             reseniainstitucion: institutionData.reseniainstitucion,
-            logoinstitucion: institutionData.logoinstitucion,
+            logoinstitucion: fileName,
             nombrecontacto: institutionData.nombrecontacto,
             correocontacto: institutionData.correocontacto,
             celularcontacto: institutionData.celularcontacto
         });
-        const sectorPertenenciaDTO = new SectorPertenenciaDTO(institutionData.sectorpertenencia.id, institutionData.sectorpertenencia.nombresectorpertenencia);
-        const usuarioDTO = new UsuarioDTO(institutionData.usuario.id, institutionData.usuario.idusuario);
-        const nuevaInstitucionDTO = new InstitucionDTO(nuevaInstitucion.id, nuevaInstitucion.nombreinstitucion, nuevaInstitucion.reseniainstitucion, nuevaInstitucion.logoinstitucion, nuevaInstitucion.nombrecontacto, nuevaInstitucion.correocontacto, nuevaInstitucion.celularcontacto, usuarioDTO, sectorPertenenciaDTO);
+        // Genera la URL completa para acceder a la imagen a través de tu API
+        // Esta línea debe formar una URL válida
+        const imageUrl = fileName ? `${baseURL}/images/${fileName}` : null;
+
+        const sectorPertenenciaDTO = new SectorPertenenciaDTO(institutionData.sectorpertenencia_id);
+        const usuarioDTO = new UsuarioDTO(institutionData.usuario_id);
+        const nuevaInstitucionDTO = new InstitucionDTO(nuevaInstitucion.id, nuevaInstitucion.nombreinstitucion, nuevaInstitucion.reseniainstitucion, imageUrl, nuevaInstitucion.nombrecontacto, nuevaInstitucion.correocontacto, nuevaInstitucion.celularcontacto, usuarioDTO, sectorPertenenciaDTO);
         console.log('Institución creada correctamente.');
         return new ResponseDTO('I-0000', nuevaInstitucionDTO, 'Institución creada correctamente');
     } catch (error) {
@@ -94,7 +107,8 @@ const updateInstitution = async (id, institutionData) => {
         });
         const sectorPertenenciaDTO = new SectorPertenenciaDTO(institutionData.sectorpertenencia.id, institutionData.sectorpertenencia.nombresectorpertenencia);
         const usuarioDTO = new UsuarioDTO(institutionData.usuario.id, institutionData.usuario.idusuario); // Usamos institutionData para el usuarioDTO
-        const actulizadoInstitucionDTO = new InstitucionDTO(institucion.id, institucion.nombreinstitucion, institucion.reseniainstitucion, institucion.logoinstitucion, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto, usuarioDTO, sectorPertenenciaDTO);
+        const imageUrl = getImageUrl(institucion.logoinstitucion);
+        const actulizadoInstitucionDTO = new InstitucionDTO(institucion.id, institucion.nombreinstitucion, institucion.reseniainstitucion, imageUrl, institucion.nombrecontacto, institucion.correocontacto, institucion.celularcontacto, usuarioDTO, sectorPertenenciaDTO);
         console.log('Institución actualizada correctamente.');
         return new ResponseDTO('I-0000', actulizadoInstitucionDTO, 'Institución actualizada correctamente');
     } catch (error) {
