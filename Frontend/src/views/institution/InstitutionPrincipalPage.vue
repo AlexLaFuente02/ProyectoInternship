@@ -124,15 +124,9 @@ export default {
   methods: {
     async initialize() {
       useLoaderStore().activateLoader();
-      // await this.institutionById.loadInstitutionById(1);
-      // this.companyInformation = this.institutionById.institution.result;
-      // this.companyInformation = this.companyInformation.map((institution) => {
-      //   return {
-      //     id: institution.id,
-      //     nombreinstitucion: institution.nombreinstitucion,
-      //   };
-      // });
-      // console.log(this.companyInformation);
+      await this.institutionById.loadInstitutionById(1);
+      this.companyInformation = this.institutionById.institution.result;
+      console.log(this.companyInformation);
       this.companyIsLoaded = true;
       useLoaderStore().desactivateLoader();
     },
