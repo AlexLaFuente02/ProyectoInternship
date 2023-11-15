@@ -3,7 +3,7 @@
     <h1>PASANTÍAS</h1>
     <h5>Te mostramos las pasantías activas en la plataforma.</h5>
     <div class="internship-container">
-      <div class="internship-information-grid">
+      <div class="internship-information-grid" v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded">
         <img
           src="https://scontent.flpb3-1.fna.fbcdn.net/v/t39.30808-6/326368094_757490342424242_7018585822248141862_n.png?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=QxL6kFOuUq0AX-3EyiD&_nc_ht=scontent.flpb3-1.fna&oh=00_AfCxCbY-DO9PuXBWEF4EqWFFpYzznYGa0twkeL-NvXnxrA&oe=65548BF4"
           alt="Logo de la Empresa"
@@ -61,7 +61,29 @@
 </template>
 
 <script>
-export default {};
+import {UseUseiInternshipStore }from "@/store/usei/UseiInternshipStore";
+import {useLoaderStore} from "@/store/common/loaderStore";
+export default {
+  data() {
+        return {
+            listInternship:[],
+           everyInternshipsAreLoaded: false,
+        };
+    },
+    methods: {
+        async getData(){
+            useLoaderStore().activateLoader();
+            await UseUseiInternshipStore().LoadInternship();
+            this.listInternship = UseUseiInternshipStore().InternshipList.result;
+            this.everyInternshipsAreLoaded = true;
+            useLoaderStore().desactivateLoader();
+            console.log(this.listInternship);
+        },
+    },
+    created(){
+        this.getData();
+    },
+};
 </script>
 
 <style scoped>
