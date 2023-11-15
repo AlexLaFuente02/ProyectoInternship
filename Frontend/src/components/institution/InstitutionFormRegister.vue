@@ -131,7 +131,7 @@ export default {
 
 </script>
 <style>
-* Tu estilo actual */
+/* Tu estilo actual */
 
 .buttons {
   display: flex;

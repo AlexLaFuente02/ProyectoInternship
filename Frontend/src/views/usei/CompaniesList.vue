@@ -3,29 +3,29 @@
     <h1>EMPRESAS</h1>
     <h5>Te mostramos las empresas que forman parte de Internship By UCB.</h5>
     <div class="companies-container">
-      <div class="company-information-grid">
+      <div class="company-information-grid" v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded">
         <img
           src="https://i.pinimg.com/564x/0f/76/1c/0f761c01d1fb284eb429061e577aa623.jpg"
           alt="Logo de la Empresa"
         />
-        <div class="information-grid">
-          <h4 class="information-title">Detalles de la Empresa:</h4>
+        <div class="information-grid" >
+          <h4 class="information-title" >Detalles de la Empresa:</h4>
           <div class="c_details">
             <ul class="company-details">
-              <li><strong>Nombre: </strong>Google</li>
+              <li><strong>Nombre: </strong>{{card.nombreinstitucion}}</li>
               <li>
                 <strong>Pertenece al sector: </strong>
-                Sector de pertenencia de la empresa
+                {{card.sectorpertenencia.nombresectorpertenencia}}
               </li>
-              <li><strong>Rese&ntilde;a: </strong>Descripción de la empresa</li>
-              <li><strong>Contacto: </strong>Contacto de la empresa</li>
+              <li><strong>Rese&ntilde;a: </strong>{{card.reseniainstitucion}}</li>
+              <li><strong>Nombre del Contacto: </strong>{{card.nombrecontacto}}</li>
               <li>
                 <strong>Correo electr&oacute;nico: </strong>
-                Correo electr&oacute;nico de la empresa
+                {{ card.correocontacto }}
               </li>
               <li>
                 <strong>N&uacute;mero de celular: </strong>
-                N&uacute;mero de celular de la empresa
+                {{card.celularcontacto}}
               </li>
             </ul>
           </div>
@@ -65,7 +65,29 @@
 </template>
 
 <script>
-export default {};
+import {UseUseiInstitutionStore }from "@/store/usei/UseiInstitutionStore";
+import {useLoaderStore} from "@/store/common/loaderStore";
+export default {
+  data() {
+        return {
+            listInstitution:[],
+           everyInternshipsAreLoaded: false,
+        };
+    },
+    methods: {
+        async getData(){
+            useLoaderStore().activateLoader();
+            await UseUseiInstitutionStore().LoadInstitutions();
+            this.listInstitution = UseUseiInstitutionStore().InstitutionList.result;
+            this.everyInternshipsAreLoaded = true;
+            useLoaderStore().desactivateLoader();
+            console.log(this.listInstitution);
+        },
+    },
+    created(){
+        this.getData();
+    },
+};
 </script>
 
 <style scoped>
