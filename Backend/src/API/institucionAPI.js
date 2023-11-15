@@ -2,6 +2,21 @@ const express = require('express');
 const router = express.Router();
 const institucionService = require('../services/institucionService');
 
+//Fotos
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../..', 'images')); // Subir un nivel y luego entrar a la carpeta images
+      },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+  });
+
+const upload = multer({ storage: storage });
+
 /**
  * @openapi
  * /institucion/:
@@ -153,16 +168,27 @@ router.get('/:id', async (req, res) => {
     });
 });
 
-router.post('/', async (req, res) => {
-    console.log('POST request received for createInstitution with data:', req.body);
-    const response = await institucionService.createInstitution(req.body);
+router.post('/', upload.single('logoinstitucion'), async (req, res) => {
+    console.log('POST request received for createInstitution');
+  
+    // Extrae los datos del cuerpo de la solicitud y la ruta del archivo de imagen
+    const institutionData = {
+        ...req.body,
+        logoinstitucion: req.file ? req.file.filename : null, // Usa filename y no path
+    };
+  
+    // Llama al servicio y pasa los datos de la institución, incluyendo la ruta de la imagen
+    const response = await institucionService.createInstitution(institutionData);
+  
+    // Envía la respuesta
     res.json({
-        method: 'createInstitution',
-        code: response.code,
-        result: response.result,
-        message: response.message,
+      method: 'createInstitution',
+      code: response.code,
+      result: response.result,
+      message: response.message,
     });
-});
+  });
+  
 
 router.put('/:id', async (req, res) => {
     console.log(`PUT request received for updateInstitution with ID: ${req.params.id} and data:`, req.body);

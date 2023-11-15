@@ -1,0 +1,60 @@
+@baseURL = http://localhost:3000/institution
+
+### POST Convocatoria
+POST {{baseURL}}/convocatoria/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "areapasantia": "Área de prueba",
+  "descripcionfunciones": "Descripción de funciones",
+  "requisitoscompetencias": "Requisitos y competencias",
+  "horario_inicio": "08:00",
+  "horario_fin": "17:00",
+  "fechasolicitud": "2023-10-22",
+  "fechaseleccionpasante": "2025-12-12",
+  "estadoconvocatoria": {
+    "id": 2
+  },
+  "institucion": {
+    "id": 1
+  },
+  "tiempoacumplir": {
+    "id": 2
+  }
+}
+
+### GET ALL EstadoSolicitudInstitucion
+GET {{baseURL}}/estadosolicitudinstitucion/
+Accept: application/json
+
+### Obtener todos los registros históricos
+GET {{baseURL}}/historicoConvocatorias
+
+### POST de Institucion
+POST {{baseURL}}/institucion/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombreinstitucion": "Universidad XYZ",
+  "reseniainstitucion": "Una breve descripción de la universidad.",
+  "logoinstitucion": null,
+  "nombrecontacto": "Juan Pérez",
+  "correocontacto": "juan.perez@univez.com",
+  "celularcontacto": "12345678",
+  "usuario": {
+    "id": 1
+  },
+  "sectorpertenencia": {
+    "id": 3
+  }
+}
+
+### Obtener todas las postulacion
+GET {{baseURL}}/postulacion
+Accept: application/json
+
+### Obtener una postulación por ID (reemplaza {id} con un ID válido)
+GET {{baseURL}}/postulacion/1
+Accept: application/json
