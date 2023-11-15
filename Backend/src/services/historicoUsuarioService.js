@@ -13,7 +13,7 @@ const insertHistoricoUsuario = async (userData) => {
       id_u: userData.id,
       idusuario: userData.idusuario,
       contrasenia: userData.contrasenia,
-      tipousuario_id: userData.tipousuario.id,
+      tipousuario_id: userData.tipousuario_id,
     });
     console.log("Usuario registrado en historico_usuario correctamente.");
   } catch (error) {
