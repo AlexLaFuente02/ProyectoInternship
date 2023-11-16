@@ -27,7 +27,7 @@ import StudentProfile from '@/views/student/StudentProfile.vue';
 
 //Paginas Institution
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
-import InstitutionAddConvocatoria from '@/views/institution/InstitutionAddConvocatoria.vue'
+import InstitutionAddConvocatoria from "@/views/institution/InstitutionAddConvocatoria.vue";
 import InstitutionConvocatoria from '@/views/institution/InstitutionConvocatoria.vue'
 import InstitutionProfile from "@/views/institution/InstitutionProfile.vue";
 import InstitutionSettings from "@/views/institution/InstitutionSettings.vue";
