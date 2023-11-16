@@ -121,7 +121,6 @@ section {
   max-width: var(--sectionWidth);
   margin: 40px auto;
   width: 97%;
-  color: #fff;
 }
 
 summary {
