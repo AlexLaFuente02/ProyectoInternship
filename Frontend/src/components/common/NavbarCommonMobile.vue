@@ -47,7 +47,7 @@
                         <li class="container__menu--options__item" @click="closeMobileMenu">
                             <router-link class="link" to="/internshipsCommon">
                                 <font-awesome-icon :icon="['fas', 'briefcase']" />
-                                <span>Pr&aacute;cticas</span>
+                                <span>Pasantías</span>
                             </router-link>
                         </li>
                         <!--Modo oscuro-->

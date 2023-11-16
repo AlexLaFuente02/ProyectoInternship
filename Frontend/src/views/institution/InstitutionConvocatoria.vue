@@ -235,6 +235,9 @@ h1 {
   border: 2px solid black;
   /* Ajusta este valor según el espacio que desees */
 }
+.dark-theme .card-inicio {
+  background-color: #919191;
+}
 
 .content {
   display: flex;
