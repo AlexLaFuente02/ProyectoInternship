@@ -41,7 +41,7 @@
               text="Cerrar de la sesion" 
               :color="0" 
               :disabled="false"
-              @option-selected="createAccount"
+              @option-selected="logout"
               >
             </Button>
           </div>
@@ -54,6 +54,8 @@
   <script>
   import { useThemeStore } from "@/store/common/useThemeStore";
   import Button from "@/components/common/Button.vue";
+  import { useMobileMenuStore } from "../../store/common/mobileMenuStore";
+  import { useLoginStore } from "@/store/common/loginStore";
   export default {
     name: "NavbarCommon",
     components:{
@@ -70,12 +72,17 @@
         this.isDarkMode = !this.isDarkMode;
         darkModeStore.toggleDarkMode();
       },
-      createAccount(option) {
-        if (option) {
-          console.log("createAccount");
-          this.$router.push("/");
-        }
-      },
+      logout(){
+        /*Logout*/
+        $cookies.remove("id");
+        $cookies.remove("type");
+        $cookies.remove("connect.sid");
+        $cookies.remove("username");
+        useLoginStore().setLogin(0);
+        this.$router.push("/");
+        this.closeMobileMenu();
+        /*Fin del logout*/
+    },
       
     },
   };

@@ -157,7 +157,7 @@ export default {
             this.isDarkMode = !this.isDarkMode;
             useThemeStore().toggleDarkMode();
         },
-        logout() {
+        logout(){
             /*Logout*/
             $cookies.remove("id");
             $cookies.remove("type");

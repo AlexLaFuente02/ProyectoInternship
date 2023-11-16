@@ -94,7 +94,6 @@ export default {};
   flex: 1; /* Permite que los contenedores ocupen el mismo ancho */
   margin: 10px; /* Espaciado entre contenedores */
   border-radius: 10px;
-  background-color: azure;
   border: 100px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
   padding: 20px; /* Añade algo de relleno para visualizar mejor el borde */
 }
