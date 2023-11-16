@@ -1,14 +1,12 @@
 <template>
       <nav>
-        <template v-for="(item, key, index) in data" :key="index">
-          <a :href="`#${key}`" :style="{ '--hue': `${item.hue}deg`, '--r': `${r}px`, '--t': `${t}s` }" class="item" @focus="onFocus" @mouseover="onHover">
-            <span class="icon mono" :id="`blur${index}`" aria-hidden="true">{{ item.ico }}</span>
+        <button v-for="(item, key, index) in data" :key="index" >
+          <a :style="{ '--hue': `${item.hue}deg`, '--r': `${r}px`, '--t': `${t}s` }" class="item" @click="emitFilter(key)">
             <span class="icon mono" aria-hidden="true">{{ item.ico }}</span>
-            <span class="icon midl" aria-hidden="true" :style="{ 'background-image': `-moz-element(#blur${index})` }">{{ item.ico }}</span>
             <span class="icon grey" aria-hidden="true">{{ item.ico }}</span>
-            {{ key }}
+            {{ key}}
           </a>
-        </template>
+        </button>
       </nav>
   </template>
   
@@ -20,19 +18,16 @@
         t: 0.3,
         data: {
             Pendiente: { ico: '🤷', hue: 60 },
+            Aceptado: { ico: '😁', hue: 120 },
+            Rechazado: { ico: '😞', hue: 0 },
             Todo: { ico: '🌎', hue: 180 },
-            Aceptado: { ico: '👍', hue: 120 },
-            Rechazado: { ico: '👎', hue: 0 },
         },
       };
     },
     methods: {
-      onFocus() {
-        // Handle focus event
-      },
-      onHover() {
-        // Handle hover event
-      },
+        emitFilter(key) {
+            this.$emit('filter', key);
+        },
     },
   };
   </script>
@@ -51,9 +46,16 @@
   nav {
     grid-auto-flow: column;
     place-self: center;
+    margin-bottom: 1rem;
+  }
+  button {
+    background: none;
+    padding: 0;
+    margin: 0.2rem;
   }
   
   .item {
+    
     --hl: 0;
     width: 5em;
     color: hsl(var(--hue), calc(var(--hl) * 100%), 65%);
@@ -101,4 +103,35 @@
   .grey {
     filter: grayscale(1) opacity(0.35);
   }
+@media only screen and (max-width: 320px) {
+  .item{
+    font-size: 0.35rem;
+  }
+  
+  
+}
+
+/* Estilos para dispositivos pequeños (teléfonos) */
+@media only screen and (min-width: 321px) and (max-width: 600px) {
+  .item{
+    font-size: 0.50rem;
+  }
+}
+
+/* Estilos para tabletas */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+
+}
+
+/* Estilos para dispositivos medianos */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (min-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
+}
+
   </style>

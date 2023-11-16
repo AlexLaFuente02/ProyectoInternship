@@ -295,6 +295,7 @@ h6 {
     align-items: center;
     width: 100%;
     margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
 .containerList__footer__pagination{
     display: flex;
@@ -396,15 +397,28 @@ h6 {
 @media only screen and (max-width: 600px) {
   /* Estilos específicos para dispositivos pequeños */
   .search__view input{
-    font-size: 0.5rem;
+    font-size: 0.40rem;
   }
-  .toggle__view button{
-    padding: 0.2rem;
-    font-size: 0.5rem;
+.toggle__view button{
+    padding: 0.1rem;
+    font-size: 0.4rem;
 }
-.containerList__footer__pagination button{
+    .containerList__footer__pagination button{
         font-size: 0.5rem;
     }
+    .containerList__footer__pagination__numbers button{
+        font-size: 0.3rem;
+        margin: 0 0.2rem;
+    }
+    
+    .containerList{
+        padding: 0.1rem;
+    }
+    .containerList h1{
+        font-size: 1rem;
+    }
+    
+    
 
 }
 

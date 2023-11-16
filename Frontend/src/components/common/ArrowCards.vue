@@ -1,48 +1,93 @@
 <template >
-    <ol class="olcards">
-		<li style="--cardColor:#fc374e">
-			<div class="content">
-				<div class="icon">😀</div>
-				<div class="title">Lorem Ipsum</div>
-				<div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, voluptatem.</div>
-			</div>
-		</li>
-		<li style="--cardColor:#36aeb3">
-			<div class="content">
-				<div class="icon">😁</div>
-				<div class="title">Lorem Ipsum</div>
-				<div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, voluptatem.</div>
-			</div>
-		</li>
-		<li style="--cardColor:#162d59">
-			<div class="content">
-				<div class="icon">😉</div>
-				<div class="title">Lorem Ipsum</div>
-				<div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, voluptatem.</div>
-			</div>
-		</li>
-		<li style="--cardColor:#f15f0e">
-			<div class="content">
-				<div class="icon">😜</div>
-				<div class="title">Lorem Ipsum</div>
-				<div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, voluptatem.</div>
-			</div>
-		</li>
-	</ol>
+    <div class="ArrowCards">
+      <div class="olcards">
+        <li :style="{ '--cardColor': Arrow.color }"
+        v-for="request in requests" :key="request.id">
+          <div class="content">
+            <div class="icon">
+              {{ this.Arrow.icon  }}
+            </div>
+            <div class="title">
+              
+                {{ request.convocatoria_id.areapasantia }}
+              
+            </div>
+            <div class="text">
+                Fecha cierre de convocatoria: {{ request.convocatoria_id.fechaseleccionpasante }}
+              <br>
+              Fecha de solicitud: {{ request.fechapostulacion }}
+            
+              
+            </div>
+          </div>
+        </li>
+      </div>
+	</div>
 </template>
 <script>
 export default {
-    
+    props:{
+        listRequests:{
+            type: Array,
+            required: true,
+        },
+        type: {
+            type: Object,
+            required: true,
+        },
+    },
+    data() {
+        return {
+            requests: [],
+            listArrows: [
+                {
+                    id: 1,
+                    title: 'Rechazado',
+                    icon: '😞',
+                    color: '#fc374e',
+                },
+                {
+                    id: 2,
+                    title: 'Aceptado',
+                    icon: '😁',
+                    color: '#36aeb3',
+                },
+                {
+                    id: 3,
+                    title: 'Pendiente',
+                    icon: '🤷',
+                    color: '#f15f0e',
+                },
+                {
+                    id: 4,
+                    title: 'Todo',
+                    icon: '🌎',
+                    color: '#162d59',
+                },
+            ],
+            Arrow: null,
+        };
+    },
+    methods: {
+        getData(){
+            this.requests = this.listRequests;
+            this.Arrow = this.type;
+        },
+    },
+    created() {
+        this.getData();
+    },
 }
 </script>
 <style scoped>
-body {
-  background: #e4ebf4;
-  padding: 2rem;
+.ArrowCards {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  overflow-y: scroll;
 }
-h1 {
-  font-family: sans-serif;
-}
+
+
 .olcards,
 .olcards * {
   margin: 0;
@@ -59,8 +104,11 @@ h1 {
   --cardsGap: 1rem;
   gap: var(--cardsGap);
   padding-bottom: var(--cardsGap);
+  width: 100%;
 }
 .olcards li {
+  position: relative;
+  width: 100%;
   counter-increment: cardCount;
   display: flex;
   color: white;
@@ -71,26 +119,27 @@ h1 {
 
 .olcards li::before {
   content: counter(cardCount, decimal-leading-zero);
-  background: white;
+  background: #162d59;
   color: var(--cardColor);
   font-size: 2em;
   font-weight: 700;
   transform: translateY(calc(-1 * var(--labelOffset)));
-  margin-right: calc(-1 * var(--labelOffset));
-  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-inline: 0.5em;
+  border-radius: 50%;
+  margin-right: 0.5em;
 }
 
 .olcards li .content {
   background-color: var(--cardColor);
   --inlinePadding: 1em;
   --boxPadding: 0.5em;
+  --leftPadding: 0.01rem;
   display: grid;
   padding: var(--boxPadding) calc(var(--inlinePadding) + var(--arrowClipSize))
-    var(--boxPadding) calc(var(--inlinePadding) + var(--labelOffset));
+    var(--boxPadding) calc(var(--leftPadding) + var(--labelOffset));
   grid-template-areas:
     "icon title"
     "icon text";
@@ -137,6 +186,89 @@ h1 {
 }
 .olcards li .content .text {
   grid-area: text;
+}
+/*Estilos para dispositivos muy pequeños*/
+@media only screen and (max-width: 320px) {
+  .icon {
+    display: none;
+  }
+  .content {
+    text-align: center;
+    font-size: 0.35rem;
+    width: auto;
+  }
+  .olcards li::before {
+    display: none;
+  }
+  .olcards li .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5em 2rem 0.5em 2rem;
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--arrowClipSize)) 0,
+      100% 50%,
+      calc(100% - var(--arrowClipSize)) 100%,
+      calc(100% - var(--arrowClipSize)) calc(100% + var(--cardsGap)),
+      0 calc(100% + var(--cardsGap))
+    );
+  }
+  .title{
+    width: auto;
+  }
+  .text{
+    width: auto;
+  }
+  
+}
+
+/* Estilos para dispositivos pequeños (teléfonos) */
+@media only screen and (min-width: 321px) and (max-width: 600px) {
+  
+  .content {
+    text-align: center;
+    font-size: 0.50rem;
+    width: auto;
+  }
+  .olcards li::before {
+    display: none;
+  }
+  .olcards li .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5em 2rem 0.5em 2rem;
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--arrowClipSize)) 0,
+      100% 50%,
+      calc(100% - var(--arrowClipSize)) 100%,
+      calc(100% - var(--arrowClipSize)) calc(100% + var(--cardsGap)),
+      0 calc(100% + var(--cardsGap))
+    );
+  }
+  .title{
+    width: auto;
+  }
+  .text{
+    width: auto;
+  }
+}
+
+/* Estilos para tabletas */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+}
+
+/* Estilos para dispositivos medianos */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (min-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
 }
 
 </style>

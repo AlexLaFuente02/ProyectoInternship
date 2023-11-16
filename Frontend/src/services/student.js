@@ -13,3 +13,15 @@ export const loadInternshipsByIdStudent = async () => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 }
+export const loadRequestsByIdStudent = async () => {
+    /*Cambiar por la ruta de la api que corresponda*/
+    //Se esta usando la ruta de la api de prueba
+    const response = await axios.get(`${rutaApi}/postulacion`);
+    return response.data;
+}
+export const loadInstitutions = async () => {
+    /*Cambiar por la ruta de la api que corresponda*/
+    //Se esta usando la ruta de la api de prueba
+    const response = await axios.get(`${rutaApi}/institucion`);
+    return response.data;
+}
