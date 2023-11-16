@@ -13,4 +13,8 @@ export const loadSemester = async () => {
     const response = await axios.get(`${rutaApi}/semestre`);
     return response.data;
 }
+export const loadSector = async () => {
+    const response = await axios.get(`${rutaApi}/sectorPertenencia`);
+    return response.data;
+}
 

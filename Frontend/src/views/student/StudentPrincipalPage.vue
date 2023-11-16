@@ -59,19 +59,60 @@
             </div>
         </div>
         
-        <!--<div class="requests__by__student">
+        <div class="requests__by__student">
             <h1>Tus Solicitudes</h1>
             <div class="container__requests" 
             v-if="everyInternshipsAreLoaded"
             >
                 <div class="container__little__nav">
-                    <LittleNav />
+                    <LittleNav 
+                    @filter="filterRequests"
+                    />
                 </div>
                 <div class="container__Arrow">
-                    <ArrowCards />
+                    <ArrowCards
+                    :listRequests="listRequests"
+                    :type="{
+                    id: 4,
+                    title: 'Todo',
+                    icon: '🌎',
+                    color: '#04befe',
+                }"
+                    v-show="type=='Todo'"
+                    />
+                    <ArrowCards
+                    :listRequests="requestsPending"
+                    :type="{
+                    id: 3,
+                    title: 'Pendiente',
+                    icon: '🤷',
+                    color: '#f15f0e',
+                }"
+                    v-show="type=='Pendiente'"
+                    />
+                    <ArrowCards
+                    :listRequests="requestsAccepted"
+                    :type="{
+                    id: 2,
+                    title: 'Aceptado',
+                    icon: '😁',
+                    color: '#36aeb3',
+                }"
+                    v-show="type=='Aceptado'"
+                    />
+                    <ArrowCards
+                    :listRequests="requestsRejected"
+                    :type="{
+                    id: 1,
+                    title: 'Rechazado',
+                    icon: '😞',
+                    color: '#fc374e',
+                }"
+                    v-show="type=='Rechazado'"
+                    />
                 </div>
             </div>
-        </div>-->
+        </div>
 
 
 
@@ -79,7 +120,6 @@
 
 
         <div class="student__content__internship">
-            
             <CardList 
             :list="listInterships"
             :title="title"
@@ -96,8 +136,8 @@ import {useInternshipsByIDStore } from "@/store/student/internshipsByIDStore";
 import CardList from "@/components/common/CardList.vue";
 import {useLoaderStore} from "@/store/common/loaderStore";
 import SimpleCard from "@/components/common/SimpleCard.vue";
-import ArrowCards from "../../components/common/ArrowCards.vue";
-import LittleNav from "../../components/common/LittleNav.vue";
+import ArrowCards from "@/components/common/ArrowCards.vue";
+import LittleNav from "@/components/common/LittleNav.vue";
 import {useRequestsByIDStore} from "@/store/student/requestsByIDStore";
 export default {
     data() {
@@ -106,6 +146,10 @@ export default {
             title: "Pasantías Populares",
             everyInternshipsAreLoaded: false,
             listRequests: [],
+            requestsAccepted: [],
+            requestsRejected: [],
+            requestsPending: [],
+            type: "Pendiente",
         };
     },
     components: {
@@ -121,9 +165,47 @@ export default {
             await useRequestsByIDStore().loadRequestsByIdStudent();
             this.listInterships = useInternshipsByIDStore().internships;
             this.listRequests = useRequestsByIDStore().requests.result;
+            this.listRequests.forEach(element => {
+                if(element.estadopostulacion_id.nombreestadopostulacion == "EN ESPERA"){
+                    this.requestsPending.push(element);
+                }
+                else if(element.estadopostulacion_id.nombreestadopostulacion == "APROBADO"){
+                    this.requestsAccepted.push(element);
+                }
+                else{
+                    this.requestsRejected.push(element);
+                }
+            });
             this.everyInternshipsAreLoaded = true;
             useLoaderStore().desactivateLoader();
         },
+        filterRequests(key){
+            if(key == "Todo"){
+                this.listRequests = useRequestsByIDStore().requests.result;
+                this.type = "Todo";
+            }
+            else if(key == "Pendiente"){
+                this.listRequests = this.requestsPending;
+                this.type = "Pendiente";
+            }
+            else if(key == "Aceptado"){
+                this.listRequests = this.requestsAccepted;
+                this.type = "Aceptado";
+            }
+            else if(key == "Rechazado"){
+                this.listRequests = this.requestsRejected;
+                this.type = "Rechazado";
+            }
+        },
+    },
+    computed: {
+        listRequestsComputed(){
+            return this.listRequests;
+        },
+        typeComputed(){
+            return this.type;
+        },
+        
     },
     created(){
         this.getData();
@@ -340,6 +422,13 @@ export default {
     background-color: #Fff;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+.container__requests{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
 .dark-theme .requests__by__student{
     background-color: #434B54;
@@ -357,8 +446,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
-    overflow-y: scroll;
-    height: 100%;
+    height: 300px;
 }
 
 
@@ -401,6 +489,11 @@ export default {
     .summary__content__text{
         font-size: 0.6rem;
     }
+
+
+
+
+
 }
 
 /* Estilos para tabletas */
