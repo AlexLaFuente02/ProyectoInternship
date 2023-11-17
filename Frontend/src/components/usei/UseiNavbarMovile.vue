@@ -58,6 +58,12 @@
                                 <span>Solicitudes de Pasant&iacute;as</span>
                             </router-link>
                         </li>
+                        <li class="container__menu--options__item" @click="closeMobileMenu">
+                            <router-link class="link" to="/usei/AnalyticsDashboard">
+                                <font-awesome-icon :icon="['fas', 'chart-mixed']" />
+                                <span>An&aacute;lisis de Datos</span>
+                            </router-link>
+                        </li>
                         <!--Modo oscuro-->
                         <li class="container__menu--options__item" @click="toggleDarkMode" v-if="isDarkMode">
                             <div class="container__menu--options__item__dark-mode">
