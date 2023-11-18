@@ -5,7 +5,7 @@
     <div class="companies-container">
       <div class="company-information-grid" v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded">
         <img
-          src="https://i.pinimg.com/564x/0f/76/1c/0f761c01d1fb284eb429061e577aa623.jpg"
+          :src="card.logoinstitucion || 'https://i.pinimg.com/564x/0f/76/1c/0f761c01d1fb284eb429061e577aa623.jpg'"
           alt="Logo de la Empresa"
         />
         <div class="information-grid" >
@@ -17,7 +17,7 @@
                 <strong>Pertenece al sector: </strong>
                 {{card.sectorpertenencia.nombresectorpertenencia}}
               </li>
-              <li><strong>Rese&ntilde;a: </strong>{{card.reseniainstitucion}}</li>
+              <li><strong>Descripción: </strong>{{card.reseniainstitucion}}</li>
               <li><strong>Nombre del Contacto: </strong>{{card.nombrecontacto}}</li>
               <li>
                 <strong>Correo electr&oacute;nico: </strong>

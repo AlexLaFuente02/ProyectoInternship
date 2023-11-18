@@ -155,7 +155,7 @@ export default {
                   this.$router.push("/institution/home");
                 } else if (result.tipousuario.id == 3) {
                   useLoginStore().setLogin(3);
-                  //this.$router.push("");
+                  this.$router.push("/usei/principal");
                 } else {
                   useLoginStore().setLogin(0);
                 }

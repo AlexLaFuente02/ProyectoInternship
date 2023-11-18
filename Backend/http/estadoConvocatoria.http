@@ -16,7 +16,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "nombreestadoconvocatoria": "En Proceso"
+  "nombreestadoconvocatoria": "ACTIVO"
 }
 
 ### PUT EstadoConvocatoria
