@@ -51,7 +51,7 @@
                         </router-link>
                     </li>
                     <li class="nav__item" @click="closeMobileMenu">
-                        <router-link class="link" to="/student/requests">
+                        <router-link class="link" to="/student/applications">
                             <font-awesome-icon :icon="['fas', 'file-alt']" size="xl"/>
                             <span class="nav__name">Solicitudes</span>
                         </router-link>
@@ -114,6 +114,7 @@
 <script>
 import { useMobileMenuStore } from "../../store/common/mobileMenuStore";
 import { useThemeStore } from "@/store/common/useThemeStore";
+import { useLoginStore } from "@/store/common/loginStore";
 import Button from "@/components/common/Button.vue";
 export default {
     name: "NavbarCommonMobile",
@@ -155,6 +156,17 @@ export default {
         toggleDarkMode() {
             this.isDarkMode = !this.isDarkMode;
             useThemeStore().toggleDarkMode();
+        },
+        logout(){
+            /*Logout*/
+            $cookies.remove("id");
+            $cookies.remove("type");
+            $cookies.remove("connect.sid");
+            $cookies.remove("username");
+            useLoginStore().setLogin(0);
+            this.$router.push("/");
+            this.closeMobileMenu();
+            /*Fin del logout*/
         },
     },
     computed: {

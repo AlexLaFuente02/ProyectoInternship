@@ -209,11 +209,19 @@
       right: 1%;
     }
     /**fin  boton  */
-    .inicio{
-      position: relative;
-      top: 10px;
-      left: 10px;
-    }
+    .inicio[data-v-92ca1783] {
+    position: relative;
+    top: 10px;
+    display: flex;
+    left: 10px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /* align-content: center; */
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    
+}
     /**colores de texto de si esta aporbado o no */
     .text-a,.text-p,.text-r{
         position: relative;
@@ -266,13 +274,16 @@
     }
     .card-inicio{
       border: 3px solid #ffffff;
-      background-color:  #434B54;
+      background-color:  #ffffff;
       border-radius: 8px;
       overflow: hidden;
       margin-top: 15px;
       margin-right: 10%;
       margin-left: 1%;
        /* Ajusta este valor según el espacio que desees */
+    }
+    .dark-theme .card-inicio {
+      background-color: #434B54;
     }
     
     .content {

@@ -18,9 +18,15 @@
       </div>
           <div class="container__field">
               <label>Sector al que pertenece *:</label>
-              <input placeholder="Introduzca el sector al que pertenece"
-              
-              v-model="formStore.sector" type="text" class="field">
+              <div class="dropdown__view">
+                    <Dropdown
+                    :options="options"
+                    :selectedValue="selected"
+                    placeholderValue="Seleccione un sector"
+                    @option-selected="updateSector"
+                    />
+                </div>
+
           </div>
           <div class="container__field">
               <label>Reseña de la Institucion *:</label>
@@ -79,6 +85,9 @@
 </template>
 <script>
 import { useFormRegisterStore } from "@/store/student/formRegisterStore";
+import {useInstitutionsByIDSectorStore} from '@/store/student/institutionsByIDSectorStore';
+import {useSectorStore} from '@/store/common/sectorStore';
+import {useLoaderStore} from '@/store/common/loaderStore';
 import Dropdown from '../common/Dropdown.vue';
 import Button from "@/components/common/Button.vue";
 export default {
@@ -105,11 +114,33 @@ export default {
         this.$router.push("/");
       }
     },
+    updateSector(option) {
+      if (option) {
+        this.formStore.sector = option;
+      }
+    },
+    async getSectors() {
+            await useSectorStore().loadSectors();
+            this.sectors = useSectorStore().sectors.result;
+        },
   },
   data(){
       return{
           formStore: useFormRegisterStore(),      
+          options: [],
+          selected: null,
       }
+  },
+  async mounted() {
+    useLoaderStore().activateLoader() ;
+    await this.getSectors();
+    this.options = this.sectors.map((sector) => {
+      return {
+        id: sector.id,
+        label: sector.nombresectorpertenencia,
+      };
+    });
+    useLoaderStore().desactivateLoader() ;
   },
 
   

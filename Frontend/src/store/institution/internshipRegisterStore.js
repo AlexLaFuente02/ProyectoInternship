@@ -10,9 +10,15 @@ export const InternshipRegisterStore = defineStore({
     horario_fin: "",
     fechasolicitud: "",
     fechaseleccionpasante: "",
-    estadoconvocatoria_id: "",
-    institucion_id: "",
-    tiempoacumplir_id: "",
+    estadoconvocatoria: {
+      id: parseInt(""),
+    },
+    institucion: {
+      id: parseInt(""),
+    },
+    tiempoacumplir: {
+      id: parseInt(""),
+    },
   }),
   actions: {
     setAreaPasantia(areapasantia) {

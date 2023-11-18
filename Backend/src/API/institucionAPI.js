@@ -35,6 +35,38 @@ const upload = multer({ storage: storage });
  *               items:
  *                 $ref: "#/components/schemas/Institucion"
  * 
+ * /institucion/destacadas:
+ *   get:
+ *     tags:
+ *       - Institucion
+ *     summary: Obtener el total de postulaciones por institución
+ *     description: Devuelve un resumen del total de postulaciones para cada institución, incluyendo el nombre, la reseña y el logo de la institución.
+ *     responses:
+ *       200:
+ *         description: Resumen de postulaciones por institución
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   nombreinstitucion:
+ *                     type: string
+ *                     description: Nombre de la institución
+ *                   reseniainstitucion:
+ *                     type: string
+ *                     description: Reseña de la institución
+ *                     nullable: true
+ *                   logoinstitucion:
+ *                     type: string
+ *                     format: byte
+ *                     description: Logo de la institución en formato binario
+ *                     nullable: true
+ *                   totalpostulaciones:
+ *                     type: number
+ *                     description: Total de postulaciones asociadas a la institución
+ * 
  *   post:
  *     tags:
  *       - Institucion
@@ -155,6 +187,19 @@ router.get('/', async (req, res) => {
         result: response.result,
         message: response.message,
     });
+});
+
+router.get('/destacadas', async (req, res) => {
+    console.log('GET request received for getInstitutionPostulations');
+    
+        const response = await institucionService.getInstitutionPostulations();
+        res.json({
+            method: 'getInstitutionPostulations',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    
 });
 
 router.get('/:id', async (req, res) => {

@@ -24,10 +24,11 @@ import ApplyForAnInternship from "@/views/student/ApplyForAnInternship.vue";
 import StudentApplications from '@/views/student/StudentApplications.vue';
 import PostulationStatus from "../src/views/student/PostulationStatus.vue"
 import StudentProfile from '@/views/student/StudentProfile.vue';
-
+import StudentInstitutions from '@/views/student/StudentInstitutions.vue';
+import StudentInternships from '@/views/student/StudentInternships.vue'; 
 //Paginas Institution
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
-import InstitutionAddConvocatoria from '@/views/institution/InstitutionAddConvocatoria.vue'
+import InstitutionAddConvocatoria from "@/views/institution/InstitutionAddConvocatoria.vue";
 import InstitutionConvocatoria from '@/views/institution/InstitutionConvocatoria.vue'
 import InstitutionProfile from "@/views/institution/InstitutionProfile.vue";
 import InstitutionSettings from "@/views/institution/InstitutionSettings.vue";
@@ -70,6 +71,8 @@ const routes = [
     {name: "PostulationStatus", path: "/student/applications/PostulationStatus", component: PostulationStatus},
     {name: 'StudentProfile', path: '/student/profile', component: StudentProfile},
     {name: 'ApplyForAnInternship',path: '/student/ApplyForAnInternship',component: ApplyForAnInternship},
+    {name: 'StudentInstitutions', path: '/student/institutions', component: StudentInstitutions},
+    {name: 'StudentInternships', path: '/student/internships', component: StudentInternships},
     //Institution
     {name: 'InstitutionRegister', path : '/institution/register', component:InstitutionRegister},
     {name: 'InstitutionAddConvocatoria', path : '/institution/addConvocatoria', component:InstitutionAddConvocatoria},
