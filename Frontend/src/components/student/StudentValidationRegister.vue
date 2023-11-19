@@ -14,7 +14,7 @@ correo electrónico de la UCB y confírmala.</p>
                 <label>Correo Electrónico</label>
                 <input placeholder="Introduzca su correo UCB"
                 
-                v-model="formStore.ucbEmail" type="email" class="field">
+                v-model="formStore.student.correoelectronico" type="email" class="field">
             </div>
             <br>
             <div class="form__button" v-if="send">
@@ -32,7 +32,7 @@ correo electrónico de la UCB y confírmala.</p>
             <div class="container__field">
                 <label>Código de verificación</label>
                 <input placeholder="Introduzca el código de verificación"
-                v-model="formStore.code" type="number" class="field" pattern=".*">
+                v-model="formStore.codeVerification" type="number" class="field" pattern=".*">
             </div>
         </div>
     </div>

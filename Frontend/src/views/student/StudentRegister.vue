@@ -83,8 +83,12 @@ export default {
             this.currentStep--;
         },
         register(){
-            console.log(this.formStore);
-            //Enviar datos al backend
+            console.log(this.formStore.student);
+            try{
+                this.formStore.postStudent() ;
+            }catch(error){
+                console.log(error);
+            }
         }
     },
 }

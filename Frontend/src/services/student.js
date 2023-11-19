@@ -25,3 +25,18 @@ export const loadInstitutions = async () => {
     const response = await axios.get(`${rutaApi}/institucion`);
     return response.data;
 }
+export const postStudent = async (studentData) => {
+    try {
+        const response = await axios.post(`${rutaApi}/estudiante`, studentData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al crear el estudiante: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+};
