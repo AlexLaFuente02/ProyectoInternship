@@ -3,7 +3,6 @@ const EstadoConvocatoriaDTO = require('../DTO/EstadoConvocatoriaDTO');
 const EstadoConvocatoriaENT = require('../ENT/EstadoConvocatoriaENT');
 const InstitucionDTO = require('../DTO/InstitucionDTO');
 const InstitucionENT = require('../ENT/InstitucionENT');
-const TiempoAcumplirDTO = require('../DTO/TiempoAcumplirDTO');
 const TiempoAcumplirENT = require('../ENT/TiempoACumplirENT');
 const ConvocatoriaENT = require("../ENT/ConvocatoriaENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
