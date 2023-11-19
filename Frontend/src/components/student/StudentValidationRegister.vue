@@ -40,7 +40,7 @@ correo electrónico de la UCB y confírmala.</p>
 <script>
 import { useFormRegisterStore } from "@/store/student/formRegisterStore";
 import Button from "@/components/common/Button.vue";
-
+import axios from 'axios';
 
 export default {
   components: {
@@ -71,20 +71,6 @@ export default {
         alert("Por favor, introduce tu correo electrónico de la UCB");
         return false;
       }
-    },    validateEmail() {
-      if (this.formStore.ucbEmail) {
-        if (this.isValidEmail(this.formStore.ucbEmail)) {
-          return true;
-        } else {
-          alert(
-            "Por favor, proporciona tu dirección de correo electrónico de la UCB (ejemplo@ucb.edu.bo)"
-          );
-          return false;
-        }
-      } else {
-        alert("Por favor, introduce tu correo electrónico de la UCB");
-        return false;
-      }
     },
 
     isValidEmail(email) {
@@ -93,37 +79,19 @@ export default {
     }
     ,
 
-    sendEmail() {
-      console.log('Función sendEmail ejecutada.'); // Nuevo
+    async sendEmail() {
+  try {
+    const response = await axios.post('http://localhost:3000/send-email', {
+      to: this.formStore.ucbEmail,
+      subject: 'Asunto del Correo',
+      text: 'Contenido del Correo',
+    });
 
-      // Verifica si el correo es válido antes de enviar el código
-      if (this.validateEmail()) {
-        console.log('Correo válido. Enviando código...'); // Nuevo
-
-        // Tu lógica existente para enviar el código
-        try {
-          // Simulación de una solicitud de envío de correo (reemplaza con tu lógica real)
-          // Si estás utilizando un servicio externo, esta parte debería manejar las solicitudes HTTP o la conexión con el servicio de correo.
-          console.log('Simulación de envío de correo...'); // Nuevo
-          // throw new Error('Error al enviar el código: Correo no enviado'); // Descomenta para simular un error
-          
-          this.send = false;
-          
-          let interval = setInterval(() => {
-            this.seconds--;
-            console.log(`Segundos restantes: ${this.seconds}`);
-            if (this.seconds === 0) {
-              clearInterval(interval);
-              this.seconds = 15;
-              this.send = true;
-              console.log('Se restableció el botón de enviar correo.');
-            }
-          }, 1000);
-        } catch (error) {
-          console.error('Error al enviar el código:', error);
-        }
-      }
-    },
+    console.log('Correo enviado con éxito', response.data);
+  } catch (error) {
+    console.error('Error al enviar el correo', error);
+  }
+},
 },
 };
 </script>

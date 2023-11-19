@@ -9,15 +9,15 @@ const sendEmail = async (to) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'tu-correo@gmail.com', // Cambia con tu dirección de correo Gmail
-      pass: 'tu-contraseña', // Cambia con tu contraseña de Gmail
+      user: 'jhessika.zarate@ucb.edu.bo', // Cambia con tu dirección de correo Gmail
+      pass: 'ngms stpk boge plgf', // Cambia con tu contraseña de Gmail
     },
   });
 
   const code = generateRandomCode();
 
   const mailOptions = {
-    from: 'tu-correo@gmail.com', // Cambia con tu dirección de correo Gmail
+    from: 'jhessika.zarate@ucb.edu.bo', // Cambia con tu dirección de correo Gmail
     to,
     subject: 'Código de Verificación',
     text: `Tu código de verificación es: ${code}`,

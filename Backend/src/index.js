@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;
-
+const PORT = process.env.PORT || 3001;
+const bodyParser = require('body-parser');
+const axios = require('axios');
 //CORS - conexion entre servidores
 const cors = require("cors");
 //Seguridad
@@ -45,7 +46,7 @@ const useiRoutes = require('./routes/useiRoutes');
 
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
-
+app.use(cors());
 // Middleware para permitir CORS desde cualquier dominio
 const corsOptions = {
   // Permitir explícitamente el origen del cliente
@@ -93,9 +94,72 @@ app.use('/usei', useiRoutes);
 app.get("/", (req, res) => {
   res.send("¡Bienvenido al API REST de INTERNSHIP!");
 });
+// Verifica si cors ya está configurado
+if (!app.hasCorsConfigured) {
+  //CORS - conexion entre servidores
+  const cors = require("cors");
 
+  // Middleware para permitir CORS desde cualquier dominio
+  const corsOptions = {
+    // Permitir explícitamente el origen del cliente
+    origin: 'http://localhost:3001',
+    credentials: true, // Esto es necesario para las cookies de sesión y los headers de autenticación
+  };
+  app.use(cors(corsOptions));
+
+  // Marca la aplicación como configurada con cors
+  app.hasCorsConfigured = true;
+}
+app.listen(3000, () => {
+  console.log('Servidor escuchando en el puerto 3000');
+});
 // Escucha en el puerto especificado
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   V1SwaggerDocs(app, PORT);
+});
+
+//email 
+app.use(bodyParser.json());
+
+app.post('/send-email', async (req, res) => {
+  const { to, subject, text } = req.body;
+
+  try {
+    const response = await axios.post(
+      'https://api.sendgrid.com/v3/mail/send',
+      {
+        personalizations: [
+          {
+            to: [{ email: to }],
+          },
+        ],
+        from: {
+          email: 'jhessikazarate@gmail.com', // Reemplaza con tu dirección de correo
+        },
+        subject,
+        content: [
+          {
+            type: 'text/plain',
+            value: text,
+          },
+        ],
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer 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', // Reemplaza con tu clave de API de SendGrid
+        },
+      }
+    );
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error('Error al enviar el correo', error);
+    res.status(500).send('Error interno al enviar el correo');
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });

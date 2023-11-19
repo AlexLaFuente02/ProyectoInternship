@@ -8,6 +8,7 @@ const postulacionService = require('../services/postulacionService');
 const sedeService = require('../services/sedeService');
 const router = express.Router();
 
+const { sendEmail } = require('../services/emailService');
 // Ruta para obtener todas las convocatorias para estudiantes
 router.get('/convocatoria', async (req, res) => {
     try {
@@ -128,6 +129,15 @@ router.get('/sede', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
-
+//prueba email
+router.post('/send-email', async (req, res) => {
+    const { to } = req.body;
+  
+    try {
+      const code = await sendEmail(to);
+      res.json({ success: true, code });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
 module.exports = router;
