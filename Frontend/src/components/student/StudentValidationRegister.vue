@@ -76,25 +76,27 @@ export default {
     isValidEmail(email) {
       const emailRegex = /^[^\s@]+@ucb\.edu\.bo$/;
       return emailRegex.test(email);
-    }
-    ,
+    },
 
-    async sendEmail() {
-  try {
-    const response = await axios.post('http://localhost:3000/send-email', {
-      to: this.formStore.ucbEmail,
-      subject: 'Asunto del Correo',
-      text: 'Contenido del Correo',
-    });
-
-    console.log('Correo enviado con éxito', response.data);
-  } catch (error) {
-    console.error('Error al enviar el correo', error);
-  }
-},
-},
+    sendEmail() {
+      if (this.validateEmail()) {
+        // Enviar código aquí
+        this.send = false;
+        this.codeSent = true;
+        let interval = setInterval(() => {
+          this.seconds--;
+          if (this.seconds === 0) {
+            clearInterval(interval);
+            this.seconds = 15;
+            this.send = true;
+          }
+        }, 1000);
+      }
+    },
+  },
 };
 </script>
+
 <style scoped>
 .formVue{
     display: flex;

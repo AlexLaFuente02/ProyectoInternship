@@ -23,3 +23,4 @@ sequelize
   });
 
 module.exports = sequelize;
+//miapikey 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
