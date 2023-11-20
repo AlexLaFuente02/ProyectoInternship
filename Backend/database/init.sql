@@ -40,9 +40,9 @@ CREATE TABLE semestre (
 );
 
 INSERT INTO semestre (codigosemestre) VALUES
-("2-2022"),
-("1-2023"),
-("2-2023");
+("2 - 2022"),
+("1 - 2023"),
+("2 - 2023");
 
 CREATE TABLE sectorpertenencia (
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -50,9 +50,13 @@ CREATE TABLE sectorpertenencia (
 );
 
 INSERT INTO sectorpertenencia (nombresectorpertenencia) VALUES
-("SECTOR 1"),
-("SECTOR 2"),
-("SECTOR 3");
+("INGENIERÍA"),
+("ARTE Y DISEÑO"),
+("CIENCIAS SOCIALES Y HUMANIDADES"),
+("ADMINISTRACIÓN Y ECONOMÍA"),
+("CIENCIAS DE LA SALUD"),
+("OTROS");
+
 
 CREATE TABLE sede (
     id int AUTO_INCREMENT PRIMARY KEY,

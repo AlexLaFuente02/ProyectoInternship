@@ -6,6 +6,7 @@ const usuarioService = require('../services/usuarioService');
 const historicoPostulacionesService = require('../services/historicoPostulacionesService');
 const postulacionService = require('../services/postulacionService');
 const sedeService = require('../services/sedeService');
+const institucionService = require('../services/institucionService');
 const router = express.Router();
 
 // Ruta para obtener todas las convocatorias para estudiantes
@@ -239,5 +240,22 @@ router.get('/convocatorias/populares', async (req, res) => {
     }
 });
 
+// Ruta para obtener instituciones por sector
+router.get('/sectores/:sectorId/instituciones', async (req, res) => {
+    try {
+        console.log(`GET request received for getInstitutionsBySector with sectorId: ${req.params.sectorId}`);
+        const sectorId = req.params.sectorId;
+        const response = await institucionService.getInstitutionsBySector(sectorId);
+        res.json({
+            method: 'getInstitutionsBySector',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting institutions for sector ID: ${req.params.sectorId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 module.exports = router;

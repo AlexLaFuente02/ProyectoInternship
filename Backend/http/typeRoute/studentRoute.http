@@ -46,6 +46,7 @@ Accept: application/json
 GET {{baseURL}}/sede/
 Accept: application/json
 
+###ENDPOINTS ESPECIFICOS:
 
 ###GET de Convoctorias activas
 GET {{baseURL}}/convocatorias/activas
@@ -72,4 +73,10 @@ Accept: application/json
 
 ###Get convocatorias populares
 GET {{baseURL}}/convocatorias/populares
+Accept: application/json
+
+
+@sectorID = 1
+###Get instituciones por sector
+GET {{baseURL}}/sectores/{{sectorID}}/instituciones
 Accept: application/json
