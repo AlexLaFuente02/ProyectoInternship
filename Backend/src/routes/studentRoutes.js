@@ -170,13 +170,14 @@ router.get('/:studentId/postulaciones', async (req, res) => {
 });
 
 //Ruta para obtener las postulaciones aprobadass de un estudiante
-router.get('/:studentId/postulaciones/aprobadas', async (req, res) => {
+router.get('/:studentId/postulaciones/:estadopostulacionId', async (req, res) => {
     try {
-        console.log(`GET request received for getApprovedPostulacionByStudent with studentId: ${req.params.studentId}`);
+        console.log(`GET request received for getPostulacionByStudentByStatus with studentId: ${req.params.studentId}`);
         const studentId = req.params.studentId;
-        const response = await postulacionService.getApprovedPostulacionByStudent(studentId);
+        const estadopostulacionId = req.params.estadopostulacionId;
+        const response = await postulacionService.getPostulacionByStudentByStatus(studentId, estadopostulacionId);
         res.json({
-            method: 'getApprovedPostulacionByStudent',
+            method: 'getPostulacionByStudentByStatus',
             code: response.code,
             result: response.result,
             message: response.message,
@@ -187,41 +188,6 @@ router.get('/:studentId/postulaciones/aprobadas', async (req, res) => {
     }
 });
 
-//Ruta para obtener las postulaciones pendientes de un estudiante
-router.get('/:studentId/postulaciones/pendientes', async (req, res) => {
-    try {
-        console.log(`GET request received for getPendingPostulacionByStudent with studentId: ${req.params.studentId}`);
-        const studentId = req.params.studentId;
-        const response = await postulacionService.getPendingPostulacionByStudent(studentId);
-        res.json({
-            method: 'getPendingPostulacionByStudent',
-            code: response.code,
-            result: response.result,
-            message: response.message,
-        });
-    } catch (error) {
-        console.error(`Error getting postulaciones for student ID: ${req.params.studentId}:`, error);
-        res.status(500).json({ error: error.message });
-    }
-});
-
-//Ruta para obtener las postulaciones rechazadas de un estudiante
-router.get('/:studentId/postulaciones/rechazadas', async (req, res) => {
-    try {
-        console.log(`GET request received for getRejectedPostulacionByStudent with studentId: ${req.params.studentId}`);
-        const studentId = req.params.studentId;
-        const response = await postulacionService.getRejectedPostulacionByStudent(studentId);
-        res.json({
-            method: 'getRejectedPostulacionByStudent',
-            code: response.code,
-            result: response.result,
-            message: response.message,
-        });
-    } catch (error) {
-        console.error(`Error getting postulaciones for student ID: ${req.params.studentId}:`, error);
-        res.status(500).json({ error: error.message });
-    }
-});
 
 //Ruta para obtener las convocatorias populares
 router.get('/convocatorias/populares', async (req, res) => {
