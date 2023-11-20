@@ -98,6 +98,9 @@
   };
   </script>
   <style scoped>
+   h1{
+      margin-left: 10px;
+    }
   .container__landingPage {
     display: flex;
     flex-direction: column;

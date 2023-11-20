@@ -119,47 +119,4 @@ app.listen(PORT, () => {
   V1SwaggerDocs(app, PORT);
 });
 
-//email 
-app.use(bodyParser.json());
 
-app.post('/send-email', async (req, res) => {
-  const { to, subject, text } = req.body;
-
-  try {
-    const response = await axios.post(
-      'https://api.sendgrid.com/v3/mail/send',
-      {
-        personalizations: [
-          {
-            to: [{ email: to }],
-          },
-        ],
-        from: {
-          email: 'jhessikazarate@gmail.com', // Reemplaza con tu dirección de correo
-        },
-        subject,
-        content: [
-          {
-            type: 'text/plain',
-            value: text,
-          },
-        ],
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer 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', // Reemplaza con tu clave de API de SendGrid
-        },
-      }
-    );
-
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error('Error al enviar el correo', error);
-    res.status(500).send('Error interno al enviar el correo');
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
