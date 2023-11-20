@@ -1,98 +1,116 @@
-<template >
-    <header class="container__header">
-        <div class="container__logo">
-            <router-link to="/">
-                <img
-                src="../images/USEI.png"
-                alt="Unidad de Servicios Estudiantiles Integrales"
-            />
+<template>
+  <header class="container__header">
+    <div class="container__logo">
+      <router-link to="/">
+        <img
+          src="../images/USEI.png"
+          alt="Unidad de Servicios Estudiantiles Integrales"
+        />
+      </router-link>
+    </div>
+    <div class="container__menu">
+      <div class="container__menu--profile" @click="toggleMobileMenu">
+        <font-awesome-icon :icon="['fas', 'circle-user']" />
+      </div>
+    </div>
+  </header>
+  <div class="container__sidebar" v-show="showMobileMenu">
+    <div class="container__sidebar--profile">
+      <div class="container__sidebar--profile__image">
+        <font-awesome-icon :icon="['fas', 'circle-user']" />
+      </div>
+      <div class="container__sidebar--profile__name">
+        <span>UseWWwiiii</span>
+      </div>
+    </div>
+    <div class="container__sidebar--options">
+      <ul class="container__menu--options">
+        <li class="container__menu--options__item" @click="closeMobileMenu">
+          <router-link class="link" to="/usei/principal">
+            <font-awesome-icon :icon="['fas', 'house']" />
+            <span>Inicio</span>
+          </router-link>
+        </li>
+
+        <li
+          class="container__menu--options__item--dropdown"
+          @click="showDropdownCallList"
+        >
+          <span class="link">
+            <font-awesome-icon :icon="['fas', 'briefcase']" size="xl" />
+            <span class="nav-direction">Visualizaci&oacute;n</span>
+          </span>
+          <ul class="dropdown-menu" v-if="dropdownButton.showViewsDropdownMenu">
+            <router-link
+              to="/usei/Companies"
+              class="dropdown-link"
+              @click="handleClick"
+            >
+              <li class="dropdown-item">Empresas</li>
             </router-link>
-        </div>
-        <div class="container__menu">
-            <div class="container__menu--profile" @click="toggleMobileMenu">
-                <font-awesome-icon :icon="['fas', 'circle-user']" />
-            </div>
-        </div>
 
-    </header>
-    <div class="container__sidebar" v-show="showMobileMenu">
-                <div class="container__sidebar--profile">
-                    <div class="container__sidebar--profile__image">
-                        <font-awesome-icon :icon="['fas', 'circle-user']" />
-                    </div>
-                    <div class="container__sidebar--profile__name">
-                        <span>UseWWwiiii</span>
-                    </div>
-                </div>
-                <div class="container__sidebar--options">
-                    <ul class="container__menu--options"  >
-                      
-                    <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/usei/principal">
-                                <font-awesome-icon :icon="['fas', 'house']" />
-                                <span>Inicio</span>
-                            </router-link>
-                        </li>
-
-                        <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/usei/Companies">
-                                <font-awesome-icon :icon="['fas', 'university']" />
-                                <span>Empresas</span>
-                            </router-link>
-                        </li>
-                        <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/usei/Internships">
-                                <font-awesome-icon :icon="['fas', 'briefcase']" />
-                                <span>Pasant&iacute;as</span>
-                            </router-link>
-                        </li>
-                        <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/usei/Business">
-                                <font-awesome-icon :icon="['fas', 'university']" />
-                                <span>Solicitudes de empresas</span>
-                            </router-link>
-                        </li>
-                        <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/usei/InternshipApp">
-                                <font-awesome-icon :icon="['fas', 'briefcase']" />
-                                <span>Solicitudes de Pasant&iacute;as</span>
-                            </router-link>
-                        </li>
-                        <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/usei/AnalyticsDashboard">
-                                <font-awesome-icon :icon="['fas', 'chart-mixed']" />
-                                <span>An&aacute;lisis de Datos</span>
-                            </router-link>
-                        </li>
-                        <!--Modo oscuro-->
-                        <li class="container__menu--options__item" @click="toggleDarkMode" v-if="isDarkMode">
-                            <div class="container__menu--options__item__dark-mode">
-                                <font-awesome-icon :icon="['fas', 'moon']" />
-                                <span>Modo oscuro</span>
-                            </div>
-                        </li>
-                        <li class="container__menu--options__item" @click="toggleDarkMode" v-else>
-                            <div class="container__menu--options__item__dark-mode">
-                                <font-awesome-icon :icon="['fas', 'sun']" />
-                                <span>Modo claro</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="container__button">
-                                <Button 
-                                    text="Cerrar sesion" 
-                                    :color="0" 
-                                    :disabled="false"
-                                    @option-selected="logout"
-                                    >
-                                </Button>
-                            </div>
-                        </li>
-                        
-                
-                    </ul>
-                </div>
-            </div>
+            <router-link
+              to="/usei/Internships"
+              class="dropdown-link"
+              @click="handleClick"
+            >
+              <li class="dropdown-item">Pasant&iacute;as</li>
+            </router-link>
+          </ul>
+        </li>
+        <li class="container__menu--options__item" @click="closeMobileMenu">
+          <router-link class="link" to="/usei/Business">
+            <font-awesome-icon :icon="['fas', 'university']" />
+            <span>Solicitudes de empresas</span>
+          </router-link>
+        </li>
+        <li class="container__menu--options__item" @click="closeMobileMenu">
+          <router-link class="link" to="/usei/InternshipApp">
+            <font-awesome-icon :icon="['fas', 'briefcase']" />
+            <span>Solicitudes de Pasant&iacute;as</span>
+          </router-link>
+        </li>
+        <li class="container__menu--options__item" @click="closeMobileMenu">
+          <router-link class="link" to="/usei/AnalyticsDashboard">
+            <font-awesome-icon :icon="['fas', 'briefcase']" />
+            <span>An&aacute;lisis de Datos</span>
+          </router-link>
+        </li>
+        <!--Modo oscuro-->
+        <li
+          class="container__menu--options__item"
+          @click="toggleDarkMode"
+          v-if="isDarkMode"
+        >
+          <div class="container__menu--options__item__dark-mode">
+            <font-awesome-icon :icon="['fas', 'moon']" />
+            <span>Modo oscuro</span>
+          </div>
+        </li>
+        <li
+          class="container__menu--options__item"
+          @click="toggleDarkMode"
+          v-else
+        >
+          <div class="container__menu--options__item__dark-mode">
+            <font-awesome-icon :icon="['fas', 'sun']" />
+            <span>Modo claro</span>
+          </div>
+        </li>
+        <li>
+          <div class="container__button">
+            <Button
+              text="Cerrar sesion"
+              :color="0"
+              :disabled="false"
+              @option-selected="logout"
+            >
+            </Button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 <script>
 import { useMobileMenuStore } from "../../store/common/mobileMenuStore";
@@ -100,50 +118,61 @@ import { useThemeStore } from "@/store/common/useThemeStore";
 import { useLoginStore } from "@/store/common/loginStore";
 import Button from "@/components/common/Button.vue";
 export default {
-    name: "NavbarCommonMobile",
-    components: {
-        Button,
+  name: "NavbarCommonMobile",
+  components: {
+    Button,
+  },
+  data() {
+    return {
+      isDarkMode: false,
+      dropdownButton: {
+        showViewsDropdownMenu: false,
+        showRequestsDropdownMenu: false,
+      },
+    };
+  },
+  methods: {
+    toggleMobileMenu() {
+      useMobileMenuStore().toggleMobileMenu();
     },
-    data() {
-        return {
-            isDarkMode: false,
-        };
+    closeMobileMenu() {
+      useMobileMenuStore().closeMobileMenu();
     },
-    methods: {
-        toggleMobileMenu() {
-            useMobileMenuStore().toggleMobileMenu();
-            
-        },
-        closeMobileMenu() {
-            useMobileMenuStore().closeMobileMenu();
-        },
-        logout(){
-            /*Logout*/
-            $cookies.remove("id");
-            $cookies.remove("type");
-            $cookies.remove("connect.sid");
-            $cookies.remove("username");
-            useLoginStore().setLogin(0);
-            this.$router.push("/");
-            this.closeMobileMenu();
-            /*Fin del logout*/
-        },
+    logout() {
+      /*Logout*/
+      $cookies.remove("id");
+      $cookies.remove("type");
+      $cookies.remove("connect.sid");
+      $cookies.remove("username");
+      useLoginStore().setLogin(0);
+      this.$router.push("/");
+      this.closeMobileMenu();
+      /*Fin del logout*/
+    },
 
-        toggleDarkMode() {
-            this.isDarkMode = !this.isDarkMode;
-            useThemeStore().toggleDarkMode();
-        },
+    toggleDarkMode() {
+      this.isDarkMode = !this.isDarkMode;
+      useThemeStore().toggleDarkMode();
     },
-    computed: {
-        showMobileMenu(){
-            return useMobileMenuStore().mobileMenu;
-        }
+    showDropdownCallList() {
+      this.dropdownButton.showViewsDropdownMenu =
+        !this.dropdownButton.showViewsDropdownMenu;
     },
-}
+    handleClick() {
+      if (this.showDropdownCallList) {
+        this.closeMobileMenu();
+      }
+    },
+  },
+  computed: {
+    showMobileMenu() {
+      return useMobileMenuStore().mobileMenu;
+    },
+  },
+};
 </script>
 <style scoped>
-
-.container__header{
+.container__header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -154,221 +183,317 @@ export default {
   transition: all 0.3s ease 0s;
   position: sticky;
   top: 0;
-  background-color: #FDFEFF;
+  background-color: #fdfeff;
   color: #515c67;
   z-index: 1;
 }
+
+.container__menu--options__item--dropdown {
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.dropdown-menu {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  background-color: white;
+  list-style: none;
+  text-align: center;
+}
+
+.dropdown-item {
+  padding: 7% 10%;
+}
+
+.dropdown-link {
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(90, 97, 106, 0.7);
+  color: #fff;
+}
+
+.dropdown-link:active {
+  background-color: aqua;
+}
+
 /*Modo oscuro*/
-.dark-theme header{
-    background-color: #434B54;
-    color: #CACFDB;
+.dark-theme header {
+  background-color: #434b54;
+  color: #cacfdb;
 }
-.container__header .container__logo img{
-    width: 150px;
-    height: auto;
-    transition: all 0.3s ease 0s;
+.container__header .container__logo img {
+  width: 150px;
+  height: auto;
+  transition: all 0.3s ease 0s;
 }
-.dark-theme .container__logo{
-    filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
-}
-
-.container__header .container__logo img:hover{
-    transform: scale(1.1);
+.dark-theme .container__logo {
+  filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 
-.container__header .container__menu{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-}
-.container__header .container__menu--profile{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-
-}
-.container__header .container__menu--profile:hover{
-    transform: scale(1.1);
-}
-.container__header .container__menu--profile svg{
-    font-size: 1.7rem;
-    font-weight: 700;
-    color: #515c67;
-}
-.dark-theme .container__header .container__menu--profile svg{
-    color: #CACFDB;
-}
- .container__sidebar{
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #FDFEFF;
-    z-index: 3;
-}
-.dark-theme  .container__sidebar{
-    background-color: #434B54;
-}
- .container__sidebar .container__sidebar--profile{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    border-bottom: 1px solid #eaeaea;
-}
- .container__sidebar .container__sidebar--profile .container__sidebar--profile__image{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-}
- .container__sidebar .container__sidebar--profile .container__sidebar--profile__image svg{
-    font-size: 2rem;
-    font-weight: 700;
-    color: #515c67;
-}
-.dark-theme  .container__sidebar .container__sidebar--profile .container__sidebar--profile__image svg{
-    color: #CACFDB;
-}
- .container__sidebar .container__sidebar--profile .container__sidebar--profile__name{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-}
- .container__sidebar .container__sidebar--profile .container__sidebar--profile__name span{
-    font-size: 1rem;
-    font-weight: 700;
-    color: #515c67;
-}
-.dark-theme .container__sidebar .container__sidebar--profile .container__sidebar--profile__name span{
-    color: #CACFDB;
-}
- .container__sidebar .container__sidebar--options{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 1rem;
-}
- .container__sidebar .container__sidebar--options .container__menu--options{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.dark-theme .dropdown-menu {
+  background-color: #434b54;
 }
 
-.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
+.dark-theme .dropdown-item {
+  color: #cacfdb;
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item:hover{
-    transform: scale(1.1);
+
+.container__header .container__logo img:hover {
+  transform: scale(1.1);
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item svg{
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #515c67;
-    margin-right: 1rem;
+
+.container__header .container__menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
 }
-.dark-theme  .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item svg{
-    color: #CACFDB;
+.container__header .container__menu--profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item span{
-    font-size: 1rem;
-    font-weight: 700;
-    color: #515c67;
+.container__header .container__menu--profile:hover {
+  transform: scale(1.1);
 }
-.dark-theme  .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item span{
-    color: #CACFDB;
+.container__header .container__menu--profile svg {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #515c67;
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link{
-    text-decoration: none;
-    color: #515c67;
+.dark-theme .container__header .container__menu--profile svg {
+  color: #cacfdb;
 }
-.dark-theme .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link{
-    color: #CACFDB;
+.container__sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fdfeff;
+  z-index: 3;
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:hover{
-    text-decoration: underline;
+.dark-theme .container__sidebar {
+  background-color: #434b54;
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:active{
-    text-decoration: underline;
+.container__sidebar .container__sidebar--profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eaeaea;
 }
-.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:visited{
-    text-decoration: underline;
+.container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__image {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
 }
-.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:focus{
-    text-decoration: underline;
+.container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__image
+  svg {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #515c67;
 }
-.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:link{
-    text-decoration: underline;
+.dark-theme
+  .container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__image
+  svg {
+  color: #cacfdb;
 }
+.container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__name
+  span {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #515c67;
+}
+.dark-theme
+  .container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__name
+  span {
+  color: #cacfdb;
+}
+.container__sidebar .container__sidebar--options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 1rem;
+}
+.container__sidebar .container__sidebar--options .container__menu--options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item:hover,
+  .container__menu--options__item--dropdown:hover {
+  transform: scale(1.1);
+}
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  svg,
+  .container__menu--options__item--dropdown {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #515c67;
+  margin-right: 1rem;
+}
+.dark-theme
+  .container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  svg,
+  .container__menu--options__item--dropdown {
+  color: #cacfdb;
+}
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  span,
+  .container__menu--options__item--dropdown {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #515c67;
+}
+.dark-theme
+  .container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  span,
+  .container__menu--options__item--dropdown {
+  color: #cacfdb;
+}
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  .link,
+  .container__menu--options__item--dropdown {
+  text-decoration: none;
+  color: #515c67;
+}
+.dark-theme
+  .container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  .link,
+  .container__menu--options__item--dropdown {
+  color: #cacfdb;
+}
+
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 li {
-    width: 100%;
+  width: 100%;
 }
 
-
-.container__sidebar .container__sidebar--options .container__menu--options .container__button{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.5rem;
-    width: 100%;
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  width: 100%;
 }
 
 /*Media Queries*/
-@media screen and (max-width: 512px){
-
-    .container__header{
-        padding: 0.5rem 0.5rem;
-    }
-    .container__header .container__logo img{
-        width: 100px;
-    }
-    .container__header .container__menu--profile{
-        margin-right: 0.5rem;
-    }
-    .container__header .container__menu--profile svg{
-        font-size: 1.5rem;
-    }
-    .container__sidebar .container__sidebar--profile{
-        padding: 0.5rem;
-    }
-    .container__sidebar .container__sidebar--profile .container__sidebar--profile__image svg{
-        font-size: 1.5rem;
-    }
-    .container__sidebar .container__sidebar--profile .container__sidebar--profile__name span{
-        font-size: 0.8rem;
-    }
-    .container__sidebar .container__sidebar--options{
-        padding: 0.5rem;
-    }
-    .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item svg{
-        font-size: 1.3rem;
-    }
-
+@media screen and (max-width: 512px) {
+  .container__header {
+    padding: 0.5rem 0.5rem;
+  }
+  .container__header .container__logo img {
+    width: 100px;
+  }
+  .container__header .container__menu--profile {
+    margin-right: 0.5rem;
+  }
+  .container__header .container__menu--profile svg {
+    font-size: 1.5rem;
+  }
+  .container__sidebar .container__sidebar--profile {
+    padding: 0.5rem;
+  }
+  .container__sidebar
+    .container__sidebar--profile
+    .container__sidebar--profile__image
+    svg {
+    font-size: 1.5rem;
+  }
+  .container__sidebar
+    .container__sidebar--profile
+    .container__sidebar--profile__name
+    span {
+    font-size: 0.8rem;
+  }
+  .container__sidebar .container__sidebar--options {
+    padding: 0.5rem;
+  }
+  .container__sidebar
+    .container__sidebar--options
+    .container__menu--options
+    .container__menu--options__item,
+    .container__menu--options__item--dropdown
+    svg {
+    font-size: 1.3rem;
+  }
 }
-
-
 </style>
