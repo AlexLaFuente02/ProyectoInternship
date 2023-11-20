@@ -3,10 +3,12 @@ const EstadoConvocatoriaDTO = require('../DTO/EstadoConvocatoriaDTO');
 const EstadoConvocatoriaENT = require('../ENT/EstadoConvocatoriaENT');
 const InstitucionDTO = require('../DTO/InstitucionDTO');
 const InstitucionENT = require('../ENT/InstitucionENT');
-const TiempoAcumplirDTO = require('../DTO/TiempoAcumplirDTO');
+const TiempoAcumplirDTO = require('../DTO/TiempoACumplirDTO');
 const TiempoAcumplirENT = require('../ENT/TiempoACumplirENT');
 const ConvocatoriaENT = require("../ENT/ConvocatoriaENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
+const sequelize = require("../../database/db");
+
 //Para el trigger:
 const historicoService = require('./historicoConvocatoriasService');
 
@@ -181,10 +183,88 @@ const deleteConvocatoria = async (id) => {
     }
 };
 
+const getActiveConvocatorias = async () => {
+    console.log('Obteniendo todas las convocatorias activas...');
+    try {
+        const convocatoriasActivas = await ConvocatoriaENT.findAll({
+            where: { estadoconvocatoria_id: [1] }, // 1 = Activa
+            include: [
+                { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+                { model: InstitucionENT, as: 'institucion' },
+                { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
+            ]
+        });
+
+        const convocatoriasActivasDTO = convocatoriasActivas.map(convocatoria => {
+            const estadoDTO = new EstadoConvocatoriaDTO(convocatoria.estadoconvocatoria.id, convocatoria.estadoconvocatoria.nombreestadoconvocatoria);
+            const institucionDTO = new InstitucionDTO(convocatoria.institucion.id, convocatoria.institucion.nombreinstitucion);
+            const tiempoDTO = new TiempoAcumplirDTO(convocatoria.tiempoacumplir.id, convocatoria.tiempoacumplir.descripcion);
+            return new ConvocatoriaDTO(
+                convocatoria.id,
+                convocatoria.areapasantia,
+                convocatoria.descripcionfunciones,
+                convocatoria.requisitoscompetencias,
+                convocatoria.horario_inicio,
+                convocatoria.horario_fin,
+                convocatoria.fechasolicitud,
+                convocatoria.fechaseleccionpasante,
+                estadoDTO,
+                institucionDTO,
+                tiempoDTO
+            );
+        });
+
+        console.log('Convocatorias activas obtenidas correctamente.');
+        return new ResponseDTO('C-0000', convocatoriasActivasDTO, 'Convocatorias activas obtenidas correctamente');
+    } catch (error) {
+        console.error('Error al obtener las convocatorias activas:', error);
+        return new ResponseDTO('C-1006', null, `Error al obtener las convocatorias activas: ${error}`);
+    }
+};
+
+const getPopularConvocatorias = async () => {
+    console.log('Obteniendo convocatorias populares...');
+    try {
+        const convocatoriasPopulares = await sequelize.query(
+            `SELECT 
+                c.id,
+                c.areapasantia,
+                c.descripcionfunciones,
+                c.horario_inicio,
+                c.horario_fin,
+                c.fechasolicitud,
+                c.fechaseleccionpasante,
+                c.estadoconvocatoria_id,
+                c.institucion_id,
+                c.tiempoacumplir_id,
+                COUNT(p.id) AS totalPostulaciones
+            FROM 
+                convocatoria c
+            LEFT JOIN 
+                postulacion p ON c.id = p.convocatoria_id
+            GROUP BY 
+                c.id
+            ORDER BY 
+                totalPostulaciones DESC
+            LIMIT 10;`,
+            { type: sequelize.QueryTypes.SELECT }
+        );
+
+        console.log('Convocatorias populares obtenidas correctamente.');
+        return new ResponseDTO('C-0000', convocatoriasPopulares, 'Convocatorias populares obtenidas correctamente');
+    } catch (error) {
+        console.error('Error al obtener convocatorias populares:', error);
+        return new ResponseDTO('C-1007', null, `Error al obtener convocatorias populares: ${error}`);
+    }
+};
+
+
 module.exports = {
     getAllConvocatorias,
     getConvocatoriaById,
     createConvocatoria,
     updateConvocatoria,
-    deleteConvocatoria
+    deleteConvocatoria,
+    getActiveConvocatorias,
+    getPopularConvocatorias
 };

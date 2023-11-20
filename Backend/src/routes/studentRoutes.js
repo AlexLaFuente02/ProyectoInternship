@@ -130,4 +130,114 @@ router.get('/sede', async (req, res) => {
 });
 
 
+// OBTENIDOS POR EL FRONTEND
+
+// Ruta para obtener las convoctarias activas para estudiantes
+router.get('/convocatorias/activas', async (req, res) => {
+    try {
+        console.log('GET request received for getConvocatoriasActivas for STUDENT');
+        const response = await convocatoriaService.getActiveConvocatorias();
+        res.json({
+            method: 'getConvocatoriasActivas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias activas for STUDENT:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+//Ruta para obtener TODAS las postulaciones de un estudiante
+router.get('/:studentId/postulaciones', async (req, res) => {
+    try {
+        console.log(`GET request received for getPostulacionByStudent with studentId: ${req.params.studentId}`);
+        const studentId = req.params.studentId;
+        const response = await postulacionService.getPostulacionByStudent(studentId);
+        res.json({
+            method: 'getPostulacionByStudent',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulaciones for student ID: ${req.params.studentId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//Ruta para obtener las postulaciones aprobadass de un estudiante
+router.get('/:studentId/postulaciones/aprobadas', async (req, res) => {
+    try {
+        console.log(`GET request received for getApprovedPostulacionByStudent with studentId: ${req.params.studentId}`);
+        const studentId = req.params.studentId;
+        const response = await postulacionService.getApprovedPostulacionByStudent(studentId);
+        res.json({
+            method: 'getApprovedPostulacionByStudent',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulaciones for student ID: ${req.params.studentId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//Ruta para obtener las postulaciones pendientes de un estudiante
+router.get('/:studentId/postulaciones/pendientes', async (req, res) => {
+    try {
+        console.log(`GET request received for getPendingPostulacionByStudent with studentId: ${req.params.studentId}`);
+        const studentId = req.params.studentId;
+        const response = await postulacionService.getPendingPostulacionByStudent(studentId);
+        res.json({
+            method: 'getPendingPostulacionByStudent',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulaciones for student ID: ${req.params.studentId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//Ruta para obtener las postulaciones rechazadas de un estudiante
+router.get('/:studentId/postulaciones/rechazadas', async (req, res) => {
+    try {
+        console.log(`GET request received for getRejectedPostulacionByStudent with studentId: ${req.params.studentId}`);
+        const studentId = req.params.studentId;
+        const response = await postulacionService.getRejectedPostulacionByStudent(studentId);
+        res.json({
+            method: 'getRejectedPostulacionByStudent',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulaciones for student ID: ${req.params.studentId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//Ruta para obtener las convocatorias populares
+router.get('/convocatorias/populares', async (req, res) => {
+    try {
+        console.log(`GET request received for getPopularConvocatorias`);
+        const response = await convocatoriaService.getPopularConvocatorias();
+        res.json({
+            method: 'getPopularConvocatorias',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting popular convocatorias:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 module.exports = router;
