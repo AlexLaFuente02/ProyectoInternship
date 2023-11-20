@@ -223,13 +223,17 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     console.log('POST request received for createStudent with data:', req.body);
-    const response = await estudianteService.createStudent(req.body);
-    res.json({
-        method: 'createStudent',
-        code: response.code,
-        result: response.result,
-        message: response.message,
-    });
+    //Verificar el token en los headers
+    const decoded = await estudianteService.validateToken(req);
+    if(decoded != null){
+        const response = await estudianteService.createStudent(req.body,decoded);
+        res.json({
+            method: 'createStudent',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    }
 });
 
 router.put('/:id', async (req, res) => {
@@ -248,6 +252,29 @@ router.delete('/:id', async (req, res) => {
     const response = await estudianteService.deleteStudent(req.params.id);
     res.json({
         method: 'deleteStudent',
+        code: response.code,
+        result: response.result,
+        message: response.message,
+    });
+});
+/*Funcion para enviar el correo de confirmacion de cuenta*/
+router.post('/sendEmail', async (req, res) => {
+    console.log('POST request received for sendEmail with data:', req.body);
+    const response = await estudianteService.sendCode(req.body.email);
+    res.json({
+        method: 'sendEmail',
+        code: response.code,
+        result: response.result,
+        message: response.message,
+    });
+});
+/*Funcion para validar el codigo de confirmacion de cuenta y enviar el token*/
+router.post('/validateCode', async (req, res) => {
+    console.log('POST request received for validateCode with data:', req.body);
+    const response = await estudianteService.validateCodeAndGenerateToken(req.body.code);
+    console.log(response);
+    res.json({
+        method: 'validateCode',
         code: response.code,
         result: response.result,
         message: response.message,

@@ -25,18 +25,79 @@ export const loadInstitutions = async () => {
     const response = await axios.get(`${rutaApi}/institucion`);
     return response.data;
 }
-export const postStudent = async (studentData) => {
+export const postStudent = async (studentData, token) => {
     try {
         const response = await axios.post(`${rutaApi}/estudiante`, studentData, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
         });
-        return response.data;
+        const data = response.data;
+        if (data.code === "E-0000") {
+            alert("Estudiante creado exitosamente");
+            return data;
+        }
+        else {
+            alert("No se pudo crear el estudiante");
+            return null;
+        }
     } catch (error) {
         // Manejar el error aquí, por ejemplo:
         console.error("Hubo un error al crear el estudiante: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+};
+/*Servicio para solicitar el codigo de verificacion*/
+export const postCode = async (email) => {
+    try {
+        const response = await axios.post(`${rutaApi}/estudiante/sendEmail`, email,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        }
+        );
+        const data = response.data;
+        if (data.code === "E-0000") {
+            alert("Se ha enviado el codigo de verificacion a su correo electronico");
+            return data;
+        }
+        else {
+            alert("No se pudo enviar el codigo de verificacion");
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al solicitar el codigo de verificacion: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+};
+/*Servicio para verificar el codigo de verificacion*/
+export const verifyCode = async (body) => {
+    try {
+        const response = await axios.post(`${rutaApi}/estudiante/validateCode`, body,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        }
+        );
+        const data = response.data;
+        if (data.code === "E-0000") {
+            alert("Codigo de verificacion correcto");
+            return data;
+        }
+        else {
+            alert("Codigo de verificacion incorrecto");
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al verificar el codigo de verificacion: ", error);
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 };

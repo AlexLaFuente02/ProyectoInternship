@@ -34,11 +34,21 @@ correo electrónico de la UCB y confírmala.</p>
                 <input placeholder="Introduzca el código de verificación"
                 v-model="formStore.codeVerification" type="number" class="field" pattern=".*">
             </div>
+            <div class="form__button">
+                <Button 
+                    text="Verificar código" 
+                    :color="5" 
+                    :disabled="false"
+                    @option-selected="verifyCode"
+                    >
+                </Button>
+            </div>
         </div>
     </div>
 </template>
 <script>
 import { useFormRegisterStore } from "@/store/student/formRegisterStore";
+import {useLoaderStore} from "@/store/common/loaderStore";
 import Button from '@/components/common/Button.vue';
 export default {
     components:{
@@ -51,21 +61,40 @@ export default {
             seconds: 15,
             ucbEmailForm: '',
             codeForm: '',
+            loader: useLoaderStore(),
         }
     },
     methods: {
-        sendEmail(){
+        async sendEmail(){
+            //Validar que el correo acabe en @ucb.edu.bo
+            const testCorreo = /@ucb.edu.bo$/;
+            if (!testCorreo.test(this.formStore.student.correoelectronico)) {
+                alert("El correo debe ser el institucional de la UCB");
+                return ;
+            }
+            this.loader.activateLoader();
             //Enviar código
+            const result = await this.formStore.postCode();
             this.send = false;
+            this.loader.desactivateLoader();
             //Contador
             let interval = setInterval(() => {
                 this.seconds--;
                 if(this.seconds === 0){
                     clearInterval(interval);
-                    this.seconds = 15;
+                    this.seconds = 60;
                     this.send = true;
                 }
             }, 1000);
+        },
+        async verifyCode(){
+            this.loader.activateLoader();
+            //Verificar código
+            const result = await this.formStore.verifyCode();
+            this.loader.desactivateLoader();
+            if (result){
+                this.$emit('nextPage', true);
+            }
         },
     },
 
