@@ -20,7 +20,7 @@
                     <font-awesome-icon :icon="['fas', 'calendar-xmark']" size="2xl" />
                     <h4>{{this.informationCard.fechaseleccionpasante}}</h4>
                 </div>
-                <div class="state_card">
+                <div class="state_card" :class="getStateCardClass">
                     <h4>{{ this.informationCard.estadoconvocatoria.nombreestadoconvocatoria }}</h4>
                 </div>
                 <Button 
@@ -43,6 +43,11 @@ export default {
     data() {
         return {
             informationCard:[],
+            informationCard: {
+                estadoconvocatoria: {
+                nombreestadoconvocatoria: "ACTIVA" 
+                }
+            }
         };
     },
     methods: {
@@ -61,6 +66,16 @@ export default {
     },
     created(){
         this.getData();
+    },
+    computed: {
+        getStateCardClass() {
+            return {
+                state_card: true,
+                'activa': this.informationCard.estadoconvocatoria.nombreestadoconvocatoria === 'ACTIVA',
+                'inactiva': this.informationCard.estadoconvocatoria.nombreestadoconvocatoria === 'INACTIVA',
+                'pendiente': this.informationCard.estadoconvocatoria.nombreestadoconvocatoria === 'PENDIENTE',
+            };
+        },
     },
 }
 </script>
@@ -178,10 +193,23 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        border-radius: 5px;
+        padding: 0.5rem;
+    }
+    .activa{
         background: #C8E6C9;
         border-radius: 5px;
         color: #256029;
-        padding: 0.5rem;
+    }
+    .inactiva{
+        background: #FFCDD2;
+        border-radius: 5px;
+        color: #C62828;
+    }
+    .pendiente{
+        background: #FFF9C4;
+        border-radius: 5px;
+        color: #F9A825;
     }
     .state_card h4{
         font-size: 1.2rem;
@@ -189,6 +217,7 @@ export default {
         margin: 0;
     }
 @media only screen and (max-width: 600px) {
+
     .container__card{
         flex-direction: column;
     }
@@ -223,6 +252,15 @@ export default {
     .header__card h4{
         font-size: 0.4rem;
     }
+    .time__card h4{
+        margin-top: 0.2rem;
+        font-size: 0.5rem;
+    }
+    .time__card{
+        padding: 0.1rem;
+        flex-direction: column;
+    }
+
 }
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
 }

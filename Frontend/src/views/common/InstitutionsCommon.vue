@@ -184,4 +184,21 @@ export default {
 .company-cards-container {
   display: inline-flex;
 }
+/*Media queries*/
+@media screen and (max-width: 300px){
+  .container{
+    padding: 0.5rem;
+  }
+  .informacionInternship{
+    padding: 0.5rem;
+  }
+  .EmpresasDestacadas{
+    padding: 0.5rem;
+    height: 420px;
+  }
+
+}
+
+
+
 </style>

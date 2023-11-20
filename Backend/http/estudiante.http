@@ -13,13 +13,14 @@ Accept: application/json
 POST http://{{host}}/estudiante/
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoicXVpc3Blb3N2YWxkbzMxQGdtYWlsLmNvbTIiLCJpYXQiOjE3MDA0NTA5MjUsImV4cCI6MTcwMDQ1NDUyNX0.FiLnKHXguXMDzxum0z9O12HJf3MmKLIAGmSNCPuLy1Y
 
 {
   "usuario_id": 3,
-  "nombres": "Juan",
-  "apellidos": "Pérez",
-  "carnetidentidad": "123456789",
-  "correoelectronico": "juan.perez@email.com",
+  "nombres": "Juan2",
+  "apellidos": "Péreza",
+  "carnetidentidad": "12345678912",
+  "correoelectronico": "juan.perez@email.com2",
   "celularcontacto": "555-555-5555",
   "graduado": true,
   "carrera": { "id": 1 },
@@ -52,3 +53,24 @@ Accept: application/json
 ### DELETE de Estudiante
 DELETE http://{{host}}/estudiante/21
 Accept: application/json
+
+### Envío de correo electrónico
+POST http://{{host}}/estudiante/sendEmail
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "quispeosvaldo31@gmail.com"
+}
+
+
+
+### Verificar el codigo de verificacion
+POST http://{{host}}/estudiante/validateCode
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "quispeosvaldo31@gmail.com2",
+  "code": "586583"
+}
