@@ -32,6 +32,35 @@ export const useFormRegisterStore = defineStore({
         campus: "",
     }),
     actions: {
+        //Funcion para eliminar los datos del estudiante
+        clearStudent() {
+            this.student = {
+                usuario_id: 0,
+                nombres: "",
+                apellidos: "",
+                carnetidentidad: "",
+                correoelectronico: "",
+                celularcontacto: "",
+                graduado: false,
+                carrera: {
+                    id:0,
+                },
+                semestre: {
+                    id:0,
+                },
+                sede:{
+                    id:0,
+                },
+                aniograduacion: 0,
+                linkcurriculumvitae: "",
+            };
+            this.hasData = false;
+            this.codeVerification = "";
+            this.career = "";
+            this.semester = "";
+            this.campus = "";
+        },
+
         async postStudent() {
             try {
                 /*Obtener el token de las cookies*/
@@ -40,9 +69,9 @@ export const useFormRegisterStore = defineStore({
                 if (response == null) {
                     return false;
                 }
+                $cookies.remove("token");
+                this.clearStudent();
                 return true;
-                // Puedes manejar la respuesta del servidor aquí según tus necesidades
-                console.log("Estudiante creado exitosamente:", response);
             } catch (error) {
                 // Manejar el error aquí
                 console.error("Hubo un error al crear el estudiante: ", error);
