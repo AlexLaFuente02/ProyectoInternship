@@ -16,9 +16,12 @@
         </router-link>
         <span class="link" @click="showDropdownViewsList">
           <font-awesome-icon :icon="['fas', 'briefcase']" size="xl" />
-          <span class="nav-direction">Visualizaci&oacute;n</span>
+          <span class="nav-direction">Componentes</span>
         </span>
-        <ul class="dropdown-menu" v-if="dropdownButton.showDropdownViewsList">
+        <ul
+          class="dropdown-menu-components"
+          v-if="dropdownButton.showViewsDropdownMenu"
+        >
           <router-link
             to="/usei/Companies"
             class="dropdown-link"
@@ -34,14 +37,13 @@
             <li class="dropdown-item">Pasant&iacute;as</li>
           </router-link>
         </ul>
-
-        <!-- <span class="link" @click="showDropdownRequestsList">
-          <font-awesome-icon :icon="['fas', 'briefcase']" size="xl" />
+        <span class="link" @click="showDropdownRequestsList">
+          <font-awesome-icon :icon="['fas', 'file']" size="xl" />
           <span class="nav-direction">Solicitudes</span>
         </span>
         <ul
-          class="dropdown-menu"
-          v-if="dropdownButton.showDropdownRequestsList"
+          class="dropdown-menu-requests"
+          v-if="dropdownButton.showRequestsDropdownMenu"
         >
           <router-link
             to="/usei/Business"
@@ -57,10 +59,10 @@
           >
             <li class="dropdown-item">Solicitudes de pasant&iacute;as</li>
           </router-link>
-        </ul> -->
-
+        </ul>
         <router-link class="link" to="/usei/AnalyticsDashboard">
-          An&aacute;lisis de Datos
+          <font-awesome-icon :icon="['fas', 'chart-simple']" size="xl" />
+          <span class="nav-direction">An&aacute;lisis de Datos</span>
         </router-link>
       </div>
       <div class="navbar__buttons">
@@ -85,6 +87,7 @@
     </nav>
   </header>
 </template>
+
 <script>
 import { useThemeStore } from "@/store/common/useThemeStore";
 import Button from "@/components/common/Button.vue";
@@ -98,7 +101,7 @@ export default {
     return {
       isDarkMode: false,
       dropdownButton: {
-        showViewsDropdownMenu: true,
+        showViewsDropdownMenu: false,
         showRequestsDropdownMenu: false,
       },
     };
@@ -120,17 +123,18 @@ export default {
       this.closeMobileMenu();
       /*Fin del logout*/
     },
-    // showDropdownViewsList() {
-    //   this.dropdownButton.showViewsDropdownMenu =
-    //     !this.dropdownButton.showViewsDropdownMenu;
-    // },
-    // showDropdownRequestsList() {
-    //   this.dropdownButton.showRequestsDropdownMenu =
-    //     !this.dropdownButton.showRequestsDropdownMenu;
-    // },
+    showDropdownViewsList() {
+      this.dropdownButton.showViewsDropdownMenu =
+        !this.dropdownButton.showViewsDropdownMenu;
+    },
+    showDropdownRequestsList() {
+      this.dropdownButton.showRequestsDropdownMenu =
+        !this.dropdownButton.showRequestsDropdownMenu;
+    },
   },
 };
 </script>
+
 <style scoped>
 .container__header {
   display: flex;
@@ -148,16 +152,23 @@ export default {
   color: #515c67;
 }
 
-.dropdown-menu {
-  position: relative;
+.dropdown-menu-components,
+.dropdown-menu-requests {
+  position: absolute;
   top: 70%;
-  left: 19.5%;
   width: 13%;
   background-color: white;
   border-radius: 20px;
   list-style: none;
   text-align: center;
   border: 1px solid black;
+}
+
+.dropdown-menu-components {
+  left: 18%;
+}
+.dropdown-menu-requests {
+  left: 29%;
 }
 
 .dropdown-item {
@@ -185,8 +196,10 @@ export default {
   color: #cacfdb;
 }
 
-.dark-theme .dropdown-menu {
+.dark-theme .dropdown-menu-components,
+.dark-theme .dropdown-menu-requests {
   background-color: #434b54;
+  border: 1px solid #cacfdb;
 }
 
 .dark-theme .dropdown-item {

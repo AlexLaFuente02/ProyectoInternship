@@ -34,17 +34,17 @@
 
         <li
           class="container__menu--options__item--dropdown"
-          @click="showDropdownCallList"
+          @click="showDropdownViewsList"
         >
           <span class="link">
             <font-awesome-icon :icon="['fas', 'briefcase']" size="xl" />
-            <span class="nav-direction">Visualizaci&oacute;n</span>
+            <span class="nav-direction">Componentes</span>
           </span>
           <ul class="dropdown-menu" v-if="dropdownButton.showViewsDropdownMenu">
             <router-link
               to="/usei/Companies"
               class="dropdown-link"
-              @click="handleClick"
+              @click="handleClickForViewsList"
             >
               <li class="dropdown-item">Empresas</li>
             </router-link>
@@ -52,27 +52,44 @@
             <router-link
               to="/usei/Internships"
               class="dropdown-link"
-              @click="handleClick"
+              @click="handleClickForViewsList"
             >
               <li class="dropdown-item">Pasant&iacute;as</li>
             </router-link>
           </ul>
         </li>
-        <li class="container__menu--options__item" @click="closeMobileMenu">
-          <router-link class="link" to="/usei/Business">
-            <font-awesome-icon :icon="['fas', 'university']" />
-            <span>Solicitudes de empresas</span>
-          </router-link>
-        </li>
-        <li class="container__menu--options__item" @click="closeMobileMenu">
-          <router-link class="link" to="/usei/InternshipApp">
-            <font-awesome-icon :icon="['fas', 'briefcase']" />
-            <span>Solicitudes de Pasant&iacute;as</span>
-          </router-link>
+        <li
+          class="container__menu--options__item--dropdown"
+          @click="showDropdownRequestsList"
+        >
+          <span class="link">
+            <font-awesome-icon :icon="['fas', 'file']" size="xl" />
+            <span class="nav-direction">Solicitudes</span>
+          </span>
+          <ul
+            class="dropdown-menu"
+            v-if="dropdownButton.showRequestsDropdownMenu"
+          >
+            <router-link
+              to="/usei/Business"
+              class="dropdown-link"
+              @click="handleClickForRequestsList"
+            >
+              <li class="dropdown-item">Solicitudes de empresas</li>
+            </router-link>
+
+            <router-link
+              to="/usei/InternshipApp"
+              class="dropdown-link"
+              @click="handleClickForRequestsList"
+            >
+              <li class="dropdown-item">Solicitudes de Pasant&iacute;as</li>
+            </router-link>
+          </ul>
         </li>
         <li class="container__menu--options__item" @click="closeMobileMenu">
           <router-link class="link" to="/usei/AnalyticsDashboard">
-            <font-awesome-icon :icon="['fas', 'briefcase']" />
+            <font-awesome-icon :icon="['fas', 'chart-simple']" />
             <span>An&aacute;lisis de Datos</span>
           </router-link>
         </li>
@@ -100,7 +117,7 @@
         <li>
           <div class="container__button">
             <Button
-              text="Cerrar sesion"
+              text="Cerrar sesión"
               :color="0"
               :disabled="false"
               @option-selected="logout"
@@ -118,7 +135,7 @@ import { useThemeStore } from "@/store/common/useThemeStore";
 import { useLoginStore } from "@/store/common/loginStore";
 import Button from "@/components/common/Button.vue";
 export default {
-  name: "NavbarCommonMobile",
+  name: "UseiNavbarMobile",
   components: {
     Button,
   },
@@ -149,17 +166,25 @@ export default {
       this.closeMobileMenu();
       /*Fin del logout*/
     },
-
     toggleDarkMode() {
       this.isDarkMode = !this.isDarkMode;
       useThemeStore().toggleDarkMode();
     },
-    showDropdownCallList() {
+    showDropdownViewsList() {
       this.dropdownButton.showViewsDropdownMenu =
         !this.dropdownButton.showViewsDropdownMenu;
     },
-    handleClick() {
-      if (this.showDropdownCallList) {
+    showDropdownRequestsList() {
+      this.dropdownButton.showRequestsDropdownMenu =
+        !this.dropdownButton.showRequestsDropdownMenu;
+    },
+    handleClickForViewsList() {
+      if (this.dropdownButton.showViewsDropdownMenu) {
+        this.closeMobileMenu();
+      }
+    },
+    handleClickForRequestsList() {
+      if (this.dropdownButton.showRequestsDropdownMenu) {
         this.closeMobileMenu();
       }
     },
@@ -207,7 +232,7 @@ export default {
 }
 
 .dropdown-link {
-  color: black;
+  color: #515c67;
   text-decoration: none;
 }
 
@@ -371,21 +396,26 @@ export default {
 .container__sidebar
   .container__sidebar--options
   .container__menu--options
-  .container__menu--options__item:hover,
-  .container__menu--options__item--dropdown:hover {
+  .container__menu--options__item:hover {
   transform: scale(1.1);
 }
 .container__sidebar
   .container__sidebar--options
   .container__menu--options
   .container__menu--options__item
-  svg,
-  .container__menu--options__item--dropdown {
+  svg {
   font-size: 1.5rem;
   font-weight: 700;
   color: #515c67;
   margin-right: 1rem;
 }
+.container__menu--options__item--dropdown svg {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #515c67;
+  margin-right: 1rem;
+}
+
 .dark-theme
   .container__sidebar
   .container__sidebar--options
@@ -394,12 +424,16 @@ export default {
   svg {
   color: #cacfdb;
 }
+.dark-theme .container__menu--options__item--dropdown svg {
+  color: #cacfdb;
+}
+
 .container__sidebar
   .container__sidebar--options
   .container__menu--options
   .container__menu--options__item
   span,
-  .container__menu--options__item--dropdown {
+.container__menu--options__item--dropdown {
   font-size: 1rem;
   font-weight: 700;
   color: #515c67;
@@ -409,8 +443,7 @@ export default {
   .container__sidebar--options
   .container__menu--options
   .container__menu--options__item
-  span,
-  .container__menu--options__item--dropdown {
+  span {
   color: #cacfdb;
 }
 .container__sidebar
@@ -418,16 +451,21 @@ export default {
   .container__menu--options
   .container__menu--options__item
   .link,
-  .container__menu--options__item--dropdown {
+.container__menu--options__item--dropdown {
   text-decoration: none;
   color: #515c67;
 }
+
+.dark-theme .container__menu--options__item--dropdown {
+  color: #cacfdb;
+}
+
 .dark-theme
   .container__sidebar
   .container__sidebar--options
   .container__menu--options
   .container__menu--options__item
-  .link,
+  .link
   .container__menu--options__item--dropdown {
   color: #cacfdb;
 }
@@ -486,8 +524,7 @@ li {
   .container__sidebar
     .container__sidebar--options
     .container__menu--options
-    .container__menu--options__item,
-    .container__menu--options__item--dropdown
+    .container__menu--options__item
     svg {
     font-size: 1.3rem;
   }
