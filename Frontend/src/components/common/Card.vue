@@ -6,7 +6,7 @@
                     <font-awesome-icon :icon="['fas', 'calendar-xmark']" size="2xl" />
                     <h4>{{this.informationCard.fechaseleccionpasante}}</h4>
                 </div>
-                <div class="state_card">
+                <div class="state_card" :class="getStateCardClass">
                     <h4>{{ this.informationCard.estadoconvocatoria.nombreestadoconvocatoria }}</h4>
                 </div>
             </div>
@@ -46,6 +46,11 @@ export default {
     data() {
         return {
             informationCard:[],
+            informationCard: {
+                estadoconvocatoria: {
+                nombreestadoconvocatoria: "ACTIVA" 
+                }
+            }
         };
     },
     methods: {
@@ -64,6 +69,16 @@ export default {
     },
     created(){
         this.getData();
+    },
+    computed: {
+        getStateCardClass() {
+            return {
+                state_card: true,
+                'activa': this.informationCard.estadoconvocatoria.nombreestadoconvocatoria === 'ACTIVA',
+                'inactiva': this.informationCard.estadoconvocatoria.nombreestadoconvocatoria === 'INACTIVA',
+                'pendiente': this.informationCard.estadoconvocatoria.nombreestadoconvocatoria === 'PENDIENTE',
+            };
+        },
     },
 }
 </script>
@@ -140,11 +155,26 @@ h6 {
         display: flex;
         justify-content: center;
         align-items: center;
+        border-radius: 5px;
+        padding: 0.5rem;
+    }
+    .activa{
         background: #C8E6C9;
         border-radius: 5px;
         color: #256029;
-        padding: 0.5rem;
     }
+    .inactiva{
+        background: #FFCDD2;
+        border-radius: 5px;
+        color: #C62828;
+    }
+    .pendiente{
+        background: #FFF9C4;
+        border-radius: 5px;
+        color: #F9A825;
+    }
+
+
     .state_card h4{
         margin: 0;
     }

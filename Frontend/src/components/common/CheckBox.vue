@@ -8,6 +8,7 @@
           :id="option"
           :name="radioGroupName"
           @change="emitSelection"
+          :checked="option === initOption"
         />
         {{ option }}
       </label>
@@ -21,16 +22,28 @@
         type: Array,
         required: true,
       },
+      initOption: {
+        type: String,
+        required: false,
+      },
     },
     data() {
       return {
         selectedOption: null,
-        radioGroupName: 'myRadioGroup', // Nombre único para el grupo de opciones
+        radioGroupName: 'myRadioGroup',
       };
     },
     methods: {
       emitSelection() {
         this.$emit("selected", this.selectedOption);
+      },
+    },
+    watch: {
+      initOption: {
+        immediate: true,
+        handler(value) {
+          this.selectedOption = value;
+        },
       },
     },
   };

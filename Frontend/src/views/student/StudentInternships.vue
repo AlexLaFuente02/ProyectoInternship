@@ -93,4 +93,34 @@ export default {
     width: 100%;
     margin-left: 0.2rem;
 }
+/* Estilos para dispositivos pequeños (teléfonos) */
+
+@media only screen and (max-width: 600px) {
+  /* Estilos específicos para dispositivos pequeños */
+    .container__student__internships{
+        padding: 0.5rem;
+    }
+}
+
+/* Estilos para tabletas */
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+    .container__student__internships{
+        padding: 1rem;
+    }
+}
+
+/* Estilos para dispositivos medianos */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+  .container__student__internships{
+    padding: 1.5rem;
+  }
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (min-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
+}
+
 </style>

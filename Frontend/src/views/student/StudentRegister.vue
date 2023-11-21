@@ -3,7 +3,7 @@
       <div class="container__stepper">
         <div class="container__items">
             <div class="stepper__item" v-for="step in steps" :key="step.id" :class="{'active': currentStep === step.id}">  
-              <div class="item__number" @click="currentStep = step.id">
+              <div class="item__number">
                 {{step.id}}
               </div>
               <div class="item__title">{{step.title}}</div>
@@ -11,7 +11,10 @@
         </div>
     </div>
       <div class="container__content">
-        <component :is="steps[currentStep - 1].component"></component>
+        <component 
+        :is="steps[currentStep - 1].component"
+        @nextPage="nextPage"
+        ></component>
       </div>
       <div class="controls">
         <div class="container__button">
@@ -24,11 +27,17 @@
             </Button>
         </div>
         <div class="container__button" v-if="currentStep !== steps.length">
-            <Button 
+            <Button v-if="validation"
                 text="Siguiente" 
                 :color="0" 
                 :disabled="false"
                 @option-selected="nextStep"
+                >
+            </Button>
+            <Button v-else
+                text="Siguiente" 
+                :color="0" 
+                :disabled="true"
                 >
             </Button>
         </div>
@@ -72,6 +81,7 @@ export default {
                     title: 'Formulario',
                 },
             ],
+            validation: false,
 
         }
       },
@@ -83,9 +93,23 @@ export default {
             this.currentStep--;
         },
         register(){
-            console.log(this.formStore);
-            //Enviar datos al backend
-        }
+            try{
+                const result = this.formStore.postStudent();
+                if (result){
+                    this.$router.push("/Login");
+                }
+            }catch(error){
+            }
+        },
+        nextPage(boolean){
+            if (boolean){
+                this.nextStep();
+                this.validation = true;
+            } else{
+                this.validation = false;
+            }
+        },
+
     },
 }
 </script>

@@ -19,7 +19,9 @@ CREATE TABLE usuario (
 );
 
 INSERT INTO usuario (idusuario, contrasenia, tipousuario_id) VALUES
-('alex', 'alex123', 1);
+('estudiante1', 'estudiante1', 1),
+('institucion1', 'institucion1', 2),
+('usei1', 'usei1', 3);
 #insertar el resto de un request la contrasenia porque la contraseña debe estar hasheada
 
 CREATE TABLE estadopostulacion (
@@ -29,7 +31,7 @@ CREATE TABLE estadopostulacion (
 
 INSERT INTO estadopostulacion (nombreestadopostulacion) VALUES
 ('APROBADO'),
-('EN ESPERA'),
+('PENDIENTE'),
 ('RECHAZADO');
 
 CREATE TABLE semestre (
@@ -38,9 +40,9 @@ CREATE TABLE semestre (
 );
 
 INSERT INTO semestre (codigosemestre) VALUES
-("2-2022"),
-("1-2023"),
-("2-2023");
+("2 - 2022"),
+("1 - 2023"),
+("2 - 2023");
 
 CREATE TABLE sectorpertenencia (
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -48,9 +50,13 @@ CREATE TABLE sectorpertenencia (
 );
 
 INSERT INTO sectorpertenencia (nombresectorpertenencia) VALUES
-("SECTOR 1"),
-("SECTOR 2"),
-("SECTOR 3");
+("INGENIERÍA"),
+("ARTE Y DISEÑO"),
+("CIENCIAS SOCIALES Y HUMANIDADES"),
+("ADMINISTRACIÓN Y ECONOMÍA"),
+("CIENCIAS DE LA SALUD"),
+("OTROS");
+
 
 CREATE TABLE sede (
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -92,7 +98,7 @@ INSERT INTO institucion
 correocontacto, celularcontacto, usuario_id, sectorpertenencia_id) 
 VALUES 
 ('EMAPA', 'Somos la institucion de agua de la ciudad de La Paz', NULL, 'Juan Pérez',
-'juan.perez@utech.edu', '123-456-7890', null, 1);
+'juan.perez@utech.edu', '123-456-7890', 2, 1);
 
 #Hacer trigger para asignar valor a usuario_id cuando USEI aprobar institucion
 
@@ -107,7 +113,7 @@ CREATE TABLE adminusei (
     CONSTRAINT adminusei_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id)
 );
 
-INSERT INTO adminusei (usuario_id) VALUES (1);
+INSERT INTO adminusei (usuario_id) VALUES (3);
 
 
 

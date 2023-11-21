@@ -7,7 +7,17 @@ const ResponseDTO = require("../DTO/ResponseDTO");
 const Carrera = require('../ENT/CarreraENT');
 const Sede = require('../ENT/SedeENT');
 const Semestre = require('../ENT/semestreENT');
-
+/*Importaciones para los correos*/
+const nodemailer = require('nodemailer');
+const {google} = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
+const accountTransport = require('../../config/account_transport.json');
+const { books } = require('googleapis/build/src/apis/books');
+/*Importaciones para los tokens*/
+const jwt = require('jsonwebtoken');
+const SECRET_KEY_CODES = require('../../config/secretKey.js');
+/*Servicio de usuario*/
+const usuarioService = require('../services/usuarioService');
 const getAllStudents = async () => {
     console.log('Obteniendo todos los estudiantes...');
     try {
@@ -88,15 +98,15 @@ const getStudentById = async (id) => {
     }
 };
 
-const createStudent = async (estudianteData) => {
+const createStudent = async (estudianteData,decoded) => {
     console.log('Creando un nuevo estudiante...');
     try {
         let newStudentData = {
-            usuario_id: estudianteData.usuario_id,
+            usuario_id: decoded.id,
             nombres: estudianteData.nombres,
             apellidos: estudianteData.apellidos,
             carnetidentidad: estudianteData.carnetidentidad,
-            correoelectronico: estudianteData.correoelectronico,
+            correoelectronico: decoded.email,
             celularcontacto: estudianteData.celularcontacto,
             graduado: estudianteData.graduado,
             carrera_id: estudianteData.carrera.id,
@@ -212,6 +222,142 @@ const deleteStudent = async (id) => {
         return new ResponseDTO('E-1005', null, `Error al eliminar el estudiante: ${error}`);
     }
 };
+/*Lista que almacena los codigos de validacion*/
+let codes = [
+    //Datos de prueba
+    /*{
+    code: 123456,
+    expiration: new Date().getTime() + 300000 // 5 minutos
+    },
+    {
+    code: 654321,
+    expiration: new Date().getTime() + 300000 // 5 minutos
+    },
+    {
+    code: 111111,
+    expiration: new Date().getTime() + 300000 // 5 minutos
+    }*/
+];
+/*Funcion para generar los codigos de validacion*/
+const generateCode = (email) => {
+    let code;
+    const expiration = new Date().getTime() + 300000; // 5 minutos
+    do {
+        code = Math.floor(Math.random() * (999999 - 100000) + 100000);
+    } while (codes.some(c => c.code === code && c.expiration > new Date().getTime()));
+    codes.push({ code, expiration, email });
+    return code;
+};
+/*Funcion para eliminar los codigos de validacion expirados*/
+const deleteExpiredCodes = () => {
+    codes = codes.filter(c => c.expiration > new Date().getTime());
+};
+/*Funcion para enviar correo*/
+const sendEmail = async (email, subject, text) => {
+    const oauth2Client = new OAuth2(
+        accountTransport.auth.clientId,
+        accountTransport.auth.clientSecret,
+        "https://developers.google.com/oauthplayground"
+    );
+    oauth2Client.setCredentials({
+        refresh_token: accountTransport.auth.refreshToken
+    });
+    const accessToken = await oauth2Client.getAccessToken();
+    const transport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            type: 'OAuth2',
+            user: accountTransport.auth.user,
+            clientId: accountTransport.auth.clientId,
+            clientSecret: accountTransport.auth.clientSecret,
+            refreshToken: accountTransport.auth.refreshToken,
+            accessToken: accessToken
+        }
+    });
+    const mailOptions = {
+        from: accountTransport.auth.user,
+        to: email,
+        subject: subject,
+        text: text
+    };
+    const result = await transport.sendMail(mailOptions);
+    return result;
+};
+/*Funcion para enviar el codigo de validacion*/
+const sendCode = async (email) => {
+    /*Verificar que el correo acabe en @ucb.edu.bo*/
+    const testCorreo = /@ucb.edu.bo$/;
+    if (!testCorreo.test(email)) {
+        return new ResponseDTO('E-1006', null, 'El correo debe ser el institucional de la UCB');
+    }
+    const subject = "Codigo de validacion";
+    const text = `Su codigo de validacion es: ${generateCode(email)}`;
+    const result = await sendEmail(email, subject, text);
+    return new ResponseDTO('E-0000', result, 'Codigo de validacion enviado correctamente');
+};
+/*Funcion para validar el codigo de validacion*/
+const validateCode = (code) => {
+    code = parseInt(code);
+    const index = codes.findIndex(c => c.code === code);
+    if (index === -1) {
+        return null;
+    }
+    const expiration = codes[index].expiration;
+    if (expiration < new Date().getTime()) {
+        codes.splice(index, 1);
+        return null;
+    }
+    console.log(codes[index]);
+    const email = codes[index].email;
+    codes.splice(index, 1);
+    return email;
+};
+/*Funcion para generar el token*/
+const generateToken = (idUser,email) => {
+    const token = jwt.sign({ id: idUser, email: email }, SECRET_KEY_CODES.SECRET_KEY, { expiresIn: '1h' });
+    return token;
+};
+
+/*Funcion que valida el codigo y genera el token*/
+const validateCodeAndGenerateToken = async (code) => {
+    try{
+        const emailValid = validateCode(code);
+        if (emailValid != null) {
+            const body = {
+                idusuario: emailValid,
+                contrasenia: emailValid,
+                tipousuario: {
+                    id: 1
+                }
+            };
+            const response = await usuarioService.createUser(body);
+            const token = generateToken(response.result.id, emailValid);
+            return new ResponseDTO('E-0000', token, 'Token generado correctamente');
+        }
+        return new ResponseDTO('E-1006', null, 'Codigo de validacion incorrecto');
+    } catch (error) {
+        console.error(`Error al validar el codigo de validacion: ${error}`);
+        return new ResponseDTO('E-1006', null, `Error al validar el codigo de validacion: ${error}`);
+    }
+};
+/*Funcion para validar el token*/
+const validateToken = (req) => {
+    const token = req.headers.authorization;
+    if(!token || !token.startsWith('Bearer ')) {
+        return null;
+    }
+    const tokenWithoutBearer = token.substring(7, token.length);
+    try {
+        const decoded = jwt.verify(tokenWithoutBearer, SECRET_KEY_CODES.SECRET_KEY);
+        return decoded;
+    } catch (error) {
+        console.error(`Error al validar el token: ${error}`);
+        return null;
+    }
+};
+
+//Eliminar los codigos de validacion expirados cada 5 minutos
+setInterval(deleteExpiredCodes, 300000);
 
 module.exports = {
     getAllStudents,
@@ -219,4 +365,8 @@ module.exports = {
     createStudent,
     updateStudent,
     deleteStudent,
+    sendCode,
+    sendEmail,
+    validateCodeAndGenerateToken,
+    validateToken,
 };
