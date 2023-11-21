@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS internshipdb;
+
+USE internshipdb;
+
 CREATE TABLE tipousuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo VARCHAR(50) NOT NULL,
@@ -87,6 +91,7 @@ CREATE TABLE institucion (
     nombrecontacto varchar(100) NOT NULL,
     correocontacto varchar(100) NOT NULL,
     celularcontacto varchar(15) NOT NULL,
+    estado varchar(15) NOT NULL,
     usuario_id int NULL,
     sectorpertenencia_id int NOT NULL,
     CONSTRAINT instituciones_sectorpertenencia FOREIGN KEY (sectorpertenencia_id) REFERENCES sectorpertenencia (id),
@@ -95,10 +100,10 @@ CREATE TABLE institucion (
 
 INSERT INTO institucion 
 (nombreinstitucion,  reseniainstitucion, logoinstitucion, nombrecontacto,
-correocontacto, celularcontacto, usuario_id, sectorpertenencia_id) 
+correocontacto, celularcontacto, estado, usuario_id, sectorpertenencia_id) 
 VALUES 
 ('EMAPA', 'Somos la institucion de agua de la ciudad de La Paz', NULL, 'Juan Pérez',
-'juan.perez@utech.edu', '123-456-7890', 2, 1);
+'juan.perez@utech.edu', '123-456-7890', 'PENDIENTE', 2, 1);
 
 #Hacer trigger para asignar valor a usuario_id cuando USEI aprobar institucion
 

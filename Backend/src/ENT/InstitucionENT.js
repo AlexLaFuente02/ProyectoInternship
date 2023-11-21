@@ -35,6 +35,10 @@ const InstitucionENT = sequelize.define(
       type: DataTypes.STRING(15),
       allowNull: false,
     },
+    estado: {
+      type: DataTypes.STRING(15),
+      allowNull: false,
+    },
   },
   {
     tableName: "institucion",
@@ -46,6 +50,7 @@ InstitucionENT.belongsTo(UsuarioENT, {
   foreignKey: "usuario_id",
   as: "usuario",
   targetKey: "id",
+  required: false
 });
 
 InstitucionENT.belongsTo(SectorPertenenciaENT, {

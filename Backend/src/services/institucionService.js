@@ -23,14 +23,21 @@ const getAllInstitutions = async () => {
       ],
     });
     const institucionesDTO = instituciones.map((institucion) => {
-      const sectorPertenenciaDTO = new SectorPertenenciaDTO(
-        institucion.sectorpertenencia.id,
-        institucion.sectorpertenencia.nombresectorpertenencia
-      );
-      const usuarioDTO = new UsuarioDTO(
-        institucion.usuario.id,
-        institucion.usuario.idusuario
-      );
+      let sectorPertenenciaDTO = null;
+      if (institucion.sectorpertenencia) {
+        sectorPertenenciaDTO = new SectorPertenenciaDTO(
+          institucion.sectorpertenencia.id,
+          institucion.sectorpertenencia.nombresectorpertenencia
+        );
+      }
+
+      let usuarioDTO = null;
+      if (institucion.usuario) {
+        usuarioDTO = new UsuarioDTO(
+          institucion.usuario.id,
+          institucion.usuario.idusuario
+        );
+      }
       const imageUrl = institucion.logoinstitucion
         ? `${baseURL}/images/${institucion.logoinstitucion}`
         : null;
@@ -42,6 +49,7 @@ const getAllInstitutions = async () => {
         institucion.nombrecontacto,
         institucion.correocontacto,
         institucion.celularcontacto,
+        institucion.estado, 
         usuarioDTO,
         sectorPertenenciaDTO
       );
@@ -92,6 +100,7 @@ const getInstitutionById = async (id) => {
       institucion.nombrecontacto,
       institucion.correocontacto,
       institucion.celularcontacto,
+      institucion.estado, 
       usuarioDTO,
       sectorPertenenciaDTO
     );
@@ -126,6 +135,7 @@ const createInstitution = async (institutionData) => {
       nombrecontacto: institutionData.nombrecontacto,
       correocontacto: institutionData.correocontacto,
       celularcontacto: institutionData.celularcontacto,
+      estado: institutionData.estado,
     });
     // Genera la URL completa para acceder a la imagen a través de tu API
     // Esta línea debe formar una URL válida
@@ -143,6 +153,7 @@ const createInstitution = async (institutionData) => {
       nuevaInstitucion.nombrecontacto,
       nuevaInstitucion.correocontacto,
       nuevaInstitucion.celularcontacto,
+      nuevaInstitucion.estado,
       usuarioDTO,
       sectorPertenenciaDTO
     );
@@ -179,6 +190,7 @@ const updateInstitution = async (id, institutionData) => {
       nombrecontacto: institutionData.nombrecontacto,
       correocontacto: institutionData.correocontacto,
       celularcontacto: institutionData.celularcontacto,
+      estado: institutionData.estado,
     });
     const sectorPertenenciaDTO = new SectorPertenenciaDTO(
       institutionData.sectorpertenencia.id,
@@ -197,6 +209,7 @@ const updateInstitution = async (id, institutionData) => {
       institucion.nombrecontacto,
       institucion.correocontacto,
       institucion.celularcontacto,
+      institucion.estado,
       usuarioDTO,
       sectorPertenenciaDTO
     );
