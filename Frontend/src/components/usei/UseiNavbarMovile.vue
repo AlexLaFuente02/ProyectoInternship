@@ -189,10 +189,7 @@ export default {
 }
 
 .container__menu--options__item--dropdown {
-  align-items: center;
-  justify-content: flex-start;
   margin-bottom: 1rem;
-  cursor: pointer;
   transition: all 0.3s ease 0s;
 }
 
@@ -394,8 +391,7 @@ export default {
   .container__sidebar--options
   .container__menu--options
   .container__menu--options__item
-  svg,
-  .container__menu--options__item--dropdown {
+  svg {
   color: #cacfdb;
 }
 .container__sidebar
