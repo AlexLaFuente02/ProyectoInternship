@@ -38,6 +38,56 @@
         </div>
         </div>
     </header>
+
+
+
+    <header class="container__header">
+        <div class="container__logo">
+            <router-link to="/usei/principal">
+                <img
+                src="../images/USEI.png"
+                alt="Unidad de Servicios Estudiantiles Integrales"
+            />
+            </router-link>
+        </div>
+        <div class="navigator">
+            <nav class="container__nav" >
+            <div class="nav__links">
+                <router-link class="link" to="/usei/principal">
+                            <font-awesome-icon :icon="['fas', 'house']" 
+                            size="xl"
+                            />
+                            <span class="nav__name">Inicio</span>
+                </router-link>
+                <router-link class="link" to="/usei/Companies">
+                            <font-awesome-icon :icon="['fas', 'building']" size="xl"/>
+                            <span class="nav__name">Instituciones</span>
+                </router-link>
+                <router-link class="link" to="/usei/Business">
+                            <font-awesome-icon :icon="['fas', 'briefcase']" size="xl"/>
+                            <span class="nav__name">Solicitudes de Instituciones</span>
+                </router-link>
+                <router-link class="link" to="/usei/Internships">
+                            <font-awesome-icon :icon="['fas', 'building']" size="xl"/>
+                            <span class="nav__name">Pasantias</span>
+                </router-link>
+                <router-link class="link" to="/usei/InternshipApp">
+                            <font-awesome-icon :icon="['fas', 'briefcase']" size="xl"/>
+                            <span class="nav__name">Solicitudes de Pasantias</span>
+                </router-link>
+            </div>
+        </nav>
+        <div class="container__menu">
+            <div class="container__menu--profile" @click="toggleMobileMenu">
+                <font-awesome-icon :icon="['fas', 'circle-user']" />
+            </div>
+        </div>
+        </div>
+    </header>
+
+
+
+
     <div class="container__sidebar" v-show="showMobileMenu">
                 <div class="container__sidebar--profile">
                     <div class="container__sidebar--profile__image">

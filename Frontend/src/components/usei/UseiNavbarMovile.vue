@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="container__logo">
-            <router-link to="/student">
+            <router-link to="/usei/principal">
                 <img
                 src="../images/USEI.png"
                 alt="Unidad de Servicios Estudiantiles Integrales"
@@ -21,7 +21,7 @@
     </header>
     <div class="menu__student" v-show="showMobileMenuLeft">
         <div class="container__logo">
-            <router-link to="/student" @click="closeMobileMenu">
+            <router-link to="/usei/principal" @click="closeMobileMenu">
                 <img
                 src="../images/USEI.png"
                 alt="Unidad de Servicios Estudiantiles Integrales"
@@ -118,24 +118,11 @@ export default {
   },
   data() {
     return {
-      isDarkMode: false,
-      dropdownButton: {
-        showViewsDropdownMenu: false,
-        showRequestsDropdownMenu: false,
-      },
-    };
-  },
-  methods: {
-    toggleMobileMenu() {
-      useMobileMenuStore().toggleMobileMenu();
-    },
-    data() {
-        return {
             isDarkMode: false,
             username: "Invitado",
         };
-    },
-    methods: {
+  },
+  methods: {
         toggleMobileMenuL() {
             useMobileMenuStore().toggleMenuLeft();
             useMobileMenuStore().toggleMobileMenu();
@@ -146,20 +133,6 @@ export default {
         },
         closeMobileMenu() {
             useMobileMenuStore().closeMobileMenu();
-        },
-        createAccount(option) {
-            if (option) {
-                console.log("createAccount");
-                this.$router.push("/UserRegister");
-                this.closeMobileMenu();
-            }
-        },
-        login(option) {
-            if (option) {
-                console.log("login");
-                this.$router.push("/Login");
-                this.closeMobileMenu();
-            }
         },
         toggleDarkMode() {
             this.isDarkMode = !this.isDarkMode;
@@ -186,31 +159,7 @@ export default {
         },
 
     },
-    showDropdownViewsList() {
-      this.dropdownButton.showViewsDropdownMenu =
-        !this.dropdownButton.showViewsDropdownMenu;
-    },
-    showDropdownRequestsList() {
-      this.dropdownButton.showRequestsDropdownMenu =
-        !this.dropdownButton.showRequestsDropdownMenu;
-    },
-    handleClickForViewsList() {
-      if (this.dropdownButton.showViewsDropdownMenu) {
-        this.closeMobileMenu();
-      }
-    },
-    handleClickForRequestsList() {
-      if (this.dropdownButton.showRequestsDropdownMenu) {
-        this.closeMobileMenu();
-      }
-    },
-  },
-  computed: {
-    showMobileMenu() {
-      return useMobileMenuStore().mobileMenu;
-    },
-  },
-};
+}
 </script>
 <style scoped>
 /*Estilos del header*/
@@ -447,7 +396,6 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
 }
 .container__header .container__menu--profile {
   display: flex;
