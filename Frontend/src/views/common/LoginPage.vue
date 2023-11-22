@@ -112,20 +112,20 @@ export default {
       if (this.userData.idusuario === "") {
         this.loginMessages.userIdErrorMessage = true;
         this.loginMessages.loginMessage = "Ingresa tu usuario por favor.";
-      } else if (!userIdRegEx.test(this.userData.idusuario)) {
+      } /*else if (!userIdRegEx.test(this.userData.idusuario)) {
         this.loginMessages.userIdErrorMessage = true;
         this.loginMessages.loginMessage =
           "Error, el usuario introducido es inválido.";
-      } else if (this.userData.password === "") {
+      }*/ else if (this.userData.password === "") {
         this.loginMessages.userIdErrorMessage = false;
         this.loginMessages.passwordErrorMessage = true;
         this.loginMessages.loginMessage = "Ingresa tu contraseña por favor.";
-      } else if (!passwordRegEx.test(this.userData.password)) {
+      } /*else if (!passwordRegEx.test(this.userData.password)) {
         this.loginMessages.userIdErrorMessage = false;
         this.loginMessages.passwordErrorMessage = true;
         this.loginMessages.loginMessage =
           "Error, la contraseña introducida es inválida.";
-      } else {
+      }*/ else {
         this.loginMessages.userIdErrorMessage = false;
         this.loginMessages.passwordErrorMessage = false;
         this.attempts++;

@@ -71,5 +71,45 @@
     }
 
 
+/*Media queries*/
+@media screen and (max-width: 300px){
+    .company-card {
+        width: 160px;
+        height: 300px;
+    }
+    .company-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .company-name {
+        font-size: 0.6rem;
+    }
+    .company-description {
+        font-size: 0.5rem;
+    }
+
+}
+/* Estilos para dispositivos pequeños (teléfonos) */
+@media only screen and (max-width: 600px) {
+  /* Estilos específicos para dispositivos pequeños */
+ 
+}
+
+/* Estilos para tabletas */
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+}
+
+/* Estilos para dispositivos medianos */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (min-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
+}
+
+
 
   </style>

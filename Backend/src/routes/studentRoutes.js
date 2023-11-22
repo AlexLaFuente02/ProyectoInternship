@@ -6,6 +6,7 @@ const usuarioService = require('../services/usuarioService');
 const historicoPostulacionesService = require('../services/historicoPostulacionesService');
 const postulacionService = require('../services/postulacionService');
 const sedeService = require('../services/sedeService');
+const institucionService = require('../services/institucionService');
 const router = express.Router();
 
 const { sendEmail } = require('../services/emailService');
@@ -129,15 +130,99 @@ router.get('/sede', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-//prueba email
-router.post('/send-email', async (req, res) => {
-    const { to } = req.body;
-  
+
+
+// OBTENIDOS POR EL FRONTEND
+
+// Ruta para obtener las convoctarias activas para estudiantes
+router.get('/convocatorias/activas', async (req, res) => {
     try {
-      const code = await sendEmail(to);
-      res.json({ success: true, code });
+        console.log('GET request received for getConvocatoriasActivas for STUDENT');
+        const response = await convocatoriaService.getActiveConvocatorias();
+        res.json({
+            method: 'getConvocatoriasActivas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
     } catch (error) {
-      res.status(500).json({ success: false, error: error.message });
+        console.error('Error getting convocatorias activas for STUDENT:', error);
+        res.status(500).json({ error: error.message });
     }
-  });
+});
+
+
+//Ruta para obtener TODAS las postulaciones de un estudiante
+router.get('/:studentId/postulaciones', async (req, res) => {
+    try {
+        console.log(`GET request received for getPostulacionByStudent with studentId: ${req.params.studentId}`);
+        const studentId = req.params.studentId;
+        const response = await postulacionService.getPostulacionByStudent(studentId);
+        res.json({
+            method: 'getPostulacionByStudent',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulaciones for student ID: ${req.params.studentId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//Ruta para obtener las postulaciones aprobadass de un estudiante
+router.get('/:studentId/postulaciones/:estadopostulacionId', async (req, res) => {
+    try {
+        console.log(`GET request received for getPostulacionByStudentByStatus with studentId: ${req.params.studentId}`);
+        const studentId = req.params.studentId;
+        const estadopostulacionId = req.params.estadopostulacionId;
+        const response = await postulacionService.getPostulacionByStudentByStatus(studentId, estadopostulacionId);
+        res.json({
+            method: 'getPostulacionByStudentByStatus',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulaciones for student ID: ${req.params.studentId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+//Ruta para obtener las convocatorias populares
+router.get('/convocatorias/populares', async (req, res) => {
+    try {
+        console.log(`GET request received for getPopularConvocatorias`);
+        const response = await convocatoriaService.getPopularConvocatorias();
+        res.json({
+            method: 'getPopularConvocatorias',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting popular convocatorias:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener instituciones por sector
+router.get('/sectores/:sectorId/instituciones', async (req, res) => {
+    try {
+        console.log(`GET request received for getInstitutionsBySector with sectorId: ${req.params.sectorId}`);
+        const sectorId = req.params.sectorId;
+        const response = await institucionService.getInstitutionsBySector(sectorId);
+        res.json({
+            method: 'getInstitutionsBySector',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting institutions for sector ID: ${req.params.sectorId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

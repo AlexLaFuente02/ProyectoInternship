@@ -292,6 +292,62 @@ const getInstitutionPostulations = async () => {
   }
 };
 
+const getInstitutionsBySector = async (sectorId) => {
+  console.log(`Obteniendo instituciones del sector con ID: ${sectorId}...`);
+  try {
+      const instituciones = await Institucion.findAll({
+          where: { sectorpertenencia_id: sectorId },
+          include: [
+              { model: SectorPertenencia, as: "sectorpertenencia" },
+              { model: Usuario, as: "usuario" },
+          ],
+      });
+
+      if (!instituciones || instituciones.length === 0) {
+          console.log(`No se encontraron instituciones para el sector con ID: ${sectorId}.`);
+          return new ResponseDTO("I-1003", null, "No se encontraron instituciones para el sector especificado");
+      }
+
+      const institucionesDTO = instituciones.map((institucion) => {
+          const sectorPertenenciaDTO = new SectorPertenenciaDTO(
+              institucion.sectorpertenencia.id,
+              institucion.sectorpertenencia.nombresectorpertenencia
+          );
+          const usuarioDTO = new UsuarioDTO(
+              institucion.usuario.id,
+              institucion.usuario.idusuario
+          );
+          const imageUrl = getImageUrl(institucion.logoinstitucion);
+          return new InstitucionDTO(
+              institucion.id,
+              institucion.nombreinstitucion,
+              institucion.reseniainstitucion,
+              imageUrl,
+              institucion.nombrecontacto,
+              institucion.correocontacto,
+              institucion.celularcontacto,
+              usuarioDTO,
+              sectorPertenenciaDTO
+          );
+      });
+
+      console.log("Instituciones del sector obtenidas correctamente.");
+      return new ResponseDTO(
+          "I-0000",
+          institucionesDTO,
+          "Instituciones del sector obtenidas correctamente"
+      );
+  } catch (error) {
+      console.error(`Error al obtener las instituciones del sector con ID: ${sectorId}:`, error);
+      return new ResponseDTO(
+          "I-1003",
+          null,
+          `Error al obtener las instituciones del sector: ${error}`
+      );
+  }
+};
+
+
 module.exports = {
   getAllInstitutions,
   getInstitutionById,
@@ -299,4 +355,5 @@ module.exports = {
   updateInstitution,
   deleteInstitution,
   getInstitutionPostulations,
+  getInstitutionsBySector,
 };

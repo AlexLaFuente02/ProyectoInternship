@@ -12,11 +12,20 @@
               </div>
               <div class="text-content">
                 <div class="text-content2">
+                  <div class="title">{{ card.title }}</div>
                   <button class="book-btn">Mas informacion</button>
                 </div>
-                <div class="title">{{ card.empresa }}</div>
-                <div class="description">{{ card.descripcion }}</div>
+                
+                <div class="description">{{ card.description }}</div>
+                <div class="info">
+                  <div class="price">{{ card.price }} per person*</div>
+                  <div class="ratings">
+                    <span v-for="i in 5" :key="i" class="star"></span>
+                    <span class="review-count">{{ card.reviews }} reviews</span>
+                  </div>
                 </div>
+                <div class="disclaimer">*Prices may vary depending on selected date.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -29,9 +38,10 @@
               </div>
               <div class="text-content">
                 <div class="text-content2">
+                  <div class="title">{{ card.title }}</div>
                   <button class="book-btn">Mas informacion</button>
                 </div>
-                <div class="title">{{ card.title }}</div>
+                
                 <div class="description">{{ card.description }}</div>
                 <div class="info">
                   <div class="price">{{ card.price }} per person*</div>
@@ -53,7 +63,11 @@
                 <img :src="card.imageUrl" alt="Card image" class="card-image">
               </div>
               <div class="text-content">
-                <div class="title">{{ card.title }}</div>
+                <div class="text-content2">
+                  <div class="title">{{ card.title }}</div>
+                  <button class="book-btn">Mas informacion</button>
+                </div>
+                
                 <div class="description">{{ card.description }}</div>
                 <div class="info">
                   <div class="price">{{ card.price }} per person*</div>
@@ -62,7 +76,6 @@
                     <span class="review-count">{{ card.reviews }} reviews</span>
                   </div>
                 </div>
-                <button class="book-btn">Book now</button>
                 <div class="disclaimer">*Prices may vary depending on selected date.</div>
               </div>
             </div>
@@ -113,15 +126,26 @@
     </script>
     
     <style scoped>
+.inicio {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /* align-content: center; */
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    
+}
     /** estilo eltra de titulo*/
     h1 {
       font-weight: 900;
       color: tomato;
       --x-offset: -0.0625em;
       --y-offset: 0.0625em;
+      
+      text-align: center;
       --stroke: 0.025em;
-      --background-color: white;
-      --stroke-color: lightblue;
       text-shadow:
         var(--x-offset)
         var(--y-offset)
@@ -160,92 +184,36 @@
     
     /**iniiciooo  boton  */
     .text-content {
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
       
     }
     .text-content2 {
-      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
 
     }
-    @media (max-width: 585px) {
-      .text-content2 {
-      position: relative;
-      margin-bottom:20%;
-    }
-    .text-a{
-        margin-top: 30px;
-       
-    }
-    .text-content {
-      margin-bottom:20%;
-    }
-    }
-    @media (max-width: 290px) {
-      .text-content2 {
-      margin-bottom:90%;
-    
-    }
-    }
-    @media (max-width: 380px) {
-      .text-content2 {
-      position: relative;
-      margin-bottom:40%;
-    }
-   
-    }
-    @media (max-width: 290px) {
-      .text-content2 {
-      margin-bottom:60%;
-    
-    }
-    }
-    .content-text {
-      margin-right: 10%; /* Ajusta el espacio para el botón de reserva */
-    }
-    
     .book-btn {
-      position: absolute;
-      top: 5%;
-      right: 1%;
+      padding: 10px 20px;
+      background-color: #5a99dd;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
     }
-    /**fin  boton  */
-    .inicio[data-v-92ca1783] {
-    position: relative;
-    top: 10px;
-    display: flex;
-    left: 10px;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    /* align-content: center; */
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    
-}
-    /**colores de texto de si esta aporbado o no */
+
     .text-a,.text-p,.text-r{
-        position: relative;
-        left: 10%; 
-        right: 60%;
-        transform: translate(50%,-50%);
-        text-transform: uppercase;
-        font-family: verdana;
-        font-size: 200%;
-        font-weight: 50%;
-        text-shadow: 1px 1px 1px #919191,
-            1px 2px 1px #919191,
-            1px 3px 1px #919191,
-            1px 4px 1px #919191,
-            1px 5px 1px #919191,
-            1px 6px 1px #919191,
-            1px 7px 1px #919191,
-            1px 8px 1px #919191,
-            1px 9px 1px #919191,
-            1px 10px 1px #919191,
-        1px 18px 6px rgba(16,16,16,0.4),
-        1px 22px 10px rgba(16,16,16,0.2),
-        1px 25px 35px rgba(16,16,16,0.2),
-        1px 30px 60px rgba(16,16,16,0.4);
+        font-size: 1.5rem;
+        font-weight: 900;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0.5rem;
     }
     .text-a{
         color: #00c123;
@@ -256,31 +224,23 @@
     .text-r {
        color: #dc0c0c;
        }
-    /**finnnnnnnnnnnnnnnnnnnnnnnn*/
     .card {/**contenedore de indivialues */
       border: 0px solid #ccc;
       border-radius: 8px;
       overflow: hidden;
-      margin-top: 30px;
-      margin-left: 5%;
-      margin-right: 5%;
-      margin-bottom: 15px;
     }
     .card-individual {
       border: 3px solid #ccc;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 7px;
+      margin: 1rem;
     }
     .card-inicio{
       border: 3px solid #ffffff;
       background-color:  #ffffff;
       border-radius: 8px;
       overflow: hidden;
-      margin-top: 15px;
-      margin-right: 10%;
-      margin-left: 1%;
-       /* Ajusta este valor según el espacio que desees */
+      margin: 1rem;
     }
     .dark-theme .card-inicio {
       background-color: #434B54;
@@ -288,10 +248,17 @@
     
     .content {
       display: flex;
+      flex-direction: row;
+      height: 100%;
     }
     
     .image {
-      flex: 0 0 auto; /* Ancho fijo para la imagen */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 300px;
+      height: 250px;
+      padding: 0.5rem;
     }
     
     .image .card-image {
@@ -301,18 +268,15 @@
     }
     
     .text-content {
-      flex: 1;
-      padding: 20px;
+      width: 100%;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+
     }
-    /* Estilos responsivos */
-    @media (max-width: 880px) {
-      .content {
-        flex-direction: column;
-      }
-      .text-content {
-        padding: 20px;
-      }
-    }
+
     .title {
       font-weight: bold;
       font-size: 20px;
@@ -320,7 +284,7 @@
     }
     
     .description {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
     
     .info {
@@ -358,5 +322,78 @@
     .review-count {
       color: #777;
     }
+/* Estilos para dispositivos pequeños (teléfonos) */
+
+@media only screen and (max-width: 600px) {
+  .inicio{
+    padding: 0.2rem;
+  }
+  /* Estilos específicos para dispositivos pequeños */
+    h1{
+        font-size: 1rem;
+    }
+    .text-a,.text-p,.text-r{
+        font-size: 0.8rem;
+    }
+    .card-individual{
+        margin: 0.4rem;
+    }
+    .card-inicio{
+        padding: 0.2rem;
+    }
+    .content{
+        flex-direction: column;
+    }
+    .image{
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+    .image .card-image{
+        width: 150px!important;
+        height: auto!important;
+    }
+    .text-content{
+        width: 100%;
+        padding: 0.2rem;
+    }
+    .text-content2{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .title{
+        font-size: 0.8rem;
+    }
+    .description{
+        font-size: 0.5rem;
+    }
+}
+
+/* Estilos para tabletas */
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+
+}
+
+/* Estilos para dispositivos medianos */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+  .student__principalPage{
+        padding: 1.5rem;
+  }
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (min-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
+}
+
+
+
+
+
+
+
     </style>
     

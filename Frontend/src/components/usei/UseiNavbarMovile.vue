@@ -112,9 +112,22 @@ import { useThemeStore } from "@/store/common/useThemeStore";
 import { useLoginStore } from "@/store/common/loginStore";
 import Button from "@/components/common/Button.vue";
 export default {
-    name: "NavbarCommonMobile",
-    components: {
-        Button,
+  name: "UseiNavbarMobile",
+  components: {
+    Button,
+  },
+  data() {
+    return {
+      isDarkMode: false,
+      dropdownButton: {
+        showViewsDropdownMenu: false,
+        showRequestsDropdownMenu: false,
+      },
+    };
+  },
+  methods: {
+    toggleMobileMenu() {
+      useMobileMenuStore().toggleMobileMenu();
     },
     data() {
         return {
@@ -173,7 +186,31 @@ export default {
         },
 
     },
-}
+    showDropdownViewsList() {
+      this.dropdownButton.showViewsDropdownMenu =
+        !this.dropdownButton.showViewsDropdownMenu;
+    },
+    showDropdownRequestsList() {
+      this.dropdownButton.showRequestsDropdownMenu =
+        !this.dropdownButton.showRequestsDropdownMenu;
+    },
+    handleClickForViewsList() {
+      if (this.dropdownButton.showViewsDropdownMenu) {
+        this.closeMobileMenu();
+      }
+    },
+    handleClickForRequestsList() {
+      if (this.dropdownButton.showRequestsDropdownMenu) {
+        this.closeMobileMenu();
+      }
+    },
+  },
+  computed: {
+    showMobileMenu() {
+      return useMobileMenuStore().mobileMenu;
+    },
+  },
+};
 </script>
 <style scoped>
 /*Estilos del header*/
@@ -188,27 +225,60 @@ export default {
   transition: all 0.3s ease 0s;
   position: sticky;
   top: 0;
-  background-color: #FDFEFF;
+  background-color: #fdfeff;
   color: #515c67;
   z-index: 1;
   justify-content: space-between;
 }
-/*Modo oscuro*/
-.dark-theme header{
-    background-color: #434B54;
-    color: #CACFDB;
-}
-.container__header .container__logo img{
-    width: 150px;
-    height: auto;
-    transition: all 0.3s ease 0s;
-}
-.dark-theme .container__logo{
-    filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
+
+.container__menu--options__item--dropdown {
+  margin-bottom: 1rem;
+  transition: all 0.3s ease 0s;
 }
 
-.container__header .container__logo img:hover{
-    transform: scale(1.1);
+.dropdown-menu {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  background-color: white;
+  list-style: none;
+  text-align: center;
+}
+
+.dropdown-item {
+  padding: 7% 10%;
+}
+
+.dropdown-link {
+  color: #515c67;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(90, 97, 106, 0.7);
+  color: #fff;
+}
+
+.dropdown-link:active {
+  background-color: aqua;
+}
+
+/*Modo oscuro*/
+.dark-theme header {
+  background-color: #434b54;
+  color: #cacfdb;
+}
+.container__header .container__logo img {
+  width: 150px;
+  height: auto;
+  transition: all 0.3s ease 0s;
+}
+.dark-theme .container__logo {
+  filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
+}
+
+.dark-theme .dropdown-menu {
+  background-color: #434b54;
 }
 .container__header .container__menu--profile:hover{
     transform: scale(1.1);
@@ -368,72 +438,226 @@ export default {
     margin: 0;
 }
 
-.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
+.container__header .container__logo img:hover {
+  transform: scale(1.1);
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item:hover{
-    transform: scale(1.1);
+
+.container__header .container__menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item svg{
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #515c67;
-    margin-right: 1rem;
+.container__header .container__menu--profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
 }
-.dark-theme  .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item svg{
-    color: #CACFDB;
+.container__header .container__menu--profile:hover {
+  transform: scale(1.1);
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item span{
-    font-size: 1rem;
-    font-weight: 700;
-    color: #515c67;
+.container__header .container__menu--profile svg {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #515c67;
 }
-.dark-theme  .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item span{
-    color: #CACFDB;
+.dark-theme .container__header .container__menu--profile svg {
+  color: #cacfdb;
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link{
-    text-decoration: none;
-    color: #515c67;
+.container__sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fdfeff;
+  z-index: 3;
 }
-.dark-theme .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link{
-    color: #CACFDB;
+.dark-theme .container__sidebar {
+  background-color: #434b54;
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:hover{
-    text-decoration: underline;
+.container__sidebar .container__sidebar--profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eaeaea;
 }
- .container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:active{
-    text-decoration: underline;
+.container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__image {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
 }
-.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:visited{
-    text-decoration: underline;
+.container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__image
+  svg {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #515c67;
 }
-.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:focus{
-    text-decoration: underline;
+.dark-theme
+  .container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__image
+  svg {
+  color: #cacfdb;
 }
-.container__sidebar .container__sidebar--options .container__menu--options .container__menu--options__item .link:link{
-    text-decoration: underline;
+.container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
+.container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__name
+  span {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #515c67;
+}
+.dark-theme
+  .container__sidebar
+  .container__sidebar--profile
+  .container__sidebar--profile__name
+  span {
+  color: #cacfdb;
+}
+.container__sidebar .container__sidebar--options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 1rem;
+}
+.container__sidebar .container__sidebar--options .container__menu--options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item:hover {
+  transform: scale(1.1);
+}
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  svg {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #515c67;
+  margin-right: 1rem;
+}
+.container__menu--options__item--dropdown svg {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #515c67;
+  margin-right: 1rem;
+}
+
+.dark-theme
+  .container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  svg {
+  color: #cacfdb;
+}
+.dark-theme .container__menu--options__item--dropdown svg {
+  color: #cacfdb;
+}
+
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  span,
+.container__menu--options__item--dropdown {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #515c67;
+}
+.dark-theme
+  .container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  span {
+  color: #cacfdb;
+}
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  .link,
+.container__menu--options__item--dropdown {
+  text-decoration: none;
+  color: #515c67;
+}
+
+.dark-theme .container__menu--options__item--dropdown {
+  color: #cacfdb;
+}
+
+.dark-theme
+  .container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__menu--options__item
+  .link
+  .container__menu--options__item--dropdown {
+  color: #cacfdb;
+}
+
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 li {
-    width: 100%;
+  width: 100%;
 }
 
-
-.container__sidebar .container__sidebar--options .container__menu--options .container__button{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.5rem;
-    width: 100%;
+.container__sidebar
+  .container__sidebar--options
+  .container__menu--options
+  .container__button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  width: 100%;
 }
 /*Fin del sidebar de la derecha*/
 /*Media queries*/

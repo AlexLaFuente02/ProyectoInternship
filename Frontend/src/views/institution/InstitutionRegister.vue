@@ -34,8 +34,6 @@
         <label for="">Logo de la Instituci&oacute;n <strong>*</strong>:</label>
         <input
           type="file"
-          name=""
-          id=""
           @change="onFileChange"
           accept="image/*"
         />
@@ -47,7 +45,7 @@
           name=""
           id=""
           placeholder="Introduzca el sector al que pertenece"
-          v-model="formStore.sector"
+          v-model="formStore.sectorpertenencia.id"
         />
       </div>
       <div class="form__tittle">
@@ -129,71 +127,47 @@ export default {
     goBack() {
       this.$router.push({ name: "PrincipalPage" });
     },
-    sendRequest() {
-      this.newInstitution = this.formStore.$state;
-      console.log(this.newInstitution);
+    onFileChange(e) {
+      const file = e.target.files[0];
+      this.formStore.setLogoInstitucion(file);
+      console.log(this.formStore.logoinstitucion); 
+    },
+    async sendRequest() {
+      try {
+        await this.formStore.registerInstitution();
+        //mostrar alert de exito con el result
+        alert("Solicitud de registro de institución enviada con éxito");
+
+      } catch (error) {
+        console.error("Hubo un error al enviar la solicitud: ", error);
+        // Mostrar un mensaje de error aquí.
+      }
     },
   },
 
-  //subir archivo joijo
-  onFileChange(e) {
-    const file = e.target.files[0];
-    if (file) {
-      // Aquí puedes procesar el archivo
-      // Por ejemplo, puedes mostrar una vista previa de la imagen seleccionada
-      this.showPreview(file);
-    }
-  },
   showPreview(file) {
     // Lógica para mostrar una vista previa de la imagen
     // Podría ser asignar el archivo a una propiedad de datos y mostrar la vista previa en tu template
   },
+  
 };
 </script>
-<style scoped>
-strong {
-  color: red;
+<style>
+.container__stepper{
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    position: relative;
 }
-
-.buttons {
-  display: flex;
-  /* justify-content: space-between; */
-  /* align-items: center; */
-  /* margin-top: 20px; */
-}
-
-.button-left,
-.button-right {
-  width: 48%; /* Establece un ancho para cada botón */
-}
-
-.button-left {
-  float: left; /* Alinea el botón "Volver atrás" a la izquierda */
-}
-
-.button-right {
-  float: right; /* Alinea el botón "Enviar solicitud" a la derecha */
-}
-
-.formVue {
-  background-color: #fff;
-  padding: 5% 10%;
-  border-radius: 10px;
-}
-
-/*Modo oscuro*/
-.dark-theme .formVue {
-  background-color: #434b54;
-}
-
-.form__tittle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.form__tittle h1 {
-  font-size: 1.5rem;
-  text-align: center;
+/*Estilos para el modo oscuro*/
+.dark-theme .container__stepper{
+    background: #434B54;
 }
 .form__description {
   display: flex;

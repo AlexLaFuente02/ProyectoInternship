@@ -77,7 +77,7 @@
                             </router-link>
                         </li>
                         <li class="container__menu--options__item" @click="closeMobileMenu">
-                            <router-link class="link" to="/student">
+                            <router-link class="link" to="/student/settings">
                                 <font-awesome-icon :icon="['fas', 'gear']" />
                                 <span>Configuración</span>
                             </router-link>

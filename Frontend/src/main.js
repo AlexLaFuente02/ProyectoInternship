@@ -26,6 +26,7 @@ import PostulationStatus from "../src/views/student/PostulationStatus.vue"
 import StudentProfile from '@/views/student/StudentProfile.vue';
 import StudentInstitutions from '@/views/student/StudentInstitutions.vue';
 import StudentInternships from '@/views/student/StudentInternships.vue'; 
+import StudentSettings from '@/views/student/StudentSettings.vue';
 //Paginas Institution
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
 import InstitutionAddConvocatoria from "@/views/institution/InstitutionAddConvocatoria.vue";
@@ -40,6 +41,7 @@ import InternshipList from "@/views/usei/InternshipList.vue";
 import CompaniesList from "@/views/usei/CompaniesList.vue";
 import UseiBusinessApplications from '@/views/usei/UseiBusinessApplications.vue'
 import UseiInternshipApplications from '@/views/usei/UseiInternshipApplications.vue'
+import UseiAnalyticsDashboard from "@/views/usei/UseiAnalyticsDashboard.vue";
 
 
 //Librerias de PrimeVue
@@ -49,6 +51,7 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import Galleria from 'primevue/galleria';
+// import Chart from "primevue/chart";
 //Main
 import "./assets/main.css";
 
@@ -73,6 +76,7 @@ const routes = [
     {name: 'ApplyForAnInternship',path: '/student/ApplyForAnInternship',component: ApplyForAnInternship},
     {name: 'StudentInstitutions', path: '/student/institutions', component: StudentInstitutions},
     {name: 'StudentInternships', path: '/student/internships', component: StudentInternships},
+    {name: 'StudentSettings', path: '/student/settings', component: StudentSettings},
     //Institution
     {name: 'InstitutionRegister', path : '/institution/register', component:InstitutionRegister},
     {name: 'InstitutionAddConvocatoria', path : '/institution/addConvocatoria', component:InstitutionAddConvocatoria},
@@ -87,7 +91,7 @@ const routes = [
     {name: "CompaniesList", path: "/usei/Companies", component: CompaniesList},
     {name: 'UseiBusinessApplications', path : '/usei/Business', component:UseiBusinessApplications},
     {name: 'UseiInternshipApplications', path : '/usei/InternshipApp', component:UseiInternshipApplications},
-    
+    {name: "UseiAnalyticsDashboard", path: "/usei/AnalyticsDashboard", component: UseiAnalyticsDashboard},
 ];
 // Router
 const router = createRouter({
@@ -123,5 +127,7 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 //Componentes de PrimeVue
 app.component('ButtonPrime', ButtonPrime);
 app.component('Galleria', Galleria);
+// app.component("Chart", Chart);
+
 //Montar la aplicacion
 app.mount("#app");

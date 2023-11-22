@@ -1,6 +1,8 @@
 <template>
+    
     <!--Form de registro de Estudiantes-->
     <div class="formVue">
+        
         <div class="form__tittle">
             <h1>REGISTRO DE ESTUDIANTE</h1>
         </div>
@@ -13,50 +15,62 @@ completa el siguiente formulario para registrarte como estudiante o graduado.</p
                 <label>Nombre *:</label>
                 <input placeholder="Introduzca su nombre"
                 
-                v-model="formStore.name" type="text" class="field">
+                v-model="formStore.student.nombres" type="text" class="field">
             </div>
             <div class="container__field">
-                <label>Primer Apellido *:</label>
+                <label>Apellidos *:</label>
                 <input placeholder="Introduzca su primer apellido"
                 
-                v-model="formStore.firstLastName" type="text" class="field">
-            </div>
-            <div class="container__field">
-                <label>Segundo Apellido *:</label>
-                <input placeholder="Introduzca su segundo apellido"
-                
-                v-model="formStore.secondLastName" type="text" class="field">
+                v-model="formStore.student.apellidos" type="text" class="field">
             </div>
             <!--INPUT-->
             <div class="container__field">
                 <label>Cédula de Identidad *:</label>
                 <input placeholder="Introduzca su cédula de identidad"
                 
-                v-model="formStore.documentNumber" type="text" class="field">
+                v-model="formStore.student.carnetidentidad" type="text" class="field">
             </div>
-
-
-
+            <!--INPUT-->
+            <div class="container__field">
+                <label>Celular *:</label>
+                <input placeholder="Introduzca su número de celular"
+                
+                v-model="formStore.student.celularcontacto" type="number" class="field">
+            </div>
             <div class="container__">
                 <label>Validación *:</label>
-                <CheckBox :options="checkboxOptions" @selected="handleSelectedOption" />
+                <CheckBox 
+                :options="checkboxOptions" 
+                :initOption="selectedOption"
+                
+                @selected="handleSelectedOption"
+                />
                 <p>La opción seleccionada es: {{ selectedOption }}</p>
             </div>
             <div class="container__select">
                 <label>Sede *:</label>
-                <Dropdown :options="this.listCampus" :selectedValue="formStore.campus" placeholderValue="Seleccione una sede"
+                <Dropdown :options="this.listCampus" :selectedValue="campus"
+                placeholderValue="Seleccione una sede"
                 @option-selected="updateCampus" />
             </div>
             <div class="container__select">
                 <label>Carrera *:</label>
-                <Dropdown :options="this.listCareers" :selectedValue="formStore.career" placeholderValue="Seleccione una carrera"
+                <Dropdown :options="this.listCareers" :selectedValue="career"
+                placeholderValue="Seleccione una carrera"
                 @option-selected="updateCareer" />
             </div>
             <div class="container__select">
                 <label>Semestre de ingreso *:</label>
                 <Dropdown :options="this.listSemester" 
-                :selectedValue="formStore.semester" placeholderValue="Seleccione un semestre"
+                :selectedValue="semester"
+                placeholderValue="Seleccione un semestre"
                 @option-selected="updateSemester" />
+            </div>
+            <div class="container__field" v-if="formStore.student.graduado">
+                <label>Año de graduación *:</label>
+                <input placeholder="Introduzca su año de graduación"
+                    v-model="formStore.student.aniograduacion"
+                    type="number" min="1900" max="2099" step="1" class="field">
             </div>
         </div>
     </div>
@@ -66,8 +80,9 @@ import { useFormRegisterStore } from "@/store/student/formRegisterStore";
 import { useCampusStore } from "@/store/common/campusStore";
 import { useCareersStore } from "@/store/common/careersStore";
 import { useSemesterStore } from "@/store/common/semesterStore";
+import {useLoaderStore} from "@/store/common/loaderStore";
 import Dropdown from '../common/Dropdown.vue';
-import CheckBox from "../common/CheckBox.vue";
+import CheckBox from '@/components/common/CheckBox.vue';
 export default {
     components:{
         Dropdown,
@@ -82,8 +97,11 @@ export default {
             listCampus: [],
             listCareers: [],
             listSemester: [],
-            checkboxOptions: ["Opción 1", "Opción 2"],
+            checkboxOptions: ["Graduado", "Estudiante"],
             selectedOption: null,
+            campus: "",
+            career: "",
+            semester: "",
         }
     },
     methods:{
@@ -123,23 +141,45 @@ export default {
             });
         },
         updateCampus (option) {
+            this.formStore.student.sede.id = option.id;
             this.formStore.campus = option.label;
+            this.campus = option.label;
         },
         updateCareer (option) {
-            this.formStore.career = option.label;
+            this.formStore.student.carrera.id = option.id;
+            this.formStore.career= option.label;
+            this.career = option.label;
         },
         updateSemester (option) {
+            this.formStore.student.semestre.id = option.id;
             this.formStore.semester = option.label;
+            this.semester = option.label;
         },
         handleSelectedOption(option) {
             this.selectedOption = option;
+            if (option === "Graduado") {
+                this.formStore.student.graduado = true;
+            } else {
+                this.formStore.student.graduado = false;
+            }
         },
     },
     //Tercer paso, obtener todas las sedes cuando se crea el componente
-    created(){
-        this.getCampus();
-        this.getCareers();
-        this.getSemester();
+    async mounted(){
+        useLoaderStore().activateLoader();
+        await this.getCampus();
+        await this.getCareers();
+        await this.getSemester();
+        if(this.formStore.student.graduado){
+            this.selectedOption = "Graduado";
+        }else{
+            this.selectedOption = "Estudiante";
+        }
+        this.campus = this.formStore.campus;
+        this.career = this.formStore.career;
+        this.semester = this.formStore.semester;
+
+        useLoaderStore().desactivateLoader();
     }
     
 }
