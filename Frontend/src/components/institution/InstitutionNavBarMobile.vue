@@ -64,9 +64,9 @@
           </ul>
         </li>
         <li class="nav-item" @click="closeMobileMenu">
-          <router-link class="link" to="/institution/RequestsTray">
+          <router-link class="link" to="/institution/InternshipFilter">
             <font-awesome-icon :icon="['fas', 'users']" size="xl" />
-            <span class="nav-direction">Bandeja de Solicitudes</span>
+            <span class="nav-direction">Solicitudes</span>
           </router-link>
         </li>
       </ul>
@@ -163,16 +163,16 @@ export default {
     closeMobileMenu() {
       useMobileMenuStore().closeMobileMenu();
     },
-    logout(){
-        /*Logout*/
-        $cookies.remove("id");
-        $cookies.remove("type");
-        $cookies.remove("connect.sid");
-        $cookies.remove("username");
-        useLoginStore().setLogin(0);
-        this.$router.push("/");
-        this.closeMobileMenu();
-        /*Fin del logout*/
+    logout() {
+      /*Logout*/
+      $cookies.remove("id");
+      $cookies.remove("type");
+      $cookies.remove("connect.sid");
+      $cookies.remove("username");
+      useLoginStore().setLogin(0);
+      this.$router.push("/");
+      this.closeMobileMenu();
+      /*Fin del logout*/
     },
     toggleDarkMode() {
       this.isDarkMode = !this.isDarkMode;

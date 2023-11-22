@@ -64,8 +64,7 @@
         >
       </div>
       <div class="form-field">
-        <input
-          type="time"
+        <Time
           name="internshipBeginHourField"
           id="internshipBeginHourField"
           v-model="formStore.horario_inicio"
@@ -77,8 +76,7 @@
         >
       </div>
       <div class="form-field">
-        <input
-          type="time"
+        <Time
           name="internshipEndHourField"
           id="internshipEndHourField"
           v-model="formStore.horario_fin"
@@ -92,8 +90,7 @@
         >
       </div>
       <div class="form-field">
-        <input
-          type="date"
+        <Calendar
           name="internshipSelectionDateField"
           id="internshipSelectionDateField"
           v-model="formStore.fechaseleccionpasante"
@@ -107,6 +104,9 @@
       <div class="form-field">
         <h5>{{ getCurrentDate() }}</h5>
       </div>
+    </div>
+    <div class="internship-message">
+      <span v-text="internshipMessages.errorMessage"></span>
     </div>
     <div class="buttons">
       <div class="button-left">
@@ -131,23 +131,30 @@
 
 <script>
 import Button from "@/components/common/Button.vue";
+import Calendar from "@/components/common/Calendar.vue";
+import Time from "@/components/common/TimePicker.vue";
 import { InternshipRegisterStore } from "../../store/institution/internshipRegisterStore";
 import { createInternship } from "../../services/institutionService";
 export default {
   components: {
     Button,
+    Calendar,
+    Time,
   },
   data() {
     return {
       formStore: InternshipRegisterStore(),
       newInternship: {},
+      internshipMessages: {
+        errorMessage: "",
+      },
     };
   },
   methods: {
     getCurrentDate() {
       var date = new Date();
       var year = date.getFullYear();
-      var month = date.getMonth();
+      var month = date.getMonth() + 1;
       var day = date.getDate();
       if (day < 10) day = "0" + day;
       if (month < 10) month = "0" + month;
@@ -159,11 +166,31 @@ export default {
     async sendRequest() {
       this.newInternship = this.formStore.$state;
       this.formStore.$state.fechasolicitud = this.getCurrentDate();
-      this.newInternship.estadoconvocatoria.id = 2;
-      this.newInternship.institucion.id = 1;
-      this.newInternship.tiempoacumplir.id = 2;
-      const response = await createInternship(this.newInternship);
-      console.log(response);
+      if (this.formStore.$state.areapasantia === "") {
+        this.internshipMessages.errorMessage =
+          "Error, ingrese el área de la pasantía por favor.";
+      } else if (this.formStore.$state.descripcionfunciones === "") {
+        this.internshipMessages.errorMessage =
+          "Error, ingrese las funciones o actividades de la pasantía por favor.";
+      } else if (this.formStore.$state.requisitoscompetencias === "") {
+        this.internshipMessages.errorMessage =
+          "Error, ingrese los requisitos mínimos de la pasantía por favor.";
+      } else if (this.formStore.$state.horario_inicio === "") {
+        this.internshipMessages.errorMessage =
+          "Error, ingrese la hora de inicio de la pasantía por favor.";
+      } else if (this.formStore.$state.horario_fin === "") {
+        this.internshipMessages.errorMessage =
+          "Error, ingrese la hora de finalización de la pasantía por favor.";
+      } else if (this.formStore.$state.fechaseleccionpasante === "") {
+        this.internshipMessages.errorMessage =
+          "Error, ingrese la fecha de selección del pasante por favor.";
+      } else {
+        this.newInternship.estadoconvocatoria.id = 2;
+        this.newInternship.institucion.id = 1;
+        this.newInternship.tiempoacumplir.id = 2;
+        const response = await createInternship(this.newInternship);
+        console.log(response);
+      }
     },
   },
 };
@@ -222,11 +249,36 @@ strong {
   text-align: center;
 }
 
+.internship-message {
+  text-align: center;
+  margin-bottom: 3%;
+}
+
+span {
+  color: red;
+  font-size: 1.5em;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.dark-theme span {
+  color: rgb(255, 105, 105);
+}
+
 @media screen and (max-width: 1025px) {
   .field-container:nth-child(6),
   .field-container:nth-child(7),
   .field-container:nth-child(8) {
     display: block;
+  }
+
+  span {
+    font-size: 1.2em;
   }
 }
 </style>

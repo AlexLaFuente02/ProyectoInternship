@@ -1,17 +1,25 @@
 <template>
   <div class="main-container">
-    <h1>DASHBOARD DE ANÁLISIS</h1>
+    <h1>DASHBOARD DE ANÁLISIS DE DATOS</h1>
     <div class="internship-container">
-      <h1>Análisis de datos</h1>
+      <BarGraph />
+      <BarGraph_lvl2 />
+      <PieChart />
     </div>
   </div>
 </template>
 
 <script>
+import BarGraph from "../../components/usei/Data Analytics/BarGraph.vue";
+import BarGraph_lvl2 from "../../components/usei/Data Analytics/BarGraph_lvl2.vue";
+import PieChart from "../../components/usei/Data Analytics/PieChart.vue";
 import Button from "@/components/common/Button.vue";
 export default {
   name: "UseiAnalyticsDashboardPage",
   components: {
+    BarGraph,
+    BarGraph_lvl2,
+    PieChart,
     Button,
   },
 };
@@ -25,10 +33,11 @@ export default {
 
 .internship-container {
   display: grid;
-  grid-template-rows: auto auto;
-  grid-template-columns: 41% 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   background-color: rgb(255, 255, 255);
   text-align: center;
+  justify-content: center;
   border: 2px solid black;
 }
 
