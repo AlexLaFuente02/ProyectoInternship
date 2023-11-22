@@ -56,26 +56,6 @@ router.get('/convocatoria', async (req, res) => {
     }
 });
 
-// Define la ruta para obtener convocatorias por ID de institución
-router.get('/convocatorias/institucion/:idInstitucion', async (req, res) => {
-    try {
-        const idInstitucion = req.params.idInstitucion;
-        console.log(`GET request received for getConvocatoriasPorIdInstitucion, ID de institución: ${idInstitucion}`);
-        
-        const response = await convocatoriaService.getConvocatoriasPorIdInstitucion(idInstitucion);
-        
-        res.json({
-            method: 'getConvocatoriasPorIdInstitucion',
-            code: response.code,
-            result: response.result,
-            message: response.message,
-        });
-    } catch (error) {
-        console.error('Error getting convocatorias by institution ID:', error);
-        res.status(500).json({ error: error.message });
-    }
-});
-
 // Ruta para obtener una convocatoria por id
 router.get('/convocatoria/:id', async (req, res) => {
     try {
@@ -198,27 +178,6 @@ router.get('/convocatorias/pendientes', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
-// Define la ruta para obtener postulaciones por ID de convocatoria
-router.get('/postulaciones/convocatoria/:idConvocatoria', async (req, res) => {
-    try {
-        const idConvocatoria = req.params.idConvocatoria;
-        console.log(`GET request received for getPostulacionesPorIdConvocatoria, ID de convocatoria: ${idConvocatoria}`);
-        
-        const response = await postulacionService.getPostulacionesPorIdConvocatoria(idConvocatoria);
-        
-        res.json({
-            method: 'getPostulacionesPorIdConvocatoria',
-            code: response.code,
-            result: response.result,
-            message: response.message,
-        });
-    } catch (error) {
-        console.error('Error getting postulaciones by convocatoria ID:', error);
-        res.status(500).json({ error: error.message });
-    }
-});
-
 
 // Ruta para obtener convocatorias rechazadas
 router.get('/convocatorias/inactivas', async (req, res) => {
