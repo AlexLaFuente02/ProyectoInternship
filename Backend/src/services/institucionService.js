@@ -361,6 +361,181 @@ const getInstitutionsBySector = async (sectorId) => {
 };
 
 
+// USEI:
+const getInstitutionApproved = async () => {
+  console.log("Obteniendo institucion con estado ACTIVO...");
+  try {
+    const result = await sequelize.query(
+      `SELECT
+        institucion.id, 
+        institucion.nombreinstitucion, 
+        institucion.reseniainstitucion, 
+        institucion.logoinstitucion, 
+        institucion.nombrecontacto, 
+        institucion.correocontacto, 
+        institucion.celularcontacto, 
+        institucion.estado, 
+        institucion.usuario_id, 
+        institucion.sectorpertenencia_id
+      FROM
+        institucion
+      WHERE
+        institucion.estado = "ACTIVO"      
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const resultWithImageUrl = result.map((item) => ({
+      id: item.id,
+      nombreinstitucion: item.nombreinstitucion,
+      reseniainstitucion: item.reseniainstitucion,
+      logoinstitucion: getImageUrl(item.logoinstitucion),
+      nombrecontacto: item.nombrecontacto,
+      correocontacto: item.correocontacto,
+      celularcontacto: item.celularcontacto,
+      estado: item.estado,
+      usuario_id: item.usuario_id,
+      sectorpertenencia_id: item.sectorpertenencia_id,
+    }));
+
+    console.log(
+      "Instituciones con estado ACTIVO obtenidas correctamente"
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      resultWithImageUrl,
+      "Instituciones con estado ACTIVO obtenidas correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener Instituciones con estado ACTIVO: ",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener Instituciones con estado ACTIVO: ${error}`
+    );
+  }
+};
+
+const getInstitutionPending = async () => {
+  console.log("Obteniendo institucion con estado PENDIENTE...");
+  try {
+    const result = await sequelize.query(
+      `SELECT
+        institucion.id, 
+        institucion.nombreinstitucion, 
+        institucion.reseniainstitucion, 
+        institucion.logoinstitucion, 
+        institucion.nombrecontacto, 
+        institucion.correocontacto, 
+        institucion.celularcontacto, 
+        institucion.estado, 
+        institucion.usuario_id, 
+        institucion.sectorpertenencia_id
+      FROM
+        institucion
+      WHERE
+        institucion.estado = "PENDIENTE"      
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const resultWithImageUrl = result.map((item) => ({
+      id: item.id,
+      nombreinstitucion: item.nombreinstitucion,
+      reseniainstitucion: item.reseniainstitucion,
+      logoinstitucion: getImageUrl(item.logoinstitucion),
+      nombrecontacto: item.nombrecontacto,
+      correocontacto: item.correocontacto,
+      celularcontacto: item.celularcontacto,
+      estado: item.estado,
+      usuario_id: item.usuario_id,
+      sectorpertenencia_id: item.sectorpertenencia_id,
+    }));
+
+    console.log(
+      "Instituciones con estado PENDIENTE obtenidas correctamente"
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      resultWithImageUrl,
+      "Instituciones con estado PENDIENTE obtenidas correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener Instituciones con estado PENDIENTE: ",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener Instituciones con estado PENDIENTE: ${error}`
+    );
+  }
+};
+
+
+const getInstitutionRejected = async () => {
+  console.log("Obteniendo institucion con estado RECHAZADO...");
+  try {
+    const result = await sequelize.query(
+      `SELECT
+        institucion.id, 
+        institucion.nombreinstitucion, 
+        institucion.reseniainstitucion, 
+        institucion.logoinstitucion, 
+        institucion.nombrecontacto, 
+        institucion.correocontacto, 
+        institucion.celularcontacto, 
+        institucion.estado, 
+        institucion.usuario_id, 
+        institucion.sectorpertenencia_id
+      FROM
+        institucion
+      WHERE
+        institucion.estado = "RECHAZADO"      
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const resultWithImageUrl = result.map((item) => ({
+      id: item.id,
+      nombreinstitucion: item.nombreinstitucion,
+      reseniainstitucion: item.reseniainstitucion,
+      logoinstitucion: getImageUrl(item.logoinstitucion),
+      nombrecontacto: item.nombrecontacto,
+      correocontacto: item.correocontacto,
+      celularcontacto: item.celularcontacto,
+      estado: item.estado,
+      usuario_id: item.usuario_id,
+      sectorpertenencia_id: item.sectorpertenencia_id,
+    }));
+
+    console.log(
+      "Instituciones con estado RECHAZADO obtenidas correctamente"
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      resultWithImageUrl,
+      "Instituciones con estado RECHAZADO obtenidas correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener Instituciones con estado RECHAZADO: ",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener Instituciones con estado RECHAZADO: ${error}`
+    );
+  }
+};
+
+
+
 module.exports = {
   getAllInstitutions,
   getInstitutionById,
@@ -369,4 +544,7 @@ module.exports = {
   deleteInstitution,
   getInstitutionPostulations,
   getInstitutionsBySector,
+  getInstitutionApproved,
+  getInstitutionPending,
+  getInstitutionRejected,
 };

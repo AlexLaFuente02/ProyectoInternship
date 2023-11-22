@@ -26,6 +26,7 @@ Accept: application/json
   "nombrecontacto": "Juan Pérez",
   "correocontacto": "juan.perez@univez.com",
   "celularcontacto": "12345678",
+  "estado": "RECHAZADO",
   "usuario_id": null,
   "sectorpertenencia_id": 3
 }
