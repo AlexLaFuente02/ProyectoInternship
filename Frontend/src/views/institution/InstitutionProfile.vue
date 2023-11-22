@@ -83,31 +83,31 @@ export default {};
 .personal-description,
 .social-media,
 .container {
-  padding: 5% 10%;
-  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
 }
 .user-details {
   flex: 1; /* Permite que los contenedores ocupen el mismo ancho */
-  margin: 10px; /* Espaciado entre contenedores */
-  border-radius: 10px;
   border: 100px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
-  padding: 20px; /* Añade algo de relleno para visualizar mejor el borde */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 /**perfil */
 .profile {
   background: linear-gradient(-45deg, #eb52ee, #b93ce7, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
-  margin-right: 10%;
-  padding: 20px;
   border-radius: 10px; /* Añade bordes redondeados */
   display: flex;
   border: 2px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
-  padding: 20px;
+  padding: 1rem;
+  color: #000;
 }
 
 @keyframes gradient {
@@ -121,30 +121,15 @@ export default {};
     background-position: 0% 50%;
   }
 }
-h2 {
-  font-size: calc(1em + 5vmin);
-  font-weight: 900;
-  color: rgb(0, 0, 0);
 
-  --x-offset: -0.0625em;
-  --y-offset: 0.0625em;
-  --stroke: 0.025em;
-  --background-color: white;
-  --stroke-color: lightblue;
-
-  text-shadow: var(--x-offset) var(--y-offset) 0px var(--background-color),
-    calc(var(--x-offset) - var(--stroke)) calc(var(--y-offset) + var(--stroke))
-      0px var(--stroke-color);
+/**contenedor inicial */
+.inicio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
 }
-
-@supports (text-shadow: 1px 1px 1px 1px rgb(0, 0, 0)) {
-  h2 {
-    text-shadow: var(--x-offset) var(--y-offset) 0px 0px var(--background-color),
-      var(--x-offset) var(--y-offset) var(--stroke) 0px var(--stroke-color);
-  }
-}
-
-/* Estilos para el contenedor principal */
 .container {
   display: flex;
   justify-content: center;
@@ -152,68 +137,16 @@ h2 {
   height: 10%; /* Ajusta la altura según tus necesidades */
 }
 
-/**contenedor inicial */
-.inicio {
-  margin-top: 20px;
-  left: 20px;
-  margin-bottom: 10%;
-}
-.inicio2 {
-  left: 20px;
-}
-@media (max-width: 990px) {
-  .inicio {
-    margin-top: 20px;
-    left: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .inicio {
-    margin-top: 20px;
-    left: 20px;
-  }
-}
-
-@media (max-width: 556px) {
-  .inicio {
-    margin-top: 20px;
-    left: 20px;
-  }
-}
-
-h1 {
-  font-size: calc(1em + 5vmin);
-  font-weight: 900;
-  color: rgb(0, 0, 0);
-
-  --x-offset: -0.0625em;
-  --y-offset: 0.0625em;
-  --stroke: 0.025em;
-  --background-color: white;
-  --stroke-color: lightblue;
-
-  text-shadow: var(--x-offset) var(--y-offset) 0px var(--background-color),
-    calc(var(--x-offset) - var(--stroke)) calc(var(--y-offset) + var(--stroke))
-      0px var(--stroke-color);
-}
-
-@supports (text-shadow: 1px 1px 1px 1px rgb(0, 0, 0)) {
-  h1 {
-    text-shadow: var(--x-offset) var(--y-offset) 0px 0px var(--background-color),
-      var(--x-offset) var(--y-offset) var(--stroke) 0px var(--stroke-color);
-  }
-}
-/* Estilos para la imagen de perfil */
 .profile-picture {
   display: flex;
   width: 100%;
   height: auto;
   margin-top: 10px;
   right: 10%;
-  border-radius: 45%;
+  border-radius: 50%;
 }
 
+/** */
 .description-header {
   display: flex;
   justify-content: space-between;
@@ -234,21 +167,23 @@ h1 {
 .box1,
 .box2,
 .box3 {
-  padding: 5%;
+  padding: 1rem;
   border: 1px solid #ccc;
   flex: 1;
-  min-width: 300px; /* Ancho mínimo para evitar que se colapsen completamente */
+  /* Ancho mínimo para evitar que se colapsen completamente */
 }
 
 /* Media query para responsividad */
 @media (max-width: 600px) {
   .profile {
     flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
   }
   .box1,
   .box2,
   .box3 {
-    width: calc(100% - 20px);
+    padding: 0.5rem;
   }
 }
 
@@ -276,5 +211,33 @@ h1 {
   .footer__links {
     margin-top: 0.5rem;
   }
+}
+/* Estilos para dispositivos pequeños (teléfonos) */
+@media only screen and (max-width: 600px) {
+  /* Estilos específicos para dispositivos pequeños (teléfonos) */
+  .inicio {
+    padding: 0.5rem;
+  }
+}
+
+/* Estilos para tabletas */
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+  .inicio {
+    padding: 1rem;
+  }
+}
+
+/* Estilos para dispositivos medianos */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+  .inicio {
+    padding: 1.5rem;
+  }
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (min-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
 }
 </style>

@@ -5,6 +5,7 @@
       <BarGraph />
       <BarGraph_lvl2 />
       <PieChart />
+      <BarGraph_lvl3 />
     </div>
   </div>
 </template>
@@ -12,6 +13,7 @@
 <script>
 import BarGraph from "../../components/usei/Data Analytics/BarGraph.vue";
 import BarGraph_lvl2 from "../../components/usei/Data Analytics/BarGraph_lvl2.vue";
+import BarGraph_lvl3 from "../../components/usei/Data Analytics/BarGraph_lvl3.vue";
 import PieChart from "../../components/usei/Data Analytics/PieChart.vue";
 import Button from "@/components/common/Button.vue";
 export default {
@@ -19,6 +21,7 @@ export default {
   components: {
     BarGraph,
     BarGraph_lvl2,
+    BarGraph_lvl3,
     PieChart,
     Button,
   },
