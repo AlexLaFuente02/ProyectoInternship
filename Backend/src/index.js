@@ -87,8 +87,8 @@ app.use("/auth", authAPI);
 
 //app.use('/student',isAuthenticated, checkRole(2), studentRoutes);
 app.use('/student', studentRoutes);
-
-app.use('/institution',isAuthenticated, checkRole(3), instutionRoutes);
+//app.use('/institution',isAuthenticated, checkRole(3), instutionRoutes);
+app.use('/institution', instutionRoutes);
 //app.use('/usei',isAuthenticated, checkRole(1), useiRoutes);
 app.use('/usei', useiRoutes);
 

@@ -17,14 +17,6 @@ Accept: application/json
 GET {{baseURL}}/convocatoria/1
 Accept: application/json
 
-### GET Convocatoria by ID Institucion
-GET {{baseURL}}/convocatorias/institucion/1
-Accept: application/json
-
-### GET Postulaciones by ID Convocatoria
-GET {{baseURL}}/postulaciones/convocatoria/3
-Accept: application/json
-
 ### PUT Convocatoria
 PUT {{baseURL}}/convocatoria/2
 Content-Type: application/json
@@ -75,3 +67,12 @@ Accept: application/json
 ### GET ALL de Convocatorias Rechazadas
 GET {{baseURL}}/convocatorias/inactivas
 Accept: application/json
+
+
+### PUT Institucion activa
+@institucionID = 14
+PUT {{baseURL}}/institucion/activate/{{institucionID}}
+Content-Type: application/json
+Accept: application/json
+
+
