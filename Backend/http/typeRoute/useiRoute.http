@@ -75,3 +75,12 @@ Accept: application/json
 ### GET ALL de Convocatorias Rechazadas
 GET {{baseURL}}/convocatorias/inactivas
 Accept: application/json
+
+
+### PUT Institucion activa
+@institucionID = 14
+PUT {{baseURL}}/institucion/activate/{{institucionID}}
+Content-Type: application/json
+Accept: application/json
+
+

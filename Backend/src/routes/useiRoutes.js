@@ -236,4 +236,21 @@ router.get('/convocatorias/inactivas', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
+router.put('/institucion/activate/:id', async (req, res) => {
+    try {
+        console.log(`PUT request received for activateInstitution, ID de institución: ${req.params.id}`);
+        const response = await institucionService.activateInstitution(req.params.id);
+        res.json({
+            method: 'activateInstitution',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error activating institution:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
 module.exports = router;

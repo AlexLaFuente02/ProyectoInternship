@@ -13,7 +13,7 @@ const InstitucionENT = sequelize.define(
     },
     nombreinstitucion: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     reseniainstitucion: {
       type: DataTypes.TEXT,
@@ -25,19 +25,19 @@ const InstitucionENT = sequelize.define(
     },
     nombrecontacto: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     correocontacto: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     celularcontacto: {
       type: DataTypes.STRING(15),
-      allowNull: false,
+      allowNull: true,
     },
     estado: {
       type: DataTypes.STRING(15),
-      allowNull: false,
+      allowNull: true,
     },
   },
   {
@@ -57,6 +57,7 @@ InstitucionENT.belongsTo(SectorPertenenciaENT, {
   foreignKey: "sectorpertenencia_id",
   as: "sectorpertenencia",
   targetKey: "id",
+  required: false
 });
 
 module.exports = InstitucionENT;
