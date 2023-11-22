@@ -1,5 +1,6 @@
 <template>
   <div class="main-container">
+    
     <h1>EMPRESAS</h1>
     <h5>Te mostramos las empresas que forman parte de Internship By UCB.</h5>
     <div class="companies-container">
