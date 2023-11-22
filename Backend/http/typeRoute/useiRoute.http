@@ -40,3 +40,30 @@ Accept: application/json
     "id": 2
   }
 }
+
+
+### ENDPOINTS DE FRONTEND
+
+### GET ALL de Institucion Activas
+GET {{baseURL}}/instituciones/activas
+Accept: application/json
+
+### GET ALL de Institucion Pendientes
+GET {{baseURL}}/instituciones/pendientes
+Accept: application/json
+
+### GET ALL de Institucion Rechazadas
+GET {{baseURL}}/instituciones/rechazadas
+Accept: application/json
+
+### GET ALL de Convocatorias Activas
+GET {{baseURL}}/convocatorias/activas
+Accept: application/json
+
+### GET ALL de Convocatorias Pendientes
+GET {{baseURL}}/convocatorias/pendientes
+Accept: application/json
+
+### GET ALL de Convocatorias Rechazadas
+GET {{baseURL}}/convocatorias/inactivas
+Accept: application/json

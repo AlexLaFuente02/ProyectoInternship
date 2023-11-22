@@ -89,7 +89,9 @@ app.use("/auth", authAPI);
 app.use('/student', studentRoutes);
 
 app.use('/institution',isAuthenticated, checkRole(3), instutionRoutes);
-app.use('/usei',isAuthenticated, checkRole(1), useiRoutes);
+//app.use('/usei',isAuthenticated, checkRole(1), useiRoutes);
+app.use('/usei', useiRoutes);
+
 //app.use('/public', publicRoutes);
 
 // Ruta de inicio

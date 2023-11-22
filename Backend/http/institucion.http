@@ -26,12 +26,9 @@ Accept: application/json
   "nombrecontacto": "Juan Pérez",
   "correocontacto": "juan.perez@univez.com",
   "celularcontacto": "12345678",
-  "usuario": {
-    "id": 1
-  },
-  "sectorpertenencia": {
-    "id": 3
-  }
+  "estado": "RECHAZADO",
+  "usuario_id": null,
+  "sectorpertenencia_id": 3
 }
 
 ### PUT de Institucion
@@ -46,12 +43,8 @@ Accept: application/json
   "nombrecontacto": "María García",
   "correocontacto": "maria.garcia@universidadabc.com",
   "celularcontacto": "987654321",
-  "usuario": {
-    "id": 2
-  },
-  "sectorpertenencia": {
-    "id": 1
-  }
+  "usuario_id": 2,
+  "sectorpertenencia_id": 1
 }
 
 ### DELETE de Institucion

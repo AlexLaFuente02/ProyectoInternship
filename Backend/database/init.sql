@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS internshipdb;
+
+USE internshipdb;
+
 CREATE TABLE tipousuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo VARCHAR(50) NOT NULL,
@@ -87,6 +91,7 @@ CREATE TABLE institucion (
     nombrecontacto varchar(100) NOT NULL,
     correocontacto varchar(100) NOT NULL,
     celularcontacto varchar(15) NOT NULL,
+    estado varchar(15) NOT NULL,
     usuario_id int NULL,
     sectorpertenencia_id int NOT NULL,
     CONSTRAINT instituciones_sectorpertenencia FOREIGN KEY (sectorpertenencia_id) REFERENCES sectorpertenencia (id),
@@ -95,10 +100,14 @@ CREATE TABLE institucion (
 
 INSERT INTO institucion 
 (nombreinstitucion,  reseniainstitucion, logoinstitucion, nombrecontacto,
-correocontacto, celularcontacto, usuario_id, sectorpertenencia_id) 
+correocontacto, celularcontacto, estado, usuario_id, sectorpertenencia_id) 
 VALUES 
 ('EMAPA', 'Somos la institucion de agua de la ciudad de La Paz', NULL, 'Juan Pérez',
-'juan.perez@utech.edu', '123-456-7890', 2, 1);
+'juan.perez@utech.edu', '123-456-7890', 'PENDIENTE', 2, 1),
+('EMAV', 'Somos la institucion de agua de la ciudad de Cochabamba', NULL, 'Juan Pérez',
+'juan.perez@utech.edu', '123-456-7890', 'ACTIVO', 2, 1),
+('EMAS', 'Somos la institucion de agua de la ciudad de Santa Cruz', NULL, 'Juan Pérez',
+'juan.perez@utech.edu', '123-456-7890', 'RECHAZADO', 2, 1);
 
 #Hacer trigger para asignar valor a usuario_id cuando USEI aprobar institucion
 
@@ -155,8 +164,8 @@ INSERT INTO convocatoria
 (areapasantia, descripcionfunciones, requisitoscompetencias, horario_inicio, horario_fin, fechasolicitud, fechaseleccionpasante, estadoconvocatoria_id, institucion_id, tiempoacumplir_id)
 VALUES
 ('Area 1', 'Descripcion 1', 'Requisitos 1', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 1, 1, 1),
-('Area 2', 'Descripcion 2', 'Requisitos 2', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 1, 1, 1),
-('Area 3', 'Descripcion 3', 'Requisitos 3', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 1, 1, 1);
+('Area 2', 'Descripcion 2', 'Requisitos 2', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 2, 1, 1),
+('Area 3', 'Descripcion 3', 'Requisitos 3', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 3, 1, 1);
 
 
 CREATE TABLE historico_convocatorias (

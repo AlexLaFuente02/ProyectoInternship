@@ -89,4 +89,109 @@ router.put('/convocatoria/:id', async (req, res) => {
     }
 });
 
+
+//ENDPOINTS ESPECIFICOS DE FRONTEND
+
+// Ruta para obtener instituciones aprobadas
+router.get('/instituciones/activas', async (req, res) => {
+    try {
+        console.log('GET request received for getInstitucionesAprobadas');
+        const response = await institucionService.getInstitutionApproved();
+        res.json({
+            method: 'getInstitutionApproved',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting instituciones aprobadas:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener instituciones pendientes
+router.get('/instituciones/pendientes', async (req, res) => {
+    try {
+        console.log('GET request received for getInstitucionesPendientes');
+        const response = await institucionService.getInstitutionPending();
+        res.json({
+            method: 'getInstitutionPending',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting instituciones pendientes:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener instituciones rechazadas
+router.get('/instituciones/rechazadas', async (req, res) => {
+    try {
+        console.log('GET request received for getInstitucionesRechazadas');
+        const response = await institucionService.getInstitutionRejected();
+        res.json({
+            method: 'getInstitutionRejected',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting instituciones rechazadas:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+// Ruta para obtener convocatorias aprobadas
+router.get('/convocatorias/activas', async (req, res) => {
+    try {
+        console.log('GET request received for getConvocatoriasAprobadas');
+        const response = await convocatoriaService.getActiveConvocatorias();
+        res.json({
+            method: 'getConvocatoriaApproved',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias aprobadas:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener convocatorias pendientes
+router.get('/convocatorias/pendientes', async (req, res) => {
+    try {
+        console.log('GET request received for getConvocatoriasPendientes');
+        const response = await convocatoriaService.getPendingConvocatorias();
+        res.json({
+            method: 'getConvocatoriaPending',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias pendientes:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener convocatorias rechazadas
+router.get('/convocatorias/inactivas', async (req, res) => {
+    try {
+        console.log('GET request received for getInactiveConvocatorias');
+        const response = await convocatoriaService.getInactiveConvocatorias();
+        res.json({
+            method: 'getInactiveConvocatorias',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias inactivas:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
 module.exports = router;

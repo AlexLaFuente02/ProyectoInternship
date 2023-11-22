@@ -23,14 +23,21 @@ const getAllInstitutions = async () => {
       ],
     });
     const institucionesDTO = instituciones.map((institucion) => {
-      const sectorPertenenciaDTO = new SectorPertenenciaDTO(
-        institucion.sectorpertenencia.id,
-        institucion.sectorpertenencia.nombresectorpertenencia
-      );
-      const usuarioDTO = new UsuarioDTO(
-        institucion.usuario.id,
-        institucion.usuario.idusuario
-      );
+      let sectorPertenenciaDTO = null;
+      if (institucion.sectorpertenencia) {
+        sectorPertenenciaDTO = new SectorPertenenciaDTO(
+          institucion.sectorpertenencia.id,
+          institucion.sectorpertenencia.nombresectorpertenencia
+        );
+      }
+
+      let usuarioDTO = null;
+      if (institucion.usuario) {
+        usuarioDTO = new UsuarioDTO(
+          institucion.usuario.id,
+          institucion.usuario.idusuario
+        );
+      }
       const imageUrl = institucion.logoinstitucion
         ? `${baseURL}/images/${institucion.logoinstitucion}`
         : null;
@@ -42,6 +49,7 @@ const getAllInstitutions = async () => {
         institucion.nombrecontacto,
         institucion.correocontacto,
         institucion.celularcontacto,
+        institucion.estado, 
         usuarioDTO,
         sectorPertenenciaDTO
       );
@@ -92,6 +100,7 @@ const getInstitutionById = async (id) => {
       institucion.nombrecontacto,
       institucion.correocontacto,
       institucion.celularcontacto,
+      institucion.estado, 
       usuarioDTO,
       sectorPertenenciaDTO
     );
@@ -126,6 +135,7 @@ const createInstitution = async (institutionData) => {
       nombrecontacto: institutionData.nombrecontacto,
       correocontacto: institutionData.correocontacto,
       celularcontacto: institutionData.celularcontacto,
+      estado: institutionData.estado,
     });
     // Genera la URL completa para acceder a la imagen a través de tu API
     // Esta línea debe formar una URL válida
@@ -143,6 +153,7 @@ const createInstitution = async (institutionData) => {
       nuevaInstitucion.nombrecontacto,
       nuevaInstitucion.correocontacto,
       nuevaInstitucion.celularcontacto,
+      nuevaInstitucion.estado,
       usuarioDTO,
       sectorPertenenciaDTO
     );
@@ -179,6 +190,7 @@ const updateInstitution = async (id, institutionData) => {
       nombrecontacto: institutionData.nombrecontacto,
       correocontacto: institutionData.correocontacto,
       celularcontacto: institutionData.celularcontacto,
+      estado: institutionData.estado,
     });
     const sectorPertenenciaDTO = new SectorPertenenciaDTO(
       institutionData.sectorpertenencia.id,
@@ -197,6 +209,7 @@ const updateInstitution = async (id, institutionData) => {
       institucion.nombrecontacto,
       institucion.correocontacto,
       institucion.celularcontacto,
+      institucion.estado,
       usuarioDTO,
       sectorPertenenciaDTO
     );
@@ -348,6 +361,181 @@ const getInstitutionsBySector = async (sectorId) => {
 };
 
 
+// USEI:
+const getInstitutionApproved = async () => {
+  console.log("Obteniendo institucion con estado ACTIVO...");
+  try {
+    const result = await sequelize.query(
+      `SELECT
+        institucion.id, 
+        institucion.nombreinstitucion, 
+        institucion.reseniainstitucion, 
+        institucion.logoinstitucion, 
+        institucion.nombrecontacto, 
+        institucion.correocontacto, 
+        institucion.celularcontacto, 
+        institucion.estado, 
+        institucion.usuario_id, 
+        institucion.sectorpertenencia_id
+      FROM
+        institucion
+      WHERE
+        institucion.estado = "ACTIVO"      
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const resultWithImageUrl = result.map((item) => ({
+      id: item.id,
+      nombreinstitucion: item.nombreinstitucion,
+      reseniainstitucion: item.reseniainstitucion,
+      logoinstitucion: getImageUrl(item.logoinstitucion),
+      nombrecontacto: item.nombrecontacto,
+      correocontacto: item.correocontacto,
+      celularcontacto: item.celularcontacto,
+      estado: item.estado,
+      usuario_id: item.usuario_id,
+      sectorpertenencia_id: item.sectorpertenencia_id,
+    }));
+
+    console.log(
+      "Instituciones con estado ACTIVO obtenidas correctamente"
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      resultWithImageUrl,
+      "Instituciones con estado ACTIVO obtenidas correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener Instituciones con estado ACTIVO: ",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener Instituciones con estado ACTIVO: ${error}`
+    );
+  }
+};
+
+const getInstitutionPending = async () => {
+  console.log("Obteniendo institucion con estado PENDIENTE...");
+  try {
+    const result = await sequelize.query(
+      `SELECT
+        institucion.id, 
+        institucion.nombreinstitucion, 
+        institucion.reseniainstitucion, 
+        institucion.logoinstitucion, 
+        institucion.nombrecontacto, 
+        institucion.correocontacto, 
+        institucion.celularcontacto, 
+        institucion.estado, 
+        institucion.usuario_id, 
+        institucion.sectorpertenencia_id
+      FROM
+        institucion
+      WHERE
+        institucion.estado = "PENDIENTE"      
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const resultWithImageUrl = result.map((item) => ({
+      id: item.id,
+      nombreinstitucion: item.nombreinstitucion,
+      reseniainstitucion: item.reseniainstitucion,
+      logoinstitucion: getImageUrl(item.logoinstitucion),
+      nombrecontacto: item.nombrecontacto,
+      correocontacto: item.correocontacto,
+      celularcontacto: item.celularcontacto,
+      estado: item.estado,
+      usuario_id: item.usuario_id,
+      sectorpertenencia_id: item.sectorpertenencia_id,
+    }));
+
+    console.log(
+      "Instituciones con estado PENDIENTE obtenidas correctamente"
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      resultWithImageUrl,
+      "Instituciones con estado PENDIENTE obtenidas correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener Instituciones con estado PENDIENTE: ",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener Instituciones con estado PENDIENTE: ${error}`
+    );
+  }
+};
+
+
+const getInstitutionRejected = async () => {
+  console.log("Obteniendo institucion con estado RECHAZADO...");
+  try {
+    const result = await sequelize.query(
+      `SELECT
+        institucion.id, 
+        institucion.nombreinstitucion, 
+        institucion.reseniainstitucion, 
+        institucion.logoinstitucion, 
+        institucion.nombrecontacto, 
+        institucion.correocontacto, 
+        institucion.celularcontacto, 
+        institucion.estado, 
+        institucion.usuario_id, 
+        institucion.sectorpertenencia_id
+      FROM
+        institucion
+      WHERE
+        institucion.estado = "RECHAZADO"      
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const resultWithImageUrl = result.map((item) => ({
+      id: item.id,
+      nombreinstitucion: item.nombreinstitucion,
+      reseniainstitucion: item.reseniainstitucion,
+      logoinstitucion: getImageUrl(item.logoinstitucion),
+      nombrecontacto: item.nombrecontacto,
+      correocontacto: item.correocontacto,
+      celularcontacto: item.celularcontacto,
+      estado: item.estado,
+      usuario_id: item.usuario_id,
+      sectorpertenencia_id: item.sectorpertenencia_id,
+    }));
+
+    console.log(
+      "Instituciones con estado RECHAZADO obtenidas correctamente"
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      resultWithImageUrl,
+      "Instituciones con estado RECHAZADO obtenidas correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener Instituciones con estado RECHAZADO: ",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener Instituciones con estado RECHAZADO: ${error}`
+    );
+  }
+};
+
+
+
 module.exports = {
   getAllInstitutions,
   getInstitutionById,
@@ -356,4 +544,7 @@ module.exports = {
   deleteInstitution,
   getInstitutionPostulations,
   getInstitutionsBySector,
+  getInstitutionApproved,
+  getInstitutionPending,
+  getInstitutionRejected,
 };
