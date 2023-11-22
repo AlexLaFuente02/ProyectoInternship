@@ -148,6 +148,49 @@ const getPostulacionById = async (id) => {
   }
 };
 
+const getPostulacionesPorIdConvocatoria = async (idConvocatoria) => {
+  console.log(`Obteniendo postulaciones para la convocatoria con ID: ${idConvocatoria}...`);
+  try {
+      const postulaciones = await PostulacionENT.findAll({
+          where: { convocatoria_id: idConvocatoria },
+          include: [
+              { model: EstadoPostulacionENT, as: 'estadopostulacion' },
+              { model: EstudianteENT, as: 'estudiante' }
+          ]
+      });
+
+      if (!postulaciones || postulaciones.length === 0) {
+          console.log(`No se encontraron postulaciones para la convocatoria con ID: ${idConvocatoria}.`);
+          return new ResponseDTO('P-1002', null, 'No se encontraron postulaciones para la convocatoria.');
+      }
+
+      const postulacionesDTO = postulaciones.map((postulacion) => {
+          const estadoPostulacionDTO = {
+              id: postulacion.estadopostulacion.id,
+              nombreestadopostulacion: postulacion.estadopostulacion.nombreestadopostulacion
+          };
+          const estudianteDTO = {
+              id: postulacion.estudiante.id,
+              usuario_id: postulacion.estudiante.usuario_id,
+              // Otras propiedades del estudiante que desees incluir
+          };
+          return new PostulacionDTO(
+              postulacion.id,
+              postulacion.fechapostulacion,
+              estadoPostulacionDTO,
+              estudianteDTO,
+              null // No incluimos la convocatoria en este caso
+          );
+      });
+
+      console.log(`Postulaciones obtenidas correctamente para la convocatoria con ID: ${idConvocatoria}.`);
+      return new ResponseDTO('P-0000', postulacionesDTO, 'Postulaciones obtenidas correctamente');
+  } catch (error) {
+      console.error(`Error al obtener las postulaciones para la convocatoria con ID: ${idConvocatoria}.`, error);
+      return new ResponseDTO('P-1002', null, `Error al obtener las postulaciones: ${error}`);
+  }
+};
+
 
 const createPostulacion = async (postulationData) => {
     console.log('Creando una nueva postulación...');
@@ -420,4 +463,5 @@ module.exports = {
   deletePostulacion,
   getPostulacionByStudent,
   getPostulacionByStudentByStatus,
+  getPostulacionesPorIdConvocatoria,
 };

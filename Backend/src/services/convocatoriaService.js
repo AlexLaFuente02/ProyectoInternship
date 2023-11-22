@@ -85,6 +85,49 @@ const getConvocatoriaById = async (id) => {
     }
 };
 
+const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
+    console.log(`Obteniendo convocatorias para la institución con ID: ${idInstitucion}...`);
+    try {
+        const convocatorias = await ConvocatoriaENT.findAll({
+            where: { institucion_id: idInstitucion },
+            include: [
+                { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+                { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
+            ]
+        });
+        
+        if (!convocatorias || convocatorias.length === 0) {
+            console.log(`No se encontraron convocatorias para la institución con ID: ${idInstitucion}.`);
+            return new ResponseDTO('C-1002', null, 'No se encontraron convocatorias para la institución.');
+        }
+        
+        const convocatoriasDTO = convocatorias.map((convocatoria) => {
+            const estadoDTO = new EstadoConvocatoriaDTO(convocatoria.estadoconvocatoria.id, convocatoria.estadoconvocatoria.nombreestadoconvocatoria);
+            const tiempoDTO = new TiempoAcumplirDTO(convocatoria.tiempoacumplir.id, convocatoria.tiempoacumplir.descripcion);
+            return new ConvocatoriaDTO(
+                convocatoria.id,
+                convocatoria.areapasantia,
+                convocatoria.descripcionfunciones,
+                convocatoria.requisitoscompetencias,
+                convocatoria.horario_inicio,
+                convocatoria.horario_fin,
+                convocatoria.fechasolicitud,
+                convocatoria.fechaseleccionpasante,
+                estadoDTO,
+                null, // No incluimos la institución en este caso
+                tiempoDTO
+            );
+        });
+
+        console.log(`Convocatorias obtenidas correctamente para la institución con ID: ${idInstitucion}.`);
+        return new ResponseDTO('C-0000', convocatoriasDTO, 'Convocatorias obtenidas correctamente');
+    } catch (error) {
+        console.error(`Error al obtener las convocatorias para la institución con ID: ${idInstitucion}.`, error);
+        return new ResponseDTO('C-1002', null, `Error al obtener las convocatorias: ${error}`);
+    }
+};
+
+
 const createConvocatoria = async (data) => {
     console.log('Creando una nueva convocatoria...');
     try {
@@ -346,4 +389,5 @@ module.exports = {
     getPopularConvocatorias,
     getPendingConvocatorias,
     getInactiveConvocatorias,
+    getConvocatoriasPorIdInstitucion,
 };
