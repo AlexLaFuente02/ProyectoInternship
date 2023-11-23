@@ -45,8 +45,8 @@ export const InstitutionRegisterStore = defineStore({
       formData.append('nombrecontacto', this.nombrecontacto);
       formData.append('correocontacto', this.correocontacto);
       formData.append('celularcontacto', this.celularcontacto);
+      formData.append('estado', 'PENDIENTE');
     
-      formData.append('usuario_id', null);
       if (!this.sectorpertenencia.id) {
         console.error('El campo sectorpertenencia_id es requerido y no está presente.');
         throw new Error('El campo sectorpertenencia_id es requerido y no está presente.');

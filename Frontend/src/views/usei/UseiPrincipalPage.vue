@@ -1,58 +1,104 @@
 <template>
-    <main>
-      <div class="container__landingPage">
-        <div class="landing__page__information">
-          <div class="container__header__description">
-            <h1>¡Bienvenido a la plataforma !</h1>
-            <p>
-              En esta plataforma administrar las empresas y pasantias que tenemos.
-            </p>
+   <div class="student__principalPage">
+            <div class="student__profile">
+                <div class="profile__content__header">
+                        <div class="content__welcome">
+                          
+                            <div class="student__data">
+                                <span class="welcome__student">
+                                  ¡Bienvenido a la plataforma !
+                                </span>
+                                <br>
+                                <span class="career__student">
+                                  En esta plataforma administrar las empresas y pasantias que tenemos.
             
+                                </span>
+                                <span class="career__student">
+                                  <img src="https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996" alt="Logo de la empresa" class="company-logo" />
+                                </span>
+                            </div>
+                        </div>
+                        
+                </div>
+                <div class="summary">
+                    <span class="summary__title">
+                        Resumen general de tus pasantías
+                    </span>
+                    <div class="summary__content">
+                        <span class="summary__content__number">120 
+                            <span class="summary__content__text">Instituciones</span>
+                        </span>
+                        <span class="summary__content__number">10 
+                            <span class="summary__content__text">Solicitudes deInstituciones</span>
+                        </span>
+                        <span class="summary__content__number">13 
+                            <span class="summary__content__text">Pasantias</span>
+                        </span>
+                        <span class="summary__content__number">12
+                            <span class="summary__content__text">Solicitudes de Pasantias</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
           </div>
-          <div class="top-section">
-          <div class="left-section">
-            <p>Bienvenido, desde esta página puedes agregar nuevas convocatorias y revisar las solicitudes de estudiantes que recibiste.</p>
-          </div>
-          <div class="right-section">
-            <img src="/images/USEI.png" alt="Logo de la empresa" class="company-logo" />
-          </div>
-        </div>
-        <hr/>
-        
-    
-  
-        <div class="container__problem">
-          <div class="container__problem__image">
-            <img src="https://s.yimg.com/ny/api/res/1.2/0h_DQCqc7Q8A.rc5jVk2kA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/homerun/feed_manager_auto_publish_494/cc75c92508ef9b1713bfca5cc2f1a3d3" />
-          </div>
-          <div class="container__problem__description">
-            <h1>¿Cuál es el problema?</h1>
-            <p>
+          <div class="student__principalPage">
+            <div class="student__profile">
+                <div class="profile__content__header">
+                        <div class="content__welcome">
+                          
+                            <div class="student__data">
+                                <span class="welcome__student">
+                                 ¿Cuál es el problema?
+                                </span>
+                                <br>
+                                <span class="career__student">
+                                 
               En la actualidad, los estudiantes y graduados no cuentan con una
               plataforma que les permita encontrar pasantías y prácticas
               profesionales de manera fácil y rápida.
-            </p>
+            </span>
+                                <span class="career__student">
+                                  <img src="https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996" alt="Logo de la empresa" class="company-logo" />
+                                </span>
+                            </div>
+                        </div>
+                        
+                </div>
+              
+            </div>
+
           </div>
-        </div>
-        <hr/>
-        <div class="container__header__page">
-          <div class="container__header__description">
-            <h1>¡Convocatorias activas o Solicitudes recibidas!</h1>
-            <p>
-              En esta plataforma podrás encontrar pasantías y prácticas
+
+          <div class="student__principalPage">
+            <div class="student__profile">
+                <div class="profile__content__header">
+                        <div class="content__welcome">
+                          
+                            <div class="student__data">
+                                <span class="welcome__student">
+                                  ¡Convocatorias activas o Solicitudes recibidas!
+                                </span>
+                                <br>
+                                <span class="career__student">
+                                 
+                                  En esta plataforma podrás encontrar pasantías y prácticas
               profesionales que te ayudarán a desarrollar tus habilidades y
               competencias en el mundo laboral.
-            </p>
-            
-  
-          </div>
-          <div class="container__carrousel">
+            </span>
+            <div class="container__carrousel">
             <Carousel :listImages="PhotoService" />
           </div>
-        </div>
-        </div>
-      </div>
-    </main>
+                            </div>
+                        </div>
+                        
+                </div>
+              
+            </div>
+
+          </div>
+      
+
   </template>
   <script>
   import Carousel from "@/components/common/Carousel.vue";
@@ -98,131 +144,8 @@
   };
   </script>
   <style scoped>
-  .container__landingPage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    
-  }
-  .landing__page__information{
-    background-color: #FDFEFF;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    box-shadow: 0 24px 64px -2px rgba(0, 0, 0, 0.02),
-      0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
-  }
-  .dark-theme .landing__page__information {
-    background-color: #434b54;
-  }
-  .container__header__page{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-  }
-  .container__header__description{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3% 7%;
-  }
-  .container__header__description h1{
-    font-size: 1.5rem;
-    text-align: center;
-  }
-  .container__header__description p{
-    font-size: 1rem;
-    text-align: center;
-  }
-  .container__header__description Button{
-    margin-top: 25%;
-  }
-  .container__carrousel {
-    display: flex;
-    padding: 1rem;
-    align-items: center;
-    justify-content: center;
-    width: 600px;
-    height: 400px;
-    z-index: 0;
-  }
-  .container__problem{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    margin-top: 2%;
-  }
-  .container__problem__description{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3% 7%;
-  }
-  .container__problem__description h1{
-    font-size: 1.5rem;
-    text-align: center;
-  }
-  .container__problem__description p{
-    font-size: 1rem;
-    text-align: center;
-  }
-  .container__problem__image{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3% 7%;
-  }
-  .container__problem__image img{
-    width: 400px;
-    height: 300px;
-  }
-  .container__solution{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    margin-top: 2%;
-  }
-  .container__solution__description{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3% 7%;
-  }
-  .container__solution__description h1{
-    font-size: 1.5rem;
-    text-align: center;
-  }
-  .container__solution__description p{
-    font-size: 1rem;
-    text-align: center;
-  }
-  hr{
-    width: 90%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    border: 1px solid #E4E5E5;
-    /*Centrar hr*/
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+   
   
-  }
-  .dark-theme hr{
-    border: 1px solid #5B646D;
-  }
   @media screen and (max-width: 1250px) {
     .container__header__page{
       flex-direction: column;
@@ -369,45 +292,12 @@
       margin-top: 15px;
     }
   }
-    .login-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .top-section {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-    
-    .left-section {
-      width: 50%;
-      margin: 5%;
-    }
-    
-    .right-section {
-      width: 50%;
-      text-align: right;
-      margin: 5%;
-    }
-    
-    h2 {
-      font-size: 20px;
-      color: #333;
-      text-align: left;
-    }
     
     .company-logo {
       max-width: 100%;
       height: auto;
     }
     
-    .quick-action {
-      margin-top: 20px;
-    }
     
     h3 {
       font-size: 18px;
@@ -416,31 +306,360 @@
       margin-bottom: 10px;
     }
     
-    .action-buttons {
-      display: flex;
-      justify-content: space-evenly;
-      flex-wrap: wrap;
-      margin-top: 0%;
-    }
-    
-    button {
-      padding: 10px 20px;
-      background-color: #5a99dd;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      margin: 0% 5px 10px 5px;
-    }
-    
+
     
     @media (min-width: 700px) {
       .company-logo {
       max-width:auto;
       height: 280px;
+    }}
+  
+    @media (max-width: 700px) {
+      .company-logo {
+      max-width:auto;
+      height: 150px;
     }
     
   }
-  </style>
+
+  /**prueba */
+
+  .student__principalPage{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    
+}
+
+.student__content__internship{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+/*Estilos para el perfil del estudiante*/
+.student__profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: #Fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.dark-theme .student__profile{
+    background-color: #434B54;
+}
+.profile__content__header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.content__welcome{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.student__data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+}
+.welcome__student{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.career__student{
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.content__more{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+.profile__button {
+  padding: 0.9rem;
+  margin: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.profile__button:hover {
+  background-position: 100% 0;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.profile__button:focus {
+  outline: none;
+}
+
+.profile__button.bn23 {
+    background-image: linear-gradient(
+    to right,
+    #25aae1,
+    #4481eb,
+    #04befe,
+    #3f86ed
+  );
+  box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+.dark-theme .profile__button.bn23{
+    background-image: linear-gradient(
+    to right,
+    #29323c,
+    #485563,
+    #2b5876,
+    #4e4376
+  );
+  box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+
+.see_vitae{
+    font-size: 1rem;
+    font-weight: 700;
+    margin-left: 0.5rem;
+}
+.edit__Profile{
+    font-size: 1rem;
+    font-weight: 700;
+    margin-left: 0.5rem;
+}
+.summary{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+.summary__title{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.summary__content{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-size: 1rem;
+}
+.summary__content__number{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 3rem;
+    font-weight: 700;
+}
+.summary__content__text{
+    font-size: 1rem;
+    font-weight: 700;
+    margin-left: 0.5rem;
+}
+/*Estilos para las pasantías del estudiante*/
+/*Estilos para las pasantías activas del estudiante*/
+.internship__active__by__student{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0 0 1.5rem 0;
+    height: 500px; 
+    border-radius: 10px;
+    background-color: #Fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.dark-theme .internship__active__by__student{
+    background-color: #434B54;
+}
+.internship__active__by__student h1{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 1rem;
+}
+.container__cards{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 100%;
+    width: 80%;
+}
+/*Estilos para las solicitudes del estudiante*/
+
+.requests__by__student{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0 0 1.5rem 0;
+    height: 500px; 
+    border-radius: 10px;
+    background-color: #Fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.container__requests{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.dark-theme .requests__by__student{
+    background-color: #434B54;
+}
+.container__little__nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.container__Arrow{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+}
+
+
+
+/* Estilos para dispositivos pequeños (teléfonos) */
+
+@media only screen and (max-width: 600px) {
+  /* Estilos específicos para dispositivos pequeños */
+    .student__principalPage{
+            padding: 0.5rem;
+    }
+    .profile__content__header{
+        flex-direction: column;
+  }
+    .content__welcome{
+        width: 100%;
+        margin-bottom: 0.3rem;
+    }
+    .content__more{
+        width: 100%;
+    }
+    .profile__button{
+        margin: 0.2rem;
+        padding: 0.5rem;
+        font-size: 0.4rem;
+    }
+    .profile__button span{
+        font-size: 0.6rem;
+    }
+    .summary__content{
+        flex-wrap: wrap;
+    }
+    .summary__title{
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    .summary__content__number{
+        font-size: 1.2rem;
+    }
+    .summary__content__text{
+        font-size: 0.6rem;
+    }
+
+
+
+
+
+}
+
+/* Estilos para tabletas */
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+  .student__principalPage{
+        padding: 1rem;
+    
+  }
+  .profile__content__header{
+        flex-direction: column;
+  }
+    .content__welcome{
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .content__more{
+        width: 100%;
+    }
+    .profile__button{
+        margin: 0.3rem 0.3rem;
+        padding: 0.8rem;
+        font-size: 0.6rem;
+    }
+    .profile__button span{
+        font-size: 0.8rem;
+    }
+    .summary__content{
+        flex-wrap: wrap;
+    }
+    .summary__title{
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+    .summary__content__number{
+        font-size: 1.5rem;
+    }
+    .summary__content__text{
+        font-size: 0.8rem;
+    }
+}
+
+/* Estilos para dispositivos medianos */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Estilos específicos para dispositivos medianos */
+  .student__principalPage{
+        padding: 1.5rem;
+  }
+}
+
+/* Estilos para dispositivos grandes (pantallas de escritorio) */
+@media only screen and (min-width: 1441px) {
+  /* Estilos específicos para dispositivos grandes */
+}
+
+
+
+</style>
   

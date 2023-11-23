@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;
-
+const PORT = process.env.PORT || 3001;
+const bodyParser = require('body-parser');
+const axios = require('axios');
 //CORS - conexion entre servidores
 const cors = require("cors");
 //Seguridad
@@ -46,7 +47,7 @@ const publicRoutes = require('./routes/publicRoutes');
 
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
-
+app.use(cors());
 // Middleware para permitir CORS desde cualquier dominio
 const corsOptions = {
   // Permitir explícitamente el origen del cliente
@@ -101,9 +102,29 @@ app.use('/public', publicRoutes);
 app.get("/", (req, res) => {
   res.send("¡Bienvenido al API REST de INTERNSHIP!");
 });
+// Verifica si cors ya está configurado
+if (!app.hasCorsConfigured) {
+  //CORS - conexion entre servidores
+  const cors = require("cors");
 
+  // Middleware para permitir CORS desde cualquier dominio
+  const corsOptions = {
+    // Permitir explícitamente el origen del cliente
+    origin: 'http://localhost:3001',
+    credentials: true, // Esto es necesario para las cookies de sesión y los headers de autenticación
+  };
+  app.use(cors(corsOptions));
+
+  // Marca la aplicación como configurada con cors
+  app.hasCorsConfigured = true;
+}
+app.listen(3000, () => {
+  console.log('Servidor escuchando en el puerto 3000');
+});
 // Escucha en el puerto especificado
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   V1SwaggerDocs(app, PORT);
 });
+
+
