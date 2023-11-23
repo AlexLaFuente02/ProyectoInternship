@@ -41,6 +41,7 @@ import InternshipList from "@/views/usei/InternshipList.vue";
 import CompaniesList from "@/views/usei/CompaniesList.vue";
 import UseiBusinessApplications from '@/views/usei/UseiBusinessApplications.vue'
 import UseiInternshipApplications from '@/views/usei/UseiInternshipApplications.vue'
+import UseiAnalyticsDashboard from "@/views/usei/UseiAnalyticsDashboard.vue";
 
 
 //Librerias de PrimeVue
@@ -90,7 +91,7 @@ const routes = [
     {name: "CompaniesList", path: "/usei/Companies", component: CompaniesList},
     {name: 'UseiBusinessApplications', path : '/usei/Business', component:UseiBusinessApplications},
     {name: 'UseiInternshipApplications', path : '/usei/InternshipApp', component:UseiInternshipApplications},
-    
+    {name: "UseiAnalyticsDashboard", path: "/usei/AnalyticsDashboard", component: UseiAnalyticsDashboard},
 ];
 // Router
 const router = createRouter({

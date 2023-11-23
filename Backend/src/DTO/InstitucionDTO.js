@@ -42,7 +42,7 @@
  *         - sectorpertenencia
  */
 class InstitucionDTO {
-  constructor(id, nombreinstitucion, reseniainstitucion, logoinstitucion, nombrecontacto, correocontacto, celularcontacto, usuario, sectorpertenencia) {
+  constructor(id, nombreinstitucion, reseniainstitucion, logoinstitucion, nombrecontacto, correocontacto, celularcontacto,estado, usuario, sectorpertenencia) {
     this.id = id;
     this.nombreinstitucion = nombreinstitucion;
     this.reseniainstitucion = reseniainstitucion;
@@ -50,6 +50,7 @@ class InstitucionDTO {
     this.nombrecontacto = nombrecontacto;
     this.correocontacto = correocontacto;
     this.celularcontacto = celularcontacto;
+    this.estado = estado; 
     this.usuario = usuario;
     this.sectorpertenencia = sectorpertenencia;
   }

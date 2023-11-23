@@ -26,34 +26,19 @@ Accept: application/json
   "nombrecontacto": "Juan Pérez",
   "correocontacto": "juan.perez@univez.com",
   "celularcontacto": "12345678",
-  "usuario": {
-    "id": 1
-  },
-  "sectorpertenencia": {
-    "id": 3
-  }
+  "estado": "RECHAZADO",
+  "usuario_id": null,
+  "sectorpertenencia_id": 3
 }
 
 ### PUT de Institucion
-PUT http://{{host}}/institucion/2
+PUT http://{{host}}/institucion/8
 Content-Type: application/json
 Accept: application/json
 
 {
-  "nombreinstitucion": "Universidad ABC",
-  "reseniainstitucion": "Descripción actualizada de la universidad.",
-  "logoinstitucion": null, 
-  "nombrecontacto": "María García",
-  "correocontacto": "maria.garcia@universidadabc.com",
-  "celularcontacto": "987654321",
-  "usuario": {
-    "id": 2
-  },
-  "sectorpertenencia": {
-    "id": 1
-  }
+    "estado": "RECHAZADO"
 }
-
 ### DELETE de Institucion
 DELETE http://{{host}}/institucion/3
 Accept: application/json

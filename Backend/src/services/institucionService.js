@@ -7,6 +7,14 @@ const Usuario = require("../ENT/UsuarioENT");
 const UsuarioDTO = require("../DTO/UsuarioDTO");
 const sequelize = require("../../database/db");
 
+const UsuarioService = require('./usuarioService'); 
+const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
+const accountTransport = require('../../config/account_transport.json'); // Asegúrate de que la ruta sea correcta
+
+
+
 const { baseURL } = require("../../config/constants");
 
 const getImageUrl = (imageName) => {
@@ -23,14 +31,21 @@ const getAllInstitutions = async () => {
       ],
     });
     const institucionesDTO = instituciones.map((institucion) => {
-      const sectorPertenenciaDTO = new SectorPertenenciaDTO(
-        institucion.sectorpertenencia.id,
-        institucion.sectorpertenencia.nombresectorpertenencia
-      );
-      const usuarioDTO = new UsuarioDTO(
-        institucion.usuario.id,
-        institucion.usuario.idusuario
-      );
+      let sectorPertenenciaDTO = null;
+      if (institucion.sectorpertenencia) {
+        sectorPertenenciaDTO = new SectorPertenenciaDTO(
+          institucion.sectorpertenencia.id,
+          institucion.sectorpertenencia.nombresectorpertenencia
+        );
+      }
+
+      let usuarioDTO = null;
+      if (institucion.usuario) {
+        usuarioDTO = new UsuarioDTO(
+          institucion.usuario.id,
+          institucion.usuario.idusuario
+        );
+      }
       const imageUrl = institucion.logoinstitucion
         ? `${baseURL}/images/${institucion.logoinstitucion}`
         : null;
@@ -42,6 +57,7 @@ const getAllInstitutions = async () => {
         institucion.nombrecontacto,
         institucion.correocontacto,
         institucion.celularcontacto,
+        institucion.estado, 
         usuarioDTO,
         sectorPertenenciaDTO
       );
@@ -92,6 +108,7 @@ const getInstitutionById = async (id) => {
       institucion.nombrecontacto,
       institucion.correocontacto,
       institucion.celularcontacto,
+      institucion.estado, 
       usuarioDTO,
       sectorPertenenciaDTO
     );
@@ -113,7 +130,23 @@ const getInstitutionById = async (id) => {
 
 const createInstitution = async (institutionData) => {
   console.log("Creando una nueva institución...");
+
   try {
+    // Verificar si ya existe una institución con el mismo correo
+    const existingInstitution = await Institucion.findOne({
+      where: { correocontacto: institutionData.correocontacto }
+    });
+
+    if (existingInstitution) {
+      console.log("Ya existe una institución con el correo proporcionado.");
+      return new ResponseDTO(
+        "I-1003",
+        null,
+        "Ya existe una institución con el correo proporcionado."
+      );
+    }
+
+    // Crear la institución si no existe un correo duplicado
     const fileName = institutionData.logoinstitucion
       ? institutionData.logoinstitucion
       : null;
@@ -126,15 +159,13 @@ const createInstitution = async (institutionData) => {
       nombrecontacto: institutionData.nombrecontacto,
       correocontacto: institutionData.correocontacto,
       celularcontacto: institutionData.celularcontacto,
+      estado: institutionData.estado,
     });
-    // Genera la URL completa para acceder a la imagen a través de tu API
-    // Esta línea debe formar una URL válida
-    const imageUrl = fileName ? `${baseURL}/images/${fileName}` : null;
 
-    const sectorPertenenciaDTO = new SectorPertenenciaDTO(
-      institutionData.sectorpertenencia_id
-    );
+    const imageUrl = fileName ? `${baseURL}/images/${fileName}` : null;
+    const sectorPertenenciaDTO = new SectorPertenenciaDTO(institutionData.sectorpertenencia_id);
     const usuarioDTO = new UsuarioDTO(institutionData.usuario_id);
+
     const nuevaInstitucionDTO = new InstitucionDTO(
       nuevaInstitucion.id,
       nuevaInstitucion.nombreinstitucion,
@@ -143,9 +174,11 @@ const createInstitution = async (institutionData) => {
       nuevaInstitucion.nombrecontacto,
       nuevaInstitucion.correocontacto,
       nuevaInstitucion.celularcontacto,
+      nuevaInstitucion.estado,
       usuarioDTO,
       sectorPertenenciaDTO
     );
+
     console.log("Institución creada correctamente.");
     return new ResponseDTO(
       "I-0000",
@@ -162,6 +195,7 @@ const createInstitution = async (institutionData) => {
   }
 };
 
+
 const updateInstitution = async (id, institutionData) => {
   console.log(`Actualizando la institución con ID: ${id}...`);
   try {
@@ -172,21 +206,20 @@ const updateInstitution = async (id, institutionData) => {
     }
     await institucion.update({
       nombreinstitucion: institutionData.nombreinstitucion,
-      sectorpertenencia_id: institutionData.sectorpertenencia.id,
-      usuario_id: institutionData.usuario.id, // Añade esta línea
+      sectorpertenencia_id: institutionData.sectorpertenencia_id,
+      usuario_id: institutionData.usuario_id,
       reseniainstitucion: institutionData.reseniainstitucion,
       logoinstitucion: institutionData.logoinstitucion,
       nombrecontacto: institutionData.nombrecontacto,
       correocontacto: institutionData.correocontacto,
       celularcontacto: institutionData.celularcontacto,
+      estado: institutionData.estado,
     });
     const sectorPertenenciaDTO = new SectorPertenenciaDTO(
-      institutionData.sectorpertenencia.id,
-      institutionData.sectorpertenencia.nombresectorpertenencia
+      institutionData.sectorpertenencia_id,
     );
     const usuarioDTO = new UsuarioDTO(
-      institutionData.usuario.id,
-      institutionData.usuario.idusuario
+      institutionData.usuario_id,
     ); // Usamos institutionData para el usuarioDTO
     const imageUrl = getImageUrl(institucion.logoinstitucion);
     const actulizadoInstitucionDTO = new InstitucionDTO(
@@ -197,6 +230,7 @@ const updateInstitution = async (id, institutionData) => {
       institucion.nombrecontacto,
       institucion.correocontacto,
       institucion.celularcontacto,
+      institucion.estado,
       usuarioDTO,
       sectorPertenenciaDTO
     );
@@ -292,6 +326,362 @@ const getInstitutionPostulations = async () => {
   }
 };
 
+const getInstitutionsBySector = async (sectorId) => {
+  console.log(`Obteniendo instituciones del sector con ID: ${sectorId}...`);
+  try {
+      const instituciones = await Institucion.findAll({
+          where: { sectorpertenencia_id: sectorId },
+          include: [
+              { model: SectorPertenencia, as: "sectorpertenencia" },
+              { model: Usuario, as: "usuario" },
+          ],
+      });
+
+      if (!instituciones || instituciones.length === 0) {
+          console.log(`No se encontraron instituciones para el sector con ID: ${sectorId}.`);
+          return new ResponseDTO("I-1003", null, "No se encontraron instituciones para el sector especificado");
+      }
+
+      const institucionesDTO = instituciones.map((institucion) => {
+          const sectorPertenenciaDTO = new SectorPertenenciaDTO(
+              institucion.sectorpertenencia.id,
+              institucion.sectorpertenencia.nombresectorpertenencia
+          );
+          const usuarioDTO = new UsuarioDTO(
+              institucion.usuario.id,
+              institucion.usuario.idusuario
+          );
+          const imageUrl = getImageUrl(institucion.logoinstitucion);
+          return new InstitucionDTO(
+              institucion.id,
+              institucion.nombreinstitucion,
+              institucion.reseniainstitucion,
+              imageUrl,
+              institucion.nombrecontacto,
+              institucion.correocontacto,
+              institucion.celularcontacto,
+              usuarioDTO,
+              sectorPertenenciaDTO
+          );
+      });
+
+      console.log("Instituciones del sector obtenidas correctamente.");
+      return new ResponseDTO(
+          "I-0000",
+          institucionesDTO,
+          "Instituciones del sector obtenidas correctamente"
+      );
+  } catch (error) {
+      console.error(`Error al obtener las instituciones del sector con ID: ${sectorId}:`, error);
+      return new ResponseDTO(
+          "I-1003",
+          null,
+          `Error al obtener las instituciones del sector: ${error}`
+      );
+  }
+};
+
+
+// USEI:
+const getInstitutionApproved = async () => {
+  console.log("Obteniendo institucion con estado ACTIVO...");
+  try {
+    const result = await sequelize.query(
+      `SELECT
+        institucion.id, 
+        institucion.nombreinstitucion, 
+        institucion.reseniainstitucion, 
+        institucion.logoinstitucion, 
+        institucion.nombrecontacto, 
+        institucion.correocontacto, 
+        institucion.celularcontacto, 
+        institucion.estado, 
+        institucion.usuario_id, 
+        institucion.sectorpertenencia_id
+      FROM
+        institucion
+      WHERE
+        institucion.estado = "ACTIVO"      
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const resultWithImageUrl = result.map((item) => ({
+      id: item.id,
+      nombreinstitucion: item.nombreinstitucion,
+      reseniainstitucion: item.reseniainstitucion,
+      logoinstitucion: getImageUrl(item.logoinstitucion),
+      nombrecontacto: item.nombrecontacto,
+      correocontacto: item.correocontacto,
+      celularcontacto: item.celularcontacto,
+      estado: item.estado,
+      usuario_id: item.usuario_id,
+      sectorpertenencia_id: item.sectorpertenencia_id,
+    }));
+
+    console.log(
+      "Instituciones con estado ACTIVO obtenidas correctamente"
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      resultWithImageUrl,
+      "Instituciones con estado ACTIVO obtenidas correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener Instituciones con estado ACTIVO: ",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener Instituciones con estado ACTIVO: ${error}`
+    );
+  }
+};
+
+const getInstitutionPending = async () => {
+  console.log("Obteniendo institucion con estado PENDIENTE...");
+  try {
+    const result = await sequelize.query(
+      `SELECT
+        institucion.id, 
+        institucion.nombreinstitucion, 
+        institucion.reseniainstitucion, 
+        institucion.logoinstitucion, 
+        institucion.nombrecontacto, 
+        institucion.correocontacto, 
+        institucion.celularcontacto, 
+        institucion.estado, 
+        institucion.usuario_id, 
+        institucion.sectorpertenencia_id
+      FROM
+        institucion
+      WHERE
+        institucion.estado = "PENDIENTE"      
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const resultWithImageUrl = result.map((item) => ({
+      id: item.id,
+      nombreinstitucion: item.nombreinstitucion,
+      reseniainstitucion: item.reseniainstitucion,
+      logoinstitucion: getImageUrl(item.logoinstitucion),
+      nombrecontacto: item.nombrecontacto,
+      correocontacto: item.correocontacto,
+      celularcontacto: item.celularcontacto,
+      estado: item.estado,
+      usuario_id: item.usuario_id,
+      sectorpertenencia_id: item.sectorpertenencia_id,
+    }));
+
+    console.log(
+      "Instituciones con estado PENDIENTE obtenidas correctamente"
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      resultWithImageUrl,
+      "Instituciones con estado PENDIENTE obtenidas correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener Instituciones con estado PENDIENTE: ",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener Instituciones con estado PENDIENTE: ${error}`
+    );
+  }
+};
+
+
+const getInstitutionRejected = async () => {
+  console.log("Obteniendo institucion con estado RECHAZADO...");
+  try {
+    const result = await sequelize.query(
+      `SELECT
+        institucion.id, 
+        institucion.nombreinstitucion, 
+        institucion.reseniainstitucion, 
+        institucion.logoinstitucion, 
+        institucion.nombrecontacto, 
+        institucion.correocontacto, 
+        institucion.celularcontacto, 
+        institucion.estado, 
+        institucion.usuario_id, 
+        institucion.sectorpertenencia_id
+      FROM
+        institucion
+      WHERE
+        institucion.estado = "RECHAZADO"      
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const resultWithImageUrl = result.map((item) => ({
+      id: item.id,
+      nombreinstitucion: item.nombreinstitucion,
+      reseniainstitucion: item.reseniainstitucion,
+      logoinstitucion: getImageUrl(item.logoinstitucion),
+      nombrecontacto: item.nombrecontacto,
+      correocontacto: item.correocontacto,
+      celularcontacto: item.celularcontacto,
+      estado: item.estado,
+      usuario_id: item.usuario_id,
+      sectorpertenencia_id: item.sectorpertenencia_id,
+    }));
+
+    console.log(
+      "Instituciones con estado RECHAZADO obtenidas correctamente"
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      resultWithImageUrl,
+      "Instituciones con estado RECHAZADO obtenidas correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener Instituciones con estado RECHAZADO: ",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener Instituciones con estado RECHAZADO: ${error}`
+    );
+  }
+};
+
+//ACTIVAR CUENTA - USEI
+// Función para enviar correo
+const sendEmail = async (email, subject, text) => {
+  const oauth2Client = new OAuth2(
+      accountTransport.auth.clientId,
+      accountTransport.auth.clientSecret,
+      "https://developers.google.com/oauthplayground"
+  );
+
+  oauth2Client.setCredentials({
+      refresh_token: accountTransport.auth.refreshToken
+  });
+
+  const accessToken = await oauth2Client.getAccessToken();
+
+  const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+          type: 'OAuth2',
+          user: accountTransport.auth.user,
+          clientId: accountTransport.auth.clientId,
+          clientSecret: accountTransport.auth.clientSecret,
+          refreshToken: accountTransport.auth.refreshToken,
+          accessToken: accessToken.token
+      }
+  });
+
+  const mailOptions = {
+      from: accountTransport.auth.user,
+      to: email,
+      subject: subject,
+      text: text
+  };
+
+  try {
+      await transporter.sendMail(mailOptions);
+      console.log('Correo enviado correctamente a', email);
+  } catch (error) {
+      console.error('Error al enviar correo:', error);
+  }
+};
+
+const activateInstitution = async (id) => {
+  console.log(`Activando la institución con ID: ${id}...`);
+  try {
+    const institucion = await Institucion.findByPk(id, {
+      include: [
+        { model: SectorPertenencia, as: "sectorpertenencia" },
+      ],
+    });
+    if (!institucion) {
+      console.log(`Institución con ID: ${id} no encontrada.`);
+      return new ResponseDTO("I-1004", null, "Institución no encontrada");
+    }
+
+    // Actualizar el estado de la institución a 'ACTIVO'
+    await institucion.update({ estado: 'ACTIVO' });
+
+    // Preparar los datos del usuario y crear el usuario
+    const userData = {
+      idusuario: institucion.correocontacto,
+      contrasenia: institucion.celularcontacto,
+      tipousuario: { id: 2 }
+    };
+    const resultadoUsuario = await UsuarioService.createUser(userData);
+    if (resultadoUsuario.code !== 'U-0000') {
+      throw new Error('Error al crear el usuario para la institución.');
+    }
+
+    // Actualizar la institución con el ID del usuario creado
+    await institucion.update({ usuario_id: resultadoUsuario.result.id });
+
+    // Recargar la institución para obtener los datos actualizados
+    await institucion.reload();
+
+    // Convertir el logoinstitucion en URL
+    const imageUrl = getImageUrl(institucion.logoinstitucion);
+
+    // Crear DTO para sector pertenencia
+    let sectorPertenenciaDTO = null;
+    if (institucion.sectorpertenencia) {
+      sectorPertenenciaDTO = new SectorPertenenciaDTO(
+        institucion.sectorpertenencia.id,
+        institucion.sectorpertenencia.nombresectorpertenencia
+      );
+    }
+
+    // Crear DTO para la institución, incluyendo el usuario actualizado
+    const actulizadoInstitucionDTO = new InstitucionDTO(
+      institucion.id,
+      institucion.nombreinstitucion,
+      institucion.reseniainstitucion,
+      imageUrl,
+      institucion.nombrecontacto,
+      institucion.correocontacto,
+      institucion.celularcontacto,
+      institucion.estado,
+      resultadoUsuario.result, // Usuario actualizado
+      sectorPertenenciaDTO
+    );
+
+
+    // MENSAJE DE CORREO ELECTRONICO
+    const emailSubject = "Activación de Cuenta en Internship by UCB";
+    const emailBody = `Su solicitud de adición a la página de Internship by UCB fue aceptada por la USEI. Sus credenciales para iniciar sesión son:
+    idusuario: ${institucion.correocontacto}
+    contraseña: ${institucion.celularcontacto}`;
+
+    // Enviar correo electrónico
+    await sendEmail(institucion.correocontacto, emailSubject, emailBody);
+
+    console.log("Institución activada y usuario creado correctamente. Correo enviado a", institucion.correocontacto);
+    return new ResponseDTO(
+      "I-0000",
+      actulizadoInstitucionDTO,
+      "Institución activada y usuario creado correctamente"
+    );
+  } catch (error) {
+    console.error(`Error al activar la institución con ID: ${id}.`, error);
+    return new ResponseDTO(
+      "I-1004",
+      null,
+      `Error al activar la institución: ${error}`
+    );
+  }
+};
+
 module.exports = {
   getAllInstitutions,
   getInstitutionById,
@@ -299,4 +689,9 @@ module.exports = {
   updateInstitution,
   deleteInstitution,
   getInstitutionPostulations,
+  getInstitutionsBySector,
+  getInstitutionApproved,
+  getInstitutionPending,
+  getInstitutionRejected,
+  activateInstitution,
 };

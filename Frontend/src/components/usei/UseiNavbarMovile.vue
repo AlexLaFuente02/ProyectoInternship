@@ -58,6 +58,12 @@
                                 <span>Solicitudes de Pasant&iacute;as</span>
                             </router-link>
                         </li>
+                        <li class="container__menu--options__item" @click="closeMobileMenu">
+                            <router-link class="link" to="/usei/AnalyticsDashboard">
+                                <font-awesome-icon :icon="['fas', 'chart-mixed']" />
+                                <span>An&aacute;lisis de Datos</span>
+                            </router-link>
+                        </li>
                         <!--Modo oscuro-->
                         <li class="container__menu--options__item" @click="toggleDarkMode" v-if="isDarkMode">
                             <div class="container__menu--options__item__dark-mode">
@@ -77,7 +83,7 @@
                                     text="Cerrar sesion" 
                                     :color="0" 
                                     :disabled="false"
-                                    @option-selected="createAccount"
+                                    @option-selected="logout"
                                     >
                                 </Button>
                             </div>
@@ -91,6 +97,7 @@
 <script>
 import { useMobileMenuStore } from "../../store/common/mobileMenuStore";
 import { useThemeStore } from "@/store/common/useThemeStore";
+import { useLoginStore } from "@/store/common/loginStore";
 import Button from "@/components/common/Button.vue";
 export default {
     name: "NavbarCommonMobile",
@@ -110,13 +117,16 @@ export default {
         closeMobileMenu() {
             useMobileMenuStore().closeMobileMenu();
         },
-        createAccount(option) {
-            if (option) {
-                console.log("createAccount");
-                this.$router.push("/");
-                //Cerrar el menu
-                this.closeMobileMenu();
-            }
+        logout(){
+            /*Logout*/
+            $cookies.remove("id");
+            $cookies.remove("type");
+            $cookies.remove("connect.sid");
+            $cookies.remove("username");
+            useLoginStore().setLogin(0);
+            this.$router.push("/");
+            this.closeMobileMenu();
+            /*Fin del logout*/
         },
 
         toggleDarkMode() {
