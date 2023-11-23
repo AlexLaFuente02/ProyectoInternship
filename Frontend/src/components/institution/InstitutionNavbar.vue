@@ -36,9 +36,9 @@
               <li class="dropdown-item">Agregar Convocatoria</li>
             </router-link>
           </ul>
-          <router-link class="link" to="/institution/RequestsTray">
+          <router-link class="link" to="/institution/InternshipFilter">
             <font-awesome-icon :icon="['fas', 'users']" size="xl" />
-            <span class="nav-direction">Bandeja de Solicitudes</span>
+            <span class="nav-direction">Solicitudes</span>
           </router-link>
         </div>
       </nav>
@@ -133,16 +133,16 @@ export default {
       this.isDarkMode = !this.isDarkMode;
       darkModeStore.toggleDarkMode();
     },
-    logout(){
-        /*Logout*/
-        $cookies.remove("id");
-        $cookies.remove("type");
-        $cookies.remove("connect.sid");
-        $cookies.remove("username");
-        useLoginStore().setLogin(0);
-        this.$router.push("/");
-        this.closeMobileMenu();
-        /*Fin del logout*/
+    logout() {
+      /*Logout*/
+      $cookies.remove("id");
+      $cookies.remove("type");
+      $cookies.remove("connect.sid");
+      $cookies.remove("username");
+      useLoginStore().setLogin(0);
+      this.$router.push("/");
+      this.closeMobileMenu();
+      /*Fin del logout*/
     },
     showDropdownCallList() {
       this.dropdownButton.showDropdownMenu =
@@ -187,7 +187,7 @@ export default {
 .dropdown-menu {
   position: absolute;
   top: 70%;
-  left: 19.5%;
+  left: 20%;
   width: 13%;
   background-color: white;
   border-radius: 20px;
@@ -223,6 +223,7 @@ export default {
 
 .dark-theme .dropdown-menu {
   background-color: #434b54;
+  border: 1px solid #cacfdb;
 }
 
 .dark-theme .dropdown-item {

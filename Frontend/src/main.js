@@ -33,7 +33,8 @@ import InstitutionAddConvocatoria from "@/views/institution/InstitutionAddConvoc
 import InstitutionConvocatoria from '@/views/institution/InstitutionConvocatoria.vue'
 import InstitutionProfile from "@/views/institution/InstitutionProfile.vue";
 import InstitutionSettings from "@/views/institution/InstitutionSettings.vue";
-import InstitutionRequestsTray from "@/views/institution/InstitutionRequestsTray.vue";
+import InstitutionInternshipFilter from "@/views/institution/InstitutionInternshipFilter.vue";
+import InstitutionInternshipApplicationTray from "@/views/institution/InstitutionInternshipApplicationTray.vue";
 import InstitutionPrincipalPage from '@/views/institution/InstitutionPrincipalPage.vue'
 //Paginas Admin
 import UseiPrincipalPage from '@/views/usei/UseiPrincipalPage.vue'
@@ -51,6 +52,9 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import Galleria from 'primevue/galleria';
+import Chart from "primevue/chart";
+import Calendar from "primevue/calendar";
+
 //Main
 import "./assets/main.css";
 
@@ -82,7 +86,8 @@ const routes = [
     {name: 'InstitutionConvocatoria', path : '/institution/Convocatoria', component:InstitutionConvocatoria},
     {name: 'InstitutionProfile', path: '/institution/Profile', component: InstitutionProfile},
     {name: "InstitutionSettings", path: "/institution/Settings", component: InstitutionSettings},
-    {name: "InstitutionRequestsTray", path: "/institution/RequestsTray", component: InstitutionRequestsTray},
+    {name: "InstitutionInternshipFilter", path: "/institution/InternshipFilter", component: InstitutionInternshipFilter},
+    {name: "InstitutionInternshipApplicationTray", path: "/institution/InternshipApplicationTray", component: InstitutionInternshipApplicationTray},
     {name: 'InstitutionPrincipalPage', path : '/institution/home', component:InstitutionPrincipalPage},
     //Usei-Admin
     {name: 'UseiPrincipalPage', path : '/usei/principal', component:UseiPrincipalPage},
@@ -126,5 +131,8 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 //Componentes de PrimeVue
 app.component('ButtonPrime', ButtonPrime);
 app.component('Galleria', Galleria);
+app.component("Chart", Chart);
+app.component("Calendar", Calendar);
+
 //Montar la aplicacion
 app.mount("#app");

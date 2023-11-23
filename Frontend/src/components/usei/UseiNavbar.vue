@@ -10,13 +10,18 @@
     </div>
     <nav class="container__nav">
       <div class="nav__links">
-        <router-link class="link" to="/usei/principal"> Inicio </router-link>
-
+        <router-link class="link" to="/usei/principal">
+          <font-awesome-icon :icon="['fas', 'house']" size="xl" />
+          <span class="nav-direction">Inicio</span>
+        </router-link>
         <span class="link" @click="showDropdownViewsList">
           <font-awesome-icon :icon="['fas', 'briefcase']" size="xl" />
-          <span class="nav-direction">Visualizaci&oacute;n</span>
+          <span class="nav-direction">Componentes</span>
         </span>
-        <ul class="dropdown-menu" v-if="dropdownButton.showDropdownMenu">
+        <ul
+          class="dropdown-menu-components"
+          v-if="dropdownButton.showViewsDropdownMenu"
+        >
           <router-link
             to="/usei/Companies"
             class="dropdown-link"
@@ -32,12 +37,14 @@
             <li class="dropdown-item">Pasant&iacute;as</li>
           </router-link>
         </ul>
-
         <span class="link" @click="showDropdownRequestsList">
-          <font-awesome-icon :icon="['fas', 'briefcase']" size="xl" />
+          <font-awesome-icon :icon="['fas', 'file']" size="xl" />
           <span class="nav-direction">Solicitudes</span>
         </span>
-        <ul class="dropdown-menu" v-if="dropdownButton.showDropdownMenu">
+        <ul
+          class="dropdown-menu-requests"
+          v-if="dropdownButton.showRequestsDropdownMenu"
+        >
           <router-link
             to="/usei/Business"
             class="dropdown-link"
@@ -53,9 +60,9 @@
             <li class="dropdown-item">Solicitudes de pasant&iacute;as</li>
           </router-link>
         </ul>
-
         <router-link class="link" to="/usei/AnalyticsDashboard">
-          An&aacute;lisis de Datos
+          <font-awesome-icon :icon="['fas', 'chart-simple']" size="xl" />
+          <span class="nav-direction">An&aacute;lisis de Datos</span>
         </router-link>
       </div>
       <div class="navbar__buttons">
@@ -80,10 +87,10 @@
     </nav>
   </header>
 </template>
+
 <script>
 import { useThemeStore } from "@/store/common/useThemeStore";
 import Button from "@/components/common/Button.vue";
-import { useMobileMenuStore } from "../../store/common/mobileMenuStore";
 import { useLoginStore } from "@/store/common/loginStore";
 export default {
   name: "NavbarCommon",
@@ -116,9 +123,18 @@ export default {
       this.closeMobileMenu();
       /*Fin del logout*/
     },
+    showDropdownViewsList() {
+      this.dropdownButton.showViewsDropdownMenu =
+        !this.dropdownButton.showViewsDropdownMenu;
+    },
+    showDropdownRequestsList() {
+      this.dropdownButton.showRequestsDropdownMenu =
+        !this.dropdownButton.showRequestsDropdownMenu;
+    },
   },
 };
 </script>
+
 <style scoped>
 .container__header {
   display: flex;
@@ -135,11 +151,61 @@ export default {
   background-color: #fdfeff;
   color: #515c67;
 }
+
+.dropdown-menu-components,
+.dropdown-menu-requests {
+  position: absolute;
+  top: 70%;
+  width: 13%;
+  background-color: white;
+  border-radius: 20px;
+  list-style: none;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.dropdown-menu-components {
+  left: 18%;
+}
+.dropdown-menu-requests {
+  left: 29%;
+}
+
+.dropdown-item {
+  padding: 7% 10%;
+  border-radius: 20px;
+}
+
+.dropdown-link {
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(90, 97, 106, 0.7);
+  color: #fff;
+}
+
+.dropdown-link:active {
+  background-color: aqua;
+}
+
 /*Modo oscuro*/
 .dark-theme header {
   background-color: #434b54;
   color: #cacfdb;
 }
+
+.dark-theme .dropdown-menu-components,
+.dark-theme .dropdown-menu-requests {
+  background-color: #434b54;
+  border: 1px solid #cacfdb;
+}
+
+.dark-theme .dropdown-item {
+  color: #cacfdb;
+}
+
 /*Estilo del logo*/
 .container__header .container__logo img {
   width: 150px;

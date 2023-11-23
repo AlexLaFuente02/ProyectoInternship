@@ -2,8 +2,9 @@
   <div class="main-container">
     <h1>BANDEJA DE SOLICITUDES</h1>
     <h5>
-      Te mostramos los estudiantes/graduados que est&aacute;n solicitando tus
-      pasant&iacute;as.
+      Te mostramos los estudiantes/graduados que est&aacute;n solicitando tu
+      pasant&iacute;a <br />
+      "<i> Desarrollo Web Backend con Spring Boot en Jala Soft </i>".
     </h5>
     <div class="students-container">
       <table class="studentsRequests-table">
@@ -20,7 +21,9 @@
           <td class="request-table-cell">Ingeniería de Sistemas</td>
           <td class="request-table-cell">Si</td>
           <td class="request-table-cell">
-            <Button text="Más información" :color="3"></Button>
+            <router-link class="link" to="/student/profile">
+              <Button text="Ver perfil" :color="3"></Button>
+            </router-link>
           </td>
         </tr>
         <tr class="request-table-row">
@@ -29,7 +32,9 @@
           <td class="request-table-cell">Ingeniería de Sistemas</td>
           <td class="request-table-cell">Si</td>
           <td class="request-table-cell">
-            <Button text="Más información" :color="3"></Button>
+            <router-link class="link" to="/student/profile">
+              <Button text="Ver perfil" :color="3"></Button>
+            </router-link>
           </td>
         </tr>
       </table>
@@ -69,6 +74,10 @@ export default {
 .request-table-head,
 .request-table-cell {
   padding: 10px;
+}
+
+.link {
+  text-decoration: none;
 }
 
 tr:nth-child(even) {

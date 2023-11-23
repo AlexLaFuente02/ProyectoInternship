@@ -1,7 +1,7 @@
 <template>
   <div class="inicio">
     <h1>TUS CONVOCATORIAS</h1>
-    <p>Te mostramos tus convocatorias</p>
+    <h5>Te mostramos tus convocatorias</h5>
     <div class="card-inicio">
       <div class="card">
         <div
@@ -28,24 +28,39 @@
                   </button>
                 </div>
               </div>
-              <div class="title">{{ internship.id }}</div>
-              <div class="description">{{ internship.areapasantia }}</div>
+              <div class="title">ID: {{ internship.id }}</div>
               <div class="description">
+                &Aacute;rea de la pasant&iacute;a: {{ internship.areapasantia }}
+              </div>
+              <div class="description">
+                Descripci&oacute;n funciones o actividades:
                 {{ internship.descripcionfunciones }}
               </div>
               <div class="description">
+                Requisitos de la pasant&iacute;a:
                 {{ internship.requisitoscompetencias }}
               </div>
-              <div class="description">{{ internship.horario_inicio }}</div>
-              <div class="description">{{ internship.horario_fin }}</div>
-              <div class="description">{{ internship.fechasolicitud }}</div>
               <div class="description">
+                Horario de inicio: {{ internship.horario_inicio }}
+              </div>
+              <div class="description">
+                Horario de fin: {{ internship.horario_fin }}
+              </div>
+              <div class="description">
+                Fecha de solicitud: {{ internship.fechasolicitud }}
+              </div>
+              <div class="description">
+                Fecha de selecci&oacute;n del pasante:
                 {{ internship.fechaseleccionpasante }}
               </div>
               <div class="description">
+                Estado de la convocatoria:
                 {{ internship.nombreestadoconvocatoria }}
               </div>
-              <div class="description">{{ internship.tiempoacumplir }}</div>
+              <div class="description">
+                Tiempo a cumplir de la pasant&iacute;a:
+                {{ internship.tiempoacumplir }}
+              </div>
             </div>
           </div>
         </div>
@@ -101,32 +116,6 @@ export default {
 </script>
 
 <style scoped>
-/** estilo eltra de titulo*/
-h1 {
-  font-weight: 900;
-  color: rgb(90, 133, 253);
-  --x-offset: -0.0625em;
-  --y-offset: 0.0625em;
-  --stroke: 0.025em;
-  --background-color: white;
-  --stroke-color: lightblue;
-  text-shadow: var(--x-offset) var(--y-offset) 0px var(--background-color),
-    calc(var(--x-offset) - var(--stroke)) calc(var(--y-offset) + var(--stroke))
-      0px var(--stroke-color);
-}
-/* for browsers that support spread, added in
-    https://drafts.csswg.org/css-text-decor-4/#text-shadow-property
-    currently: none browsers! none of them!
-    I can't even find a test: 
-    https://wpt.fyi/results/css/css-text-decor */
-@supports (text-shadow: 1px 1px 1px 1px rgb(0, 0, 0)) {
-  h1 {
-    text-shadow: var(--x-offset) var(--y-offset) 0px 0px var(--background-color),
-      var(--x-offset) var(--y-offset) var(--stroke) 0px var(--stroke-color);
-  }
-}
-
-/**iniiciooo  boton  */
 .text-content {
   position: relative;
 }
@@ -175,11 +164,10 @@ h1 {
 }
 /**fin  boton  */
 .inicio {
-  position: relative;
-  top: 10px;
-  left: 10px;
+  margin: 3% 5%;
 }
-/**colores de texto de si esta aporbado o no */
+
+/**colores de texto de si esta aprobado o no */
 .text-a,
 .text-p,
 .text-r {
@@ -222,21 +210,21 @@ h1 {
   border: 2px solid black;
   border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 7px;
+  margin-bottom: 2%;
 }
+.dark-theme .card-individual {
+  border: 2px solid white;
+}
+
 .card-inicio {
-  border: 3px solid #ffffff;
   background-color: rgb(255, 255, 255);
   border-radius: 8px;
   overflow: hidden;
-  margin-top: 15px;
-  margin-right: 10%;
-  margin-left: 1%;
   border: 2px solid black;
-  /* Ajusta este valor según el espacio que desees */
 }
 .dark-theme .card-inicio {
-  background-color: #919191;
+  background-color: #353e48;
+  border: 2px solid white;
 }
 
 .content {
