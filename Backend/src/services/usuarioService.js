@@ -5,9 +5,9 @@ const ResponseDTO = require("../DTO/ResponseDTO");
 const TipoUsuario = require('../ENT/TipoUsuarioENT');
 // TRIGGER
 const HistoricoUsuarioService = require("../services/historicoUsuarioService");
-
+const SECRET_KEY_CODES = require('../../config/secretKey.js');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
 const getAllUsers = async () => {
     console.log('Obteniendo todos los usuarios...');
     try {
@@ -92,7 +92,46 @@ const updateUser = async (id, userData) => {
         return new ResponseDTO('U-1004', null, `Error al actualizar el usuario: ${error}`);
     }
 };
-
+//Funcion para cambiar la contraseña de un usuario
+const updatePassword = async (req) => {
+    try {
+        const decoded = validateToken(req);
+        console.log(`Actualizando la contraseña del usuario con ID: ${decoded.id}...`);
+        const usuario = await Usuario.findByPk(decoded.id);
+        if (!usuario) {
+            console.log(`Usuario con ID: ${req.body.id} no encontrado.`);
+            return new ResponseDTO('U-1004', null, 'Usuario no encontrado');
+        }
+        // Hashea la contraseña antes de actualizarla en la base de datos
+        console.log(req.body.contrasenia);
+        const hashedPassword = await bcrypt.hash(req.body.contrasenia, 10);
+        await usuario.update({
+            contrasenia: hashedPassword, // Actualizamos con la contraseña hasheada
+        });
+        console.log('Usuario actualizado correctamente.');
+        return new ResponseDTO('U-0000', null, 'Usuario actualizado correctamente');
+    } catch (error) {
+        console.error(`Error al actualizar el usuario con ID: ${req.body.id}.`, error);
+        return new ResponseDTO('U-1004', null, `Error al actualizar el usuario: ${error}`);
+    }
+};
+/*Funcion para validar el token*/
+const validateToken = (req) => {
+    const token = req.headers.authorization;
+    if(!token || !token.startsWith('Bearer ')) {
+        console.error('No se ha encontrado el token.');
+        return null;
+    }
+    const tokenWithoutBearer = token.substring(7, token.length);
+    try {
+        console.log('Validando el token...');
+        const decoded = jwt.verify(tokenWithoutBearer, SECRET_KEY_CODES.SECRET_KEY);
+        return decoded;
+    } catch (error) {
+        console.error(`Error al validar el token: ${error}`);
+        return null;
+    }
+};
 const deleteUser = async (id) => {
     console.log(`Eliminando el usuario con ID: ${id}...`);
     try {
@@ -116,4 +155,5 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
+    updatePassword,
 };

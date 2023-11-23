@@ -225,18 +225,21 @@ const deleteStudent = async (id) => {
 /*Lista que almacena los codigos de validacion*/
 let codes = [
     //Datos de prueba
-    /*{
-    code: 123456,
-    expiration: new Date().getTime() + 300000 // 5 minutos
+    {
+        code: 123456,
+        expiration: new Date().getTime() + 300000 ,// 5 minutos
+        email: "junito11@ucb.edu.bo"
     },
     {
-    code: 654321,
-    expiration: new Date().getTime() + 300000 // 5 minutos
+        code: 654321,
+        expiration: new Date().getTime() + 300000, // 5 minutos
+        email: "junito21@ucb.edu.bo"
     },
     {
-    code: 111111,
-    expiration: new Date().getTime() + 300000 // 5 minutos
-    }*/
+        code: 111111,
+        expiration: new Date().getTime() + 300000, // 5 minutos
+        email: "junito31@ucb.edu.bo"
+    }
 ];
 /*Funcion para generar los codigos de validacion*/
 const generateCode = (email) => {
@@ -314,7 +317,7 @@ const validateCode = (code) => {
 };
 /*Funcion para generar el token*/
 const generateToken = (idUser,email) => {
-    const token = jwt.sign({ id: idUser, email: email }, SECRET_KEY_CODES.SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: idUser, email: email }, SECRET_KEY_CODES.SECRET_KEY);
     return token;
 };
 

@@ -50,6 +50,7 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import Galleria from 'primevue/galleria';
+import Password from 'primevue/password';
 //Main
 import "./assets/main.css";
 
@@ -125,5 +126,6 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 //Componentes de PrimeVue
 app.component('ButtonPrime', ButtonPrime);
 app.component('Galleria', Galleria);
+app.component('Password', Password);
 //Montar la aplicacion
 app.mount("#app");

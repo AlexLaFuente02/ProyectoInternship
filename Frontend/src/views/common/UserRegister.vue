@@ -11,7 +11,7 @@
 <script>
 import FooterCommon from '../../components/common/FooterCommon.vue';
 import NavbarCommon from '../../components/common/NavbarCommon.vue';
-import UserTypes from '../../components/common/UserTypes.vue';
+import UserTypes from '@/components/common/UserTypes.vue';
 export default {
     components:{
         NavbarCommon,

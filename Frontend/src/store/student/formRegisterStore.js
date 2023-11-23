@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { postStudent } from "@/services/student";
 import { postCode } from "@/services/student";
 import { verifyCode } from "@/services/student";
+import {putStudent} from "@/services/student";
 export const useFormRegisterStore = defineStore({
     id: "formRegister",
     state: () => ({
@@ -30,6 +31,9 @@ export const useFormRegisterStore = defineStore({
         career: "",
         semester: "",
         campus: "",
+        updatePassword: {
+            contrasenia: "",
+        }
     }),
     actions: {
         //Funcion para eliminar los datos del estudiante
@@ -53,6 +57,10 @@ export const useFormRegisterStore = defineStore({
                 },
                 aniograduacion: 0,
                 linkcurriculumvitae: "",
+                updatePassword: {
+                    contrasenia: "",
+                }
+
             };
             this.hasData = false;
             this.codeVerification = "";
@@ -123,6 +131,23 @@ export const useFormRegisterStore = defineStore({
                 console.error("Hubo un error al verificar el codigo de verificacion: ", error);
                 // Puedes lanzar el error nuevamente si es necesario
                 
+                throw error;
+            }
+        },
+        //Funcion para actualizar los datos del estudiante
+        async putStudent() {
+            try {
+                /*Obtener el token de las cookies*/
+                const token = $cookies.get("token");
+                const response = await putStudent(this.updatePassword, token);
+                if (response == null) {
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                // Manejar el error aquí
+                console.error("Hubo un error al actualizar el estudiante: ", error);
+                // Puedes lanzar el error nuevamente si es necesario
                 throw error;
             }
         },

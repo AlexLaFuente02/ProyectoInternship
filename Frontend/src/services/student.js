@@ -101,3 +101,28 @@ export const verifyCode = async (body) => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 };
+//PUT para actualizar el usuario de un estudiante
+export const putStudent = async (contrasenia, token) => {
+    try {
+        const response = await axios.put(`${rutaApi}/usuario/updatePassword`, contrasenia, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        const data = response.data;
+        if (data.code === "U-0000") {
+            alert("Usuario actualizado exitosamente");
+            return data;
+        }
+        else {
+            alert("No se pudo actualizar el usuario");
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al actualizar el estudiante: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+};
