@@ -38,3 +38,14 @@ Accept: application/json
 ### DELETE de Usuario
 DELETE http://{{host}}/usuario/3
 Accept: application/json
+
+###PUT para actualizar contraseña
+PUT http://{{host}}/usuario/updatePassword
+Content-Type: application/json
+Accept: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDksImVtYWlsIjoianVuaXRvMTFAdWNiLmVkdS5ibyIsImlhdCI6MTcwMDcxNDc1MX0.Pn4jLKLFB3yx2Al-EYW9xf-6iKz520YVGIg7tea5kzI
+
+{
+  "contrasenia": "passupdated"
+}
+

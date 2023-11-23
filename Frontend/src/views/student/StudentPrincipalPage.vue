@@ -1,5 +1,8 @@
 <template>
     <div class="student__principalPage">
+        <h1>
+            {{ dataUser }}
+        </h1>
             <div class="student__profile">
                 <div class="profile__content__header">
                         <div class="content__welcome">
@@ -8,10 +11,10 @@
                             </div>
                             <div class="student__data">
                                 <span class="welcome__student">
-                                    Hola, Edward!
+                                    Hola, {{ getNombre }}!
                                 </span>
                                 <span class="career__student">
-                                    Ingenieria de Sistemas
+                                    {{ getCorreo  }}
                                 </span>
                             </div>
                         </div>
@@ -139,6 +142,7 @@ import SimpleCard from "@/components/common/SimpleCard.vue";
 import ArrowCards from "@/components/common/ArrowCards.vue";
 import LittleNav from "@/components/common/LittleNav.vue";
 import {useRequestsByIDStore} from "@/store/student/requestsByIDStore";
+import {useUserByIdStore} from "@/store/common/dataUserStore";
 export default {
     data() {
         return {
@@ -150,6 +154,10 @@ export default {
             requestsRejected: [],
             requestsPending: [],
             type: "Pendiente",
+            dataUserStore: useUserByIdStore(),
+            dataUser:[],
+            nombre: "",
+            correo: "",
         };
     },
     components: {
@@ -161,11 +169,15 @@ export default {
     methods: {
         async getData(){
             useLoaderStore().activateLoader();
+            const id = $cookies.get("id");
+            await this.dataUserStore.getUserByIdUsuario(id);
+            this.dataUser = this.dataUserStore.user;
+            console.log(this.dataUser);
             await useInternshipsByIDStore().loadInternshipsByIdStudent();
-            await useRequestsByIDStore().loadRequestsByIdStudent();
+            await useRequestsByIDStore().loadRequestsByIdStudent(this.dataUserStore.user.id);
             this.listInterships = useInternshipsByIDStore().internships;
-            this.listRequests = useRequestsByIDStore().requests.result;
-            this.listRequests.forEach(element => {
+            this.listRequests = useRequestsByIDStore().requests;
+            /*this.listRequests.forEach(element => {
                 if(element.estadopostulacion_id.nombreestadopostulacion == "EN ESPERA"){
                     this.requestsPending.push(element);
                 }
@@ -175,7 +187,7 @@ export default {
                 else{
                     this.requestsRejected.push(element);
                 }
-            });
+            });*/
             this.everyInternshipsAreLoaded = true;
             useLoaderStore().desactivateLoader();
         },
@@ -197,6 +209,9 @@ export default {
                 this.type = "Rechazado";
             }
         },
+        
+
+
     },
     computed: {
         listRequestsComputed(){
@@ -205,10 +220,25 @@ export default {
         typeComputed(){
             return this.type;
         },
+        getNombre(){
+            //Obtener el primer nombre del estudiante del campo nombres
+            try{
+                this.nombre = this.dataUser.nombres.split(" ")[0];
+            }
+            catch{
+                this.nombre = "";
+            }
+            return this.nombre;
+        },
+        getCorreo(){
+            //Obtener el correo del estudiante
+            this.correo = this.dataUser.correoelectronico;
+            return this.correo;
+        },
         
     },
-    created(){
-        this.getData();
+    async mounted(){
+        await this.getData();
     },
 }
 </script>
@@ -489,6 +519,10 @@ export default {
     .summary__content__text{
         font-size: 0.6rem;
     }
+    .career__student{
+    font-size: 0.5rem;
+    font-weight: 400;
+}
 
 
 

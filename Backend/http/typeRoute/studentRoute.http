@@ -53,13 +53,13 @@ GET {{baseURL}}/convocatorias/activas
 Accept: application/json
 
 
-@studentID = 1
+@studentID = 2
 ###GET Postulaciones por estudiante
 GET {{baseURL}}/{{studentID}}/postulaciones
 Accept: application/json
 
 ###GET Postulaciones de estudiante segun estadopostulacion
-@estadopostulacionID = 1
+@estadopostulacionID = 2
 ###StudentID = 1-Aprobadas, 2-Pendientes, 3-Rechazadas
 GET {{baseURL}}/{{studentID}}/postulaciones/{{estadopostulacionID}}
 Accept: application/json

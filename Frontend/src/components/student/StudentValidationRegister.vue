@@ -14,7 +14,11 @@ correo electrónico de la UCB y confírmala.</p>
                 <label>Correo Electrónico</label>
                 <input placeholder="Introduzca su correo UCB"
                 
-                v-model="formStore.student.correoelectronico" type="email" class="field">
+                v-model="formStore.student.correoelectronico" type="email" class="field"
+                pattern=".*@ucb.edu.bo"
+                title="El correo debe ser el institucional de la UCB" autocomplete="on"
+                
+                >
             </div>
             <br>
             <div class="form__button" v-if="send">
