@@ -13,11 +13,20 @@ export const loadInternshipsByIdStudent = async () => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 }
-export const loadRequestsByIdStudent = async () => {
-    /*Cambiar por la ruta de la api que corresponda*/
-    //Se esta usando la ruta de la api de prueba
-    const response = await axios.get(`${rutaApi}/postulacion`);
-    return response.data;
+export const loadRequestsByIdStudent = async (idStudent) => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/${idStudent}/postulaciones`);
+        const data = response.data;
+        if (data.code === "P-0000") {
+            return data.result;
+        }else{
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar las postulaciones: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
 }
 export const loadInstitutions = async () => {
     /*Cambiar por la ruta de la api que corresponda*/

@@ -3,6 +3,13 @@ const TipoUsuarioDTO = require('../DTO/TipoUsuarioDTO');
 const Usuario = require("../ENT/UsuarioENT");
 const ResponseDTO = require("../DTO/ResponseDTO");
 const TipoUsuario = require('../ENT/TipoUsuarioENT');
+const EstudianteDTO = require('../DTO/EstudianteDTO');
+const Estudiante = require('../ENT/EstudianteENT');
+const AdminuseiDTO = require('../DTO/AdminuseiDTO');
+const Adminusei = require('../ENT/AdminuseiENT');
+const InstitucionDTO = require('../DTO/InstitucionDTO');
+const Institucion = require('../ENT/InstitucionENT');
+
 // TRIGGER
 const HistoricoUsuarioService = require("../services/historicoUsuarioService");
 const SECRET_KEY_CODES = require('../../config/secretKey.js');
@@ -148,7 +155,95 @@ const deleteUser = async (id) => {
         return new ResponseDTO('U-1005', null, `Error al eliminar el usuario: ${error}`);
     }
 };
+/*Obtener los datos de un usuario por el idusuario*/
+const getUserByIdUsuario = async (idusuario) => {
+    console.log(`Obteniendo el usuario con idusuario: ${idusuario}...`);
+    try {
+        const usuario = await Usuario.findOne({
+            where: {
+                id: idusuario
+            },
+            include: [{ model: TipoUsuario, as: 'tipousuario' }]
+        });
+        if (!usuario) {
+            console.log(`Usuario con idusuario: ${idusuario} no encontrado.`);
+            return new ResponseDTO('U-1002', null, 'Usuario no encontrado');
+        }
+        if(usuario.tipousuario.id === 1){
+            return await getEstudianteByIdUsuario(idusuario);
+        }else if(usuario.tipousuario.id === 2){
+            return await getInstitucionByIdUsuario(idusuario);
+        } else if(usuario.tipousuario.id === 3){
+            return await getAdmiUseiByIdUsuario(idusuario);
+        }
 
+        return new ResponseDTO('U-0000', usuarioDTO, 'Usuario obtenido correctamente');
+    } catch (error) {
+        console.error(`Error al obtener el usuario con idusuario: ${idusuario}.`, error);
+        return new ResponseDTO('U-1002', null, `Error al obtener el usuario: ${error}`);
+    }
+};
+const getEstudianteByIdUsuario = async (idusuario) => {
+    console.log(`Obteniendo el estudiante con idusuario: ${idusuario}...`);
+    try {
+        const estudiante = await Estudiante.findOne({
+            where: {
+                usuario_id: idusuario
+            },
+           
+        });
+        if (!estudiante) {
+            console.log(`Estudiante con idusuario: ${idusuario} no encontrado.`);
+            return new ResponseDTO('U-1002', null, 'Estudiante no encontrado');
+        }
+        const estudianteDTO = new EstudianteDTO(estudiante.id, estudiante.usuario_id, estudiante.nombres, estudiante.apellidos, estudiante.carnetidentidad, estudiante.correoelectronico, estudiante.celularcontacto, estudiante.graduado, estudiante.carrera_id, estudiante.semestre_id, estudiante.sede_id, estudiante.aniograduacion, estudiante.linkcurriculumvitae);
+        console.log('Estudiante obtenido correctamente.');
+        return new ResponseDTO('U-0000', estudianteDTO, 'Estudiante obtenido correctamente');
+    } catch (error) {
+        console.error(`Error al obtener el estudiante con idusuario: ${idusuario}.`, error);
+        return new ResponseDTO('U-1002', null, `Error al obtener el estudiante: ${error}`);
+    }
+}
+const getInstitucionByIdUsuario = async (idusuario) => {
+    console.log(`Obteniendo la institucion con idusuario: ${idusuario}...`);
+    try {
+        const institucion = await Institucion.findOne({
+            where: {
+                usuario_id: idusuario
+            },
+            include: [{ model: Institucion, as: 'institucion' }]
+        });
+        if (!institucion) {
+            console.log(`Institucion con idusuario: ${idusuario} no encontrado.`);
+            return new ResponseDTO('U-1002', null, 'Institucion no encontrado');
+        }
+        const institucionDTO = new InstitucionDTO(institucion.id, institucion.usuario_id, institucion.nombre, institucion.direccion, institucion.telefono, institucion.correoelectronico, institucion.sitioweb, institucion.logo);
+        console.log('Institucion obtenido correctamente.');
+        return new ResponseDTO('U-0000', institucionDTO, 'Institucion obtenido correctamente');
+    } catch (error) {
+        console.error(`Error al obtener la institucion con idusuario: ${idusuario}.`, error);
+        return new ResponseDTO('U-1002', null, `Error al obtener la institucion: ${error}`);
+    }
+}
+const getAdmiUseiByIdUsuario = async (idusuario) => {
+    console.log(`Obteniendo el administrador de la usei con idusuario: ${idusuario}...`);
+    try {
+        const adminusei = await Adminusei.findOne({
+            where: {
+                usuario_id: idusuario
+            },
+            include: [{ model: Adminusei, as: 'adminusei' }]
+        });
+        if (!adminusei) {
+            return new ResponseDTO('U-1002', null, 'Administrador de la usei no encontrado');
+        }
+        const adminuseiDTO = new AdminuseiDTO(adminusei.id,adminusei.usuario_id);
+        return new ResponseDTO('U-0000', adminuseiDTO, 'Administrador de la usei obtenido correctamente');
+    } catch (error) {
+        console.error(`Error al obtener el administrador de la usei con idusuario: ${idusuario}.`, error);
+        return new ResponseDTO('U-1002', null, `Error al obtener el administrador de la usei: ${error}`);
+    }
+}
 module.exports = {
     getAllUsers,
     getUserById,
@@ -156,4 +251,5 @@ module.exports = {
     updateUser,
     deleteUser,
     updatePassword,
+    getUserByIdUsuario
 };

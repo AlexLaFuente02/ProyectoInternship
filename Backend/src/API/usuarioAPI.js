@@ -201,5 +201,15 @@ router.delete('/:id', async (req, res) => {
         message: response.message,
     });
 });
-
+/*Obtener los datos de usuario por idUsuario*/
+router.get('/getUsuarioByIdUsuario/:idUsuario', async (req, res) => {
+    console.log(`GET request received for getUsuarioByIdUsuario with ID: ${req.params.idUsuario}`);
+    const response = await usuarioService.getUserByIdUsuario(req.params.idUsuario);
+    res.json({
+        method: 'getUsuarioByIdUsuario',
+        code: response.code,
+        result: response.result,
+        message: response.message,
+    });
+});
 module.exports = router;

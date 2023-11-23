@@ -79,6 +79,7 @@
 <script>
 import Button from "@/components/common/Button.vue";
 import { useLoginStore } from "@/store/common/loginStore";
+import {useUserByIdStore} from "@/store/common/dataUserStore";
 export default {
   name: "LoginPage",
   components: {
@@ -90,6 +91,7 @@ export default {
         idusuario: "",
         password: "",
       },
+      userStore: useUserByIdStore(),
       attempts: 0,
       showPassword: false,
       buttonDisabled: false,
@@ -106,7 +108,7 @@ export default {
     };
   },
   methods: {
-    login() {
+    async login() {
       const userIdRegEx = /^[A-Za-z0-9-_.&]{5,}$/;
       const passwordRegEx = /^[A-Za-z0-9@#$-_.%^&*()!~?]{2,}$/;
       if (this.userData.idusuario === "") {
@@ -138,11 +140,11 @@ export default {
           },
           body: JSON.stringify(this.userData),
         })
-          .then((response) => {
+          .then  ( async (response) =>  {
             if (response.ok) {
               // La solicitud fue exitosa
               console.log("Inicio de sesión exitoso");
-              response.json().then((data) => {
+              response.json().then( async (data) => {
                 var result = data.result;
                 $cookies.set("id", result.id);
                 $cookies.set("username", result.username);
