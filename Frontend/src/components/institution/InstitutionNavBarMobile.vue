@@ -169,6 +169,7 @@ export default {
       $cookies.remove("type");
       $cookies.remove("connect.sid");
       $cookies.remove("username");
+      $cookies.remove("institutionID");
       useLoginStore().setLogin(0);
       this.$router.push("/");
       this.closeMobileMenu();

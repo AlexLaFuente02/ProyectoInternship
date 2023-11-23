@@ -79,6 +79,7 @@
 <script>
 import Button from "@/components/common/Button.vue";
 import { useLoginStore } from "@/store/common/loginStore";
+import { institutionsStore } from "../../store/institution/InstitutionsStore";
 export default {
   name: "LoginPage",
   components: {
@@ -103,6 +104,8 @@ export default {
         userIdErrorMessage: false,
         passwordErrorMessage: false,
       },
+      institutionsStore: institutionsStore(),
+      institutionsList: [],
     };
   },
   methods: {
@@ -147,6 +150,11 @@ export default {
                 $cookies.set("id", result.id);
                 $cookies.set("username", result.username);
                 $cookies.set("type", result.tipousuario.id);
+                this.institutionsList.forEach((institution) => {
+                  if (result.id === institution.usuario.id) {
+                    $cookies.set("institutionID", institution.id);
+                  }
+                });
                 if (result.tipousuario.id == 1) {
                   useLoginStore().setLogin(1);
                   this.$router.push("/student/");
@@ -201,6 +209,17 @@ export default {
         }
       }, 1000);
     },
+    async getInstitutions() {
+      await this.institutionsStore.loadInstitutions();
+      this.institutionsList = this.institutionsStore.institutions.result;
+      // this.institutionsList = this.institutionsList.map((institution) => {
+      //   return {
+      //     id: institution.id,
+      //     nombreinstitucion: institution.nombreinstitucion,
+      //   };
+      // });
+      console.log(this.institutionsList);
+    },
   },
   computed: {
     formattedTime() {
@@ -210,6 +229,9 @@ export default {
         this.timer.seconds < 10 ? `0${this.timer.seconds}` : this.timer.seconds;
       return `${min}:${sec}`;
     },
+  },
+  created() {
+    this.getInstitutions();
   },
 };
 </script>

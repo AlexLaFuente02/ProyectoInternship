@@ -148,7 +148,7 @@ export default {
   methods: {
     async initialize() {
       useLoaderStore().activateLoader();
-      await this.institutionById.loadInstitutionById(1);
+      await this.institutionById.loadInstitutionById($cookies.get("institutionID"));
       this.companyInformation = this.institutionById.institution.result;
       console.log(this.companyInformation);
       this.companyIsLoaded = true;
