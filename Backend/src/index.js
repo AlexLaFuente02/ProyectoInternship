@@ -41,6 +41,7 @@ const authAPI = require("./API/authAPI");
 const studentRoutes = require('./routes/studentRoutes');
 const instutionRoutes = require('./routes/institutionRoutes');
 const useiRoutes = require('./routes/useiRoutes');
+const publicRoutes = require('./routes/publicRoutes');
 
 
 // Middleware para analizar el cuerpo de las solicitudes JSON
@@ -91,6 +92,8 @@ app.use('/student', studentRoutes);
 app.use('/institution', instutionRoutes);
 //app.use('/usei',isAuthenticated, checkRole(1), useiRoutes);
 app.use('/usei', useiRoutes);
+
+app.use('/public', publicRoutes);
 
 //app.use('/public', publicRoutes);
 
