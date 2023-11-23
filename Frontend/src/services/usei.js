@@ -13,6 +13,16 @@ export const loadUseiInstitutionPendent = async () => {
     return response.data;
 }
 
+export const activateInstitution = async (institutionId) => {
+    try {
+      const response = await axios.put(`${rutaUsei}/institucion/activate/${institutionId}`);
+      return response.data;
+    } catch (error) {
+      // Manejar errores aquí si es necesario
+      throw error;
+    }
+  };
+
 export const loadUseiInternship = async () => {
     /*Cambiar por la ruta de la api que corresponda*/
     //Se esta usando la ruta de la api de prueba

@@ -453,7 +453,8 @@ const getInstitutionPending = async () => {
         institucion.celularcontacto, 
         institucion.estado, 
         institucion.usuario_id, 
-        institucion.sectorpertenencia_id
+        sectorpertenencia.id AS sectorpertenencia_id,
+        sectorpertenencia.nombresectorpertenencia
       FROM
         institucion
       LEFT JOIN sectorpertenencia ON institucion.sectorpertenencia_id = sectorpertenencia.id
