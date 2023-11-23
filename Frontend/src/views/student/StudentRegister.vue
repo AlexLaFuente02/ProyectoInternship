@@ -17,7 +17,7 @@
         ></component>
       </div>
       <div class="controls">
-        <div class="container__button">
+        <!--<div class="container__button">
             <Button 
                 text="Anterior" 
                 :color="0" 
@@ -40,8 +40,8 @@
                 :disabled="true"
                 >
             </Button>
-        </div>
-        <div class="container__button" v-else>
+        </div>-->
+        <div class="container__button" v-if="currentStep === steps.length">
             <Button 
                 text="Registrarse" 
                 :color="0" 
@@ -59,11 +59,13 @@ import StudentFormRegister from '@/components/student/StudentFormRegister.vue';
 import StudentValidationRegister from '@/components/student/StudentValidationRegister.vue';
 import { useFormRegisterStore } from "@/store/student/formRegisterStore";
 import Button from '@/components/common/Button.vue';
+import StudentFormPassword from '../../components/student/StudentFormPassword.vue';
 export default {
     components:{
         StudentFormRegister,
         StudentValidationRegister,
         Button,
+        StudentFormPassword
     },
     data(){
         return{
@@ -77,6 +79,11 @@ export default {
                 },
                 {
                     id: 2,
+                    component: 'StudentFormPassword',
+                    title: 'Contraseña',
+                },
+                {
+                    id: 3,
                     component: 'StudentFormRegister',
                     title: 'Formulario',
                 },

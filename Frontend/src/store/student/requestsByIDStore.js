@@ -7,8 +7,8 @@ export const useRequestsByIDStore = defineStore({
         isDataLoaded: false,
     }),
     actions: {
-        async loadRequestsByIdStudent() {
-            this.requests = await loadRequestsByIdStudent();
+        async loadRequestsByIdStudent(idStudent) {
+            this.requests = await loadRequestsByIdStudent(idStudent);
             this.isDataLoaded = true;
         },
     },

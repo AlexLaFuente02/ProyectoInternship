@@ -1,6 +1,6 @@
 /* Estilos generales */
 
-*,*::before,*::after{
+*,*::before,*::after:not(.passwordContainer){
   margin: 0;
   padding:0;
   box-sizing: border-box;
@@ -32,6 +32,7 @@ input {
     box-shadow 0.2s;
   border: 1px solid #dfe7f1;
   background-color: #fff;
+  width: 100%;
 }
 input:focus {
   outline: none;
