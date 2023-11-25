@@ -1,8 +1,6 @@
 <template>
     <div class="student__principalPage">
-        <h1>
-            {{ dataUser }}
-        </h1>
+
             <div class="student__profile">
                 <div class="profile__content__header">
                         <div class="content__welcome">
@@ -36,16 +34,16 @@
                         Resumen general de tus pasantías
                     </span>
                     <div class="summary__content">
-                        <span class="summary__content__number">72 
+                        <span class="summary__content__number">{{ listRequestsAcceptedComputed.length }}
                             <span class="summary__content__text">aprobado</span>
                         </span>
-                        <span class="summary__content__number">4 
+                        <span class="summary__content__number">{{ listRequestsPendingComputed.length }}
                             <span class="summary__content__text">pendiente</span>
                         </span>
-                        <span class="summary__content__number">18 
+                        <span class="summary__content__number">{{ listRequestsRejectedComputed.length }}
                             <span class="summary__content__text">rechazado</span>
                         </span>
-                        <span class="summary__content__number">94
+                        <span class="summary__content__number">{{ listRequestsComputed.length }}
                             <span class="summary__content__text">Totales</span>
                         </span>
                     </div>
@@ -124,7 +122,7 @@
 
         <div class="student__content__internship">
             <CardList 
-            :list="listInterships"
+            :list="popularInternships"
             :title="title"
             v-if="everyInternshipsAreLoaded"
             />
@@ -153,11 +151,13 @@ export default {
             requestsAccepted: [],
             requestsRejected: [],
             requestsPending: [],
+            allRequests: [],
             type: "Pendiente",
             dataUserStore: useUserByIdStore(),
             dataUser:[],
             nombre: "",
             correo: "",
+            popularInternships: [],
         };
     },
     components: {
@@ -172,13 +172,15 @@ export default {
             const id = $cookies.get("id");
             await this.dataUserStore.getUserByIdUsuario(id);
             this.dataUser = this.dataUserStore.user;
-            console.log(this.dataUser);
             await useInternshipsByIDStore().loadInternshipsByIdStudent();
             await useRequestsByIDStore().loadRequestsByIdStudent(this.dataUserStore.user.id);
+            await useInternshipsByIDStore().loadPopularInternships();
             this.listInterships = useInternshipsByIDStore().internships;
             this.listRequests = useRequestsByIDStore().requests;
-            /*this.listRequests.forEach(element => {
-                if(element.estadopostulacion_id.nombreestadopostulacion == "EN ESPERA"){
+            this.allRequests = this.listRequests;
+            this.popularInternships = useInternshipsByIDStore().popularInternships;
+            this.listRequests.forEach(element => {
+                if(element.estadopostulacion_id.nombreestadopostulacion == "PENDIENTE"){
                     this.requestsPending.push(element);
                 }
                 else if(element.estadopostulacion_id.nombreestadopostulacion == "APROBADO"){
@@ -187,7 +189,7 @@ export default {
                 else{
                     this.requestsRejected.push(element);
                 }
-            });*/
+            });
             this.everyInternshipsAreLoaded = true;
             useLoaderStore().desactivateLoader();
         },
@@ -209,13 +211,19 @@ export default {
                 this.type = "Rechazado";
             }
         },
-        
-
-
     },
     computed: {
         listRequestsComputed(){
-            return this.listRequests;
+            return this.allRequests;
+        },
+        listRequestsAcceptedComputed(){
+            return this.requestsAccepted;
+        },
+        listRequestsRejectedComputed(){
+            return this.requestsRejected;
+        },
+        listRequestsPendingComputed(){
+            return this.requestsPending;
         },
         typeComputed(){
             return this.type;
