@@ -4,9 +4,24 @@ import { rutaUsei } from '../assets/apiConfig';
 export const loadUseiInstitution = async () => {
     /*Cambiar por la ruta de la api que corresponda*/
     //Se esta usando la ruta de la api de prueba
-    const response = await axios.get(`${rutaApi}/institucion`);
+    const response = await axios.get(`${rutaUsei}/instituciones/activas`);
     return response.data;
 }
+
+export const loadUseiInstitutionPendent = async () => {
+    const response = await axios.get(`${rutaUsei}/instituciones/pendientes`);
+    return response.data;
+}
+
+export const activateInstitution = async (institutionId) => {
+    try {
+      const response = await axios.put(`${rutaUsei}/institucion/activate/${institutionId}`);
+      return response.data;
+    } catch (error) {
+      // Manejar errores aquí si es necesario
+      throw error;
+    }
+  };
 
 export const loadUseiInternship = async () => {
     /*Cambiar por la ruta de la api que corresponda*/

@@ -108,7 +108,10 @@ export default {
   computed: {
         showMobileMenu(){
             return useMobileMenuStore().mobileMenu;
-        }
+        },
+        isSmallScreen() {
+          return window.innerWidth <= 1250;
+        },
     },
   methods: {
     toggleDarkMode() {

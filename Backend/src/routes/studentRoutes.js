@@ -9,6 +9,7 @@ const sedeService = require('../services/sedeService');
 const institucionService = require('../services/institucionService');
 const router = express.Router();
 
+const { sendEmail } = require('../services/emailService');
 // Ruta para obtener todas las convocatorias para estudiantes
 router.get('/convocatoria', async (req, res) => {
     try {

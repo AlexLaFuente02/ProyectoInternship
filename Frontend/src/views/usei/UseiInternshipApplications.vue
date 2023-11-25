@@ -80,49 +80,7 @@
     
     <style scoped>
     /** estilo eltra de titulo*/
-    h1 {
-      font-weight: 900;
-      color: rgb(90, 133, 253);
-      --x-offset: -0.0625em;
-      --y-offset: 0.0625em;
-      --stroke: 0.025em;
-      --background-color: white;
-      --stroke-color: lightblue;
-      text-shadow:
-        var(--x-offset)
-        var(--y-offset)
-        0px
-        var(--background-color), 
-        
-        calc( var(--x-offset) - var(--stroke) )
-        calc( var(--y-offset) + var(--stroke) )
-        0px
-        var(--stroke-color);
-      
-    }
-    /* for browsers that support spread, added in
-    https://drafts.csswg.org/css-text-decor-4/#text-shadow-property
-    currently: none browsers! none of them!
-    I can't even find a test: 
-    https://wpt.fyi/results/css/css-text-decor */
-    @supports ( text-shadow: 1px 1px 1px 1px rgb(0, 0, 0) ) {
-      h1 {
-        text-shadow:
-          
-          var(--x-offset)
-          var(--y-offset)
-          0px
-          0px
-          var(--background-color), 
-          
-          var(--x-offset) 
-          var(--y-offset)
-          var(--stroke)
-          0px
-          var(--stroke-color);
-        
-      }
-    }
+   
     
     /**iniiciooo  boton  */
     .text-content {
@@ -183,6 +141,7 @@
       position: relative;
       top: 10px;
       left: 10px;
+      margin-bottom: 30px;
     }
     /**colores de texto de si esta aporbado o no */
     
@@ -203,8 +162,8 @@
       margin-bottom: 7px;
     }
     .card-inicio{
-      border: 3px solid #ffffff;
-      background-color:  #434B54;
+      border: 3px solid #ccc;
+
       border-radius: 8px;
       overflow: hidden;
       margin-top: 15px;

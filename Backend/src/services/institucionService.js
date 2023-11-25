@@ -386,8 +386,8 @@ const getInstitutionsBySector = async (sectorId) => {
 const getInstitutionApproved = async () => {
   console.log("Obteniendo institucion con estado ACTIVO...");
   try {
-    const result = await sequelize.query(
-      `SELECT
+    const result = await sequelize.query(`
+      SELECT
         institucion.id, 
         institucion.nombreinstitucion, 
         institucion.reseniainstitucion, 
@@ -397,14 +397,14 @@ const getInstitutionApproved = async () => {
         institucion.celularcontacto, 
         institucion.estado, 
         institucion.usuario_id, 
-        institucion.sectorpertenencia_id
+        sectorpertenencia.id AS sectorpertenencia_id,
+        sectorpertenencia.nombresectorpertenencia
       FROM
         institucion
+      LEFT JOIN sectorpertenencia ON institucion.sectorpertenencia_id = sectorpertenencia.id
       WHERE
-        institucion.estado = "ACTIVO"      
-          `,
-      { type: sequelize.QueryTypes.SELECT }
-    );
+        institucion.estado = "ACTIVO"
+    `, { type: sequelize.QueryTypes.SELECT });
 
     const resultWithImageUrl = result.map((item) => ({
       id: item.id,
@@ -416,22 +416,20 @@ const getInstitutionApproved = async () => {
       celularcontacto: item.celularcontacto,
       estado: item.estado,
       usuario_id: item.usuario_id,
-      sectorpertenencia_id: item.sectorpertenencia_id,
+      sectorpertenencia: item.nombresectorpertenencia ? {
+        id: item.sectorpertenencia_id,
+        nombresectorpertenencia: item.nombresectorpertenencia
+      } : null,
     }));
 
-    console.log(
-      "Instituciones con estado ACTIVO obtenidas correctamente"
-    );
+    console.log("Instituciones con estado ACTIVO obtenidas correctamente");
     return new ResponseDTO(
       "IP-0000",
       resultWithImageUrl,
       "Instituciones con estado ACTIVO obtenidas correctamente"
     );
   } catch (error) {
-    console.error(
-      "Error al obtener Instituciones con estado ACTIVO: ",
-      error
-    );
+    console.error("Error al obtener Instituciones con estado ACTIVO: ", error);
     return new ResponseDTO(
       "IP-1001",
       null,
@@ -439,6 +437,7 @@ const getInstitutionApproved = async () => {
     );
   }
 };
+
 
 const getInstitutionPending = async () => {
   console.log("Obteniendo institucion con estado PENDIENTE...");
@@ -454,9 +453,11 @@ const getInstitutionPending = async () => {
         institucion.celularcontacto, 
         institucion.estado, 
         institucion.usuario_id, 
-        institucion.sectorpertenencia_id
+        sectorpertenencia.id AS sectorpertenencia_id,
+        sectorpertenencia.nombresectorpertenencia
       FROM
         institucion
+      LEFT JOIN sectorpertenencia ON institucion.sectorpertenencia_id = sectorpertenencia.id
       WHERE
         institucion.estado = "PENDIENTE"      
           `,
@@ -473,7 +474,10 @@ const getInstitutionPending = async () => {
       celularcontacto: item.celularcontacto,
       estado: item.estado,
       usuario_id: item.usuario_id,
-      sectorpertenencia_id: item.sectorpertenencia_id,
+      sectorpertenencia: item.nombresectorpertenencia ? {
+        id: item.sectorpertenencia_id,
+        nombresectorpertenencia: item.nombresectorpertenencia
+      } : null,
     }));
 
     console.log(

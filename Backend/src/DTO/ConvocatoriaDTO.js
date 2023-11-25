@@ -62,7 +62,7 @@
  */
 
 class ConvocatoriaDTO {
-    constructor(id, areapasantia, descripcionfunciones, requisitoscompetencias, horario_inicio, horario_fin, fechasolicitud, fechaseleccionpasante, estadoconvocatoria, institucion, tiempoacumplir) {
+    constructor(id, areapasantia, descripcionfunciones, requisitoscompetencias, horario_inicio, horario_fin, fechasolicitud, fechaseleccionpasante, estadoconvocatoria, institucion, tiempoacumplir, totalPostulaciones) {
         this.id = id;
         this.areapasantia = areapasantia;
         this.descripcionfunciones = descripcionfunciones;
@@ -74,6 +74,7 @@ class ConvocatoriaDTO {
         this.estadoconvocatoria = estadoconvocatoria;
         this.institucion = institucion;
         this.tiempoacumplir = tiempoacumplir;
+        this.totalPostulaciones = totalPostulaciones;
     }
 }
 

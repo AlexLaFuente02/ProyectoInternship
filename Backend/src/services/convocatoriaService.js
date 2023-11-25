@@ -273,6 +273,7 @@ const getPopularConvocatorias = async () => {
                 c.id,
                 c.areapasantia,
                 c.descripcionfunciones,
+                c.requisitoscompetencias,
                 c.horario_inicio,
                 c.horario_fin,
                 c.fechasolicitud,
@@ -280,26 +281,62 @@ const getPopularConvocatorias = async () => {
                 c.estadoconvocatoria_id,
                 c.institucion_id,
                 c.tiempoacumplir_id,
+                ta.descripcion AS tiempoacumplir_descripcion,
+                e.nombreestadoconvocatoria,
+                i.nombreinstitucion,
                 COUNT(p.id) AS totalPostulaciones
             FROM 
                 convocatoria c
             LEFT JOIN 
                 postulacion p ON c.id = p.convocatoria_id
+            LEFT JOIN
+                tiempoacumplir ta ON c.tiempoacumplir_id = ta.id
+            LEFT JOIN
+                estadoconvocatoria e ON c.estadoconvocatoria_id = e.id
+            LEFT JOIN
+                institucion i ON c.institucion_id = i.id
             GROUP BY 
-                c.id
+                c.id, c.areapasantia, c.descripcionfunciones, c.requisitoscompetencias, c.horario_inicio,
+                c.horario_fin, c.fechasolicitud, c.fechaseleccionpasante, c.estadoconvocatoria_id,
+                c.institucion_id, c.tiempoacumplir_id, ta.descripcion, e.nombreestadoconvocatoria, i.nombreinstitucion
             ORDER BY 
                 totalPostulaciones DESC
-            LIMIT 10;`,
+            LIMIT 10;
+            `,
             { type: sequelize.QueryTypes.SELECT }
         );
 
+        // Mapear los resultados a objetos DTO
+        const convocatoriasDTO = convocatoriasPopulares.map(convocatoria => {
+            const estadoDTO = new EstadoConvocatoriaDTO(convocatoria.estadoconvocatoria_id, convocatoria.nombreestadoconvocatoria);
+            const institucionDTO = new InstitucionDTO(convocatoria.institucion_id, convocatoria.nombreinstitucion);
+            const tiempoDTO = new TiempoAcumplirDTO(convocatoria.tiempoacumplir_id, convocatoria.tiempoacumplir_descripcion);
+
+            return new ConvocatoriaDTO(
+                convocatoria.id,
+                convocatoria.areapasantia,
+                convocatoria.descripcionfunciones,
+                convocatoria.requisitoscompetencias,
+                convocatoria.horario_inicio,
+                convocatoria.horario_fin,
+                convocatoria.fechasolicitud,
+                convocatoria.fechaseleccionpasante,
+                estadoDTO,
+                institucionDTO,
+                tiempoDTO,
+                convocatoria.totalPostulaciones
+            );
+        });
+
         console.log('Convocatorias populares obtenidas correctamente.');
-        return new ResponseDTO('C-0000', convocatoriasPopulares, 'Convocatorias populares obtenidas correctamente');
+        return new ResponseDTO('C-0000', convocatoriasDTO, 'Convocatorias populares obtenidas correctamente');
     } catch (error) {
         console.error('Error al obtener convocatorias populares:', error);
         return new ResponseDTO('C-1007', null, `Error al obtener convocatorias populares: ${error}`);
     }
 };
+
+
 
 const getPendingConvocatorias = async () => {
     console.log('Obteniendo todas las convocatorias PENDIENTES...');

@@ -4,10 +4,10 @@
       <p>Te mostramos tus solicitudes de empresas para entrar a la pagina</p>
       <div class="card-inicio">
         <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card-individual">
+          <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="card-individual">
             <div class="content">
               <div class="image">
-                <img :src="card.imageUrl" alt="Card image" class="card-image">
+                <img :src="card.logoinstitucion || defaultImage" alt="Imagen de la Empresa" class="card-image">
               </div>
               <div class="text-content">
                 <div class="button-container">
@@ -16,9 +16,9 @@
                     <button class="delete-btn" @click="deleteCard(card.id)">Rechazar</button>
                   </div>
                 </div>
-                <div class="title">{{ card.empresa }}</div>
-                <div class="description">{{ card.descripcion }}</div>
-              </div>
+                    <div class="title">{{ card.nombreinstitucion }}</div>
+                    <div class="description">{{ card.reseniainstitucion }}</div>
+                </div>
             </div>
           </div>
         </div>
@@ -26,103 +26,56 @@
     </div>
   </template>
   
-    
-    <script>
-    export default {
-      data() {
-        return {
-          cards: [
-            {
-              id: 1,
-              empresa:"JALA",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Amsterdam Walking Tour",
-              description: "Explore popular tourist destinations as well as hidden local favourites.",
-              price: 17,
-              reviews: 28
-            },
-            {
-              id: 2,
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Card 2",
-              empresa:"Empres 2",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              
-              price: 20,
-              reviews: 15
-            },
-            {
-              id: 3,
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Card 3",
-              empresa:"Empresa 3",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              price: 25,
-              reviews: 10
-            },
-            // Agrega más objetos para mostrar más tarjetas si lo necesitas
-          ]
-        };
-      },
-      methods: {
-    editCard(cardId) {
-      // Lógica para editar la tarjeta con el ID proporcionado
-      console.log(`Editar tarjeta con ID: ${cardId}`);
+  
+  <script>
+import { useLoaderStore } from "@/store/common/loaderStore";
+import { UseUseiInstitutionStore } from "@/store/usei/UseiInstitutionStore";
+
+
+export default {
+  data() {
+    return {
+      listInstitution: [],
+      everyInternshipsAreLoaded: false,
+      defaultImage: 'https://i.pinimg.com/564x/0f/76/1c/0f761c01d1fb284eb429061e577aa623.jpg',
+    };
+  },
+  methods: {
+    async getData() {
+      useLoaderStore().activateLoader();
+      // Asegúrate de que LoadPendentInstitutions() se implemente correctamente y devuelva los datos esperados.
+      await UseUseiInstitutionStore().LoadPendentInstitutions();
+      // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
+      this.listInstitution = UseUseiInstitutionStore().InstitutionList.result;
+      this.everyInternshipsAreLoaded = true;
+      useLoaderStore().desactivateLoader();
     },
-    deleteCard(cardId) {
-      // Lógica para borrar la tarjeta con el ID proporcionado
-      console.log(`Borrar tarjeta con ID: ${cardId}`);
-    }
-  }
+    async editCard(institutionId) {
+      try {
+        const result = await UseUseiInstitutionStore().ActivateInstitution(institutionId);
+        console.log('Institución activada correctamente', result);
+        // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
+      } catch (error) {
+        console.error('Error al activar la institución', error);
+        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
+    },
+      deleteCard(cardId) {
+        // Lógica para rechazar la solicitud
+        console.log(`Rechazar solicitud con ID: ${cardId}`);
+        // Aquí iría la llamada al backend o la lógica para actualizar el estado
+      },
+  },
+  created() {
+    this.getData();
+  },
 };
-    </script>
+</script>
+
     
     <style scoped>
     /** estilo eltra de titulo*/
-    h1 {
-      font-weight: 900;
-      color: rgb(90, 133, 253);
-      --x-offset: -0.0625em;
-      --y-offset: 0.0625em;
-      --stroke: 0.025em;
-      --background-color: white;
-      --stroke-color: lightblue;
-      text-shadow:
-        var(--x-offset)
-        var(--y-offset)
-        0px
-        var(--background-color), 
-        
-        calc( var(--x-offset) - var(--stroke) )
-        calc( var(--y-offset) + var(--stroke) )
-        0px
-        var(--stroke-color);
-      
-    }
-    /* for browsers that support spread, added in
-    https://drafts.csswg.org/css-text-decor-4/#text-shadow-property
-    currently: none browsers! none of them!
-    I can't even find a test: 
-    https://wpt.fyi/results/css/css-text-decor */
-    @supports ( text-shadow: 1px 1px 1px 1px rgb(0, 0, 0) ) {
-      h1 {
-        text-shadow:
-          
-          var(--x-offset)
-          var(--y-offset)
-          0px
-          0px
-          var(--background-color), 
-          
-          var(--x-offset) 
-          var(--y-offset)
-          var(--stroke)
-          0px
-          var(--stroke-color);
-        
-      }
-    }
+    
     
     /**iniiciooo  boton  */
     .text-content {
@@ -183,6 +136,7 @@
       position: relative;
       top: 10px;
       left: 10px;
+      margin-bottom: 30px;
     }
     /**colores de texto de si esta aporbado o no */
     
@@ -197,14 +151,13 @@
       margin-bottom: 15px;
     }
     .card-individual {
-      border: 3px solid #ccc;
+      border: 3px solid;
       border-radius: 8px;
       overflow: hidden;
       margin-bottom: 7px;
     }
     .card-inicio{
-      border: 3px solid #ffffff;
-      background-color:  #434B54;
+      border: 3px solid;
       border-radius: 8px;
       overflow: hidden;
       margin-top: 15px;

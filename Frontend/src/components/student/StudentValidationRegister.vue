@@ -102,8 +102,29 @@ export default {
         },
     },
 
-}
+    isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@ucb\.edu\.bo$/;
+      return emailRegex.test(email);
+    },
+
+    sendEmail() {
+      if (this.validateEmail()) {
+        // Enviar código aquí
+        this.send = false;
+        this.codeSent = true;
+        let interval = setInterval(() => {
+          this.seconds--;
+          if (this.seconds === 0) {
+            clearInterval(interval);
+            this.seconds = 15;
+            this.send = true;
+          }
+        }, 1000);
+      }
+    },
+};
 </script>
+
 <style scoped>
 .formVue{
     display: flex;
