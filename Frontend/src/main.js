@@ -55,6 +55,7 @@ import Galleria from 'primevue/galleria';
 import Chart from "primevue/chart";
 import Calendar from "primevue/calendar";
 
+import Password from 'primevue/password';
 //Main
 import "./assets/main.css";
 
@@ -134,5 +135,6 @@ app.component('Galleria', Galleria);
 app.component("Chart", Chart);
 app.component("Calendar", Calendar);
 
+app.component('Password', Password);
 //Montar la aplicacion
 app.mount("#app");

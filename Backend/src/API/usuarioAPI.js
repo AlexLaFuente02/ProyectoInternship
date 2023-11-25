@@ -151,16 +151,23 @@ router.post('/', async (req, res) => {
  *             schema:
  *               $ref: "#/components/schemas/ResponseDTO"
  */
-router.put('/:id', async (req, res) => {
-    console.log(`PUT request received for updateUser with ID: ${req.params.id} and data:`, req.body);
-    const response = await usuarioService.updateUser(req.params.id, req.body);
+
+//PUT para actualizar la contraseña de un usuario
+router.put('/updatePassword', async (req, res) => {
+    console.log(`PUT request received for updatePassword with ID: PTM`);
+    const response = await usuarioService.updatePassword(req);
     res.json({
-        method: 'updateUser',
+        method: 'updatePassword',
         code: response.code,
         result: response.result,
         message: response.message,
     });
 });
+
+
+
+
+
 
 /**
  * @swagger
@@ -194,5 +201,15 @@ router.delete('/:id', async (req, res) => {
         message: response.message,
     });
 });
-
+/*Obtener los datos de usuario por idUsuario*/
+router.get('/getUsuarioByIdUsuario/:idUsuario', async (req, res) => {
+    console.log(`GET request received for getUsuarioByIdUsuario with ID: ${req.params.idUsuario}`);
+    const response = await usuarioService.getUserByIdUsuario(req.params.idUsuario);
+    res.json({
+        method: 'getUsuarioByIdUsuario',
+        code: response.code,
+        result: response.result,
+        message: response.message,
+    });
+});
 module.exports = router;

@@ -3,7 +3,7 @@ import { rutaApi } from '../assets/apiConfig';
 
 export const loadInternshipsByIdStudent = async () => {
     try {
-        const response = await axios.get(`${rutaApi}/convocatoria`, {
+        const response = await axios.get(`${rutaApi}/student/convocatorias/activas`, {
             withCredentials: true // Esto asegurará que se envíen las cookies de sesión
         });
         return response.data;
@@ -13,11 +13,20 @@ export const loadInternshipsByIdStudent = async () => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 }
-export const loadRequestsByIdStudent = async () => {
-    /*Cambiar por la ruta de la api que corresponda*/
-    //Se esta usando la ruta de la api de prueba
-    const response = await axios.get(`${rutaApi}/postulacion`);
-    return response.data;
+export const loadRequestsByIdStudent = async (idStudent) => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/${idStudent}/postulaciones`);
+        const data = response.data;
+        if (data.code === "P-0000") {
+            return data.result;
+        }else{
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar las postulaciones: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
 }
 export const loadInstitutions = async () => {
     /*Cambiar por la ruta de la api que corresponda*/
@@ -101,3 +110,43 @@ export const verifyCode = async (body) => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 };
+//PUT para actualizar el usuario de un estudiante
+export const putStudent = async (contrasenia, token) => {
+    try {
+        const response = await axios.put(`${rutaApi}/usuario/updatePassword`, contrasenia, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        const data = response.data;
+        if (data.code === "U-0000") {
+            alert("Usuario actualizado exitosamente");
+            return data;
+        }
+        else {
+            alert("No se pudo actualizar el usuario");
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al actualizar el estudiante: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+};
+export const popularInternships = async () => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/convocatorias/populares`);
+        const data = response.data;
+        if (data.code === "C-0000") {
+            return data.result;
+        }else{
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar las convocatorias: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}
