@@ -64,13 +64,13 @@ Accept: application/json
 GET {{baseURL}}/convocatorias/pendientes
 Accept: application/json
 
-### GET ALL de Convocatorias Rechazadas
+### GET ALL de Convocatorias Inactiva
 GET {{baseURL}}/convocatorias/inactivas
 Accept: application/json
 
 
 ### PUT Institucion activa
-@institucionID = 6
+@institucionID = 5
 PUT {{baseURL}}/institucion/activate/{{institucionID}}
 Content-Type: application/json
 Accept: application/json

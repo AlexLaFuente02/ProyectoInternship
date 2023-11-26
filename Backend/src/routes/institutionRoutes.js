@@ -1,11 +1,25 @@
 const express = require('express');
-const { isAuthenticated, checkRole } = require('../services/authService');
 const convocatoriaService = require('../services/convocatoriaService');
 const estadosolicitudinstitucionService = require('../services/estadoSolicitudInstitucionService');
 const historicoConvocatoriasService = require('../services/historicoConvocatoriasService');
 const institucionService = require('../services/institucionService');
 const postulacionService = require('../services/postulacionService');
 const router = express.Router();
+
+//Fotos
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../..', 'images')); // Subir un nivel y luego entrar a la carpeta images
+      },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+  });
+
+const upload = multer({ storage: storage });
 
 // Ruta para publicar convocatoria por institucion
 router.post('/convocatoria/', async (req, res) => {
@@ -59,21 +73,27 @@ router.get('/historicoConvocatorias', async (req, res) => {
 });
 
 // Ruta para añadir una institucion
-router.post('/institucion', async (req, res) => {
-    try {
-        console.log('POST request received for createInstitucion');
-        const response = await institucionService.createInstitution(req.body);
-        res.json({
-            method: 'createInstitucion',
-            code: response.code,
-            result: response.result,
-            message: response.message,
-        });
-    } catch (error) {
-        console.error('Error creating institucion:', error);
-        res.status(500).json({ error: error.message });
-    }
-});
+
+router.post('/crear', upload.single('logoinstitucion'), async (req, res) => {
+    console.log('POST request received for createInstitution');
+  
+    // Extrae los datos del cuerpo de la solicitud y la ruta del archivo de imagen
+    const institutionData = {
+        ...req.body,
+        logoinstitucion: req.file ? req.file.filename : null, // Usa filename y no path
+    };
+  
+    // Llama al servicio y pasa los datos de la institución, incluyendo la ruta de la imagen
+    const response = await institucionService.createInstitution(institutionData);
+  
+    // Envía la respuesta
+    res.json({
+      method: 'createInstitution',
+      code: response.code,
+      result: response.result,
+      message: response.message,
+    });
+  });
 
 // Ruta para obtener todas las postulaciones
 router.get('/postulacion', async (req, res) => {

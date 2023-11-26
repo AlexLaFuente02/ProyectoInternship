@@ -1,5 +1,6 @@
 import axios from "axios";
 import { rutaApi } from "../assets/apiConfig";
+import { rutaInstitucion } from "../assets/apiConfig";
 
 export const getAllInternships = async () => {
   const response = await axios.get(`${rutaApi}/convocatoria/`);
@@ -28,7 +29,7 @@ export const createInternship = async (internshipData) => {
 
 export const createInstitution = async (formData) => {
   try {
-    const response = await axios.post(`${rutaApi}/institucion/`, formData, {
+    const response = await axios.post(`${rutaInstitucion}/crear`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
