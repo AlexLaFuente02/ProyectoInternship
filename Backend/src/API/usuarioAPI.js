@@ -152,6 +152,19 @@ router.post('/', async (req, res) => {
  *               $ref: "#/components/schemas/ResponseDTO"
  */
 
+//PUT DE USUARIO
+router.put('/:id', async (req, res) => {
+    console.log(`PUT request received for updateUser with ID: ${req.params.id}`);
+    const response = await usuarioService.updateUser(req.params.id, req.body);
+    res.json({
+        method: 'updateUser',
+        code: response.code,
+        result: response.result,
+        message: response.message,
+    });
+}
+);
+
 //PUT para actualizar la contraseña de un usuario
 router.put('/updatePassword', async (req, res) => {
     console.log(`PUT request received for updatePassword with ID: PTM`);

@@ -169,4 +169,24 @@ router.get('/institucion/user/:userId', async (req, res) => {
     }
 });
 
+//Ruta para obtener Institution by ID
+router.get('/institucion/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log(`GET request received for getInstitutionById, ID: ${id}`);
+        
+        const response = await institucionService.getInstitutionById(id);
+        
+        res.json({
+            method: 'getInstitutionById',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting Institution by ID:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

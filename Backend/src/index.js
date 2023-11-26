@@ -79,14 +79,14 @@ app.use("/sectorPertenencia", sectorPertenenciaAPI); //SIN AUTENTICACION usado e
 app.use("/sede", sedeAPI); //SIN AUTENTICACION usado en FRONT getAll por STUDENT
 app.use("/semestre", semestreAPI); //SIN AUTENTICACION usado en FRONT getAll por STUDENT
 app.use("/tiempoacumplir", tiempoAcumplirAPI); //utilizado por INSTIUTICION en FRONT para POST
-app.use("/tipoUsuario", tipoUsuarioAPI);  //no tiene uso en FRONT, USEI
+app.use("/tipoUsuario", tipoUsuarioAPI);  //no tiene uso en FRONT, USEI*/
 app.use("/usuario", UsuarioAPI); //no tiene uso en FRONT, a no ser modificar contraseña**
-*/
+
 app.use("/auth", authAPI); 
 
 //app.use('/student',isAuthenticated, checkRole(2), studentRoutes);
 app.use('/student', studentRoutes);
-//app.use('/institution',isAuthenticated, checkRole(3), instutionRoutes);
+//app.use('/institution',isAuthenticated, checkRole(3), instutionRoutes); 
 app.use('/institution', instutionRoutes);
 //app.use('/usei',isAuthenticated, checkRole(1), useiRoutes);
 app.use('/usei', useiRoutes);

@@ -73,3 +73,9 @@ Accept: application/json
 @userID = 1
 GET {{baseURL}}/institucion/user/{{userID}}
 Accept: application/json
+
+
+###ENDPOINT para obtener Institucion by InstituionID
+@institucionID = 1
+GET {{baseURL}}/institucion/{{institucionID}}
+Accept: application/json
