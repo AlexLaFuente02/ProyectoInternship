@@ -40,3 +40,23 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsI
   "aniograduacion": 2022,
   "linkcurriculumvitae": "http://example.com/juan_perez_cv.pdf"
 }
+### Envío de correo electrónico
+POST {{baseURL}}/sendEmail
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "alex.lafuente@ucb.edu.bo"
+}
+
+
+
+### Verificar el codigo de verificacion
+POST {{baseURL}}/validateCode
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "junito11@ucb.edu.bo",
+  "code": "123456"
+}

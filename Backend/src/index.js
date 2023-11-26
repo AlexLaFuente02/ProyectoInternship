@@ -47,7 +47,6 @@ const publicRoutes = require('./routes/publicRoutes');
 
 // Middleware para analizar el cuerpo de las solicitudes JSON
 app.use(express.json());
-app.use(cors());
 // Middleware para permitir CORS desde cualquier dominio
 const corsOptions = {
   // Permitir explícitamente el origen del cliente
@@ -62,19 +61,17 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Usa las rutas
+/* API ANTERIOR:
 app.use("/adminUSEI", adminuseiAPI); //NO INCLUIR EN CONSUMOS PORQUE SOLO SE MANEJA DESDE BASE DE DATOS DE ADMINISTRADOR
 app.use("/aprobacionConvocatoria", aprobacionConvocatoriaAPI);  //REVISAR UTILIDAD, NO SE USA EN FRONTEND
 app.use("/carrera", carreraAPI);  //SIN AUTENTICACION PORQUE SE USA EN REGISTRO DE ESTUDIANTE, usa en FRONT
 app.use("/convocatoria", convocatoriaAPI); //usado en FRONT por STUDENT(getall y getid), POST por INSTITUCION, GetAll,GetByID, PUT por USEI
-//app.use("/convocatoria", isAuthenticated, checkRole("1"), convocatoriaAPI); //usado en FRONT por STUDENT(getall y getid), POST por INSTITUCION, GetAll,GetByID, PUT por USEI
-                                      //verificando if admin
 app.use("/estadoConvocatoria", estadoConvocatoriaAPI); //No se usa en FRONT, util en Convocatorias    
 app.use("/estadoPostulacion", estadoPostulacionAPI); //No se usa en FRONT, util en Convocatorias
 app.use("/estadosolicitudinstitucion", estadoSolicitudInstitucionAPI); //Utilizable en FRONT por Instituciones para saber su estado de solicitud
 app.use("/estudiante", estudianteAPI); //Post utilizado en FRONT para registro STUDENT, GET por admin?
-app.use("/historicoConvocatorias", historicoConvocatoriasAPI); //futuro uso por ID de INSTITUCION****
-app.use("/historicoPostulaciones", historicoPostulacionesAPI); //futuro uso por ID de STUDENT****
+app.use("/historicoConvocatorias", historicoConvocatoriasAPI); //futuro uso por ID de INSTITUCION**
+app.use("/historicoPostulaciones", historicoPostulacionesAPI); //futuro uso por ID de STUDENT**
 app.use("/historicoUsuario", historicoUsuarioAPI); //no tiene uso en FRONT, USEI
 app.use("/institucion",  institucionAPI); //usado en FRONT para POST por INSTITUCION
 app.use("/postulacion", postulacionAPI); //usado en FRONT por STUDENT(post), GetAll y GetID por INSTITUCION
@@ -83,8 +80,8 @@ app.use("/sede", sedeAPI); //SIN AUTENTICACION usado en FRONT getAll por STUDENT
 app.use("/semestre", semestreAPI); //SIN AUTENTICACION usado en FRONT getAll por STUDENT
 app.use("/tiempoacumplir", tiempoAcumplirAPI); //utilizado por INSTIUTICION en FRONT para POST
 app.use("/tipoUsuario", tipoUsuarioAPI);  //no tiene uso en FRONT, USEI
-app.use("/usuario", UsuarioAPI); //no tiene uso en FRONT, a no ser modificar contraseña****
-
+app.use("/usuario", UsuarioAPI); //no tiene uso en FRONT, a no ser modificar contraseña**
+*/
 app.use("/auth", authAPI); 
 
 //app.use('/student',isAuthenticated, checkRole(2), studentRoutes);
@@ -110,4 +107,5 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   V1SwaggerDocs(app, PORT);
 });
+
 

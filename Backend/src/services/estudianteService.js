@@ -225,7 +225,7 @@ const deleteStudent = async (id) => {
 /*Lista que almacena los codigos de validacion*/
 let codes = [
     //Datos de prueba
-    {
+    /*{
         code: 123456,
         expiration: new Date().getTime() + 300000 ,// 5 minutos
         email: "junito11@ucb.edu.bo"
@@ -239,7 +239,7 @@ let codes = [
         code: 111111,
         expiration: new Date().getTime() + 300000, // 5 minutos
         email: "junito31@ucb.edu.bo"
-    }
+    }*/
 ];
 /*Funcion para generar los codigos de validacion*/
 const generateCode = (email) => {
@@ -293,8 +293,8 @@ const sendCode = async (email) => {
     if (!testCorreo.test(email)) {
         return new ResponseDTO('E-1006', null, 'El correo debe ser el institucional de la UCB');
     }
-    const subject = "Codigo de validacion";
-    const text = `Su codigo de validacion es: ${generateCode(email)}`;
+    const subject = "Código de validación";
+    const text = `Su código de validación es: ${generateCode(email)}`;
     const result = await sendEmail(email, subject, text);
     return new ResponseDTO('E-0000', result, 'Codigo de validacion enviado correctamente');
 };
