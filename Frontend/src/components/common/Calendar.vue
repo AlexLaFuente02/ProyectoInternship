@@ -1,25 +1,36 @@
 <template>
   <div class="card flex justify-content-center">
     <Calendar
-      v-model="date"
+      v-model="dateValue"
       :manualInput="false"
       dateFormat="dd/mm/yy"
       showButtonBar
       showIcon
+      @date-select="setDate"
     />
     <!-- <Calendar
-      v-model="date"
+      v-model="dateValue"
       :manualInput="false"
       dateFormat="dd/mm/yy"
       touchUI
       showButtonBar
       showIcon
+      @date-select="setDate"
     /> -->
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-
-const date = ref();
+<script>
+export default {
+  data() {
+    return {
+      dateValue: "",
+    };
+  },
+  methods: {
+    setDate() {
+      this.$emit("date-emit", this.dateValue);
+    },
+  },
+};
 </script>

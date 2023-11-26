@@ -347,7 +347,7 @@ export default {
   width: 90%;
   margin: 0 auto;
   background-color: white;
-  list-style: none;
+  padding: 0;
   text-align: center;
 }
 
