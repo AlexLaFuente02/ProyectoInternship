@@ -31,12 +31,14 @@ Accept: application/json
 ### Obtener todos los registros históricos
 GET {{baseURL}}/historicoConvocatorias
 
+@institucionID=1
 ### GET Convocatoria by ID Institucion
-GET {{baseURL}}/convocatorias/institucion/1
+GET {{baseURL}}/convocatorias/institucion/{{institucionID}}
 Accept: application/json
 
+@convocatoriaId=3
 ### GET Postulaciones by ID Convocatoria
-GET {{baseURL}}/postulaciones/convocatoria/3
+GET {{baseURL}}/postulaciones/convocatoria/{{convocatoriaId}}
 Accept: application/json
 
 ### POST de Institucion

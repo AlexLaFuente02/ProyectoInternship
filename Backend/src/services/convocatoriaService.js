@@ -92,6 +92,7 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
             where: { institucion_id: idInstitucion },
             include: [
                 { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+                { model: InstitucionENT, as: 'institucion' },
                 { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
             ]
         });
@@ -103,6 +104,8 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
         
         const convocatoriasDTO = convocatorias.map((convocatoria) => {
             const estadoDTO = new EstadoConvocatoriaDTO(convocatoria.estadoconvocatoria.id, convocatoria.estadoconvocatoria.nombreestadoconvocatoria);
+            const institucionDTO = new InstitucionDTO(convocatoria.institucion.id, convocatoria.institucion.nombreinstitucion);
+        
             const tiempoDTO = new TiempoAcumplirDTO(convocatoria.tiempoacumplir.id, convocatoria.tiempoacumplir.descripcion);
             return new ConvocatoriaDTO(
                 convocatoria.id,
@@ -114,7 +117,7 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
                 estadoDTO,
-                null, // No incluimos la institución en este caso
+                institucionDTO, // No incluimos la institución en este caso
                 tiempoDTO
             );
         });
