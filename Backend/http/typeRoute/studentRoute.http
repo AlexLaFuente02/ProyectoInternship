@@ -53,13 +53,13 @@ GET {{baseURL}}/convocatorias/activas
 Accept: application/json
 
 
-@studentID = 2
+@studentID = 1
 ###GET Postulaciones por estudiante
 GET {{baseURL}}/{{studentID}}/postulaciones
 Accept: application/json
 
 ###GET Postulaciones de estudiante segun estadopostulacion
-@estadopostulacionID = 2
+@estadopostulacionID = 1
 ###StudentID = 1-Aprobadas, 2-Pendientes, 3-Rechazadas
 GET {{baseURL}}/{{studentID}}/postulaciones/{{estadopostulacionID}}
 Accept: application/json
@@ -70,7 +70,7 @@ GET {{baseURL}}/convocatorias/populares
 Accept: application/json
 
 
-@sectorID = 3
+@sectorID = 1
 ###Get instituciones por el sector de pertenencia
 ### ID: 1-Ingenieria, 2-ArteYDiseño, 3-AdministacionyEconomia, 4-CienciasSalud, 5-otros
 GET {{baseURL}}/sectores/{{sectorID}}/instituciones
