@@ -40,7 +40,7 @@ GET {{baseURL}}/postulaciones/convocatoria/3
 Accept: application/json
 
 ### POST de Institucion
-POST {{baseURL}}/institucion/
+POST {{baseURL}}/crear
 Content-Type: application/json
 Accept: application/json
 
@@ -51,12 +51,9 @@ Accept: application/json
   "nombrecontacto": "Juan Pérez",
   "correocontacto": "juan.perez@univez.com",
   "celularcontacto": "12345678",
-  "usuario": {
-    "id": 1
-  },
-  "sectorpertenencia": {
-    "id": 3
-  }
+  "estado": "PENDIENTE",
+  "usuario_id": 1,
+  "sectorpertenencia_id": 1
 }
 
 ### Obtener todas las postulacion

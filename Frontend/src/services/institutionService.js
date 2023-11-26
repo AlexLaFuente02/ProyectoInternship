@@ -33,7 +33,7 @@ export const createInternship = async (internshipData) => {
 export const createInstitution = async (formData) => {
   try {
     const response = await axios.post(
-      `${institutionAPIRoute}/institucion/`,
+      `${institutionAPIRoute}/crear`,
       formData,
       {
         headers: {
