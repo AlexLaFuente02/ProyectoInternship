@@ -26,6 +26,6 @@ export const activateInstitution = async (institutionId) => {
 export const loadUseiInternship = async () => {
     /*Cambiar por la ruta de la api que corresponda*/
     //Se esta usando la ruta de la api de prueba
-    const response = await axios.get(`${rutaUsei}/convocatoria`);
+    const response = await axios.get(`${rutaUsei}/convocatoria/activas`);
     return response.data;
 }
