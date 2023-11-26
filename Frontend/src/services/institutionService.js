@@ -11,6 +11,11 @@ export const getInstitutionById = async (institution_id) => {
   return response.data;
 };
 
+export const getInstitutionIdByUserId = async (user_id) => {
+  const response = await axios.get(`${rutaApi}/institution/institucion/user/${user_id}`);
+  return response.data;
+};
+
 export const getAllInstitutions = async () => {
   const response = await axios.get(`${rutaApi}/institucion/`);
   return response.data;

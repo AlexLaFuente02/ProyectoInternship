@@ -79,8 +79,8 @@
 <script>
 import Button from "@/components/common/Button.vue";
 import { useLoginStore } from "@/store/common/loginStore";
-import { institutionsStore } from "../../store/institution/InstitutionsStore";
-import {useUserByIdStore} from "@/store/common/dataUserStore";
+import { useUserByIdStore } from "@/store/common/dataUserStore";
+import { InstitutionIdByUserIdStore } from "@/store/institution/InstitutionIdByUserIdStore";
 export default {
   name: "LoginPage",
   components: {
@@ -106,8 +106,8 @@ export default {
         userIdErrorMessage: false,
         passwordErrorMessage: false,
       },
-      institutionsStore: institutionsStore(),
-      institutionsList: [],
+      institutionIdByUserIdStore: InstitutionIdByUserIdStore(),
+      institutionInformation: [],
     };
   },
   methods: {
@@ -143,25 +143,21 @@ export default {
           },
           body: JSON.stringify(this.userData),
         })
-          .then  ( async (response) =>  {
+          .then(async (response) => {
             if (response.ok) {
               // La solicitud fue exitosa
               console.log("Inicio de sesión exitoso");
-              response.json().then( async (data) => {
+              response.json().then(async (data) => {
                 var result = data.result;
                 $cookies.set("id", result.id);
                 $cookies.set("username", result.username);
                 $cookies.set("type", result.tipousuario.id);
-                this.institutionsList.forEach((institution) => {
-                  if (result.id === institution.usuario.id) {
-                    $cookies.set("institutionID", institution.id);
-                  }
-                });
                 if (result.tipousuario.id == 1) {
                   useLoginStore().setLogin(1);
                   this.$router.push("/student/");
                 } else if (result.tipousuario.id == 2) {
                   useLoginStore().setLogin(2);
+                  await this.getInstitutionIdByUserId(result.id);
                   this.$router.push("/institution/home");
                 } else if (result.tipousuario.id == 3) {
                   useLoginStore().setLogin(3);
@@ -211,16 +207,10 @@ export default {
         }
       }, 1000);
     },
-    async getInstitutions() {
-      await this.institutionsStore.loadInstitutions();
-      this.institutionsList = this.institutionsStore.institutions.result;
-      // this.institutionsList = this.institutionsList.map((institution) => {
-      //   return {
-      //     id: institution.id,
-      //     nombreinstitucion: institution.nombreinstitucion,
-      //   };
-      // });
-      console.log(this.institutionsList);
+    async getInstitutionIdByUserId(user_id) {
+      await this.institutionIdByUserIdStore.loadInstitutionIdByUserId(user_id);
+      this.institutionInformation = this.institutionIdByUserIdStore.institution.result;
+      $cookies.set("institutionID", this.institutionInformation.institutionId);
     },
   },
   computed: {
@@ -231,9 +221,6 @@ export default {
         this.timer.seconds < 10 ? `0${this.timer.seconds}` : this.timer.seconds;
       return `${min}:${sec}`;
     },
-  },
-  created() {
-    this.getInstitutions();
   },
 };
 </script>
