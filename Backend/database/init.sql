@@ -22,10 +22,9 @@ CREATE TABLE usuario (
     CONSTRAINT usuario_tipousuario FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
 );
 
-INSERT INTO usuario (idusuario, contrasenia, tipousuario_id) VALUES
-('estudiante1', 'estudiante1', 1),
-('institucion1', 'institucion1', 2),
-('usei1', 'usei1', 3);
+INSERT INTO `usuario` VALUES (1, 'estudiante1', '$2b$10$tT5EWhx1Trs1WbPVm.KDMeBM/ty1MYKtUjMbWlpm3xVzVP/5NeAOK', 1);
+INSERT INTO `usuario` VALUES (2, 'institucion1', '$2b$10$1RMjfOcuR85pkJi6olNixexJtZiP7E0N92R3p9tposg/UkitNbusm', 2);
+INSERT INTO `usuario` VALUES (3, 'usei1', '$2b$10$79bFUNK4r4DAiWDFjTb1yuyWeTDaKJB8QQBfzhY2N9IytxuU2AO5q', 3);
 #insertar el resto de un request la contrasenia porque la contraseña debe estar hasheada
 
 CREATE TABLE estadopostulacion (
@@ -103,11 +102,8 @@ INSERT INTO institucion
 correocontacto, celularcontacto, estado, usuario_id, sectorpertenencia_id) 
 VALUES 
 ('EMAPA', 'Somos la institucion de agua de la ciudad de La Paz', NULL, 'Juan Pérez',
-'juan.perez@utech.edu', '123-456-7890', 'PENDIENTE', 2, 1),
-('EMAV', 'Somos la institucion de agua de la ciudad de Cochabamba', NULL, 'Juan Lopez',
-'juan.lopez@utech.edu', '123-456-7890', 'ACTIVO', 2, 1),
-('EMAS', 'Somos la institucion de agua de la ciudad de Santa Cruz', NULL, 'Juan Velez',
-'juan.velez@utech.edu', '123-456-7890', 'RECHAZADO', 2, 1);
+'juan.perez@utech.edu', '123-456-7890', 'PENDIENTE', 2, 1);
+
 
 #Hacer trigger para asignar valor a usuario_id cuando USEI aprobar institucion
 

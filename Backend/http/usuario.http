@@ -23,13 +23,13 @@ Accept: application/json
 }
 
 ### PUT de Usuario
-PUT http://{{host}}/usuario/1
+PUT http://{{host}}/usuario/3
 Content-Type: application/json
 Accept: application/json
 
 {
-  "idusuario": "userupdated",
-  "contrasenia": "passupdated",
+  "idusuario": "usei1",
+  "contrasenia": "usei1",
   "tipousuario": {
     "id": 3
   }
