@@ -149,4 +149,24 @@ router.get('/convocatorias/institucion/:idInstitucion', async (req, res) => {
     }
 });
 
+// Ruta para obtener InstitutionID por UserID
+router.get('/institucion/user/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        console.log(`GET request received for getInstitutionIdByUserId, UserID: ${userId}`);
+        
+        const response = await institucionService.getInstitutionIdByUserId(userId);
+        
+        res.json({
+            method: 'getInstitutionIdByUserId',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting InstitutionID by UserID:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

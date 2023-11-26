@@ -66,3 +66,10 @@ Accept: application/json
 ### Obtener una postulación por ID (reemplaza {id} con un ID válido)
 GET {{baseURL}}/postulacion/1
 Accept: application/json
+
+
+
+###ENDPOINT para obtener INSTITUCIONID por USUARIOID
+@userID = 1
+GET {{baseURL}}/institucion/user/{{userID}}
+Accept: application/json

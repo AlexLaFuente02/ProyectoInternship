@@ -102,22 +102,6 @@ app.use('/public', publicRoutes);
 app.get("/", (req, res) => {
   res.send("¡Bienvenido al API REST de INTERNSHIP!");
 });
-// Verifica si cors ya está configurado
-if (!app.hasCorsConfigured) {
-  //CORS - conexion entre servidores
-  const cors = require("cors");
-
-  // Middleware para permitir CORS desde cualquier dominio
-  const corsOptions = {
-    // Permitir explícitamente el origen del cliente
-    origin: 'http://localhost:3001',
-    credentials: true, // Esto es necesario para las cookies de sesión y los headers de autenticación
-  };
-  app.use(cors(corsOptions));
-
-  // Marca la aplicación como configurada con cors
-  app.hasCorsConfigured = true;
-}
 app.listen(3000, () => {
   console.log('Servidor escuchando en el puerto 3000');
 });
@@ -126,5 +110,4 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   V1SwaggerDocs(app, PORT);
 });
-
 

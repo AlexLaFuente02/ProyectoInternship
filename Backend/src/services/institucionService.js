@@ -686,6 +686,37 @@ const activateInstitution = async (id) => {
   }
 };
 
+const getInstitutionIdByUserId = async (userId) => {
+  console.log(`Obteniendo InstitutionID para UserID: ${userId}...`);
+  try {
+      // Suponiendo que tienes un modelo de Sequelize que relaciona los usuarios con las instituciones.
+      const institucion = await Institucion.findOne({
+          where: { usuario_id: userId },
+          attributes: ['id'], // Solo necesitamos el ID de la institución
+      });
+
+      if (!institucion) {
+          console.log(`No se encontró una institución para el UserID: ${userId}.`);
+          return new ResponseDTO("I-1006", null, "Institución no encontrada para el usuario especificado");
+      }
+
+      console.log(`InstitutionID encontrado para UserID ${userId}: ${institucion.id}`);
+      return new ResponseDTO(
+          "I-0000",
+          { institutionId: institucion.id },
+          "InstitutionID obtenido correctamente"
+      );
+  } catch (error) {
+      console.error(`Error al obtener InstitutionID para UserID: ${userId}:`, error);
+      return new ResponseDTO(
+          "I-1006",
+          null,
+          `Error al obtener InstitutionID para UserID: ${error}`
+      );
+  }
+};
+
+
 module.exports = {
   getAllInstitutions,
   getInstitutionById,
@@ -698,4 +729,5 @@ module.exports = {
   getInstitutionPending,
   getInstitutionRejected,
   activateInstitution,
+  getInstitutionIdByUserId,
 };
