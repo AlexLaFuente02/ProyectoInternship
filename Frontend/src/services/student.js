@@ -61,7 +61,7 @@ export const postStudent = async (studentData, token) => {
 /*Servicio para solicitar el codigo de verificacion*/
 export const postCode = async (email) => {
     try {
-        const response = await axios.post(`${rutaApi}/estudiante/sendEmail`, email,
+        const response = await axios.post(`${rutaApi}/public/sendEmail`, email,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export const postCode = async (email) => {
 /*Servicio para verificar el codigo de verificacion*/
 export const verifyCode = async (body) => {
     try {
-        const response = await axios.post(`${rutaApi}/estudiante/validateCode`, body,
+        const response = await axios.post(`${rutaApi}/public/validateCode`, body,
         {
             headers: {
                 'Content-Type': 'application/json',
