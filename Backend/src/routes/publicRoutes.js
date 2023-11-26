@@ -66,6 +66,28 @@ router.post('/institucion', upload.single('logoinstitucion'), async (req, res) =
         res.status(500).json({ error: error.message });
     }
 });
-
+/*Funcion para enviar el correo de confirmacion de cuenta*/
+router.post('/sendEmail', async (req, res) => {
+    console.log('POST request received for sendEmail with data:', req.body);
+    const response = await estudianteService.sendCode(req.body.email);
+    res.json({
+        method: 'sendEmail',
+        code: response.code,
+        result: response.result,
+        message: response.message,
+    });
+});
+/*Funcion para validar el codigo de confirmacion de cuenta y enviar el token*/
+router.post('/validateCode', async (req, res) => {
+    console.log('POST request received for validateCode with data:', req.body);
+    const response = await estudianteService.validateCodeAndGenerateToken(req.body.code);
+    console.log(response);
+    res.json({
+        method: 'validateCode',
+        code: response.code,
+        result: response.result,
+        message: response.message,
+    });
+});
 
 module.exports = router;
