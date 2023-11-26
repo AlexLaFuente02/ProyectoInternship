@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import {loadUseiInternship} from "@/services/usei.js";
+import {loadUseiInternship, loadPendentinternship} from "@/services/usei.js";
 export const UseUseiInternshipStore = defineStore({
     id: "useiInternship",
     state: () => ({
@@ -11,7 +11,12 @@ export const UseUseiInternshipStore = defineStore({
         async LoadInternship(){
             const internship=await loadUseiInternship();
             this.InternshipList= internship;
-        }   
+        }, 
+        async LoadPendenInternship(){
+            const internship=await loadPendentinternship();
+            this.InternshipList= internship;
+        },
+
     },
 
 });

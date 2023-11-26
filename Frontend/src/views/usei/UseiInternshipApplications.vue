@@ -4,7 +4,7 @@
       <p>Te mostramos tus solicitudes de pasantias de las empresas</p>
       <div class="card-inicio">
         <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card-individual">
+          <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="card-individual">
             <div class="content">
               <div class="image">
                 <img :src="card.imageUrl" alt="Card image" class="card-image">
@@ -28,44 +28,27 @@
   
     
     <script>
+import {UseUseiInternshipStore }from "@/store/usei/UseiInternshipStore";
+import {useLoaderStore} from "@/store/common/loaderStore";
     export default {
       data() {
-        return {
-          cards: [
-            {
-              id: 1,
-              empresa:"JALA",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Amsterdam Walking Tour",
-              description: "Explore popular tourist destinations as well as hidden local favourites.",
-              price: 17,
-              reviews: 28
-            },
-            {
-              id: 2,
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Card 2",
-              empresa:"Empres 2",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              
-              price: 20,
-              reviews: 15
-            },
-            {
-              id: 3,
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Card 3",
-              empresa:"Empresa 3",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              price: 25,
-              reviews: 10
-            },
-            // Agrega más objetos para mostrar más tarjetas si lo necesitas
-          ]
-        };
-      },
+        return{
+          listInternship: [],
+      everyInternshipsAreLoaded: false,
+      defaultImage: 'https://i.pinimg.com/564x/0f/76/1c/0f761c01d1fb284eb429061e577aa623.jpg',
+    };
+  },
       methods: {
+        async getData() {
+      useLoaderStore().activateLoader();
+      // Asegúrate de que LoadPendentInstitutions() se implemente correctamente y devuelva los datos esperados.
+      await UseUseiInternshipStore().LoadPendenInternship();
+      // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
+      this.listInternship = UseUseiInternshipStore().InternshipList.result;
+            this.everyInternshipsAreLoaded = true;
+      useLoaderStore().desactivateLoader();
+    },
+
     editCard(cardId) {
       // Lógica para editar la tarjeta con el ID proporcionado
       console.log(`Editar tarjeta con ID: ${cardId}`);
@@ -74,7 +57,10 @@
       // Lógica para borrar la tarjeta con el ID proporcionado
       console.log(`Borrar tarjeta con ID: ${cardId}`);
     }
-  }
+  },
+  created() {
+    this.getData();
+  },
 };
     </script>
     
