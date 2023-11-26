@@ -67,8 +67,9 @@
         <Time
           name="internshipBeginHourField"
           id="internshipBeginHourField"
-          v-model="formStore.horario_inicio"
+          @time-emit="setBeginTimeInput"
         />
+        <p>horario_inicio: {{ formComponents.beginTimeInput }}</p>
       </div>
       <div class="form-label">
         <label for="internshipEndHourField"
@@ -79,8 +80,9 @@
         <Time
           name="internshipEndHourField"
           id="internshipEndHourField"
-          v-model="formStore.horario_fin"
+          @time-emit="setEndTimeInput"
         />
+        <p>horario_fin: {{ formComponents.endTimeInput }}</p>
       </div>
     </div>
     <div class="field-container">
@@ -93,8 +95,9 @@
         <Calendar
           name="internshipSelectionDateField"
           id="internshipSelectionDateField"
-          v-model="formStore.fechaseleccionpasante"
+          @date-emit="setDateInput"
         />
+        <p>fecha_selección: {{ formComponents.dateInput }}</p>
       </div>
     </div>
     <div class="field-container">
@@ -148,6 +151,11 @@ export default {
       internshipMessages: {
         errorMessage: "",
       },
+      formComponents: {
+        beginTimeInput: "",
+        endTimeInput: "",
+        dateInput: "",
+      },
     };
   },
   methods: {
@@ -160,11 +168,23 @@ export default {
       if (month < 10) month = "0" + month;
       return year + "-" + month + "-" + day;
     },
+    setBeginTimeInput(beginTimeValue) {
+      this.formComponents.beginTimeInput = beginTimeValue;
+    },
+    setEndTimeInput(endTimeValue) {
+      this.formComponents.endTimeInput = endTimeValue;
+    },
+    setDateInput(dateValue) {
+      this.formComponents.dateInput = dateValue;
+    },
     goBack() {
       this.$router.push({ name: "InstitutionPrincipalPage" });
     },
     async sendRequest() {
       this.newInternship = this.formStore.$state;
+      this.formStore.$state.horario_inicio = this.formComponents.beginTimeInput;
+      this.formStore.$state.horario_fin = this.formComponents.endTimeInput;
+      this.formStore.$state.fechaseleccionpasante = this.formComponents.dateInput;
       this.formStore.$state.fechasolicitud = this.getCurrentDate();
       if (this.formStore.$state.areapasantia === "") {
         this.internshipMessages.errorMessage =
@@ -185,8 +205,9 @@ export default {
         this.internshipMessages.errorMessage =
           "Error, ingrese la fecha de selección del pasante por favor.";
       } else {
+        this.internshipMessages.errorMessage = "";
         this.newInternship.estadoconvocatoria.id = 2;
-        this.newInternship.institucion.id = 1;
+        this.newInternship.institucion.id = $cookies.get("institutionID");
         this.newInternship.tiempoacumplir.id = 2;
         const response = await createInternship(this.newInternship);
         console.log(response);

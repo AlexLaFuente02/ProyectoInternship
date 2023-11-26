@@ -187,11 +187,12 @@ export default {
 
 .dropdown-menu {
   position: absolute;
-  top: 70%;
-  left: 20%;
+  top: 50%;
+  left: 19.5%;
   width: 13%;
   background-color: white;
   border-radius: 20px;
+  padding: 0;
   list-style: none;
   text-align: center;
   border: 1px solid black;

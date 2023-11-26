@@ -307,8 +307,8 @@ img {
 .showPasswordButton {
   position: absolute;
   appearance: none;
-  /* max-width: 7%; */
-  /* max-height: 77%; */
+  max-width: 7%;
+  max-height: 77%;
   right: 5px;
   top: 50%;
   transform: translateY(-50%);
