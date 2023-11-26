@@ -160,6 +160,7 @@ export default {
   background-color: white;
   border-radius: 20px;
   padding: 0;
+  list-style: none;
   text-align: center;
   border: 1px solid black;
 }
