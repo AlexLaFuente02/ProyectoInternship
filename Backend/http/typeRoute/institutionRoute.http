@@ -31,18 +31,8 @@ Accept: application/json
 ### Obtener todos los registros históricos
 GET {{baseURL}}/historicoConvocatorias
 
-@institucionID=1
-### GET Convocatoria by ID Institucion
-GET {{baseURL}}/convocatorias/institucion/{{institucionID}}
-Accept: application/json
-
-@convocatoriaId=3
-### GET Postulaciones by ID Convocatoria
-GET {{baseURL}}/postulaciones/convocatoria/{{convocatoriaId}}
-Accept: application/json
-
 ### POST de Institucion
-POST {{baseURL}}/institucion/
+POST {{baseURL}}/crear
 Content-Type: application/json
 Accept: application/json
 
@@ -53,12 +43,9 @@ Accept: application/json
   "nombrecontacto": "Juan Pérez",
   "correocontacto": "juan.perez@univez.com",
   "celularcontacto": "12345678",
-  "usuario": {
-    "id": 1
-  },
-  "sectorpertenencia": {
-    "id": 3
-  }
+  "estado": "PENDIENTE",
+  "usuario_id": 1,
+  "sectorpertenencia_id": 1
 }
 
 ### Obtener todas las postulacion
@@ -80,4 +67,34 @@ Accept: application/json
 ###ENDPOINT para obtener Institucion by InstituionID
 @institucionID = 1
 GET {{baseURL}}/institucion/{{institucionID}}
+Accept: application/json
+
+@institutionID = 1
+### ENDPOINT Convocatoria by ID Institucion
+GET {{baseURL}}/convocatorias/institucion/{{institutionID}}
+Accept: application/json
+
+@convocatoriaID = 3
+### ENDPOINT Postulaciones by ID Convocatoria
+GET {{baseURL}}/postulaciones/convocatoria/{{convocatoriaID}}
+Accept: application/json
+
+### ENDPOINT Instituciones por cantidad de postulaciones
+GET {{baseURL}}/destacadas
+Accept: application/json
+
+### ENDPOINT Postulaciones by ID Institucion
+GET {{baseURL}}/postulaciones/{{institucionID}}
+Accept: application/json
+
+###ENDPOINT de Convoctorias activas
+GET {{baseURL}}/convocatorias/activas
+Accept: application/json
+
+###ENDPOINT de Convoctorias inactivas
+GET {{baseURL}}/convocatorias/inactivas
+Accept: application/json
+
+###ENDPOINT de Convoctorias inactivas
+GET {{baseURL}}/convocatorias/sumatorias
 Accept: application/json

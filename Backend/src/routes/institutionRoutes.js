@@ -1,11 +1,25 @@
 const express = require('express');
-const { isAuthenticated, checkRole } = require('../services/authService');
 const convocatoriaService = require('../services/convocatoriaService');
 const estadosolicitudinstitucionService = require('../services/estadoSolicitudInstitucionService');
 const historicoConvocatoriasService = require('../services/historicoConvocatoriasService');
 const institucionService = require('../services/institucionService');
 const postulacionService = require('../services/postulacionService');
 const router = express.Router();
+
+//Fotos
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../..', 'images')); // Subir un nivel y luego entrar a la carpeta images
+      },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+  });
+
+const upload = multer({ storage: storage });
 
 // Ruta para publicar convocatoria por institucion
 router.post('/convocatoria/', async (req, res) => {
@@ -59,21 +73,27 @@ router.get('/historicoConvocatorias', async (req, res) => {
 });
 
 // Ruta para añadir una institucion
-router.post('/institucion', async (req, res) => {
-    try {
-        console.log('POST request received for createInstitucion');
-        const response = await institucionService.createInstitution(req.body);
-        res.json({
-            method: 'createInstitucion',
-            code: response.code,
-            result: response.result,
-            message: response.message,
-        });
-    } catch (error) {
-        console.error('Error creating institucion:', error);
-        res.status(500).json({ error: error.message });
-    }
-});
+
+router.post('/crear', upload.single('logoinstitucion'), async (req, res) => {
+    console.log('POST request received for createInstitution');
+  
+    // Extrae los datos del cuerpo de la solicitud y la ruta del archivo de imagen
+    const institutionData = {
+        ...req.body,
+        logoinstitucion: req.file ? req.file.filename : null, // Usa filename y no path
+    };
+  
+    // Llama al servicio y pasa los datos de la institución, incluyendo la ruta de la imagen
+    const response = await institucionService.createInstitution(institutionData);
+  
+    // Envía la respuesta
+    res.json({
+      method: 'createInstitution',
+      code: response.code,
+      result: response.result,
+      message: response.message,
+    });
+  });
 
 // Ruta para obtener todas las postulaciones
 router.get('/postulacion', async (req, res) => {
@@ -188,5 +208,101 @@ router.get('/institucion/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+//Ruta para obtener postulaciones de instituciones
+router.get('/destacadas', async (req, res) => {
+    try {
+        console.log('GET request received for getInstitutionPostulations');
+        
+        const response = await institucionService.getInstitutionPostulations();
+        
+        res.json({
+            method: 'getInstitutionPostulations',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting Institution Postulations:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//Ruta para obtener postulaciones de institucionID
+router.get('/postulaciones/:institutionId', async (req, res) => {
+    const institutionId = req.params.institutionId;
+
+    if (!institutionId) {
+        return res.status(400).json({ error: 'Se requiere el ID de la institución' });
+    }
+
+    try {
+        console.log(`GET request received for getPostulationsByInstitutionId with ID: ${institutionId}`);
+
+        const response = await institucionService.getPostulationsByInstitutionId(institutionId);
+
+        res.json({
+            method: 'getPostulationsByInstitutionId',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulations for institution ID ${institutionId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener las convoctarias activas para estudiantes
+router.get('/convocatorias/activas', async (req, res) => {
+    try {
+        console.log('GET request received for getConvocatoriasActivas for STUDENT');
+        const response = await convocatoriaService.getActiveConvocatorias();
+        res.json({
+            method: 'getConvocatoriasActivas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias activas for STUDENT:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener las convoctarias inactivas para estudiantes
+router.get('/convocatorias/inactivas', async (req, res) => {
+    try {
+        console.log('GET request received for getConvocatoriasInactivas for STUDENT');
+        const response = await convocatoriaService.getInactiveConvocatorias();
+        res.json({
+            method: 'getConvocatoriasInactivas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias inactivas for STUDENT:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener un resumen de convocatorias activas e inactivas
+router.get('/convocatorias/sumatorias', async (req, res) => {
+    try {
+        console.log('GET request received for getSummaryOfConvocatorias');
+        const response = await convocatoriaService.getSummaryOfConvocatorias();
+        res.json({
+            method: 'getSummaryOfConvocatorias',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting summary of convocatorias:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 module.exports = router;
