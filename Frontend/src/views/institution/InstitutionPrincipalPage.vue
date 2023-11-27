@@ -121,7 +121,7 @@ import SimpleCard from "@/components/common/SimpleCard.vue";
 import ArrowCards from "@/components/common/ArrowCards.vue";
 import LittleNav from "@/components/common/LittleNav.vue";
 import { useRequestsByIDStore } from "@/store/student/requestsByIDStore";
-import { InstitutionByIdStore } from "@/store/institution/institutionByIdStore";
+import { InstitutionByIdStore } from "@/store/institution/InstitutionByIdStore";
 export default {
   data() {
     return {

@@ -92,6 +92,7 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
             where: { institucion_id: idInstitucion },
             include: [
                 { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+                { model: InstitucionENT, as: 'institucion' },
                 { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
             ]
         });
@@ -103,6 +104,8 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
         
         const convocatoriasDTO = convocatorias.map((convocatoria) => {
             const estadoDTO = new EstadoConvocatoriaDTO(convocatoria.estadoconvocatoria.id, convocatoria.estadoconvocatoria.nombreestadoconvocatoria);
+            const institucionDTO = new InstitucionDTO(convocatoria.institucion.id, convocatoria.institucion.nombreinstitucion);
+        
             const tiempoDTO = new TiempoAcumplirDTO(convocatoria.tiempoacumplir.id, convocatoria.tiempoacumplir.descripcion);
             return new ConvocatoriaDTO(
                 convocatoria.id,
@@ -114,7 +117,7 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
                 estadoDTO,
-                null, // No incluimos la institución en este caso
+                institucionDTO, // No incluimos la institución en este caso
                 tiempoDTO
             );
         });
@@ -336,6 +339,30 @@ const getPopularConvocatorias = async () => {
     }
 };
 
+const getSummaryOfConvocatorias = async () => {
+    console.log('Obteniendo resumen de convocatorias activas e inactivas...');
+    try {
+        const summary = await sequelize.query(
+            `SELECT 
+                SUM(CASE WHEN estadoconvocatoria_id = 1 THEN 1 ELSE 0 END) AS ConvocatoriasActivas,
+                SUM(CASE WHEN estadoconvocatoria_id = 3 THEN 1 ELSE 0 END) AS ConvocatoriasInactivas
+            FROM 
+                convocatoria;`,
+            { type: sequelize.QueryTypes.SELECT }
+        );
+
+        const summaryDTO = {
+            ConvocatoriasActivas: summary[0].ConvocatoriasActivas,
+            ConvocatoriasInactivas: summary[0].ConvocatoriasInactivas
+        };
+
+        console.log('Sumatoria de convocatorias obtenido correctamente.');
+        return new ResponseDTO('CV-0000', summaryDTO, 'Sumatoria de convocatorias obtenido correctamente');
+    } catch (error) {
+        console.error('Error al obtener sumatoria de convocatorias:', error);
+        return new ResponseDTO('CV-1008', null, `Error al obtener sumatoria de convocatorias: ${error}`);
+    }
+};
 
 
 const getPendingConvocatorias = async () => {
@@ -427,4 +454,5 @@ module.exports = {
     getPendingConvocatorias,
     getInactiveConvocatorias,
     getConvocatoriasPorIdInstitucion,
+    getSummaryOfConvocatorias,
 };

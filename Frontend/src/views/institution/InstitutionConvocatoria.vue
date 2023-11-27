@@ -3,9 +3,9 @@
     <h1>TUS CONVOCATORIAS</h1>
     <h5>Te mostramos tus convocatorias</h5>
     <div class="card-inicio">
-      <div class="card">
+      <div class="card" v-if="internshipsAreLoaded">
         <div
-          v-for="internship in internshipsList"
+          v-for="internship in internshipsByInstitutionList"
           :key="internship.id"
           class="card-individual"
         >
@@ -70,35 +70,42 @@
 </template>
 
 <script>
-import { internshipsStore } from "../../store/institution/internshipsStore";
+import { useLoaderStore } from "@/store/common/loaderStore";
+import { internshipsByInstitutionIdStore } from "../../store/institution/InternshipsByInstitutionIdStore";
 export default {
   data() {
     return {
-      internshipsStore: internshipsStore(),
-      internshipsList: [],
+      internshipsByInstitutionIdStore: internshipsByInstitutionIdStore(),
+      internshipsAreLoaded: false,
+      internshipsByInstitutionList: [],
     };
   },
   methods: {
-    async getInternships() {
-      await this.internshipsStore.loadInternships();
-      this.internshipsList = this.internshipsStore.internships.result;
-      this.internshipsList = this.internshipsList.map((internship) => {
-        return {
-          id: internship.id,
-          areapasantia: internship.areapasantia,
-          descripcionfunciones: internship.descripcionfunciones,
-          requisitoscompetencias: internship.requisitoscompetencias,
-          horario_inicio: internship.horario_inicio,
-          horario_fin: internship.horario_fin,
-          fechasolicitud: internship.fechasolicitud,
-          fechaseleccionpasante: internship.fechaseleccionpasante,
-          nombreestadoconvocatoria:
-            internship.estadoconvocatoria.nombreestadoconvocatoria,
-          tiempoacumplir: internship.tiempoacumplir.descripcion,
-          logoinstitucion: internship.institucion.logoinstitucion,
-        };
-      });
-      console.log(this.internshipsList);
+    async getInternshipsByInstitution() {
+      useLoaderStore().activateLoader();
+      await this.internshipsByInstitutionIdStore.loadInternshipsByInstitutionId($cookies.get("institutionID"));
+      this.internshipsByInstitutionList = this.internshipsByInstitutionIdStore.internships.result;
+      this.internshipsByInstitutionList = this.internshipsByInstitutionList.map(
+        (internship) => {
+          return {
+            id: internship.id,
+            areapasantia: internship.areapasantia,
+            descripcionfunciones: internship.descripcionfunciones,
+            requisitoscompetencias: internship.requisitoscompetencias,
+            horario_inicio: internship.horario_inicio,
+            horario_fin: internship.horario_fin,
+            fechasolicitud: internship.fechasolicitud,
+            fechaseleccionpasante: internship.fechaseleccionpasante,
+            nombreestadoconvocatoria:
+              internship.estadoconvocatoria.nombreestadoconvocatoria,
+            tiempoacumplir: internship.tiempoacumplir.descripcion,
+            // logoinstitucion: internship.institucion.logoinstitucion,
+          };
+        }
+      );
+      console.log(this.internshipsByInstitutionList);
+      this.internshipsAreLoaded = true;
+      useLoaderStore().desactivateLoader();
     },
     editCard(cardId) {
       // Lógica para editar la tarjeta con el ID proporcionado
@@ -110,7 +117,7 @@ export default {
     },
   },
   created() {
-    this.getInternships();
+    this.getInternshipsByInstitution();
   },
 };
 </script>
