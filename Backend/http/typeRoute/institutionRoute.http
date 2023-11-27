@@ -98,3 +98,7 @@ Accept: application/json
 ###ENDPOINT de cantidad de convocatorias activas e inactivas
 GET {{baseURL}}/convocatorias/sumatorias/{{institutionID}}
 Accept: application/json
+
+###ENDPOINT de cantidad de convocatorias activas e inactivas
+GET {{baseURL}}/institucion/{{institutionID}}/postulaciones
+Accept: application/json
