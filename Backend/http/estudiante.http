@@ -54,23 +54,3 @@ Accept: application/json
 DELETE http://{{host}}/estudiante/21
 Accept: application/json
 
-### Envío de correo electrónico
-POST http://{{host}}/estudiante/sendEmail
-Accept: application/json
-Content-Type: application/json
-
-{
-  "email": "quispeosvaldo31@gmail.com"
-}
-
-
-
-### Verificar el codigo de verificacion
-POST http://{{host}}/estudiante/validateCode
-Accept: application/json
-Content-Type: application/json
-
-{
-  "email": "junito11@ucb.edu.bo",
-  "code": "123456"
-}

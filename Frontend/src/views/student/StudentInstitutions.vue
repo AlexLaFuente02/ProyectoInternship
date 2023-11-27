@@ -28,7 +28,7 @@
             </div>
     </div>
     <div class="container__cards">
-      <div class="card" v-for="card in listInstitutions" :key="card.id">
+      <div class="card" v-for="card in listInstitutionsComputed" :key="card.id">
         <div class="content">
           <div class="back">
             <div class="back-content">
@@ -97,13 +97,24 @@ export default {
         async getSectors() {
             await useSectorStore().loadSectors();
             this.sectors = useSectorStore().sectors.result;
+            //Aumentar el valor de la variable para que se muestren todos los sectores
+            this.sectors.push({
+                id: 0,
+                nombresectorpertenencia: 'Todos los sectores',
+            });
         },
         async getInstitutions() {
             await useInstitutionsByIDSectorStore().loadInstitutions();
             this.listInstitutions = useInstitutionsByIDSectorStore().institutions.result;
         },
-        updateSector(option) {
+        async updateSector(option) {
             this.selected = option.label;
+            if (option.id === 0) {
+                this.listInstitutions = useInstitutionsByIDSectorStore().institutions.result;
+            } else {
+                await useInstitutionsByIDSectorStore().loadInstitutionsByIdSector(option.id);
+                this.listInstitutions = useInstitutionsByIDSectorStore().institutions;
+            }
         },
         handleSearch() {
             this.listInstitutions = useInstitutionsByIDSectorStore().institutions.result.filter((institution) => {
@@ -127,10 +138,11 @@ export default {
         });
         useLoaderStore().desactivateLoader() ;
     },
-
-
-
-    
+    computed: {
+        listInstitutionsComputed() {
+            return this.listInstitutions;
+        }
+    }
 }
 </script>
 <style scoped>
