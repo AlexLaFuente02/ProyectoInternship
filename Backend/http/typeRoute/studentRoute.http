@@ -75,3 +75,6 @@ Accept: application/json
 ### ID: 1-Ingenieria, 2-ArteYDiseño, 3-AdministacionyEconomia, 4-CienciasSalud, 5-otros
 GET {{baseURL}}/sectores/{{sectorID}}/instituciones
 Accept: application/json
+###Get todas las instituciones
+GET {{baseURL}}/institucion
+Accept: application/json
