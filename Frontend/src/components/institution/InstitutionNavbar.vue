@@ -55,7 +55,7 @@
         <font-awesome-icon :icon="['fas', 'circle-user']" />
       </div>
       <div class="container__sidebar--profile__name">
-        <span>Empresa</span>
+        <span>{{ userName }}</span>
       </div>
     </div>
     <div class="container__sidebar--options">
@@ -125,6 +125,7 @@ export default {
       dropdownButton: {
         showDropdownMenu: false,
       },
+      userName: "EMPRESA",
     };
   },
   methods: {

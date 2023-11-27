@@ -13,7 +13,7 @@
             <div class="image">
               <img
                 :src="internship.logoinstitucion"
-                alt="Card image"
+                alt="Internship image"
                 class="card-image"
               />
             </div>
@@ -96,8 +96,7 @@ export default {
             horario_fin: internship.horario_fin,
             fechasolicitud: internship.fechasolicitud,
             fechaseleccionpasante: internship.fechaseleccionpasante,
-            nombreestadoconvocatoria:
-              internship.estadoconvocatoria.nombreestadoconvocatoria,
+            nombreestadoconvocatoria: internship.estadoconvocatoria.nombreestadoconvocatoria,
             tiempoacumplir: internship.tiempoacumplir.descripcion,
             // logoinstitucion: internship.institucion.logoinstitucion,
           };
