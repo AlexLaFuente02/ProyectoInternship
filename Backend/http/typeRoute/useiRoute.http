@@ -70,7 +70,7 @@ Accept: application/json
 
 
 ### PUT Institucion activa
-@institucionID = 9
+@institucionID = 3
 PUT {{baseURL}}/institucion/activate/{{institucionID}}
 Content-Type: application/json
 Accept: application/json

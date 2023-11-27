@@ -195,7 +195,7 @@ export default {
         },
         filterRequests(key){
             if(key == "Todo"){
-                this.listRequests = useRequestsByIDStore().requests.result;
+                this.listRequests = this.allRequests;
                 this.type = "Todo";
             }
             else if(key == "Pendiente"){
