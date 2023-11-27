@@ -3,10 +3,10 @@
     <h1>TUS PASANTÍAS</h1>
     <h5>Te mostramos tus pasantías activas en la plataforma.</h5>
     <div class="internship-container">
-      <div v-if="everyInternshipsAreLoaded">
+      <div v-if="internshipsAreLoaded">
         <div
           class="internship-information-grid"
-          v-for="internship in listInternship"
+          v-for="internship in internshipsByInstitutionList"
           :key="internship.id"
         >
           <img
@@ -51,8 +51,8 @@
 </template>
 
 <script>
-import { UseUseiInternshipStore } from "@/store/usei/UseiInternshipStore";
 import { useLoaderStore } from "@/store/common/loaderStore";
+import { internshipsByInstitutionIdStore } from "../../store/institution/InternshipsByInstitutionIdStore";
 import ButtonVue from "../../components/common/Button.vue";
 export default {
   name: "institutionInternshipFilterPage",
@@ -61,22 +61,40 @@ export default {
   },
   data() {
     return {
-      listInternship: [],
-      everyInternshipsAreLoaded: false,
+      internshipsByInstitutionIdStore: internshipsByInstitutionIdStore(),
+      internshipsAreLoaded: false,
+      internshipsByInstitutionList: [],
     };
   },
   methods: {
-    async getData() {
+    async getInternshipsByInstitution() {
       useLoaderStore().activateLoader();
-      await UseUseiInternshipStore().LoadInternship();
-      this.listInternship = UseUseiInternshipStore().InternshipList.result;
-      this.everyInternshipsAreLoaded = true;
+      await this.internshipsByInstitutionIdStore.loadInternshipsByInstitutionId($cookies.get("institutionID"));
+      this.internshipsByInstitutionList = this.internshipsByInstitutionIdStore.internships.result;
+      this.internshipsByInstitutionList = this.internshipsByInstitutionList.map(
+        (internship) => {
+          return {
+            id: internship.id,
+            areapasantia: internship.areapasantia,
+            descripcionfunciones: internship.descripcionfunciones,
+            requisitoscompetencias: internship.requisitoscompetencias,
+            horario_inicio: internship.horario_inicio,
+            horario_fin: internship.horario_fin,
+            fechasolicitud: internship.fechasolicitud,
+            fechaseleccionpasante: internship.fechaseleccionpasante,
+            nombreestadoconvocatoria: internship.estadoconvocatoria.nombreestadoconvocatoria,
+            tiempoacumplir: internship.tiempoacumplir.descripcion,
+            // logoinstitucion: internship.institucion.logoinstitucion,
+          };
+        }
+      );
+      console.log(this.internshipsByInstitutionList);
+      this.internshipsAreLoaded = true;
       useLoaderStore().desactivateLoader();
-      console.log(this.listInternship);
     },
   },
   created() {
-    this.getData();
+    this.getInternshipsByInstitution();
   },
 };
 </script>
