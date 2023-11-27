@@ -79,8 +79,8 @@ app.use("/sectorPertenencia", sectorPertenenciaAPI); //SIN AUTENTICACION usado e
 app.use("/sede", sedeAPI); //SIN AUTENTICACION usado en FRONT getAll por STUDENT
 app.use("/semestre", semestreAPI); //SIN AUTENTICACION usado en FRONT getAll por STUDENT
 app.use("/tiempoacumplir", tiempoAcumplirAPI); //utilizado por INSTIUTICION en FRONT para POST
-app.use("/tipoUsuario", tipoUsuarioAPI);  //no tiene uso en FRONT, USEI*/
-app.use("/usuario", UsuarioAPI); //no tiene uso en FRONT, a no ser modificar contraseña**
+app.use("/tipoUsuario", tipoUsuarioAPI);  //no tiene uso en FRONT, USEI
+app.use("/usuario", UsuarioAPI); //no tiene uso en FRONT, a no ser modificar contraseña***/
 
 app.use("/auth", authAPI); 
 

@@ -155,7 +155,8 @@ const getPostulacionesPorIdConvocatoria = async (idConvocatoria) => {
           where: { convocatoria_id: idConvocatoria },
           include: [
               { model: EstadoPostulacionENT, as: 'estadopostulacion' },
-              { model: EstudianteENT, as: 'estudiante' }
+              { model: EstudianteENT, as: 'estudiante' },
+              { model: ConvocatoriaENT, as: "convocatoria" },
           ]
       });
 
@@ -170,16 +171,40 @@ const getPostulacionesPorIdConvocatoria = async (idConvocatoria) => {
               nombreestadopostulacion: postulacion.estadopostulacion.nombreestadopostulacion
           };
           const estudianteDTO = {
-              id: postulacion.estudiante.id,
-              usuario_id: postulacion.estudiante.usuario_id,
-              // Otras propiedades del estudiante que desees incluir
-          };
+            id: postulacion.estudiante.id,
+            usuario_id: postulacion.estudiante.usuario_id,
+            nombres: postulacion.estudiante.nombres,
+            apellidos: postulacion.estudiante.apellidos,
+            carnetidentidad: postulacion.estudiante.carnetidentidad,
+            correoelectronico: postulacion.estudiante.correoelectronico,
+            celularcontacto: postulacion.estudiante.celularcontacto,
+            graduado: postulacion.estudiante.graduado,
+            carrera_id: postulacion.estudiante.carrera_id,
+            semestre_id: postulacion.estudiante.semestre_id,
+            sede_id: postulacion.estudiante.sede_id,
+            aniograduacion: postulacion.estudiante.aniograduacion,
+            linkcurriculumvitae: postulacion.estudiante.linkcurriculumvitae
+        };
+        const convocatoriaDTO = {
+          id: postulacion.convocatoria.id,
+          areapasantia: postulacion.convocatoria.areapasantia,
+          descripcionfunciones: postulacion.convocatoria.descripcionfunciones,
+          requisitoscompetencias: postulacion.convocatoria.requisitoscompetencias,
+          horario_inicio: postulacion.convocatoria.horario_inicio,
+          horario_fin: postulacion.convocatoria.horario_fin,
+          fechasolicitud: postulacion.convocatoria.fechasolicitud,
+          fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
+          estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
+          institucion: postulacion.convocatoria.institucion,
+          tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
+        };
+        
           return new PostulacionDTO(
               postulacion.id,
               postulacion.fechapostulacion,
               estadoPostulacionDTO,
               estudianteDTO,
-              null // No incluimos la convocatoria en este caso
+              convocatoriaDTO // No incluimos la convocatoria en este caso
           );
       });
 

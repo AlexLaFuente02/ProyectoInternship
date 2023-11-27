@@ -254,44 +254,47 @@ router.get('/postulaciones/:institutionId', async (req, res) => {
 });
 
 // Ruta para obtener las convoctarias activas para estudiantes
-router.get('/convocatorias/activas', async (req, res) => {
+router.get('/convocatorias/activas/:institutionId', async (req, res) => {
+    const institutionId = req.params.institutionId;
     try {
-        console.log('GET request received for getConvocatoriasActivas for STUDENT');
-        const response = await convocatoriaService.getActiveConvocatorias();
+        console.log('GET request received for getConvocatoriasActivasById for INSTITUTION');
+        const response = await convocatoriaService.getActiveConvocatoriasById(institutionId);
         res.json({
-            method: 'getConvocatoriasActivas',
+            method: 'getConvocatoriasActivasById',
             code: response.code,
             result: response.result,
             message: response.message,
         });
     } catch (error) {
-        console.error('Error getting convocatorias activas for STUDENT:', error);
+        console.error('Error getting convocatorias activas for INSTITUTION:', error);
         res.status(500).json({ error: error.message });
     }
 });
 
 // Ruta para obtener las convoctarias inactivas para estudiantes
-router.get('/convocatorias/inactivas', async (req, res) => {
+router.get('/convocatorias/inactivas/:institutionId', async (req, res) => {
+    const institutionId = req.params.institutionId;
     try {
-        console.log('GET request received for getConvocatoriasInactivas for STUDENT');
-        const response = await convocatoriaService.getInactiveConvocatorias();
+        console.log('GET request received for getConvocatoriasInactivasById for INSTITUTION');
+        const response = await convocatoriaService.getInactiveConvocatoriasById(institutionId);
         res.json({
-            method: 'getConvocatoriasInactivas',
+            method: 'getConvocatoriasInactivasById',
             code: response.code,
             result: response.result,
             message: response.message,
         });
     } catch (error) {
-        console.error('Error getting convocatorias inactivas for STUDENT:', error);
+        console.error('Error getting convocatorias inactivas for INSTITUTION:', error);
         res.status(500).json({ error: error.message });
     }
 });
 
 // Ruta para obtener un resumen de convocatorias activas e inactivas
-router.get('/convocatorias/sumatorias', async (req, res) => {
+router.get('/convocatorias/sumatorias/:institutionId', async (req, res) => {
+    const institutionId = req.params.institutionId;
     try {
         console.log('GET request received for getSummaryOfConvocatorias');
-        const response = await convocatoriaService.getSummaryOfConvocatorias();
+        const response = await convocatoriaService.getSummaryOfConvocatorias(institutionId);
         res.json({
             method: 'getSummaryOfConvocatorias',
             code: response.code,

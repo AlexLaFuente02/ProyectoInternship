@@ -92,6 +92,7 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
             where: { institucion_id: idInstitucion },
             include: [
                 { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+                { model: InstitucionENT, as: 'institucion' },
                 { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
             ]
         });
@@ -103,6 +104,8 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
         
         const convocatoriasDTO = convocatorias.map((convocatoria) => {
             const estadoDTO = new EstadoConvocatoriaDTO(convocatoria.estadoconvocatoria.id, convocatoria.estadoconvocatoria.nombreestadoconvocatoria);
+            const institucionDTO = new InstitucionDTO(convocatoria.institucion.id, convocatoria.institucion.nombreinstitucion);
+        
             const tiempoDTO = new TiempoAcumplirDTO(convocatoria.tiempoacumplir.id, convocatoria.tiempoacumplir.descripcion);
             return new ConvocatoriaDTO(
                 convocatoria.id,
@@ -114,7 +117,7 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
                 estadoDTO,
-                null, // No incluimos la institución en este caso
+                institucionDTO, // No incluimos la institución en este caso
                 tiempoDTO
             );
         });
@@ -230,7 +233,48 @@ const getActiveConvocatorias = async () => {
     console.log('Obteniendo todas las convocatorias activas...');
     try {
         const convocatoriasActivas = await ConvocatoriaENT.findAll({
-            where: { estadoconvocatoria_id: [1] }, // 1 = Activa
+            where: { estadoconvocatoria_id: [1] },
+            include: [
+                { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+                { model: InstitucionENT, as: 'institucion' },
+                { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
+            ]
+        });
+
+        const convocatoriasActivasDTO = convocatoriasActivas.map(convocatoria => {
+            const estadoDTO = new EstadoConvocatoriaDTO(convocatoria.estadoconvocatoria.id, convocatoria.estadoconvocatoria.nombreestadoconvocatoria);
+            const institucionDTO = new InstitucionDTO(convocatoria.institucion.id, convocatoria.institucion.nombreinstitucion);
+            const tiempoDTO = new TiempoAcumplirDTO(convocatoria.tiempoacumplir.id, convocatoria.tiempoacumplir.descripcion);
+            return new ConvocatoriaDTO(
+                convocatoria.id,
+                convocatoria.areapasantia,
+                convocatoria.descripcionfunciones,
+                convocatoria.requisitoscompetencias,
+                convocatoria.horario_inicio,
+                convocatoria.horario_fin,
+                convocatoria.fechasolicitud,
+                convocatoria.fechaseleccionpasante,
+                estadoDTO,
+                institucionDTO,
+                tiempoDTO
+            );
+        });
+
+        console.log('Convocatorias activas obtenidas correctamente.');
+        return new ResponseDTO('C-0000', convocatoriasActivasDTO, 'Convocatorias activas obtenidas correctamente');
+    } catch (error) {
+        console.error('Error al obtener las convocatorias activas:', error);
+        return new ResponseDTO('C-1006', null, `Error al obtener las convocatorias activas: ${error}`);
+    }
+};
+
+const getActiveConvocatoriasById = async (institucionId) => {
+    console.log('Obteniendo todas las convocatorias activas...');
+    try {
+        const convocatoriasActivas = await ConvocatoriaENT.findAll({
+            where: { estadoconvocatoria_id: [1],
+                     institucion_id: institucionId
+            },
             include: [
                 { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
                 { model: InstitucionENT, as: 'institucion' },
@@ -336,16 +380,19 @@ const getPopularConvocatorias = async () => {
     }
 };
 
-const getSummaryOfConvocatorias = async () => {
+const getSummaryOfConvocatorias = async (institucionId) => {
     console.log('Obteniendo resumen de convocatorias activas e inactivas...');
     try {
         const summary = await sequelize.query(
             `SELECT 
-                SUM(CASE WHEN estadoconvocatoria_id = 1 THEN 1 ELSE 0 END) AS ConvocatoriasActivas,
-                SUM(CASE WHEN estadoconvocatoria_id = 3 THEN 1 ELSE 0 END) AS ConvocatoriasInactivas
-            FROM 
-                convocatoria;`,
-            { type: sequelize.QueryTypes.SELECT }
+            SUM(CASE WHEN estadoconvocatoria_id = 1 THEN 1 ELSE 0 END) AS ConvocatoriasActivas,
+            SUM(CASE WHEN estadoconvocatoria_id = 3 THEN 1 ELSE 0 END) AS ConvocatoriasInactivas
+          FROM 
+            convocatoria
+          WHERE
+              institucion_id=:institucionId;`,
+            { replacements: { institucionId: institucionId },
+            type: sequelize.QueryTypes.SELECT }
         );
 
         const summaryDTO = {
@@ -440,6 +487,47 @@ const getInactiveConvocatorias = async () => {
     }
 };
 
+const getInactiveConvocatoriasById = async (institucionId) => {
+    console.log('Obteniendo todas las convocatorias INACTIVAS...');
+    try {
+        const convocatoriasActivas = await ConvocatoriaENT.findAll({
+            where: { estadoconvocatoria_id: [3],
+                    institucion_id: institucionId
+            }, // 3 = Inactivo
+            include: [
+                { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+                { model: InstitucionENT, as: 'institucion' },
+                { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
+            ]
+        });
+
+        const convocatoriasActivasDTO = convocatoriasActivas.map(convocatoria => {
+            const estadoDTO = new EstadoConvocatoriaDTO(convocatoria.estadoconvocatoria.id, convocatoria.estadoconvocatoria.nombreestadoconvocatoria);
+            const institucionDTO = new InstitucionDTO(convocatoria.institucion.id, convocatoria.institucion.nombreinstitucion);
+            const tiempoDTO = new TiempoAcumplirDTO(convocatoria.tiempoacumplir.id, convocatoria.tiempoacumplir.descripcion);
+            return new ConvocatoriaDTO(
+                convocatoria.id,
+                convocatoria.areapasantia,
+                convocatoria.descripcionfunciones,
+                convocatoria.requisitoscompetencias,
+                convocatoria.horario_inicio,
+                convocatoria.horario_fin,
+                convocatoria.fechasolicitud,
+                convocatoria.fechaseleccionpasante,
+                estadoDTO,
+                institucionDTO,
+                tiempoDTO
+            );
+        });
+
+        console.log('Convocatorias INACTIVAS obtenidas correctamente.');
+        return new ResponseDTO('C-0000', convocatoriasActivasDTO, 'Convocatorias INACTIVAS obtenidas correctamente');
+    } catch (error) {
+        console.error('Error al obtener las convocatorias INACTIVAS:', error);
+        return new ResponseDTO('C-1006', null, `Error al obtener las convocatorias INACTIVAS: ${error}`);
+    }
+};
+
 module.exports = {
     getAllConvocatorias,
     getConvocatoriaById,
@@ -452,4 +540,6 @@ module.exports = {
     getInactiveConvocatorias,
     getConvocatoriasPorIdInstitucion,
     getSummaryOfConvocatorias,
+    getActiveConvocatoriasById,
+    getInactiveConvocatoriasById,
 };
