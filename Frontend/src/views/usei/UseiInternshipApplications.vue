@@ -40,14 +40,25 @@ import {useLoaderStore} from "@/store/common/loaderStore";
   },
       methods: {
         async getData() {
-      useLoaderStore().activateLoader();
-      // Asegúrate de que LoadPendentInstitutions() se implemente correctamente y devuelva los datos esperados.
-      await UseUseiInternshipStore().LoadPendenInternship();
-      // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
-      this.listInternship = UseUseiInternshipStore().InternshipList.result;
-            this.everyInternshipsAreLoaded = true;
-      useLoaderStore().desactivateLoader();
-    },
+  try {
+    useLoaderStore().activateLoader();
+
+    // Asegúrate de que LoadPendentInstitutions() se implemente correctamente y devuelva los datos esperados.
+    await useUseiInstitutionStore().LoadPendentInstitutions();
+    // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
+    this.listInstitution = useUseiInstitutionStore().InstitutionList.result;
+
+    await useUseiInternshipStore().LoadPendenInternship();
+    // Asumiendo que LoadPendenInternship() actualiza InternshipList de manera similar a LoadInstitutions() en tu ejemplo.
+    this.listInternship = useUseiInternshipStore().InternshipList.result;
+
+    this.everyInternshipsAreLoaded = true;
+    useLoaderStore().deactivateLoader();
+  } catch (error) {
+    console.error("Error al obtener datos:", error);
+    // Agrega aquí el manejo de errores según sea necesario.
+  }
+},
 
     editCard(cardId) {
       // Lógica para editar la tarjeta con el ID proporcionado
