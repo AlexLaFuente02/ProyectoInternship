@@ -154,13 +154,14 @@ import {useLoaderStore} from "@/store/common/loaderStore";
       margin-right: 5%;
       margin-bottom: 15px;
       color: #000;
-      background: rgb(116, 181, 203);
+      background: rgb(255, 255, 255);
     }
     .card-individual {
       border: 3px solid #000000;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 10px;
+      margin-bottom: 1rem;
+      background: rgb(116, 181, 203);
     }
     .card-inicio{
       border: 3px solid #000000;
@@ -176,11 +177,11 @@ background:  #ffffff;
     .dark-theme .card {/**contenedore de indivialues */
       border: 0px solid #ccc;
       color: #ffffff;
-      background: rgb(119, 129, 216);
+      background: rgb(0, 0, 0);
     }
     .dark-theme .card-individual {
       border: 3px solid #ffffff;
-      margin-bottom: 1rem;
+      background: rgb(119, 129, 216);
     }
     .dark-theme .card-inicio{
       border: 3px solid #ffffff;
