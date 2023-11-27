@@ -228,6 +228,7 @@ router.get('/destacadas', async (req, res) => {
     }
 });
 
+//Ruta para obtener postulaciones de institucionID
 router.get('/postulaciones/:institutionId', async (req, res) => {
     const institutionId = req.params.institutionId;
 
@@ -252,6 +253,56 @@ router.get('/postulaciones/:institutionId', async (req, res) => {
     }
 });
 
+// Ruta para obtener las convoctarias activas para estudiantes
+router.get('/convocatorias/activas', async (req, res) => {
+    try {
+        console.log('GET request received for getConvocatoriasActivas for STUDENT');
+        const response = await convocatoriaService.getActiveConvocatorias();
+        res.json({
+            method: 'getConvocatoriasActivas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias activas for STUDENT:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener las convoctarias inactivas para estudiantes
+router.get('/convocatorias/inactivas', async (req, res) => {
+    try {
+        console.log('GET request received for getConvocatoriasInactivas for STUDENT');
+        const response = await convocatoriaService.getInactiveConvocatorias();
+        res.json({
+            method: 'getConvocatoriasInactivas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias inactivas for STUDENT:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener un resumen de convocatorias activas e inactivas
+router.get('/convocatorias/sumatorias', async (req, res) => {
+    try {
+        console.log('GET request received for getSummaryOfConvocatorias');
+        const response = await convocatoriaService.getSummaryOfConvocatorias();
+        res.json({
+            method: 'getSummaryOfConvocatorias',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting summary of convocatorias:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 module.exports = router;

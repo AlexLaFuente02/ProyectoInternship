@@ -86,3 +86,15 @@ Accept: application/json
 ### ENDPOINT Postulaciones by ID Institucion
 GET {{baseURL}}/postulaciones/{{institucionID}}
 Accept: application/json
+
+###ENDPOINT de Convoctorias activas
+GET {{baseURL}}/convocatorias/activas
+Accept: application/json
+
+###ENDPOINT de Convoctorias inactivas
+GET {{baseURL}}/convocatorias/inactivas
+Accept: application/json
+
+###ENDPOINT de Convoctorias inactivas
+GET {{baseURL}}/convocatorias/sumatorias
+Accept: application/json
