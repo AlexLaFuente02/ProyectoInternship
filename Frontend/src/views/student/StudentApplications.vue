@@ -33,8 +33,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <span class="text-p">PASANTIAS EN ESPERA</span>
+          <div class="card-inicio">
+          <span class="text-p">PASANTIAS EN ESPERA</span>
         <div class="card">
           <div v-for="card in requestsPending"
           :key="card.id" class="card-individual">
@@ -64,7 +64,9 @@
                 </div>
               </div>
         </div>
-        <span class="text-r">PASANTIAS RECHAZADAS</span>
+        </div>
+        <div class="card-inicio">
+          <span class="text-r">PASANTIAS RECHAZADAS</span>
         <div class="card">
           <div v-for="card in requestsRejected" :key="card.id" class="card-individual">
             <div class="content">
@@ -93,6 +95,10 @@
                 </div>
               </div>
         </div>
+        </div>
+        </div>
+
+        
        
     </template>
     

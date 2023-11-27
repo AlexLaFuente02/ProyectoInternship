@@ -202,7 +202,7 @@ export default {
         },
         filterRequests(key){
             if(key == "Todo"){
-                this.listRequests = this.allRequests;
+                this.listRequests = useRequestsByIDStore().requests;
                 this.type = "Todo";
             }
             else if(key == "Pendiente"){
