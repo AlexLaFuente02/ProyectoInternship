@@ -5,125 +5,143 @@
       <div class="card-inicio">
       <span class="text-a">PASANTIAS APROBADAS</span>
         <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card-individual">
+          <div v-for="card in requestsAccepted" :key="card.id" class="card-individual">
             <div class="content">
               <div class="image">
-                <img :src="card.imageUrl" alt="Card image" class="card-image">
+                <!--Imagen por defecto porque no se devuelve en el request-->
+                <img src="https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996" alt="Card image" class="card-image">
+                <!--<img :src="card.imageUrl" alt="Card image" class="card-image">-->
               </div>
               <div class="text-content">
                 <div class="text-content2">
-                  <div class="title">{{ card.title }}</div>
+                  <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
                   <button class="book-btn">Mas informacion</button>
                 </div>
                 
-                <div class="description">{{ card.description }}</div>
+                <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
                 <div class="info">
-                  <div class="price">{{ card.price }} per person*</div>
-                  <div class="ratings">
-                    <span v-for="i in 5" :key="i" class="star"></span>
-                    <span class="review-count">{{ card.reviews }} reviews</span>
+                  <div class="price"> Fecha de postulación:
+                    {{ card.fechapostulacion }}</div>
+                  <div class="price">Horario de pasantia:
+                    {{ card.convocatoria_id.horario_inicio }} - {{ card.convocatoria_id.horario_fin }}</div>
                   </div>
+                  <div class="price">
+                    Fecha final de postulación: {{ card.convocatoria_id.fechaseleccionpasante }}</div>
+                  </div>
+
                 </div>
-                <div class="disclaimer">*Prices may vary depending on selected date.</div>
               </div>
             </div>
           </div>
         </div>
         <span class="text-p">PASANTIAS EN ESPERA</span>
         <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card-individual">
+          <div v-for="card in requestsPending"
+          :key="card.id" class="card-individual">
             <div class="content">
               <div class="image">
-                <img :src="card.imageUrl" alt="Card image" class="card-image">
+                <!--Imagen por defecto porque no se devuelve en el request-->
+                <img src="https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996" alt="Card image" class="card-image">
+                <!--<img :src="card.imageUrl" alt="Card image" class="card-image">-->
               </div>
               <div class="text-content">
                 <div class="text-content2">
-                  <div class="title">{{ card.title }}</div>
+                  <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
                   <button class="book-btn">Mas informacion</button>
                 </div>
                 
-                <div class="description">{{ card.description }}</div>
+                <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
                 <div class="info">
-                  <div class="price">{{ card.price }} per person*</div>
-                  <div class="ratings">
-                    <span v-for="i in 5" :key="i" class="star"></span>
-                    <span class="review-count">{{ card.reviews }} reviews</span>
+                  <div class="price"> Fecha de postulación:
+                    {{ card.fechapostulacion }}</div>
+                  <div class="price"> Horario de pasantia:
+                    {{ card.convocatoria_id.horario_inicio }} - {{ card.convocatoria_id.horario_fin }}</div>
                   </div>
+                  <div class="price">
+                    Fecha final de postulación: {{ card.convocatoria_id.fechaseleccionpasante }}</div>
+                  </div>
+
                 </div>
-                <div class="disclaimer">*Prices may vary depending on selected date.</div>
               </div>
-            </div>
-          </div>
         </div>
         <span class="text-r">PASANTIAS RECHAZADAS</span>
         <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card-individual">
+          <div v-for="card in requestsRejected" :key="card.id" class="card-individual">
             <div class="content">
               <div class="image">
-                <img :src="card.imageUrl" alt="Card image" class="card-image">
+                <!--Imagen por defecto porque no se devuelve en el request-->
+                <img src="https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996" alt="Card image" class="card-image">
+                <!--<img :src="card.imageUrl" alt="Card image" class="card-image">-->
               </div>
               <div class="text-content">
                 <div class="text-content2">
-                  <div class="title">{{ card.title }}</div>
+                  <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
                   <button class="book-btn">Mas informacion</button>
                 </div>
                 
-                <div class="description">{{ card.description }}</div>
+                <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
                 <div class="info">
-                  <div class="price">{{ card.price }} per person*</div>
-                  <div class="ratings">
-                    <span v-for="i in 5" :key="i" class="star"></span>
-                    <span class="review-count">{{ card.reviews }} reviews</span>
+                  <div class="price"> Fecha de postulación:
+                    {{ card.fechapostulacion }}</div>
+                  <div class="price"> Horario de pasantia:
+                    {{ card.convocatoria_id.horario_inicio }} - {{ card.convocatoria_id.horario_fin }}</div>
                   </div>
+                  <div class="price">
+                    Fecha final de postulación: {{ card.convocatoria_id.fechaseleccionpasante }}</div>
+                  </div>
+
                 </div>
-                <div class="disclaimer">*Prices may vary depending on selected date.</div>
               </div>
-            </div>
-          </div>
         </div>
-       </div> 
-    </div>
+       
     </template>
     
     
     <script>
+import {useRequestsByIDStore} from '@/store/student/requestsByIDStore';
+import {useLoaderStore} from "@/store/common/loaderStore";
+import {useUserByIdStore} from "@/store/common/dataUserStore";
+
     export default {
       data() {
         return {
-          cards: [
-            {
-              id: 1,
-              empresa:"JALA",
-              estado:"APROBADO",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              imageUrl: "https://okdiario.com/img/2023/04/10/-es-malo-que-los-gatos-coman-moscas-y-mosquitos-635x358.jpg",
-              title: "Amsterdam Walking Tour",
-              description: "Explore popular tourist destinations as well as hidden local favourites.",
-              price: 17,
-              reviews: 28
-            },
-            {
-              id: 2,
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Card 2",
-              description: "Description for Card 2",
-              price: 20,
-              reviews: 15
-            },
-            {
-              id: 3,
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Card 3",
-              description: "Description for Card 3",
-              price: 25,
-              reviews: 10
-            },
-            // Agrega más objetos para mostrar más tarjetas si lo necesitas
-          ]
+          requestsAccepted:[],
+          requestsPending:[],
+          requestsRejected:[],
+          dataUserStore: useUserByIdStore(),
+          dataUser: {},
+          
         };
+      },
+      methods: {
+        async getRequestsAccepted(){
+          await useRequestsByIDStore().loadRequestsByEstatus(this.dataUser.id,1);
+          this.requestsAccepted = useRequestsByIDStore().requestsAccepted;
+        },
+        async getRequestsPending(){
+          await useRequestsByIDStore().loadRequestsByEstatus(this.dataUser.id,2);
+          this.requestsPending = useRequestsByIDStore().requestsPending;
+        },
+        async getRequestsRejected(){
+          await useRequestsByIDStore().loadRequestsByEstatus(this.dataUser.id,3);
+          this.requestsRejected = useRequestsByIDStore().requestsRejected;
+        },
+        async getUser(){
+          await this.dataUserStore.getUserByIdUsuario( $cookies.get("id"));
+          this.dataUser = this.dataUserStore.user;
+        }
+      },
+      async mounted() {
+        useLoaderStore().activateLoader();
+        await this.getUser();
+        await this.getRequestsAccepted();
+        await this.getRequestsPending();
+        await this.getRequestsRejected();
+        useLoaderStore().desactivateLoader();
       }
     };
-    </script>
+  
+</script>
     
     <style scoped>
 .inicio {
@@ -314,7 +332,6 @@
       display: inline-block;
       width: 15px;
       height: 15px;
-      background-image: url("https://image.flaticon.com/icons/svg/148/148841.svg");
       background-size: contain;
       margin-right: 3px;
     }

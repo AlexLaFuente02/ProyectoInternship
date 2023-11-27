@@ -46,7 +46,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "email": "alex.lafuente@ucb.edu.bo"
+  "email": "edward.gomez@ucb.edu.bo"
 }
 
 
@@ -60,3 +60,17 @@ Content-Type: application/json
   "email": "junito11@ucb.edu.bo",
   "code": "123456"
 }
+
+
+###GET ALL DE sectorPertenencia
+GET {{baseURL}}/sectorPertenencia
+Accept: application/json
+###GET ALL DE carrera
+GET {{baseURL}}/carrera
+Accept: application/json
+###GET ALL DE semestre
+GET {{baseURL}}/semestre
+Accept: application/json
+###GET ALL DE sede
+GET {{baseURL}}/sede
+Accept: application/json

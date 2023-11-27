@@ -59,7 +59,7 @@ import StudentFormRegister from '@/components/student/StudentFormRegister.vue';
 import StudentValidationRegister from '@/components/student/StudentValidationRegister.vue';
 import { useFormRegisterStore } from "@/store/student/formRegisterStore";
 import Button from '@/components/common/Button.vue';
-import StudentFormPassword from '../../components/student/StudentFormPassword.vue';
+import StudentFormPassword from '@/components/student/StudentFormPassword.vue';
 export default {
     components:{
         StudentFormRegister,

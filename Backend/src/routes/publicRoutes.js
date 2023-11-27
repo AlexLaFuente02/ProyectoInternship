@@ -2,7 +2,11 @@ const express = require('express');
 const { isAuthenticated, checkRole } = require('../services/authService');
 const institucionService = require('../services/institucionService');
 const estudianteService = require('../services/estudianteService');
-
+const sectorPertenenciaService = require('../services/sectorPertenenciaService');
+const usuarioService = require('../services/usuarioService');
+const semestreService = require("../services/semestreService");
+const sedeService = require('../services/sedeService');
+const carreraService = require("../services/carreraService");
 const router = express.Router();
 
 const multer = require('multer');
@@ -38,6 +42,51 @@ router.post('/estudiante', async (req, res) => {
         console.error('Error creating student:', error);
         res.status(500).json({ error: error.message });
     }
+});
+
+router.get('/sectorPertenencia', async (req, res) => {
+  console.log('GET request received for getAll');
+  const response = await sectorPertenenciaService.getAll();
+  res.json({
+    method: 'getAll',
+    code: response.code,
+    result: response.result,
+    message: response.message,
+  });
+});
+router.get("/carrera", async (req, res) => {
+  try {
+    const response = await carreraService.getAllCarreras();
+    res.json({
+      method: 'getAllCarreras',
+      code: response.code,
+      result: response.result,
+      message: response.message,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get('/sede', async (req, res) => {
+    console.log('GET request received for getAll');
+    const response = await sedeService.getAll();
+    res.json({
+        method: 'getAll',
+        code: response.code,
+        result: response.result,
+        message: response.message,
+    });
+    }
+);
+router.get("/semestre", async (req, res) => {
+  console.log("GET request received for all semesters");
+  const response = await semestreService.getAll();
+  res.json({
+    method: "getAll",
+    code: response.code,
+    result: response.result,
+    message: response.message
+  });
 });
 
 // Ruta para añadir una institucion
@@ -98,6 +147,17 @@ router.post('/validateCode', async (req, res) => {
         console.error('Error validating code:', error);
         res.status(500).json({ error: error.message });
     }
+});
+//PUT para actualizar la contraseña de un usuario
+router.put('/updatePassword', async (req, res) => {
+  console.log(`PUT request received for updatePassword with ID: PTM`);
+  const response = await usuarioService.updatePassword(req);
+  res.json({
+      method: 'updatePassword',
+      code: response.code,
+      result: response.result,
+      message: response.message,
+  });
 });
 
 module.exports = router;

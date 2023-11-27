@@ -259,9 +259,6 @@ const deleteExpiredCodes = () => {
 const sendEmail = async (email) => {
     const subject = "Código de validación";
     const text = `Su código de validación es: ${generateCode(email)}`;
-    console.log(`Enviando correo a: ${email}...`);
-    console.log(`Asunto: ${subject}`);
-    console.log(`Texto: ${text}`);
     const oauth2Client = new OAuth2(
         accountTransport.auth.clientId,
         accountTransport.auth.clientSecret,
@@ -300,7 +297,6 @@ const sendCode = async (email) => {
     }
     const result = await sendEmail(email);
     const response = new ResponseDTO('E-0000', result, 'Codigo de validacion enviado correctamente');
-    console.log(response);
     return response;
 };
 /*Funcion para validar el codigo de validacion*/

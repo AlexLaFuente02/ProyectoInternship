@@ -1,8 +1,10 @@
 <template>
-  <div class="inicio">
-    <div class="inicio2">
-      <h1>PERFIL DE ESTUDIANTE / GRADUADO</h1>
-    </div>
+    <div class="inicio">
+      <div class="inicio2">
+  <h1>
+    <font-awesome-icon :icon="['fas', 'user-circle']" />
+    Perfil de Usuario
+  </h1></div>
     <div class="container">
       <div class="profile">
         <div class="personal-description box1">
@@ -68,166 +70,90 @@
         <div class="user-details box3">
           <!-- Detalles del usuario -->
           <h2>Datos del usuario</h2>
-          <p>Nombre: Nombre del usuario</p>
-          <p>Edad: Edad del usuario</p>
-          <p>Cumpleaños: Fecha de nacimiento del usuario</p>
-          <p>Carrera: Carrera académica del usuario</p>
+          <p>
+            Nombre: {{dataUser.nombres}}
+          </p>
+          <p>
+            Apellido: {{dataUser.apellidos}}
+          </p>
+          <p>
+            Carnet: {{dataUser.carnetidentidad}}
+          </p>
+          <p>
+            Celular: {{dataUser.celularcontacto}}
+          </p>
         </div>
       </div>
     </div>
   </div>
-</template>
-
-<script>
-import Button from "../../components/common/Button.vue";
-export default {
-  name: "StudentProfilePage",
-  components: {
-    Button,
-  },
-};
-</script>
-
-<style scoped>
-/*contendores para ordenas*/
-.personal-description,
-.social-media,
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-.user-details {
-  flex: 1; /* Permite que los contenedores ocupen el mismo ancho */
-  border: 100px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.links__pack {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 3% auto;
-}
-
-.link {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin: 0 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.3s ease 0s;
-}
-.link:hover {
-  transform: scale(1.1);
-}
-.link svg {
-  width: 20px;
-  height: 20px;
-  color: #fff;
-}
-
-.profile__button {
-  padding: 0.9rem;
-  margin: 0.5rem;
-  color: #fff;
-  cursor: pointer;
-  text-align: center;
-  border: none;
-  background-size: 300% 100%;
-  border-radius: 50px;
-  -o-transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-}
-
-.profile__button:hover {
-  background-position: 100% 0;
-  -o-transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-}
-
-.profile__button:focus {
-  outline: none;
-}
-
-.profile__button.bn23 {
-  background-image: linear-gradient(
-    to right,
-    #25aae1,
-    #4481eb,
-    #04befe,
-    #3f86ed
-  );
-  box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
-}
-.dark-theme .profile__button.bn23 {
-  background-image: linear-gradient(
-    to right,
-    #29323c,
-    #485563,
-    #2b5876,
-    #4e4376
-  );
-  box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
-}
-
-.see_vitae {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-left: 0.5rem;
-}
-
-/**perfil */
-.profile {
-  background: linear-gradient(-45deg, #eb52ee, #b93ce7, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-  border-radius: 10px; /* Añade bordes redondeados */
-  display: flex;
-  border: 2px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
-  padding: 1rem;
-  color: #000;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
+  </template>
+  
+  <script>
+  export default {
+    // Código de tu componente
+  };
+  </script>
+  
+  <style scoped>
+  /*contendores para ordenas*/
+  .personal-description,
+  .social-media,
+  .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+  .user-details {
+    flex: 1; /* Permite que los contenedores ocupen el mismo ancho */
+    border: 100px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 
-/**contenedor inicial */
-.inicio {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 2rem;
-}
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 10%; /* Ajusta la altura según tus necesidades */
-}
+
+  }
+  /**perfil */
+  .profile {
+      background: linear-gradient(-45deg, #eb52ee, #b93ce7, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      border-radius: 10px; /* Añade bordes redondeados */
+      display: flex;
+      border: 2px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
+      padding: 1rem;
+      color: #000;
+    }
+  
+  @keyframes gradient {
+      0% {
+          background-position: 0% 50%;
+      }
+      50% {
+          background-position: 100% 50%;
+      }
+      100% {
+          background-position: 0% 50%;
+      }
+  }
+  
+  /**contenedor inicial */
+  .inicio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%; /* Ajusta la altura según tus necesidades */
+  }
 
 .profile-picture {
   display: flex;
