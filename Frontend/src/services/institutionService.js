@@ -22,6 +22,13 @@ export const getInstitutionIdByUserId = async (user_id) => {
   return response.data;
 };
 
+export const getPostulationsByInternshipId = async (internship_id) => {
+  const response = await axios.get(
+    `${institutionAPIRoute}/postulaciones/convocatoria/${internship_id}`
+  );
+  return response.data;
+};
+
 export const createInternship = async (internshipData) => {
   const response = await axios.post(
     `${institutionAPIRoute}/convocatoria/`,
