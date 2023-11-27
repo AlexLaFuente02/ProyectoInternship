@@ -153,16 +153,18 @@ import {useLoaderStore} from "@/store/common/loaderStore";
       margin-left: 5%;
       margin-right: 5%;
       margin-bottom: 15px;
+      color: #000;
+      background: rgb(116, 181, 203);
     }
     .card-individual {
-      border: 3px solid #ccc;
+      border: 3px solid #000000;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 7px;
+      margin-bottom: 10px;
     }
     .card-inicio{
-      border: 3px solid #ccc;
-
+      border: 3px solid #000000;
+background:  #ffffff;
       border-radius: 8px;
       overflow: hidden;
       margin-top: 15px;
@@ -170,6 +172,22 @@ import {useLoaderStore} from "@/store/common/loaderStore";
       margin-left: 1%;
        /* Ajusta este valor según el espacio que desees */
     }
+
+    .dark-theme .card {/**contenedore de indivialues */
+      border: 0px solid #ccc;
+      color: #ffffff;
+      background: rgb(119, 129, 216);
+    }
+    .dark-theme .card-individual {
+      border: 3px solid #ffffff;
+      margin-bottom: 1rem;
+    }
+    .dark-theme .card-inicio{
+      border: 3px solid #ffffff;
+background:  #000000;
+     
+    }
+
     
     .content {
       display: flex;

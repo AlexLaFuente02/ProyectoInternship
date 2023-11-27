@@ -13,6 +13,7 @@
                                   En esta plataforma administrar las empresas y pasantias que tenemos.
             
                                 </span>
+                                
                                 <span class="career__student1">
                                   <img src="@/components/images/USEI.png" alt="Logo de la empresa" class="company-logo" />
                                 </span>
@@ -931,5 +932,6 @@ useLoaderStore().desactivateLoader();
     }
 
 }
+
 
 </style>
