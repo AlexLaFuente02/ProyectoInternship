@@ -70,7 +70,7 @@ router.post('/institucion', upload.single('logoinstitucion'), async (req, res) =
 router.post('/sendEmail', async (req, res) => {
     try {
         console.log('POST request received for sendEmail with data:', req.body);
-        const response = await estudianteService.sendEmail(req.body.email);
+        const response = await estudianteService.sendCode(req.body.email);
         res.json({
             method: 'sendEmail',
             code: response.code,
