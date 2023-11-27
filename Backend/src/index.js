@@ -61,7 +61,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-/* API ANTERIOR:
+/* API ANTERIOR:*/
 app.use("/adminUSEI", adminuseiAPI); //NO INCLUIR EN CONSUMOS PORQUE SOLO SE MANEJA DESDE BASE DE DATOS DE ADMINISTRADOR
 app.use("/aprobacionConvocatoria", aprobacionConvocatoriaAPI);  //REVISAR UTILIDAD, NO SE USA EN FRONTEND
 app.use("/carrera", carreraAPI);  //SIN AUTENTICACION PORQUE SE USA EN REGISTRO DE ESTUDIANTE, usa en FRONT
@@ -80,7 +80,7 @@ app.use("/sede", sedeAPI); //SIN AUTENTICACION usado en FRONT getAll por STUDENT
 app.use("/semestre", semestreAPI); //SIN AUTENTICACION usado en FRONT getAll por STUDENT
 app.use("/tiempoacumplir", tiempoAcumplirAPI); //utilizado por INSTIUTICION en FRONT para POST
 app.use("/tipoUsuario", tipoUsuarioAPI);  //no tiene uso en FRONT, USEI
-app.use("/usuario", UsuarioAPI); //no tiene uso en FRONT, a no ser modificar contraseña***/
+app.use("/usuario", UsuarioAPI); //no tiene uso en FRONT, a no ser modificar contraseña**
 
 app.use("/auth", authAPI); 
 
