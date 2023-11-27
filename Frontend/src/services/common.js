@@ -17,6 +17,8 @@ export const loadSector = async () => {
     const response = await axios.get(`${rutaApi}/sectorPertenencia`);
     return response.data;
 }
+
+
 export const getUserByIdUsuario = async (idUsuario) => {
     try {
         const response = await axios.get(`${rutaApi}/usuario/getUsuarioByIdUsuario/${idUsuario}`);
