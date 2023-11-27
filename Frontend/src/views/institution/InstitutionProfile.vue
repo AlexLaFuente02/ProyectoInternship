@@ -24,7 +24,10 @@
               </li>
               <li>
                 <strong>Pertenece al sector: </strong>
-                {{ institutionInformation.sectorpertenencia.nombresectorpertenencia }}
+                {{
+                  institutionInformation.sectorpertenencia
+                    .nombresectorpertenencia
+                }}
               </li>
               <li>
                 <strong>Estado: </strong>{{ institutionInformation.estado }}
@@ -34,7 +37,7 @@
           <div class="social-media box2">
             <h2>Mi perfil</h2>
             <img
-              src="https://i.pinimg.com/564x/c1/df/04/c1df04360a5e95eb87de6f20ef233c8e.jpg"
+              :src="institutionInformation.logoinstitucion"
               alt="Foto de Perfil Institución"
               class="profile-picture"
             />

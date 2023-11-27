@@ -5,7 +5,7 @@
     <div class="card-inicio">
       <div class="card" v-if="internshipsAreLoaded">
         <div
-          v-for="internship in internshipsByInstitutionList"
+          v-for="internship in activeInternshipsByInstitutionList"
           :key="internship.id"
           class="card-individual"
         >
@@ -71,38 +71,36 @@
 
 <script>
 import { useLoaderStore } from "@/store/common/loaderStore";
-import { internshipsByInstitutionIdStore } from "../../store/institution/InternshipsByInstitutionIdStore";
+import { activeInternshipsByInstitutionIdStore } from "../../store/institution/ActiveInternshipsByInstitutionIdStore";
 export default {
   data() {
     return {
-      internshipsByInstitutionIdStore: internshipsByInstitutionIdStore(),
+      activeInternshipsByInstitutionIdStore: activeInternshipsByInstitutionIdStore(),
       internshipsAreLoaded: false,
-      internshipsByInstitutionList: [],
+      activeInternshipsByInstitutionList: [],
     };
   },
   methods: {
-    async getInternshipsByInstitution() {
+    async getActiveInternshipsByInstitution() {
       useLoaderStore().activateLoader();
-      await this.internshipsByInstitutionIdStore.loadInternshipsByInstitutionId($cookies.get("institutionID"));
-      this.internshipsByInstitutionList = this.internshipsByInstitutionIdStore.internships.result;
-      this.internshipsByInstitutionList = this.internshipsByInstitutionList.map(
-        (internship) => {
-          return {
-            id: internship.id,
-            areapasantia: internship.areapasantia,
-            descripcionfunciones: internship.descripcionfunciones,
-            requisitoscompetencias: internship.requisitoscompetencias,
-            horario_inicio: internship.horario_inicio,
-            horario_fin: internship.horario_fin,
-            fechasolicitud: internship.fechasolicitud,
-            fechaseleccionpasante: internship.fechaseleccionpasante,
-            nombreestadoconvocatoria: internship.estadoconvocatoria.nombreestadoconvocatoria,
-            tiempoacumplir: internship.tiempoacumplir.descripcion,
-            // logoinstitucion: internship.institucion.logoinstitucion,
-          };
-        }
-      );
-      console.log(this.internshipsByInstitutionList);
+      await this.activeInternshipsByInstitutionIdStore.loadActiveInternshipsByInstitutionId($cookies.get("institutionID"));
+      this.activeInternshipsByInstitutionList = this.activeInternshipsByInstitutionIdStore.internships.result;
+      this.activeInternshipsByInstitutionList = this.activeInternshipsByInstitutionList.map((internship) => {
+        return {
+          id: internship.id,
+          areapasantia: internship.areapasantia,
+          descripcionfunciones: internship.descripcionfunciones,
+          requisitoscompetencias: internship.requisitoscompetencias,
+          horario_inicio: internship.horario_inicio,
+          horario_fin: internship.horario_fin,
+          fechasolicitud: internship.fechasolicitud,
+          fechaseleccionpasante: internship.fechaseleccionpasante,
+          nombreestadoconvocatoria: internship.estadoconvocatoria.nombreestadoconvocatoria,
+          tiempoacumplir: internship.tiempoacumplir.descripcion,
+          // logoinstitucion: internship.institucion.logoinstitucion,
+        };
+      });
+      console.log(this.activeInternshipsByInstitutionList);
       this.internshipsAreLoaded = true;
       useLoaderStore().desactivateLoader();
     },
@@ -116,7 +114,7 @@ export default {
     },
   },
   created() {
-    this.getInternshipsByInstitution();
+    this.getActiveInternshipsByInstitution();
   },
 };
 </script>

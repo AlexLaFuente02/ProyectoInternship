@@ -69,7 +69,6 @@
           id="internshipBeginHourField"
           @time-emit="setBeginTimeInput"
         />
-        <p>horario_inicio: {{ formComponents.beginTimeInput }}</p>
       </div>
       <div class="form-label">
         <label for="internshipEndHourField"
@@ -82,7 +81,6 @@
           id="internshipEndHourField"
           @time-emit="setEndTimeInput"
         />
-        <p>horario_fin: {{ formComponents.endTimeInput }}</p>
       </div>
     </div>
     <div class="field-container">
@@ -97,7 +95,6 @@
           id="internshipSelectionDateField"
           @date-emit="setDateInput"
         />
-        <p>fecha_selección: {{ formComponents.dateInput }}</p>
       </div>
     </div>
     <div class="field-container">
@@ -169,14 +166,21 @@ export default {
       return year + "-" + month + "-" + day;
     },
     setBeginTimeInput(beginTimeValue) {
-      // dateValue es un objeto Date o similar
-      this.formComponents.beginTimeInput = beginTimeValue.getHours() + ':' + beginTimeValue.getMinutes();
+      var hours = beginTimeValue.getHours();
+      var minutes = beginTimeValue.getMinutes();
+      if (hours < 10) hours = "0" + hours;
+      if (minutes < 10) minutes = "0" + minutes;
+      this.formComponents.beginTimeInput = hours + ":" + minutes;
     },
     setEndTimeInput(endTimeValue) {
-      this.formComponents.endTimeInput = endTimeValue.getHours() + ':' + endTimeValue.getMinutes();
+      var hours = endTimeValue.getHours();
+      var minutes = endTimeValue.getMinutes();
+      if (hours < 10) hours = "0" + hours;
+      if (minutes < 10) minutes = "0" + minutes;
+      this.formComponents.endTimeInput = hours + ":" + minutes;
     },
     setDateInput(dateValue) {
-      this.formComponents.dateInput = dateValue.toISOString().split('T')[0];
+      this.formComponents.dateInput = dateValue.toISOString().split("T")[0];
     },
     goBack() {
       this.$router.push({ name: "InstitutionPrincipalPage" });
