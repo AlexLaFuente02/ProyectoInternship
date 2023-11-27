@@ -4,18 +4,17 @@
     <h5>Te mostramos las pasantías activas en la plataforma.</h5>
     <div class="internship-container">
       <div class="internship-information-grid" v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded">
-        <img
-          src="https://scontent.flpb3-1.fna.fbcdn.net/v/t39.30808-6/326368094_757490342424242_7018585822248141862_n.png?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=QxL6kFOuUq0AX-3EyiD&_nc_ht=scontent.flpb3-1.fna&oh=00_AfCxCbY-DO9PuXBWEF4EqWFFpYzznYGa0twkeL-NvXnxrA&oe=65548BF4"
-          alt="Logo de la Empresa"
-        />
+        
+        <img :src="card.imageUrl|| defaultImage" alt="Imagen de la Empresa" class="card-image">
+        
 
         <div class="information-grid">
           <h4 class="information-title">Detalles de la Pasantía:</h4>
           <div class="i_details">
             <ul class="internship-details">
-              <li><strong>Empresa: </strong>{{card.institucion}}</li>
+              <li><strong>Empresa: </strong>{{card.institucion.nombreinstitucion}}</li>
               <li><strong>Requisitos: </strong>{{card.requisitoscompetencias}}</li>
-              <li><strong>Duración: </strong>{{card.tiempoacumplir}}</li>
+              <li><strong>Duración: </strong>{{card.tiempoacumplir.descripcion}}</li>
               <li><strong>Fecha de Inicio: </strong>{{card.fechasolicitud}}</li>
               <li>
                 <strong>Fecha de Finalización: </strong>{{card.fechaseleccionpasante}}</li>
@@ -39,6 +38,7 @@ export default {
         return {
             listInternship:[],
            everyInternshipsAreLoaded: false,
+           defaultImage: "https://cdn-icons-png.flaticon.com/512/9715/9715942.png",
         };
     },
     methods: {

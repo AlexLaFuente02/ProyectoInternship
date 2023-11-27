@@ -7,7 +7,7 @@
           <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="card-individual">
             <div class="content">
               <div class="image">
-                <img :src="card.imageUrl" alt="Card image" class="card-image">
+                <img :src="card.imageUrl|| defaultImage" alt="Imagen de la Empresa" class="card-image">
               </div>
               <div class="text-content">
                 <div class="button-container">
@@ -17,7 +17,17 @@
                   </div>
                 </div>
                 <div class="title">{{ card.empresa }}</div>
-                <div class="description">{{ card.descripcion }}</div>
+                <div class="description"> <ul class="internship-details">
+              <li><strong>Empresa: </strong>{{card.institucion.nombreinstitucion}}</li>
+              <li><strong>Requisitos: </strong>{{card.requisitoscompetencias}}</li>
+              <li><strong>Duración: </strong>{{card.tiempoacumplir.descripcion}}</li>
+              <li><strong>Fecha de Inicio: </strong>{{card.fechasolicitud}}</li>
+              <li>
+                <strong>Fecha de Finalización: </strong>{{card.fechaseleccionpasante}}</li>
+              <li>
+                <strong>Tipo de Pasantía: </strong>{{card.areapasantia}}</li>
+      
+            </ul></div>
               </div>
             </div>
           </div>
@@ -34,30 +44,22 @@ import {useLoaderStore} from "@/store/common/loaderStore";
       data() {
         return{
           listInternship: [],
-      everyInternshipsAreLoaded: false,
-      defaultImage: 'https://i.pinimg.com/564x/0f/76/1c/0f761c01d1fb284eb429061e577aa623.jpg',
+          everyInternshipsAreLoaded: false,
+      defaultImage: "https://cdn-icons-png.flaticon.com/512/9715/9715942.png",
     };
   },
-      methods: {
+  methods: {
         async getData() {
-  try {
+ 
     useLoaderStore().activateLoader();
 
-    // Asegúrate de que LoadPendentInstitutions() se implemente correctamente y devuelva los datos esperados.
-    await useUseiInstitutionStore().LoadPendentInstitutions();
-    // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
-    this.listInstitution = useUseiInstitutionStore().InstitutionList.result;
-
-    await useUseiInternshipStore().LoadPendenInternship();
+    await UseUseiInternshipStore().LoadPendenInternship();
     // Asumiendo que LoadPendenInternship() actualiza InternshipList de manera similar a LoadInstitutions() en tu ejemplo.
-    this.listInternship = useUseiInternshipStore().InternshipList.result;
+    this.listInternship = UseUseiInternshipStore().InternshipList.result;
 
     this.everyInternshipsAreLoaded = true;
-    useLoaderStore().deactivateLoader();
-  } catch (error) {
-    console.error("Error al obtener datos:", error);
-    // Agrega aquí el manejo de errores según sea necesario.
-  }
+    useLoaderStore().desactivateLoader();
+  
 },
 
     editCard(cardId) {

@@ -2,7 +2,10 @@
     <div class="company-card">
       <img src="https://cdn-icons-png.flaticon.com/512/9715/9715942.png" alt="Company Logo" class="company-logo" />
       <h2 class="company-name">{{ name }}</h2>
-      <p class="company-description">{{ description }}</p>
+      <p class="company-description"><strong>Pertenece al sector:  </strong><br>{{ a }}</p>
+      <p class="company-description"><strong>Nombre del Contacto:  </strong><br>{{ b }}</p>
+      <p class="company-description"><strong>Correo electr&oacute;nico:  </strong><br>{{ c }}</p>
+      <p class="company-description"><strong>N&uacute;mero de celular:  </strong><br>{{ d }}</p>
     </div>
   </template>
   
@@ -13,8 +16,19 @@
         type: String,
         required: true,
       },
-     
-      description: {
+      a: {
+        type: String,
+        required: true,
+      },
+      b: {
+        type: String,
+        required: true,
+      },
+      c: {
+        type: String,
+        required: true,
+      },
+      d: {
         type: String,
         required: true,
       },
@@ -31,11 +45,12 @@
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 0.5rem;
+    margin: 1.5rem;
     width: 250px;
-    height: auto;
+    height: 450px;
     color: #fff;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
+   
   }
   .dark-theme .company-card {
     background: rgb(59, 187, 168);
@@ -45,7 +60,6 @@
     width: 100px; /* Adjust the size as needed */
     height: 100px; /* Adjust the size as needed */
     object-fit: contain;
-    margin-bottom: 1rem;
   }
   
   .company-name {
@@ -59,7 +73,7 @@
   }
 /*Estilos hover*/
     .company-card:hover {
-        background: #4486e9;
+        background: rgb(187, 217, 68);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         scale: 1.1;
     }
@@ -69,10 +83,11 @@
 
 
 /*Media queries*/
-@media screen and (max-width: 300px){
+@media screen and (max-width: 380px){
     .company-card {
         width: 160px;
-        height: 300px;
+        height: 270px;
+        margin: 23%;
     }
     .company-logo {
         width: 50px;

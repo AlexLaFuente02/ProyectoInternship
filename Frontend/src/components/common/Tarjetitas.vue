@@ -2,7 +2,10 @@
     <div class="company-card">
       <img src="https://cdn-icons-png.flaticon.com/512/1465/1465439.png" alt="Company Logo" class="company-logo" />
       <h2 class="company-name">{{ name }}</h2>
-      <p class="company-description">{{ description }}</p>
+      <p class="company-description"><strong>Area: </strong>{{ description }}</p>
+      <p class="company-description"><strong>Duracion: </strong>{{ a }}</p>
+      <p class="company-description"><strong>Fecha de solicitud: </strong>{{ b }}</p>
+      <p class="company-description"><strong>Fecha limite: </strong>{{ c }}</p>
     </div>
   </template>
   
@@ -18,6 +21,18 @@
         type: String,
         required: true,
       },
+      a: {
+        type: String,
+        required: true,
+      },
+      b: {
+        type: String,
+        required: true,
+      },
+      c: {
+        type: String,
+        required: true,
+      },
     },
   };
   </script>
@@ -27,25 +42,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #4486e9;
+    background: rgb(187, 217, 68);
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 0.5rem;
+    margin: 1.5rem;
     width: 250px;
-    height: auto;
-    color: #fff;
+    height: 350px;
+    color: #000000;
     transition: all 0.3s ease-in-out;
   }
   .dark-theme .company-card {
-    background: rgb(59, 187, 168);
+    background: rgb(26, 127, 152);
+    color: #ffffff;
   }
+ 
   
   .company-logo {
     width: 100px; /* Adjust the size as needed */
     height: 100px; /* Adjust the size as needed */
     object-fit: contain;
-    margin-bottom: 1rem;
+  
   }
   
   .company-name {
@@ -59,20 +76,23 @@
   }
 /*Estilos hover*/
     .company-card:hover {
-        background: #4486e9;
+        background: rgb(26, 127, 152);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         scale: 1.1;
+        
+    color: #ffffff;
     }
     .dark-theme .company-card:hover {
-        background: rgb(59, 187, 168);
+        background: rgb(192, 199, 65);
+        color: #000000;
     }
 
 
 /*Media queries*/
-@media screen and (max-width: 300px){
+@media screen and (max-width: 380px){
     .company-card {
         width: 160px;
-        height: 300px;
+        height: 250px;
     }
     .company-logo {
         width: 50px;
