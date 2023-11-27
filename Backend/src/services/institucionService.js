@@ -408,6 +408,7 @@ const getInstitutionsBySector = async (sectorId) => {
               institucion.nombrecontacto,
               institucion.correocontacto,
               institucion.celularcontacto,
+              institucion.estado,
               usuarioDTO,
               sectorPertenenciaDTO
           );
