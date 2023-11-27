@@ -30,7 +30,7 @@ export const loadRequestsByIdStudent = async (idStudent) => {
 }
 export const loadInstitutions = async () => {
     try {
-        const response = await axios.get(`${rutaApi}/institucion`);
+        const response = await axios.get(`${rutaApi}/student/institucion`);
         return response.data;
     } catch (error) {
         // Manejar el error aquí, por ejemplo:

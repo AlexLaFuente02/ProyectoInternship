@@ -224,5 +224,15 @@ router.get('/sectores/:sectorId/instituciones', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+router.get('/institucion', async (req, res) => {
+    console.log('GET request received for getAllInstitutions');
+    const response = await institucionService.getAllInstitutions();
+    res.json({
+        method: 'getAllInstitutions',
+        code: response.code,
+        result: response.result,
+        message: response.message,
+    });
+});
 
 module.exports = router;

@@ -2,19 +2,19 @@ import axios from 'axios';
 import { rutaApi } from '../assets/apiConfig';
 //Primer paso, que se comunica con el backend
 export const loadCampuses = async () => {
-    const response = await axios.get(`${rutaApi}/sede`);
+    const response = await axios.get(`${rutaApi}/public/sede`);
     return response.data;
 }
 export const loadCareers = async () => {
-    const response = await axios.get(`${rutaApi}/carrera`);
+    const response = await axios.get(`${rutaApi}/public/carrera`);
     return response.data;
 }
 export const loadSemester = async () => {
-    const response = await axios.get(`${rutaApi}/semestre`);
+    const response = await axios.get(`${rutaApi}/public/semestre`);
     return response.data;
 }
 export const loadSector = async () => {
-    const response = await axios.get(`${rutaApi}/sectorPertenencia`);
+    const response = await axios.get(`${rutaApi}/public/sectorPertenencia`);
     return response.data;
 }
 

@@ -134,6 +134,7 @@ export default {
     background-color: #FFF;
     padding: 5% 10%;
     border-radius: 10px;
+    width: 100%;
 }
 
 /*Modo oscuro*/
