@@ -326,6 +326,8 @@ const getInstitutionPostulations = async () => {
   }
 };
 
+
+
 const getPostulationsByInstitutionId = async (institutionId) => {
   console.log(`Obteniendo postulaciones para la institución con ID: ${institutionId}...`);
   try {
@@ -408,6 +410,7 @@ const getInstitutionsBySector = async (sectorId) => {
               institucion.nombrecontacto,
               institucion.correocontacto,
               institucion.celularcontacto,
+              institucion.estado,
               usuarioDTO,
               sectorPertenenciaDTO
           );

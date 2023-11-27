@@ -307,5 +307,26 @@ router.get('/convocatorias/sumatorias/:institutionId', async (req, res) => {
     }
 });
 
+// Ruta para obtener las postulaciones por ID de institución
+router.get('/institucion/:institucionId/postulaciones', async (req, res) => {
+    const { institucionId } = req.params;
+    if (!institucionId) {
+        return res.status(400).json({ error: 'Se requiere el ID de la institución.' });
+    }
+
+    try {
+        console.log(`GET request received for getPostulationsByInstitutionId with ID: ${institucionId}`);
+        const response = await institucionService.getPostulationsByInstitutionId(institucionId);
+        res.json({
+            method: 'getPostulationsByInstitutionId',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulations for institution ID ${institucionId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 module.exports = router;
