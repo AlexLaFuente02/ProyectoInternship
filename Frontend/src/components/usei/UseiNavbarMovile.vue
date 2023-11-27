@@ -1,7 +1,7 @@
 <template>
   <header class="container__header">
     <div class="container__logo">
-      <router-link to="/">
+      <router-link to="/usei/principal">
         <img
           src="../images/USEI.png"
           alt="Unidad de Servicios Estudiantiles Integrales"

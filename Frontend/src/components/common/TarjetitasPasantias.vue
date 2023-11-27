@@ -41,19 +41,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #4486e9;
+    background: rgb(23, 174, 166);
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     margin: 1.5rem;
     width: 250px;
     height: 450px;
-    color: #fff;
+    color: #ffffff;
     transition: all 0.2s ease-in-out;
-   
+
   }
   .dark-theme .company-card {
-    background: rgb(59, 187, 168);
+    background: rgb(141, 104, 166);
+    color: #ffffff;
   }
   
   .company-logo {
@@ -73,9 +74,10 @@
   }
 /*Estilos hover*/
     .company-card:hover {
-        background: rgb(187, 217, 68);
+        background: rgb(255, 236, 26);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         scale: 1.1;
+        color: #000000;
     }
     .dark-theme .company-card:hover {
         background: rgb(59, 187, 168);
@@ -87,7 +89,7 @@
     .company-card {
         width: 160px;
         height: 270px;
-        margin: 23%;
+        
     }
     .company-logo {
         width: 50px;
@@ -104,7 +106,10 @@
 /* Estilos para dispositivos pequeños (teléfonos) */
 @media only screen and (max-width: 600px) {
   /* Estilos específicos para dispositivos pequeños */
- 
+  .company-card {
+        margin-top: 10%;
+        margin-bottom: 12%;
+    }
 }
 
 /* Estilos para tabletas */
