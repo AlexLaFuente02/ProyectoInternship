@@ -209,4 +209,49 @@ router.get('/institucion/:id', async (req, res) => {
     }
 });
 
+//Ruta para obtener postulaciones de instituciones
+router.get('/destacadas', async (req, res) => {
+    try {
+        console.log('GET request received for getInstitutionPostulations');
+        
+        const response = await institucionService.getInstitutionPostulations();
+        
+        res.json({
+            method: 'getInstitutionPostulations',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting Institution Postulations:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.get('/postulaciones/:institutionId', async (req, res) => {
+    const institutionId = req.params.institutionId;
+
+    if (!institutionId) {
+        return res.status(400).json({ error: 'Se requiere el ID de la institución' });
+    }
+
+    try {
+        console.log(`GET request received for getPostulationsByInstitutionId with ID: ${institutionId}`);
+
+        const response = await institucionService.getPostulationsByInstitutionId(institutionId);
+
+        res.json({
+            method: 'getPostulationsByInstitutionId',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulations for institution ID ${institutionId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
 module.exports = router;

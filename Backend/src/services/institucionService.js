@@ -326,6 +326,54 @@ const getInstitutionPostulations = async () => {
   }
 };
 
+const getPostulationsByInstitutionId = async (institutionId) => {
+  console.log(`Obteniendo postulaciones para la institución con ID: ${institutionId}...`);
+  try {
+    const result = await sequelize.query(
+      `SELECT 
+        postulacion.id,
+        postulacion.fechapostulacion,
+        postulacion.estadopostulacion_id,
+        postulacion.estudiante_id,
+        postulacion.convocatoria_id
+      FROM 
+        postulacion
+      JOIN 
+        convocatoria ON postulacion.convocatoria_id = convocatoria.id
+      JOIN 
+        institucion ON convocatoria.institucion_id = institucion.id
+      WHERE 
+        institucion.id = :institutionId;
+      `,
+      { 
+        replacements: { institutionId: institutionId },
+        type: sequelize.QueryTypes.SELECT 
+      }
+    );
+
+    console.log(
+      `Postulaciones obtenidas correctamente para la institución con ID: ${institutionId}.`
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      result,
+      `Postulaciones obtenidas correctamente para la institución con ID: ${institutionId}`
+    );
+  } catch (error) {
+    console.error(
+      `Error al obtener postulaciones para la institución con ID: ${institutionId}:`,
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener postulaciones para la institución con ID: ${institutionId}: ${error}`
+    );
+  }
+};
+
+
+
 const getInstitutionsBySector = async (sectorId) => {
   console.log(`Obteniendo instituciones del sector con ID: ${sectorId}...`);
   try {
@@ -730,4 +778,5 @@ module.exports = {
   getInstitutionRejected,
   activateInstitution,
   getInstitutionIdByUserId,
+  getPostulationsByInstitutionId,
 };
