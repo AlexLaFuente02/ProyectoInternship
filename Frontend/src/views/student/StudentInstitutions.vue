@@ -8,6 +8,7 @@
             <div class="dataview__options">
                 <div class="search__view">
                     <input
+                    class="search__input"
                     type="text" 
                     placeholder="Buscar por institución" 
                     v-model="searchTerms"
@@ -110,6 +111,7 @@ export default {
         async updateSector(option) {
             this.selected = option.label;
             if (option.id === 0) {
+                await useInstitutionsByIDSectorStore().loadInstitutions();
                 this.listInstitutions = useInstitutionsByIDSectorStore().institutions.result;
             } else {
                 await useInstitutionsByIDSectorStore().loadInstitutionsByIdSector(option.id);
@@ -187,6 +189,7 @@ h6 {
     border-radius: 0.5rem;
     margin-bottom: 1rem;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    flex: 1 1 auto;
 
 }
 .dark-theme .containerList__header{
@@ -206,10 +209,14 @@ h6 {
 .search__view{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
+.search__input{
+    flex: 1 1 90%;
+}
 .search__image{
+  flex: 1 1 10%;
     display: flex;
     justify-content: center;
     align-items: center;

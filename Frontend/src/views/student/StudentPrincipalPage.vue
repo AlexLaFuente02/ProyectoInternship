@@ -52,7 +52,7 @@
         <div class="internship__active__by__student">
             <h1>Pasantías activas</h1>
             <div class="container__cards">
-                <div class="card" v-for="internship in listInterships.result" v-if="everyInternshipsAreLoaded">
+                <div class="card" v-for="internship in listInterships" v-if="everyInternshipsAreLoaded">
                     <SimpleCard 
                     :key="internship.id"
                     :internship="internship"/>
@@ -172,10 +172,10 @@ export default {
             const id = $cookies.get("id");
             await this.dataUserStore.getUserByIdUsuario(id);
             this.dataUser = this.dataUserStore.user;
-            await useInternshipsByIDStore().loadInternshipsByIdStudent();
+            await useInternshipsByIDStore().loadActiveInternships();
             await useRequestsByIDStore().loadRequestsByIdStudent(this.dataUserStore.user.id);
             await useInternshipsByIDStore().loadPopularInternships();
-            this.listInterships = useInternshipsByIDStore().internships;
+            this.listInterships = useInternshipsByIDStore().activeInternships;
             this.listRequests = useRequestsByIDStore().requests;
             this.allRequests = this.listRequests;
             this.popularInternships = useInternshipsByIDStore().popularInternships;

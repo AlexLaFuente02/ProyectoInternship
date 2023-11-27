@@ -1,7 +1,10 @@
 <template>
     <div class="inicio">
       <div class="inicio2">
-  <h1>PERFIL DE ESTUDIANTE / GRADUADO</h1></div>
+  <h1>
+    <font-awesome-icon :icon="['fas', 'user-circle']" />
+    Perfil de Usuario
+  </h1></div>
     <div class="container">
       <div class="profile">
         <div class="personal-description box1">
@@ -63,21 +66,47 @@
         <div class="user-details box3">
           <!-- Detalles del usuario -->
           <h2>Datos del usuario</h2>
-          <p>Nombre: Nombre del usuario</p>
-          <p>Edad: Edad del usuario</p>
-          <p>Cumpleaños: Fecha de nacimiento del usuario</p>
-          <p>Carrera: Carrera académica del usuario</p>
+          <p>
+            Nombre: {{dataUser.nombres}}
+          </p>
+          <p>
+            Apellido: {{dataUser.apellidos}}
+          </p>
+          <p>
+            Carnet: {{dataUser.carnetidentidad}}
+          </p>
+          <p>
+            Celular: {{dataUser.celularcontacto}}
+          </p>
         </div>
       </div>
     </div>
   </div>
   </template>
   
-  <script>
+<script>
+import {useLoaderStore} from "@/store/common/loaderStore";
+import {useUserByIdStore} from "@/store/common/dataUserStore";
   export default {
-    // Código de tu componente
+    data() {
+      return {
+        dataUserStore: useUserByIdStore(),
+        dataUser: {},
+      };
+    },
+    methods: {
+      async getUser(){
+          await this.dataUserStore.getUserByIdUsuario( $cookies.get("id"));
+          this.dataUser = this.dataUserStore.user;
+      }
+    },
+    async mounted() {
+      useLoaderStore().activateLoader();
+      await this.getUser();
+      useLoaderStore().desactivateLoader();
+    },
   };
-  </script>
+</script>
   
   <style scoped>
   /*contendores para ordenas*/

@@ -4,10 +4,20 @@
             <div class="containerList__title">
                 <h1>Pasantías</h1>
             </div>
-    </div>
+            <div class="dataview__options">
+                <div class="dropdown__view">
+                    <Dropdown
+                    :options="options"
+                    :selectedValue="selected.label"
+                    placeholderValue="Seleccione un opción"
+                    @option-selected="updateListByOption"
+                    />
+                </div>
+            </div>
+        </div>
         <div class="content__internship">
             <CardList 
-            :list="listInterships"
+            :list="listIntershipsComputed"
             :title="title"
             v-if="everyInternshipsAreLoaded"
             />
@@ -18,23 +28,57 @@
 import {useInternshipsByIDStore } from "@/store/student/internshipsByIDStore";
 import CardList from "@/components/common/CardList.vue";
 import {useLoaderStore} from "@/store/common/loaderStore";
+import Dropdown from "../../components/common/Dropdown.vue";
 export default {
     name: "StudentInternships",
     components: {
-        CardList
+        CardList,
+        Dropdown
     },
     data() {
         return {
             listInterships: [],
             title: "Pasantías",
-            everyInternshipsAreLoaded: false
+            everyInternshipsAreLoaded: false,
+            options: [
+                { id: 0, label: "Todas las Pasantías"},
+                { id: 1, label: "Pasantías Populares"},
+                { id: 2, label: "Pasantías Activas"}
+            ],
+            selected: { id: 0, label: "Todas las Pasantías"}
         }
     },
     methods: {
         async getInternships() {
-            await useInternshipsByIDStore().loadInternshipsByIdStudent();
+            await useInternshipsByIDStore().loadAllInternships();
             this.listInterships = useInternshipsByIDStore().internships;
             this.everyInternshipsAreLoaded = true;
+        },
+        async updateListByOption(option) {
+            useLoaderStore().activateLoader();
+            this.everyInternshipsAreLoaded = false;
+            switch(option.id) {
+                case 0:
+                    await this.getInternships();
+                    break;
+                case 1:
+                    await useInternshipsByIDStore().loadPopularInternships();
+                    this.listInterships = useInternshipsByIDStore().popularInternships;
+                    this.everyInternshipsAreLoaded = true;
+                    break;
+                case 2:
+                    await useInternshipsByIDStore().loadActiveInternships();
+                    this.listInterships = useInternshipsByIDStore().activeInternships;
+                    this.everyInternshipsAreLoaded = true;
+                    break;
+            }
+            this.selected = option;
+            useLoaderStore().desactivateLoader();
+        },
+    },
+    computed: {
+        listIntershipsComputed() {
+            return this.listInterships;
         }
     },
     async mounted() {
@@ -71,7 +115,7 @@ export default {
 }
 .containerList__title{
     display: flex;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 .dataview__options{
     display: flex;
@@ -86,7 +130,11 @@ export default {
     justify-content: center;
     align-items: center;
 }
+.search__input{
+    flex: 1 1 90%;
+}
 .search__image{
+    flex: 1 1 10%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,6 +147,12 @@ export default {
   /* Estilos específicos para dispositivos pequeños */
     .container__student__internships{
         padding: 0.5rem;
+    }
+    .dataview__options{
+        flex-direction: column;
+    }
+    .search__view{
+        margin-bottom: 0.5rem;
     }
 }
 

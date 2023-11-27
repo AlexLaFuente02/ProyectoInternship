@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { rutaApi } from '../assets/apiConfig';
 
+//No hay API para cargar las convocatorias que tomó un estudiante
 export const loadInternshipsByIdStudent = async () => {
-    try {
+    /*try {
         const response = await axios.get(`${rutaApi}/student/convocatorias/activas`, {
             withCredentials: true // Esto asegurará que se envíen las cookies de sesión
         });
@@ -11,7 +12,7 @@ export const loadInternshipsByIdStudent = async () => {
         // Manejar el error aquí, por ejemplo:
         console.error("Hubo un error al cargar las convocatorias: ", error);
         throw error; // O reenviar el error para manejarlo en otro lugar
-    }
+    }*/
 }
 export const loadRequestsByIdStudent = async (idStudent) => {
     try {
@@ -28,6 +29,28 @@ export const loadRequestsByIdStudent = async (idStudent) => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 }
+export const loadRequestsByEstatus = async (idStudent, estatus) => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/${idStudent}/postulaciones/${estatus}`);
+        const data = response.data;
+        if (data.code === "P-0000") {
+            return data.result;
+        }else{
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar las postulaciones: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}
+
+
+
+
+
+
+
 export const loadInstitutions = async () => {
     try {
         const response = await axios.get(`${rutaApi}/student/institucion`);
@@ -162,6 +185,36 @@ export const putStudent = async (contrasenia, token) => {
 export const popularInternships = async () => {
     try {
         const response = await axios.get(`${rutaApi}/student/convocatorias/populares`);
+        const data = response.data;
+        if (data.code === "C-0000") {
+            return data.result;
+        }else{
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar las convocatorias: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}
+export const loadAllInternships = async () => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/convocatoria`);
+        const data = response.data;
+        if (data.code === "C-0000") {
+            return data.result;
+        }else{
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar las convocatorias: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}
+export const loadActiveInternships = async () => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/convocatorias/activas`);
         const data = response.data;
         if (data.code === "C-0000") {
             return data.result;
