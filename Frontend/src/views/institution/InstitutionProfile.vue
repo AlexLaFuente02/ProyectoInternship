@@ -1,82 +1,127 @@
 <template>
   <div class="inicio">
-    <div class="inicio2">
-      <h1>PERFIL DE EMPRESA</h1>
-    </div>
-    <div class="container">
-      <div class="profile">
-        <div class="personal-description box1">
-          <div class="description-header">
-            <h2>Acerca de mí</h2>
+    <div v-if="institutionInformationIsLoaded">
+      <div class="inicio2">
+        <h1>
+          PERFIL DE TU EMPRESA ¡{{ institutionInformation.nombreinstitucion }}!
+        </h1>
+      </div>
+      <div class="container">
+        <div class="profile">
+          <div class="personal-description box1">
+            <div class="description-header">
+              <h2>ACERCA DE MI</h2>
+            </div>
+            <p>INFORMACI&Oacute;N SOBRE TU EMPRESA.</p>
+            <ul class="company-details">
+              <li>
+                <strong>Nombre: </strong>
+                {{ institutionInformation.nombreinstitucion }}
+              </li>
+              <li>
+                <strong>Usuario: </strong>
+                {{ institutionInformation.usuario.idusuario }}
+              </li>
+              <li>
+                <strong>Pertenece al sector: </strong>
+                {{ institutionInformation.sectorpertenencia.nombresectorpertenencia }}
+              </li>
+              <li>
+                <strong>Estado: </strong>{{ institutionInformation.estado }}
+              </li>
+            </ul>
           </div>
-          <p>INFORMACI&Oacute;N SOBRE LA EMPRESA.</p>
-        </div>
-        <div class="social-media box2">
-          <h2 style="justify-content: center">Mi perfil</h2>
-          <img
-            src="https://i.pinimg.com/564x/c1/df/04/c1df04360a5e95eb87de6f20ef233c8e.jpg"
-            alt="Mi Foto de Perfil"
-            class="profile-picture"
-          />
-          <!--botones funenme-->
-          <div class="footer__links">
-            <a
-              class="btn text-white btn-floating rounded-circle m-1"
-              style="background-color: #3b5998"
-              href="https://www.facebook.com/usei.lpz"
-              role="button"
-              ><font-awesome-icon :icon="['fab', 'facebook']"
-            /></a>
-            <a
-              class="btn text-white btn-floating rounded-circle m-1"
-              style="background-color: #55acee"
-              href="https://twitter.com/UCBLaPaz"
-              role="button"
-              ><font-awesome-icon :icon="['fab', 'twitter']"
-            /></a>
-            <a
-              class="btn text-white btn-floating rounded-circle m-1"
-              style="background-color: #ac2bac"
-              href="https://www.instagram.com/usei.lapaz/?fbclid=IwAR07aYlD7DflEtSJDuW6ERzw_r7DjawQAQVxbXcShM4RmZjLHQAUPensFyc"
-              role="button"
-              ><font-awesome-icon :icon="['fab', 'instagram']"
-            /></a>
-            <a
-              class="btn text-white btn-floating rounded-circle m-1"
-              style="background-color: #0082ca"
-              href="https://www.linkedin.com/in/usei-la-paz-080327253/?originalSubdomain=bo"
-              role="button"
-              ><font-awesome-icon :icon="['fab', 'linkedin']"
-            /></a>
+          <div class="social-media box2">
+            <h2>Mi perfil</h2>
+            <img
+              src="https://i.pinimg.com/564x/c1/df/04/c1df04360a5e95eb87de6f20ef233c8e.jpg"
+              alt="Foto de Perfil Institución"
+              class="profile-picture"
+            />
+            <h5>{{ institutionInformation.reseniainstitucion }}</h5>
+            <div class="links__pack">
+              <a
+                class="link"
+                style="background-color: #3b5998"
+                href="https://www.facebook.com/usei.lpz"
+                role="button"
+                ><font-awesome-icon :icon="['fab', 'facebook']"
+              /></a>
+              <a
+                class="link"
+                style="background-color: #55acee"
+                href="https://twitter.com/UCBLaPaz"
+                role="button"
+                ><font-awesome-icon :icon="['fab', 'twitter']"
+              /></a>
+              <a
+                class="link"
+                style="background-color: #ac2bac"
+                href="https://www.instagram.com/usei.lapaz/?fbclid=IwAR07aYlD7DflEtSJDuW6ERzw_r7DjawQAQVxbXcShM4RmZjLHQAUPensFyc"
+                role="button"
+                ><font-awesome-icon :icon="['fab', 'instagram']"
+              /></a>
+              <a
+                class="link"
+                style="background-color: #0082ca"
+                href="https://www.linkedin.com/in/usei-la-paz-080327253/?originalSubdomain=bo"
+                role="button"
+                ><font-awesome-icon :icon="['fab', 'linkedin']"
+              /></a>
+            </div>
           </div>
-        </div>
-        <div class="user-details box3">
-          <h2>Datos de la Empresa</h2>
-          <ul class="company-details">
-            <li><strong>Nombre: </strong>Netflix</li>
-            <li>
-              <strong>Pertenece al sector: </strong>
-              Sector de pertenencia de la empresa
-            </li>
-            <li><strong>Rese&ntilde;a: </strong>Descripción de la empresa</li>
-            <li><strong>Contacto: </strong>Contacto de la empresa</li>
-            <li>
-              <strong>Correo electr&oacute;nico: </strong>
-              Correo electr&oacute;nico de la empresa
-            </li>
-            <li>
-              <strong>N&uacute;mero de celular: </strong>
-              N&uacute;mero de celular de la empresa
-            </li>
-          </ul>
+          <div class="user-details box3">
+            <h2>CONTACTO</h2>
+            <ul class="company-details">
+              <li>
+                <strong>Nombre del contacto: </strong>
+                {{ institutionInformation.nombrecontacto }}
+              </li>
+              <li>
+                <strong>Correo electr&oacute;nico: </strong>
+                {{ institutionInformation.correocontacto }}
+              </li>
+              <li>
+                <strong>N&uacute;mero de celular: </strong>
+                {{ institutionInformation.celularcontacto }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+    </div>
+    <div v-else>
+      <h1>No se logró cargar tu perfil, int&eacute;ntalo nuevamente...</h1>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { useLoaderStore } from "@/store/common/loaderStore";
+import { InstitutionByIdStore } from "@/store/institution/InstitutionByIdStore";
+export default {
+  name: "InstitutionProfilePage",
+  data() {
+    return {
+      institutionById: InstitutionByIdStore(),
+      institutionInformationIsLoaded: false,
+      institutionInformation: [],
+    };
+  },
+  methods: {
+    async getInstitutionData() {
+      useLoaderStore().activateLoader();
+      await this.institutionById.loadInstitutionById($cookies.get("institutionID"));
+      this.institutionInformation = this.institutionById.institution.result;
+      console.log(this.institutionInformation);
+      this.institutionInformationIsLoaded = true;
+      useLoaderStore().desactivateLoader();
+    },
+  },
+  created() {
+    this.getInstitutionData();
+  },
+};
 </script>
 
 <style scoped>
@@ -98,6 +143,35 @@ export default {};
   align-items: center;
   width: 100%;
 }
+
+.links__pack {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 3% auto;
+}
+
+.link {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease 0s;
+}
+.link:hover {
+  transform: scale(1.1);
+}
+.link svg {
+  width: 20px;
+  height: 20px;
+  color: #fff;
+}
+
 /**perfil */
 .profile {
   background: linear-gradient(-45deg, #eb52ee, #b93ce7, #23a6d5, #23d5ab);
@@ -107,7 +181,11 @@ export default {};
   display: flex;
   border: 2px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
   padding: 1rem;
-  color: #000;
+  color: white;
+}
+
+.company-details {
+  text-align: start;
 }
 
 @keyframes gradient {
@@ -127,6 +205,7 @@ export default {};
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   flex-direction: column;
   padding: 2rem;
 }

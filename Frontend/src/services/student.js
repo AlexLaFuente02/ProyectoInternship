@@ -29,11 +29,35 @@ export const loadRequestsByIdStudent = async (idStudent) => {
     }
 }
 export const loadInstitutions = async () => {
-    /*Cambiar por la ruta de la api que corresponda*/
-    //Se esta usando la ruta de la api de prueba
-    const response = await axios.get(`${rutaApi}/institucion`);
-    return response.data;
+    try {
+        const response = await axios.get(`${rutaApi}/institucion`);
+        return response.data;
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar las instituciones: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
 }
+export const loadInstitutionsByIdSector = async (idSector) => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/sectores/${idSector}/instituciones`);
+        const data = response.data;
+        if (data.code === "I-0000") {
+            return data.result;
+        }else{
+            return null;
+        }
+    }
+    catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar las instituciones: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}
+
+
+
+
 export const postStudent = async (studentData, token) => {
     try {
         const response = await axios.post(`${rutaApi}/estudiante`, studentData, {

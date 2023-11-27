@@ -261,6 +261,7 @@ router.delete('/:id', async (req, res) => {
 router.post('/sendEmail', async (req, res) => {
     console.log('POST request received for sendEmail with data:', req.body);
     const response = await estudianteService.sendCode(req.body.email);
+    console.log(response);
     res.json({
         method: 'sendEmail',
         code: response.code,

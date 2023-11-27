@@ -7,6 +7,7 @@ const historicoPostulacionesService = require('../services/historicoPostulacione
 const postulacionService = require('../services/postulacionService');
 const sedeService = require('../services/sedeService');
 const institucionService = require('../services/institucionService');
+const estudianteService = require('../services/estudianteService');
 const router = express.Router();
 
 const { sendEmail } = require('../services/emailService');
@@ -221,6 +222,24 @@ router.get('/sectores/:sectorId/instituciones', async (req, res) => {
         });
     } catch (error) {
         console.error(`Error getting institutions for sector ID: ${req.params.sectorId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener Student por ID
+router.get('/:studentId', async (req, res) => {
+    try {
+        console.log(`GET request received for getStudentById with studentId: ${req.params.studentId}`);
+        const studentId = req.params.studentId;
+        const response = await estudianteService.getStudentById(studentId);
+        res.json({
+            method: 'getStudentById',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting student for student ID: ${req.params.studentId}:`, error);
         res.status(500).json({ error: error.message });
     }
 });

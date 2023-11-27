@@ -91,7 +91,7 @@ export default {
     },
     methods: {
         getData(){
-            this.listInterships = this.list.result.filter((internship) => {
+            this.listInterships = this.list.filter((internship) => {
                 return internship.institucion.nombreinstitucion.toLowerCase().includes(this.searchTerms.toLowerCase());
             });
             this.titleList =  this.title;

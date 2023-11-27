@@ -68,26 +68,36 @@ router.post('/institucion', upload.single('logoinstitucion'), async (req, res) =
 });
 /*Funcion para enviar el correo de confirmacion de cuenta*/
 router.post('/sendEmail', async (req, res) => {
-    console.log('POST request received for sendEmail with data:', req.body);
-    const response = await estudianteService.sendCode(req.body.email);
-    res.json({
-        method: 'sendEmail',
-        code: response.code,
-        result: response.result,
-        message: response.message,
-    });
+    try {
+        console.log('POST request received for sendEmail with data:', req.body);
+        const response = await estudianteService.sendCode(req.body.email);
+        res.json({
+            method: 'sendEmail',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ error: error.message });
+    }
 });
 /*Funcion para validar el codigo de confirmacion de cuenta y enviar el token*/
 router.post('/validateCode', async (req, res) => {
-    console.log('POST request received for validateCode with data:', req.body);
-    const response = await estudianteService.validateCodeAndGenerateToken(req.body.code);
-    console.log(response);
-    res.json({
-        method: 'validateCode',
-        code: response.code,
-        result: response.result,
-        message: response.message,
-    });
+    try {
+        console.log('POST request received for validateCode with data:', req.body);
+        const response = await estudianteService.validateCodeAndGenerateToken(req.body.code);
+        console.log(response);
+        res.json({
+            method: 'validateCode',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error validating code:', error);
+        res.status(500).json({ error: error.message });
+    }
 });
 
 module.exports = router;
