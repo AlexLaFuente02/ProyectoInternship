@@ -47,12 +47,28 @@ export default {
 </script>
 <style scoped>
 .card{
+  margin-top: 15%;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
+@media screen and (max-width: 450px){
+  
+  .card{
+      margin-top: 30%;
+    }
+
+}
+
+@media screen and (max-width: 335px){
+  
+  .card{
+      margin-top: 50%;
+    }
+
+}
+
 
 </style>

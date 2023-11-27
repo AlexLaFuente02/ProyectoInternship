@@ -1,20 +1,21 @@
 <template>
    <div class="student__principalPage">
             <div class="student__profile">
-                <div class="profile__content__header">
+                <div class="profile__content__header1">
                         <div class="content__welcome">
                           
                             <div class="student__data">
                                 <span class="welcome__student">
-                                  ¡Bienvenido a la plataforma !
+                                  ¡Bienvenido a la plataforma!
                                 </span>
                                 <br>
                                 <span class="career__student">
                                   En esta plataforma administrar las empresas y pasantias que tenemos.
             
                                 </span>
-                                <span class="career__student">
-                                  <img src="https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996" alt="Logo de la empresa" class="company-logo" />
+                                
+                                <span class="career__student1">
+                                  <img src="@/components/images/USEI.png" alt="Logo de la empresa" class="company-logo" />
                                 </span>
                             </div>
                         </div>
@@ -25,15 +26,11 @@
                         Resumen general de tus pasantías
                     </span>
                     <div class="summary__content">
-                        <span class="summary__content__number">120 
-                            <span class="summary__content__text">Instituciones</span>
-                        </span>
+                       
                         <span class="summary__content__number">10 
                             <span class="summary__content__text">Solicitudes deInstituciones</span>
                         </span>
-                        <span class="summary__content__number">13 
-                            <span class="summary__content__text">Pasantias</span>
-                        </span>
+                        
                         <span class="summary__content__number">12
                             <span class="summary__content__text">Solicitudes de Pasantias</span>
                         </span>
@@ -42,33 +39,72 @@
             </div>
 
           </div>
-          <div class="student__principalPage">
-            <div class="student__profile">
-                <div class="profile__content__header">
-                        <div class="content__welcome">
-                          
-                            <div class="student__data">
-                                <span class="welcome__student">
-                                 ¿Cuál es el problema?
-                                </span>
-                                <br>
-                                <span class="career__student">
-                                 
-              En la actualidad, los estudiantes y graduados no cuentan con una
-              plataforma que les permita encontrar pasantías y prácticas
-              profesionales de manera fácil y rápida.
-            </span>
-                                <span class="career__student">
-                                  <img src="https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996" alt="Logo de la empresa" class="company-logo" />
-                                </span>
-                            </div>
-                        </div>
-                        
-                </div>
-              
-            </div>
 
-          </div>
+
+        <!--prueba -->
+         
+
+      
+    
+        <div class="card-inicio">
+        <div class="card">
+          <h1>Solicitudes de convocatorias</h1>
+          <div class="EmpresasDestacadas">
+           
+            <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
+        
+        <Tarjetitas 
+        :name="card.institucion.nombreinstitucion" 
+        :description="card.areapasantia "
+        :a="card.tiempoacumplir.descripcion"
+        :b="card.fechasolicitud"
+        :c="card.fechaseleccionpasante"
+        />
+      
+        </div>
+       
+      </div>
+      <div class="container__button">
+          <Button 
+            text="Revisa tus convocatorias de empresas" 
+            :color="1" 
+            :disabled="false"
+            @option-selected="Convocatorias">
+          </Button>
+        </div>
+        </div>
+      </div>
+    
+        
+        <div class="card-inicio">
+        <div class="card">
+          <h1>Solicitudes de empresas</h1>
+          <div class="EmpresasDestacadas">
+           
+        <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
+          
+        <TarjetitasPasantias 
+        :name="card.nombreinstitucion"
+        :a="card.sectorpertenencia.nombresectorpertenencia "
+        :b="card.nombrecontacto "
+        :c="card.correocontacto "
+        :d="card.celularcontacto "/>
+        
+        </div>
+      
+      </div>
+      <div class="container__button">
+          <Button 
+            text="Revisa tus solicitudes de empresas " 
+            :color="0" 
+            :disabled="false"
+            @option-selected="Empresas"
+            >
+          </Button>
+        </div>
+        </div>
+      </div>
+ 
 
           <div class="student__principalPage">
             <div class="student__profile">
@@ -101,15 +137,27 @@
 
   </template>
   <script>
+  import Tarjetitas from '../../components/common/Tarjetitas.vue';
+  import TarjetitasPasantias from '../../components/common/TarjetitasPasantias.vue';
   import Carousel from "@/components/common/Carousel.vue";
   import Button from "@/components/common/Button.vue";
+  import SimpleCard from "@/components/common/SimpleCard.vue";
+  import { useLoaderStore } from "@/store/common/loaderStore";
+  import {UseUseiInternshipStore }from "@/store/usei/UseiInternshipStore";
+  import { UseUseiInstitutionStore } from "@/store/usei/UseiInstitutionStore";
   export default {
     components: {
       Carousel,
-      Button
+      SimpleCard,
+      Button,
+      Tarjetitas,
+      TarjetitasPasantias
     },
     data() {
       return {
+        listInstitution: [],
+        listInternship: [],
+        everyInternshipsAreLoaded: false,
         PhotoService:[
         {
               itemImageSrc: 'https://www.animafestexperience.net/internshipsabroad/wp-content/uploads/2019/08/ANIMAFEST-PASANTIAS-REMUNERADAS-min-min-800x333.jpg',
@@ -139,10 +187,42 @@
           this.$router.push("/UserRegister");
         }
       },
+      Empresas(option) {
+      if (option) {
+        console.log("createAccount");
+        this.$router.push("/usei/Business");
+      }
     },
-    
+    Convocatorias(option) {
+      if (option) {
+        console.log("createAccount");
+        this.$router.push("/usei/InternshipApp");
+      }
+    },
+    async getData() {
+      
+      useLoaderStore().activateLoader();
+
+      await UseUseiInternshipStore().LoadPendenInternship();
+// Asumiendo que LoadPendenInternship() actualiza InternshipList de manera similar a LoadInstitutions() en tu ejemplo.
+      this.listInternship = UseUseiInternshipStore().InternshipList.result;
+      await UseUseiInstitutionStore().LoadPendentInstitutions();
+      // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
+      this.listInstitution = UseUseiInstitutionStore().InstitutionList.result;
+
+this.everyInternshipsAreLoaded = true;
+useLoaderStore().desactivateLoader();
+
+
+
+        
+      },
+    },
+    created() {
+      this.getData();
+    },
   };
-  </script>
+</script>
   <style scoped>
    
   
@@ -176,7 +256,21 @@
     .container__solution__description{
       padding: 3% 7%;
     }
+    .company-logo{
+      height: 400px;
+    }
+    .student__profile{
+      padding-bottom: 70%;
+    }
   }
+
+  @media screen and (max-width: 1025px) {
+    
+    .company-logo{
+      height: 10%;
+    }
+  }
+
   @media screen and (max-width: 768px) {
     .container__header__page{
       flex-direction: column;
@@ -294,8 +388,7 @@
   }
     
     .company-logo {
-      max-width: 100%;
-      height: auto;
+      height: 100%;
     }
     
     
@@ -308,20 +401,26 @@
     
 
     
-    @media (min-width: 700px) {
+    @media (max-width: 370px) {
       .company-logo {
-      max-width:auto;
-      height: 280px;
+      height: 70px;
+     
     }}
   
     @media (max-width: 700px) {
       .company-logo {
       max-width:auto;
-      height: 150px;
+    }}
+    @media (max-width: 275px) {
+      .company-logo {
+        margin-top: 50px;
+     height: 50px;
     }
     
   }
-
+.h1{
+  margin-top: 10%
+}
   /**prueba */
 
   .student__principalPage{
@@ -331,6 +430,9 @@
     align-items: center;
     padding: 2rem;
     
+}
+.card-inicio{
+  padding: 1rem;
 }
 
 .student__content__internship{
@@ -345,14 +447,26 @@
 /*Estilos para el perfil del estudiante*/
 .student__profile{
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 0.5rem;
+    padding: 1rem;
     border-radius: 10px;
     background-color: #Fff;
+    padding-top: 3%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.card{
+  width: 100%;
+    border-radius: 10px;
+ padding:2% ;
+    background-color: #Fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);}
+
+
+.dark-theme .card{
+    background-color: #434B54;
 }
 .dark-theme .student__profile{
     background-color: #434B54;
@@ -363,7 +477,17 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding-bottom: 10%;
 }
+.profile__content__header1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 10%;
+}
+
 .content__welcome{
     display: flex;
     flex-direction: row;
@@ -388,7 +512,16 @@
     font-weight: 400;
     margin-top: 10px;
     margin-bottom: 30px;
+    height: 20px;
+
 }
+.career__student1{
+    font-size: 1rem;
+    font-weight: 400;
+    height:100px;
+    width: 100%;
+}
+
 .content__more{
     display: flex;
     flex-direction: row;
@@ -606,7 +739,63 @@
 
 }
 
+@media only screen and (max-width: 480px) {
+  /* Estilos específicos para dispositivos pequeños */
+    .student__profile{
+           flex-direction: column;
+    }
+    
+}
+@media only screen and (max-width: 451px) {
+  /* Estilos específicos para dispositivos pequeños */
+  .profile__content__header{
+   
+   padding-bottom: 20%;
+}
+    
+}
+
+
+
 /* Estilos para tabletas */
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+  /* Estilos específicos para tabletas */
+  .student__principalPage{
+        padding: 1rem;
+    
+  }
+  .profile__content__header{
+        flex-direction: column;
+  }
+    .content__welcome{
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .content__more{
+        width: 100%;
+    }
+    .profile__button{
+        margin: 0.3rem 0.3rem;
+        padding: 0.8rem;
+        font-size: 0.6rem;
+    }
+    .profile__button span{
+        font-size: 0.8rem;
+    }
+    .summary__content{
+        flex-wrap: wrap;
+    }
+    .summary__title{
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+    .summary__content__number{
+        font-size: 1.5rem;
+    }
+    .summary__content__text{
+        font-size: 0.8rem;
+    }
+}
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
   /* Estilos específicos para tabletas */
   .student__principalPage{
@@ -659,7 +848,90 @@
   /* Estilos específicos para dispositivos grandes */
 }
 
+.EmpresasDestacadas {
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background: #434B54;
+    margin: 0.5rem;
+    
+    overflow: auto;
+    overflow-x: scroll;
+    
+}
+.EmpresasDestacadas {
+  background-color: #Fff;
+    
+}
+
+.dark-theme .EmpresasDestacadas {
+ background: #434B54;
+ padding: 0.1rem;
+   
+    
+}
+.company-cards-container {
+  display: inline-flex;
+}
+.container__button{
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    justify-content: space-around;
+}
+.button{
+  height: 50px;
+}
+
+
+@media screen and (max-width: 380px){
+  
+  .EmpresasDestacadas{
+    padding: 0.5rem;
+    height: 320px;
+  }
+
+}
+@media screen and (max-width: 360px){
+  
+  .profile__content__header{
+   
+    padding-bottom: 20%;
+}
+
+}
+
+@media screen and (max-width: 335px){
+  
+  .profile__content__header{
+   
+    padding-bottom: 30%;
+}
+
+}
+@media screen and (max-width: 300px){
+  
+  .profile__content__header{
+   
+    padding-bottom: 40%;
+}
+
+}
+
+
+
+@media screen and (max-width: 540px){
+  
+  .student__profile{
+    padding-top: 10%;
+      padding-bottom: 10%;
+    }
+
+}
 
 
 </style>
-  

@@ -4,10 +4,10 @@
       <p>Te mostramos tus solicitudes de pasantias de las empresas</p>
       <div class="card-inicio">
         <div class="card">
-          <div v-for="card in cards" :key="card.id" class="card-individual">
+          <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="card-individual">
             <div class="content">
               <div class="image">
-                <img :src="card.imageUrl" alt="Card image" class="card-image">
+                <img :src="card.imageUrl|| defaultImage" alt="Imagen de la Empresa" class="card-image">
               </div>
               <div class="text-content">
                 <div class="button-container">
@@ -17,7 +17,17 @@
                   </div>
                 </div>
                 <div class="title">{{ card.empresa }}</div>
-                <div class="description">{{ card.descripcion }}</div>
+                <div class="description"> <ul class="internship-details">
+              <li><strong>Empresa: </strong>{{card.institucion.nombreinstitucion}}</li>
+              <li><strong>Requisitos: </strong>{{card.requisitoscompetencias}}</li>
+              <li><strong>Duración: </strong>{{card.tiempoacumplir.descripcion}}</li>
+              <li><strong>Fecha de Inicio: </strong>{{card.fechasolicitud}}</li>
+              <li>
+                <strong>Fecha de Finalización: </strong>{{card.fechaseleccionpasante}}</li>
+              <li>
+                <strong>Tipo de Pasantía: </strong>{{card.areapasantia}}</li>
+      
+            </ul></div>
               </div>
             </div>
           </div>
@@ -28,44 +38,30 @@
   
     
     <script>
+import {UseUseiInternshipStore }from "@/store/usei/UseiInternshipStore";
+import {useLoaderStore} from "@/store/common/loaderStore";
     export default {
       data() {
-        return {
-          cards: [
-            {
-              id: 1,
-              empresa:"JALA",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Amsterdam Walking Tour",
-              description: "Explore popular tourist destinations as well as hidden local favourites.",
-              price: 17,
-              reviews: 28
-            },
-            {
-              id: 2,
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Card 2",
-              empresa:"Empres 2",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              
-              price: 20,
-              reviews: 15
-            },
-            {
-              id: 3,
-              imageUrl: "https://img.freepik.com/vector-premium/cute-dibujos-animados-perro-pug-sentado-fondo-aislado_701683-46.jpg?w=996",
-              title: "Card 3",
-              empresa:"Empresa 3",
-              descripcion:"Breve infromacion sobre la empresa y la pasantia",
-              price: 25,
-              reviews: 10
-            },
-            // Agrega más objetos para mostrar más tarjetas si lo necesitas
-          ]
-        };
-      },
-      methods: {
+        return{
+          listInternship: [],
+          everyInternshipsAreLoaded: false,
+      defaultImage: "https://cdn-icons-png.flaticon.com/512/9715/9715942.png",
+    };
+  },
+  methods: {
+        async getData() {
+ 
+    useLoaderStore().activateLoader();
+
+    await UseUseiInternshipStore().LoadPendenInternship();
+    // Asumiendo que LoadPendenInternship() actualiza InternshipList de manera similar a LoadInstitutions() en tu ejemplo.
+    this.listInternship = UseUseiInternshipStore().InternshipList.result;
+
+    this.everyInternshipsAreLoaded = true;
+    useLoaderStore().desactivateLoader();
+  
+},
+
     editCard(cardId) {
       // Lógica para editar la tarjeta con el ID proporcionado
       console.log(`Editar tarjeta con ID: ${cardId}`);
@@ -74,7 +70,10 @@
       // Lógica para borrar la tarjeta con el ID proporcionado
       console.log(`Borrar tarjeta con ID: ${cardId}`);
     }
-  }
+  },
+  created() {
+    this.getData();
+  },
 };
     </script>
     
@@ -154,16 +153,19 @@
       margin-left: 5%;
       margin-right: 5%;
       margin-bottom: 15px;
+      color: #000;
+      background: rgb(255, 255, 255);
     }
     .card-individual {
-      border: 3px solid #ccc;
+      border: 3px solid #000000;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 7px;
+      margin-bottom: 1rem;
+      background: rgb(116, 181, 203);
     }
     .card-inicio{
-      border: 3px solid #ccc;
-
+      border: 3px solid #000000;
+background:  #ffffff;
       border-radius: 8px;
       overflow: hidden;
       margin-top: 15px;
@@ -171,6 +173,22 @@
       margin-left: 1%;
        /* Ajusta este valor según el espacio que desees */
     }
+
+    .dark-theme .card {/**contenedore de indivialues */
+      border: 0px solid #ccc;
+      color: #ffffff;
+      background: rgb(0, 0, 0);
+    }
+    .dark-theme .card-individual {
+      border: 3px solid #ffffff;
+      background: rgb(119, 129, 216);
+    }
+    .dark-theme .card-inicio{
+      border: 3px solid #ffffff;
+background:  #000000;
+     
+    }
+
     
     .content {
       display: flex;
