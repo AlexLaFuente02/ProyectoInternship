@@ -31,14 +31,6 @@ Accept: application/json
 ### Obtener todos los registros históricos
 GET {{baseURL}}/historicoConvocatorias
 
-### GET Convocatoria by ID Institucion
-GET {{baseURL}}/convocatorias/institucion/1
-Accept: application/json
-
-### GET Postulaciones by ID Convocatoria
-GET {{baseURL}}/postulaciones/convocatoria/3
-Accept: application/json
-
 ### POST de Institucion
 POST {{baseURL}}/crear
 Content-Type: application/json
@@ -75,4 +67,34 @@ Accept: application/json
 ###ENDPOINT para obtener Institucion by InstituionID
 @institucionID = 1
 GET {{baseURL}}/institucion/{{institucionID}}
+Accept: application/json
+
+@institutionID = 1
+### ENDPOINT Convocatoria by ID Institucion
+GET {{baseURL}}/convocatorias/institucion/{{institutionID}}
+Accept: application/json
+
+@convocatoriaID = 3
+### ENDPOINT Postulaciones by ID Convocatoria
+GET {{baseURL}}/postulaciones/convocatoria/{{convocatoriaID}}
+Accept: application/json
+
+### ENDPOINT Instituciones por cantidad de postulaciones
+GET {{baseURL}}/destacadas
+Accept: application/json
+
+### ENDPOINT Postulaciones by ID Institucion
+GET {{baseURL}}/postulaciones/{{institucionID}}
+Accept: application/json
+
+###ENDPOINT de Convoctorias activas
+GET {{baseURL}}/convocatorias/activas
+Accept: application/json
+
+###ENDPOINT de Convoctorias inactivas
+GET {{baseURL}}/convocatorias/inactivas
+Accept: application/json
+
+###ENDPOINT de Convoctorias inactivas
+GET {{baseURL}}/convocatorias/sumatorias
 Accept: application/json
