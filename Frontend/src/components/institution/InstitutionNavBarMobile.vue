@@ -148,7 +148,7 @@ export default {
       dropdownButton: {
         showDropdownMenu: false,
       },
-      username: "Invitado",
+      username: "EMPRESA",
     };
   },
   methods: {

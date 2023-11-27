@@ -88,13 +88,13 @@ GET {{baseURL}}/postulaciones/{{institucionID}}
 Accept: application/json
 
 ###ENDPOINT de Convoctorias activas
-GET {{baseURL}}/convocatorias/activas
+GET {{baseURL}}/convocatorias/activas/{{institutionID}}
 Accept: application/json
 
 ###ENDPOINT de Convoctorias inactivas
-GET {{baseURL}}/convocatorias/inactivas
+GET {{baseURL}}/convocatorias/inactivas/{{institutionID}}
 Accept: application/json
 
-###ENDPOINT de Convoctorias inactivas
-GET {{baseURL}}/convocatorias/sumatorias
+###ENDPOINT de cantidad de convocatorias activas e inactivas
+GET {{baseURL}}/convocatorias/sumatorias/{{institutionID}}
 Accept: application/json

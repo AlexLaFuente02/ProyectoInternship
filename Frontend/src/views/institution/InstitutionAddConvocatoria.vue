@@ -169,13 +169,14 @@ export default {
       return year + "-" + month + "-" + day;
     },
     setBeginTimeInput(beginTimeValue) {
-      this.formComponents.beginTimeInput = beginTimeValue;
+      // dateValue es un objeto Date o similar
+      this.formComponents.beginTimeInput = beginTimeValue.getHours() + ':' + beginTimeValue.getMinutes();
     },
     setEndTimeInput(endTimeValue) {
-      this.formComponents.endTimeInput = endTimeValue;
+      this.formComponents.endTimeInput = endTimeValue.getHours() + ':' + endTimeValue.getMinutes();
     },
     setDateInput(dateValue) {
-      this.formComponents.dateInput = dateValue;
+      this.formComponents.dateInput = dateValue.toISOString().split('T')[0];
     },
     goBack() {
       this.$router.push({ name: "InstitutionPrincipalPage" });
