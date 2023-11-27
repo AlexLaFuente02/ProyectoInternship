@@ -160,7 +160,7 @@ export const verifyCode = async (body) => {
 //PUT para actualizar el usuario de un estudiante
 export const putStudent = async (contrasenia, token) => {
     try {
-        const response = await axios.put(`${rutaApi}/usuario/updatePassword`, contrasenia, {
+        const response = await axios.put(`${rutaApi}/public/updatePassword`, contrasenia, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',

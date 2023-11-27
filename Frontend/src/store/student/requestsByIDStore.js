@@ -13,6 +13,9 @@ export const useRequestsByIDStore = defineStore({
     actions: {
         async loadRequestsByIdStudent(idStudent) {
             this.requests = await loadRequestsByIdStudent(idStudent);
+            if(this.requests === null){
+                this.requests = [];
+            }
             this.isDataLoaded = true;
         },
         async loadRequestsByEstatus(idStudent, estatus) {

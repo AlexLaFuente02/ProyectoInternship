@@ -3,7 +3,7 @@ const { isAuthenticated, checkRole } = require('../services/authService');
 const institucionService = require('../services/institucionService');
 const estudianteService = require('../services/estudianteService');
 const sectorPertenenciaService = require('../services/sectorPertenenciaService');
-
+const usuarioService = require('../services/usuarioService');
 const semestreService = require("../services/semestreService");
 const sedeService = require('../services/sedeService');
 const carreraService = require("../services/carreraService");
@@ -147,6 +147,17 @@ router.post('/validateCode', async (req, res) => {
         console.error('Error validating code:', error);
         res.status(500).json({ error: error.message });
     }
+});
+//PUT para actualizar la contraseña de un usuario
+router.put('/updatePassword', async (req, res) => {
+  console.log(`PUT request received for updatePassword with ID: PTM`);
+  const response = await usuarioService.updatePassword(req);
+  res.json({
+      method: 'updatePassword',
+      code: response.code,
+      result: response.result,
+      message: response.message,
+  });
 });
 
 module.exports = router;

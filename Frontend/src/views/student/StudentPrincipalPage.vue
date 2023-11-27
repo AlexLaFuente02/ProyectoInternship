@@ -24,8 +24,10 @@
                                 </span>
                             </button>
                             <button class="profile__button bn23">
-                                <font-awesome-icon :icon="['fas', 'user-edit']" size="2xl" />
-                                <span class="edit__Profile">Editar Perfil</span>
+                                <router-link class="link" to="/student/profile">
+                                    <font-awesome-icon :icon="['fas', 'user-edit']" size="2xl" />
+                                    <span class="edit__Profile">Editar Perfil</span>
+                                </router-link>
                             </button>
                         </div>
                 </div>
@@ -34,16 +36,16 @@
                         Resumen general de tus pasantías
                     </span>
                     <div class="summary__content">
-                        <span class="summary__content__number">{{ listRequestsAcceptedComputed.length }}
+                        <span class="summary__content__number">{{ requestsAccepted.length }}
                             <span class="summary__content__text">aprobado</span>
                         </span>
-                        <span class="summary__content__number">{{ listRequestsPendingComputed.length }}
+                        <span class="summary__content__number">{{ requestsPending.length }}
                             <span class="summary__content__text">pendiente</span>
                         </span>
-                        <span class="summary__content__number">{{ listRequestsRejectedComputed.length }}
+                        <span class="summary__content__number">{{ requestsRejected.length }}
                             <span class="summary__content__text">rechazado</span>
                         </span>
-                        <span class="summary__content__number">{{ listRequestsComputed.length }}
+                        <span class="summary__content__number">{{ listRequests.length }}
                             <span class="summary__content__text">Totales</span>
                         </span>
                     </div>
@@ -151,7 +153,6 @@ export default {
             requestsAccepted: [],
             requestsRejected: [],
             requestsPending: [],
-            allRequests: [],
             type: "Pendiente",
             dataUserStore: useUserByIdStore(),
             dataUser:[],
@@ -177,9 +178,9 @@ export default {
             await useInternshipsByIDStore().loadPopularInternships();
             this.listInterships = useInternshipsByIDStore().activeInternships;
             this.listRequests = useRequestsByIDStore().requests;
-            this.allRequests = this.listRequests;
             this.popularInternships = useInternshipsByIDStore().popularInternships;
-            this.listRequests.forEach(element => {
+            if(this.listRequests != null){
+                this.listRequests.forEach(element => {
                 if(element.estadopostulacion_id.nombreestadopostulacion == "PENDIENTE"){
                     this.requestsPending.push(element);
                 }
@@ -189,7 +190,13 @@ export default {
                 else{
                     this.requestsRejected.push(element);
                 }
-            });
+                });
+            }
+            else{
+                this.requestsAccepted = [];
+                this.requestsRejected = [];
+                this.requestsPending = [];
+            }
             this.everyInternshipsAreLoaded = true;
             useLoaderStore().desactivateLoader();
         },
@@ -213,21 +220,6 @@ export default {
         },
     },
     computed: {
-        listRequestsComputed(){
-            return this.allRequests;
-        },
-        listRequestsAcceptedComputed(){
-            return this.requestsAccepted;
-        },
-        listRequestsRejectedComputed(){
-            return this.requestsRejected;
-        },
-        listRequestsPendingComputed(){
-            return this.requestsPending;
-        },
-        typeComputed(){
-            return this.type;
-        },
         getNombre(){
             //Obtener el primer nombre del estudiante del campo nombres
             try{
@@ -259,7 +251,10 @@ export default {
     padding: 2rem;
     
 }
-
+.link{
+    text-decoration: none;
+    color: #fff;
+}
 .student__content__internship{
     display: flex;
     flex-direction: column;
