@@ -1,17 +1,19 @@
 <template>
-  <div class="formVue">
+  <div class="formVue10">
     <div class="form__tittle">
       <h1>SOLICITUD ADICI&Oacute;N NUEVA INSTITUCI&Oacute;N</h1>
     </div>
     <div class="form__description">
       <h5>Por favor complete el formulario a continuaci&oacute;n:</h5>
     </div>
+    
     <div class="form__container">
+      <div class="formVue100">
       <div class="form__tittle">
         <h1>Datos generales</h1>
       </div>
       <div class="container__field">
-        <label for="">Nombre de la Instituci&oacute;n <strong>*</strong>:</label>
+        <h3>Nombre de la Instituci&oacute;n <strong>*</strong></h3>
         <input
           type="text"
           name=""
@@ -21,7 +23,7 @@
         />
       </div>
       <div class="container__field">
-        <label for="">Reseña de la Instituci&oacute;n <strong>*</strong>:</label>
+        <h3>Reseña de la Instituci&oacute;n <strong>*</strong></h3>
         <input
           type="text"
           name=""
@@ -31,7 +33,7 @@
         />
       </div>
       <div class="container__field2">
-        <label for="">Logo de la Instituci&oacute;n <strong>*</strong>:</label>
+        <h3>Logo de la Instituci&oacute;n <strong>*</strong></h3>
         <input
           type="file"
           @change="onFileChange"
@@ -39,7 +41,7 @@
         />
       </div>
       <div class="container__field">
-        <label for="">Sector al que pertenece <strong>*</strong>:</label>
+        <h3>Sector al que pertenece <strong>*</strong></h3>
         <input
           type="text"
           name=""
@@ -47,12 +49,13 @@
           placeholder="Introduzca el sector al que pertenece"
           v-model="formStore.sectorpertenencia.id"
         />
-      </div>
+      </div></div>
+      <div class="formVue100">
       <div class="form__tittle">
         <h1>Datos del contacto</h1>
       </div>
       <div class="container__field">
-        <label for="">Nombre del contacto <strong>*</strong>:</label>
+        <h3>Nombre del contacto <strong>*</strong></h3>
         <input
           type="text"
           name=""
@@ -62,7 +65,7 @@
         />
       </div>
       <div class="container__field">
-        <label for="">Correo electr&oacute;nico <strong>*</strong>:</label>
+        <h3> Correo electr&oacute;nico <strong>*</strong>:</h3>
         <input
           type="text"
           name=""
@@ -72,7 +75,7 @@
         />
       </div>
       <div class="container__field">
-        <label for="">Celular del contacto <strong>*</strong>:</label>
+        <h3>Celular del contacto <strong>*</strong></h3>
         <input
           type="text"
           name=""
@@ -80,9 +83,11 @@
           placeholder="Introduzca el celular de contacto"
           v-model="formStore.celularcontacto"
         />
-      </div>
-      <div class="buttons">
-        <div class="button-left">
+      </div></div>
+      
+
+      <div class="buttons-container10">
+        <div class="button-left10">
           <Button
             text="Volver atrás"
             :color="0"
@@ -90,16 +95,17 @@
             @option-selected="goBack"
           ></Button>
         </div>
-        <div class="button-right">
+        <div class="button-right10">
           <Button
             text="Enviar solicitud"
             :color="1"
             :disabled="false"
             @option-selected="sendRequest"
           ></Button>
-        </div>
+        
       </div>
     </div>
+  </div>
   </div>
 </template>
 <script>
@@ -152,12 +158,12 @@ export default {
   
 };
 </script>
-<style>
+<style scoped>
 .container__stepper{
     padding: 1rem;
     border-radius: 10px;
     margin-bottom: 1rem;
-    background: #fff;
+    background: #000000;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -189,7 +195,7 @@ export default {
 }
 .container__field2 {
   display: flex;
-  border: 0px solid #ccc;
+  border: 0px solid #600d0d;
   flex-direction: column;
   margin-bottom: 10px;
 }
@@ -209,4 +215,7 @@ export default {
   font-weight: 700;
   margin-bottom: 5px;
 }
+
+
+
 </style>
