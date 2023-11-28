@@ -904,7 +904,9 @@ useLoaderStore().desactivateLoader();
 }
 
 }
-
+.dark-theme .company-logo{
+  filter:invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
+}
 @media screen and (max-width: 335px){
   
   .profile__content__header{
