@@ -326,6 +326,8 @@ const getInstitutionPostulations = async () => {
   }
 };
 
+
+
 const getPostulationsByInstitutionId = async (institutionId) => {
   console.log(`Obteniendo postulaciones para la institución con ID: ${institutionId}...`);
   try {

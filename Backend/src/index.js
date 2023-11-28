@@ -16,6 +16,33 @@ const path = require('path');
 app.use('/images', express.static(path.join(__dirname, '..', 'images')));
 
 
+
+
+// Middleware para analizar el cuerpo de las solicitudes JSON
+app.use(express.json());
+// Middleware para permitir CORS desde cualquier dominio
+const corsOptions = {
+  // Permitir explícitamente el origen del cliente
+  origin: 'http://localhost:5173',
+  credentials: true, // Esto es necesario para las cookies de sesión y los headers de autenticación
+};
+app.use(cors(corsOptions));
+// Configuración de Passport
+app.use(
+  session({
+    secret: "tu-secret-key", // Usa una clave secreta que sea única y segura
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // En producción, deberías estar usando https
+    },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 // Importa las rutas
 const tipoUsuarioAPI = require("./API/tipoUsuarioAPI");
 const UsuarioAPI = require("./API/usuarioAPI");
@@ -45,21 +72,6 @@ const useiRoutes = require('./routes/useiRoutes');
 const publicRoutes = require('./routes/publicRoutes');
 
 
-// Middleware para analizar el cuerpo de las solicitudes JSON
-app.use(express.json());
-// Middleware para permitir CORS desde cualquier dominio
-const corsOptions = {
-  // Permitir explícitamente el origen del cliente
-  origin: 'http://localhost:5173',
-  credentials: true, // Esto es necesario para las cookies de sesión y los headers de autenticación
-};
-app.use(cors(corsOptions));
-// Configuración de Passport
-app.use(
-  session({ secret: "your-secret-key", resave: false, saveUninitialized: true })
-);
-app.use(passport.initialize());
-app.use(passport.session());
 
 /* API ANTERIOR:*/
 app.use("/adminUSEI", adminuseiAPI); //NO INCLUIR EN CONSUMOS PORQUE SOLO SE MANEJA DESDE BASE DE DATOS DE ADMINISTRADOR
@@ -84,12 +96,15 @@ app.use("/usuario", UsuarioAPI); //no tiene uso en FRONT, a no ser modificar con
 
 app.use("/auth", authAPI); 
 
-//app.use('/student',isAuthenticated, checkRole(2), studentRoutes);
+
+app.use('/student',isAuthenticated, checkRole(1), studentRoutes);
+app.use('/institution',isAuthenticated, checkRole(2), instutionRoutes); 
+app.use('/usei',isAuthenticated, checkRole(3), useiRoutes);
+/*
 app.use('/student', studentRoutes);
-//app.use('/institution',isAuthenticated, checkRole(3), instutionRoutes); 
 app.use('/institution', instutionRoutes);
-//app.use('/usei',isAuthenticated, checkRole(1), useiRoutes);
 app.use('/usei', useiRoutes);
+*/
 
 app.use('/public', publicRoutes);
 
@@ -107,5 +122,7 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   V1SwaggerDocs(app, PORT);
 });
+
+
 
 

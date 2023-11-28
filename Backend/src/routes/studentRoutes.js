@@ -254,4 +254,21 @@ router.get('/:studentId', async (req, res) => {
     }
 });
 
+// Ruta para obtener Instituciones por ID
+router.get('/institucion/:institucionId', async (req, res) => {
+    try {
+        console.log(`GET request received for getInstitutionById with institutionId: ${req.params.institucionId}`);
+        const institucionId = req.params.institucionId;
+        const response = await institucionService.getInstitutionById(institucionId);
+        res.json({
+            method: 'getInstitutionById',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting institution for institution ID: ${req.params.institucionId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
 module.exports = router;

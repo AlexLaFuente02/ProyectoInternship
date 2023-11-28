@@ -77,9 +77,17 @@ CREATE TABLE carrera (
 );
 
 INSERT INTO carrera (nombrecarrera) VALUES
-("Carrera 1"),
-("Carrera 2"),
-("Carrera 3");
+("Administración de Empresas"),
+("Economía"),
+("Ingeniería de Sistemas"),
+("Ingeniería de Telecomunicaciones"),
+("Ingeniería Mecatrónica"),
+("Ingeniería Industrial"),
+("Ingeniería Electrónica"),
+("Ingeniería Civil"),
+("Ingeniería Ambiental"),
+("Ingeniería Química"),
+("Psicología");
 
 
 CREATE TABLE institucion (
@@ -100,6 +108,7 @@ CREATE TABLE institucion (
 INSERT INTO `institucion` VALUES (1, 'EMAPA', 'Somos la institucion de agua de la ciudad de La Paz', NULL, 'Juan Pérez', 'juan.perez@utech.edu', '123-456-7890', 'ACTIVO', 2, 1);
 INSERT INTO `institucion` VALUES (2, 'PIL', 'Empresa de lacteos en Bolivia', 0x6C6F676F696E737469747563696F6E2D313730313034353837373239352E706E67, 'Edward', 'edu@gmail.com', '61123636', 'PENDIENTE', NULL, 3);
 INSERT INTO `institucion` VALUES (3, 'ENTEL', 'Empresa de telecomuncaciones en Bolivia.', 0x6C6F676F696E737469747563696F6E2D313730313034363738383739362E6A706567, 'Axel', 'axel@gmail.comds', '61123636', 'PENDIENTE', NULL, 2);
+INSERT INTO `institucion` VALUES (4, 'OscarBusiness', 'es la empresa del osqui', 0x6C6F676F696E737469747563696F6E2D313730313039333130323233302E6A7067, 'Oscar Men', 'osqui.menacho2002@gmail.com', '77596520', 'PENDIENTE', NULL, 2);
 
 #Hacer trigger para asignar valor a usuario_id cuando USEI aprobar institucion
 
@@ -216,8 +225,17 @@ CREATE TABLE postulacion (
     CONSTRAINT postulacion_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (id)
 );
 
-INSERT INTO postulacion (fechapostulacion, estadopostulacion_id, estudiante_id, convocatoria_id)
-VALUES ('2023-10-25', 1, 1, 3);
+INSERT INTO `postulacion` VALUES (1, '2023-10-25', 1, 1, 3);
+INSERT INTO `postulacion` VALUES (2, '2012-01-11', 2, 1, 1);
+INSERT INTO `postulacion` VALUES (3, '2014-06-20', 2, 1, 2);
+INSERT INTO `postulacion` VALUES (4, '2016-04-08', 1, 1, 2);
+INSERT INTO `postulacion` VALUES (5, '2017-02-15', 3, 1, 2);
+INSERT INTO `postulacion` VALUES (6, '2006-12-07', 2, 1, 1);
+INSERT INTO `postulacion` VALUES (7, '2013-10-17', 1, 1, 3);
+INSERT INTO `postulacion` VALUES (8, '2015-06-21', 2, 1, 2);
+INSERT INTO `postulacion` VALUES (9, '2001-07-12', 3, 1, 1);
+INSERT INTO `postulacion` VALUES (10, '2016-05-29', 2, 1, 3);
+INSERT INTO `postulacion` VALUES (11, '2006-05-05', 2, 1, 3);
 
 CREATE TABLE historico_postulaciones (
     id_h int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -239,9 +257,7 @@ CREATE TABLE historico_usuario (
     id_u int NOT NULL,
     idusuario varchar(50) NOT NULL,
     contrasenia varchar(255) NOT NULL,
-    tipousuario_id int NOT NULL,
-    FOREIGN KEY (id_u) REFERENCES usuario (id),
-    FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
+    tipousuario_id int NOT NULL
 );
 
 CREATE TABLE aprobacionconvocatoria (

@@ -17,7 +17,9 @@
                   </div>
                 </div>
                     <div class="title">{{ card.nombreinstitucion }}</div>
-                    <div class="description">{{ card.reseniainstitucion }}</div>
+                    <div class="description"><strong>Sector:</strong>{{card.sectorpertenencia.nombresectorpertenencia}}</div>
+                    <div class="description"><strong>Nombre del Contacto:</strong>{{card.nombrecontacto}}</div>
+                    <div class="description"><strong>Correo electr&oacute;nico:</strong>{{ card.correocontacto }}</div>
                 </div>
             </div>
           </div>
@@ -149,21 +151,41 @@ export default {
       margin-left: 5%;
       margin-right: 5%;
       margin-bottom: 15px;
+      color: #000;
+      background: rgb(255, 255, 255);
     }
     .card-individual {
-      border: 3px solid;
+      border: 3px solid #000000;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 7px;
+      margin-bottom: 1rem;
+      background: rgb(116, 181, 203);
     }
     .card-inicio{
-      border: 3px solid;
+      border: 3px solid #000000;
+background:  #ffffff;
       border-radius: 8px;
       overflow: hidden;
       margin-top: 15px;
       margin-right: 10%;
       margin-left: 1%;
        /* Ajusta este valor según el espacio que desees */
+    }
+
+    .dark-theme .card {/**contenedore de indivialues */
+      border: 0px solid #ccc;
+      color: #ffffff;
+      background: rgb(255, 255, 255);
+   
+    }
+    .dark-theme .card-individual {
+      border: 3px solid #000000;
+      background: rgb(52, 87, 184);
+    }
+    .dark-theme .card-inicio{
+      border: 3px solid #000000;
+background:  #ffffff;
+     
     }
     
     .content {

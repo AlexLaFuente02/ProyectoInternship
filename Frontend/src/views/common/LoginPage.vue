@@ -81,6 +81,7 @@ import Button from "@/components/common/Button.vue";
 import { useLoginStore } from "@/store/common/loginStore";
 import { useUserByIdStore } from "@/store/common/dataUserStore";
 import { InstitutionIdByUserIdStore } from "@/store/institution/InstitutionIdByUserIdStore";
+import axios from 'axios';
 export default {
   name: "LoginPage",
   components: {
@@ -112,78 +113,52 @@ export default {
   },
   methods: {
     async login() {
-      const userIdRegEx = /^[A-Za-z0-9-_.&]{5,}$/;
-      const passwordRegEx = /^[A-Za-z0-9@#$-_.%^&*()!~?]{2,}$/;
-      if (this.userData.idusuario === "") {
-        this.loginMessages.userIdErrorMessage = true;
-        this.loginMessages.loginMessage = "Ingresa tu usuario por favor.";
-      } /*else if (!userIdRegEx.test(this.userData.idusuario)) {
-        this.loginMessages.userIdErrorMessage = true;
-        this.loginMessages.loginMessage =
-          "Error, el usuario introducido es inválido.";
-      }*/ else if (this.userData.password === "") {
-        this.loginMessages.userIdErrorMessage = false;
-        this.loginMessages.passwordErrorMessage = true;
-        this.loginMessages.loginMessage = "Ingresa tu contraseña por favor.";
-      } /*else if (!passwordRegEx.test(this.userData.password)) {
-        this.loginMessages.userIdErrorMessage = false;
-        this.loginMessages.passwordErrorMessage = true;
-        this.loginMessages.loginMessage =
-          "Error, la contraseña introducida es inválida.";
-      }*/ else {
+      if (this.userData.idusuario === "" || this.userData.password === "") {
+        // Configura tus mensajes de error de validación aquí
+        this.loginMessages.userIdErrorMessage = this.userData.idusuario === "";
+        this.loginMessages.passwordErrorMessage = this.userData.password === "";
+        this.loginMessages.loginMessage = "Por favor, completa todos los campos.";
+      } else {
+        // Restablece los mensajes de error si previamente se mostraron
         this.loginMessages.userIdErrorMessage = false;
         this.loginMessages.passwordErrorMessage = false;
-        this.attempts++;
-        // Realiza la solicitud POST a la API
-        fetch("http://localhost:3000/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(this.userData),
-        })
-          .then(async (response) => {
-            if (response.ok) {
-              // La solicitud fue exitosa
-              console.log("Inicio de sesión exitoso");
-              response.json().then(async (data) => {
-                var result = data.result;
-                $cookies.set("id", result.id);
-                $cookies.set("username", result.username);
-                $cookies.set("type", result.tipousuario.id);
-                if (result.tipousuario.id == 1) {
-                  useLoginStore().setLogin(1);
-                  this.$router.push("/student/");
-                } else if (result.tipousuario.id == 2) {
-                  useLoginStore().setLogin(2);
-                  await this.getInstitutionIdByUserId(result.id);
-                  this.$router.push("/institution/home");
-                } else if (result.tipousuario.id == 3) {
-                  useLoginStore().setLogin(3);
-                  this.$router.push("/usei/principal");
-                } else {
-                  useLoginStore().setLogin(0);
-                }
-              });
-            } else if (this.attempts <= 2) {
-              this.loginMessages.loginMessage =
-                "Usuario o contraseña incorrectos, inténtalo nuevamente.";
-              console.log("attempts: " + this.attempts);
-              // La solicitud falló
-              console.error("Inicio de sesión fallido");
-            } else {
-              console.error("¡Realizaste demasiados intentos!");
-              this.timer.minutes = 3;
-              this.loginMessages.loginMessage = "";
-              this.buttonDisabled = true;
-              this.loginMessages.manyAttempts = true;
-              this.startTimer();
-            }
-          })
-          .catch((error) => {
-            console.error("Error de red: ", error);
+
+        try {
+          const response = await axios.post("http://localhost:3000/auth/login", this.userData, {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
           });
+
+          // Suponiendo que tu backend responde con un código en el cuerpo de la respuesta
+          if (response.data.code === "AUTH-0000") {
+            var result = response.data.result;
+            this.$cookies.set("id", result.id);
+            this.$cookies.set("username", result.username);
+            this.$cookies.set("type", result.tipousuario.id);
+            // Redirige al usuario según su tipo
+            if (result.tipousuario.id === 1) {
+              useLoginStore().setLogin(1);
+              this.$router.push("/student/");
+            } else if (result.tipousuario.id === 2) {
+              useLoginStore().setLogin(2);
+              // Aquí necesitas implementar getInstitutionIdByUserId
+              await this.getInstitutionIdByUserId(result.id); 
+              this.$router.push("/institution/home");
+            } else if (result.tipousuario.id === 3) {
+              useLoginStore().setLogin(3);
+              this.$router.push("/usei/principal");
+            }
+          } else {
+            // Manejo de respuesta no exitosa
+            this.loginMessages.loginMessage = "Usuario o contraseña incorrectos.";
+          }
+        } catch (error) {
+          console.error("Error de red o servidor: ", error);
+          this.loginMessages.loginMessage = "Error al iniciar sesión. Intente de nuevo.";
+        }
       }
     },
     togglePasswordVisibility() {
