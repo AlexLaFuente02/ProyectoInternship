@@ -1,7 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../database/db");
-const UsuarioENT = require("./UsuarioENT");
-const TipoUsuarioENT = require("./TipoUsuarioENT");
 
 const HistoricoUsuarioENT = sequelize.define(
   "HistoricoUsuario",
@@ -12,6 +10,10 @@ const HistoricoUsuarioENT = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    id_u: { // Este es el cambio, antes era una clave foránea
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     idusuario: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -20,23 +22,15 @@ const HistoricoUsuarioENT = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    tipousuario_id: { // Este también cambia de ser una clave foránea a un campo regular
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   },
   {
     tableName: "historico_usuario",
     timestamps: false,
   }
 );
-
-HistoricoUsuarioENT.belongsTo(UsuarioENT, {
-  foreignKey: "id_u",
-  as: "usuario",
-  targetKey: "id",
-});
-
-HistoricoUsuarioENT.belongsTo(TipoUsuarioENT, {
-  foreignKey: "tipousuario_id",
-  as: "tipousuario",
-  targetKey: "id",
-});
 
 module.exports = HistoricoUsuarioENT;

@@ -87,7 +87,7 @@ INSERT INTO carrera (nombrecarrera) VALUES
 ("Ingeniería Civil"),
 ("Ingeniería Ambiental"),
 ("Ingeniería Química"),
-("Psicología"),;
+("Psicología");
 
 
 CREATE TABLE institucion (
@@ -234,7 +234,7 @@ INSERT INTO `postulacion` VALUES (6, '2006-12-07', 2, 1, 1);
 INSERT INTO `postulacion` VALUES (7, '2013-10-17', 1, 1, 3);
 INSERT INTO `postulacion` VALUES (8, '2015-06-21', 2, 1, 2);
 INSERT INTO `postulacion` VALUES (9, '2001-07-12', 3, 1, 1);
-INSERT INTO `postulacion` VALUES (10, '2016-05-29', 2, 1, 4);
+INSERT INTO `postulacion` VALUES (10, '2016-05-29', 2, 1, 3);
 INSERT INTO `postulacion` VALUES (11, '2006-05-05', 2, 1, 3);
 
 CREATE TABLE historico_postulaciones (
@@ -257,9 +257,7 @@ CREATE TABLE historico_usuario (
     id_u int NOT NULL,
     idusuario varchar(50) NOT NULL,
     contrasenia varchar(255) NOT NULL,
-    tipousuario_id int NOT NULL,
-    FOREIGN KEY (id_u) REFERENCES usuario (id),
-    FOREIGN KEY (tipousuario_id) REFERENCES tipousuario (id)
+    tipousuario_id int NOT NULL
 );
 
 CREATE TABLE aprobacionconvocatoria (
