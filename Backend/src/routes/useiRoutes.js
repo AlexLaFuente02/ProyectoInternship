@@ -212,4 +212,56 @@ router.put('/institucion/activate/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+//Ruta para rechazar institucion
+router.put('/institucion/reject/:id', async (req, res) => {
+    try {
+        console.log(`PUT request received for rejectInstitution, ID de institución: ${req.params.id}`);
+        const response = await institucionService.rejectInstitution(req.params.id);
+        res.json({
+            method: 'rejectInstitution',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error rejecting institution:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//Ruta para aprobar convocatoria
+router.put('/convocatoria/activate/:id', async (req, res) => {
+    try {
+        console.log(`PUT request received for activateConvocatoria, ID de convocatoria: ${req.params.id}`);
+        const response = await convocatoriaService.activateConvocatoria(req.params.id);
+        res.json({
+            method: 'activateConvocatoria',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error activating convocatoria:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//Ruta para rechazar convocatoria
+router.put('/convocatoria/reject/:id', async (req, res) => {
+    try {
+        console.log(`PUT request received for rejectConvocatoria, ID de convocatoria: ${req.params.id}`);
+        const response = await convocatoriaService.rejectConvocatoria(req.params.id);
+        res.json({
+            method: 'rejectConvocatoria',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error rejecting convocatoria:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;
