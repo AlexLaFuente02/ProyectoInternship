@@ -251,3 +251,39 @@ h6 {
     font-size: 0.7rem;
   }
 }
+
+/**borrar si daña otras paginas, esto solo esat para modificar registro empresa*/
+.formVue10{
+  padding: 5%;
+  margin: 5%;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Añade sombra */
+}
+.dark-theme .formVue10{
+  background: #575d63;
+  border-radius: 10px #dfe7f1;
+  box-shadow: 0px 4px 8px rgba(225,225,225); /* Añade sombra */
+}
+.formVue100{
+  padding: 5%;
+  margin: 5%;
+  background: rgb(242, 242, 242);
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Añade sombra */
+}
+.dark-theme .formVue100{
+  background: #61686e;
+  border-radius: 10px #dfe7f1; 
+  box-shadow: 0px 4px 8px rgba(225,225,225); /* Añade sombra */
+}
+
+.buttons-container10 {
+  display: flex;
+  flex-direction: row;
+  max-width: 300px; /* Ajusta el tamaño máximo según tus necesidades */
+  margin-left: auto; /* Centra el contenedor */
+}
+
+
+

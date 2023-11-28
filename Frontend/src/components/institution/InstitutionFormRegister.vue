@@ -2,7 +2,7 @@
   <!--Form de registro de Estudiantes-->
   <div class="formVue">
       <div class="form__tittle">
-          <h1>SOLICITUD ADICION NUEVA INSTITUCION</h1>
+          <h1>SOLICITUD ADICION NUEVA INSTITUCION NOOOOOOOOOOOO</h1>
       </div>
       <div class="form__description">
           <p>Por favor complete el formulario a continuación:</p>
