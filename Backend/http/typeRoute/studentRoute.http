@@ -6,7 +6,8 @@ GET {{baseURL}}/convocatoria/
 Accept: application/json
 
 ### GET CONVOCATORIAS POR ID
-GET {{baseURL}}/convocatoria/1
+@convocatoriaID = 1
+GET {{baseURL}}/convocatoria/{{convocatoriaID}}
 Accept: application/json
 ###GET de Convoctorias activas
 GET {{baseURL}}/convocatorias/activas
@@ -78,9 +79,15 @@ Accept: application/json
 ### ID: 1-Ingenieria, 2-ArteYDiseño, 3-AdministacionyEconomia, 4-CienciasSalud, 5-otros
 GET {{baseURL}}/sectores/{{sectorID}}/instituciones
 Accept: application/json
+
 ###Get todas las instituciones
 GET {{baseURL}}/institucion
 Accept: application/json
+
+###GET de institucion por ID
+@institucionID = 1
+GET {{baseURL}}/institucion/{{institucionID}}
+
 
 
 ### GET de Student por ID
