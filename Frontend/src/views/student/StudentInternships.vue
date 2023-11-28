@@ -20,6 +20,7 @@
             :list="listIntershipsComputed"
             :title="title"
             v-if="everyInternshipsAreLoaded"
+            @more-information="moreInformation"
             />
         </div>
     </div>
@@ -75,6 +76,10 @@ export default {
             this.selected = option;
             useLoaderStore().desactivateLoader();
         },
+        
+        moreInformation(id){
+            this.$router.push(`/student/ApplyForAnInternship/${id}`);
+        }
     },
     computed: {
         listIntershipsComputed() {

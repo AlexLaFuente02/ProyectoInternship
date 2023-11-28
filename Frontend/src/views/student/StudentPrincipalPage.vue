@@ -57,7 +57,9 @@
                 <div class="card" v-for="internship in listInterships" v-if="everyInternshipsAreLoaded">
                     <SimpleCard 
                     :key="internship.id"
-                    :internship="internship"/>
+                    :internship="internship"
+                    @more-information="moreInformation"
+                    />
                 </div>
             </div>
         </div>
@@ -127,6 +129,7 @@
             :list="popularInternships"
             :title="title"
             v-if="everyInternshipsAreLoaded"
+            @more-information="moreInformation"
             />
         </div>
         <!--
@@ -218,6 +221,9 @@ export default {
                 this.type = "Rechazado";
             }
         },
+        moreInformation(id){
+            this.$router.push(`/student/ApplyForAnInternship/${id}`);
+        }
     },
     computed: {
         getNombre(){

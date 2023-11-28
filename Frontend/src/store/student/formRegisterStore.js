@@ -26,7 +26,6 @@ export const useFormRegisterStore = defineStore({
             aniograduacion: 0,
             linkcurriculumvitae: "",
         },
-        hasData: false,
         codeVerification: "",
         career: "",
         semester: "",
@@ -62,7 +61,6 @@ export const useFormRegisterStore = defineStore({
                 }
 
             };
-            this.hasData = false;
             this.codeVerification = "";
             this.career = "";
             this.semester = "";

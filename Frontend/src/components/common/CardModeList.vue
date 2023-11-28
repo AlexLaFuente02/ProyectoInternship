@@ -37,6 +37,7 @@
 <script>
 import Button from "@/components/common/Button.vue";
 export default {
+    emits: ['more-information'],
     components: {
         Button,
     },
@@ -55,7 +56,7 @@ export default {
             this.informationCard = this.internship;
         },
         moreInformation(){
-            this.$router.push({name: "InternshipInformation", params: {id: this.informationCard.id}});
+            this.$emit('more-information', this.informationCard.id);
         }
     },
     props: {

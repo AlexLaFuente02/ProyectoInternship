@@ -227,3 +227,18 @@ export const loadActiveInternships = async () => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 }
+export const loadInternshipById = async (idInternship) => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/convocatoria/${idInternship}`);
+        const data = response.data;
+        if (data.code === "C-0000") {
+            return data.result;
+        }else{
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar la convocatoria: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}
