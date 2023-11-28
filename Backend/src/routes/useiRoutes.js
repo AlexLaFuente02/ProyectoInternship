@@ -230,6 +230,23 @@ router.put('/institucion/reject/:id', async (req, res) => {
     }
 });
 
+//Ruta para convertir pendiente una institucion
+router.put('/institucion/pending/:id', async (req, res) => {
+    try {
+        console.log(`PUT request received for pendingInstitution, ID de institución: ${req.params.id}`);
+        const response = await institucionService.pendingInstitution(req.params.id);
+        res.json({
+            method: 'pendingInstitution',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error pending institution:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 //Ruta para aprobar convocatoria
 router.put('/convocatoria/activate/:id', async (req, res) => {
     try {
@@ -260,6 +277,23 @@ router.put('/convocatoria/reject/:id', async (req, res) => {
         });
     } catch (error) {
         console.error('Error rejecting convocatoria:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//Ruta para convertir pendiente una convocatoria
+router.put('/convocatoria/pending/:id', async (req, res) => {
+    try {
+        console.log(`PUT request received for pendingConvocatoria, ID de convocatoria: ${req.params.id}`);
+        const response = await convocatoriaService.pendingConvocatoria(req.params.id);
+        res.json({
+            method: 'pendingConvocatoria',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error pending convocatoria:', error);
         res.status(500).json({ error: error.message });
     }
 });

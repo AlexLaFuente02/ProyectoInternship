@@ -768,7 +768,7 @@ const getInstitutionIdByUserId = async (userId) => {
 };
 
 const rejectInstitution = async (id) => {
-  console.log(`Activando la institución con ID: ${id}...`);
+  console.log(`Rechazando la institución con ID: ${id}...`);
   try {
     const institucion = await Institucion.findByPk(id, {
       include: [
@@ -844,6 +844,75 @@ const rejectInstitution = async (id) => {
   }
 };
 
+const pendingInstitution = async (id) => {
+  console.log(`Poniendo en pendiente la institución con ID: ${id}...`);
+  try {
+    const institucion = await Institucion.findByPk(id, {
+      include: [
+        { model: SectorPertenencia, as: "sectorpertenencia" },
+        { model: Usuario, as: "usuario"},
+      ],
+    });
+    if (!institucion) {
+      console.log(`Institución con ID: ${id} no encontrada.`);
+      return new ResponseDTO("I-1004", null, "Institución no encontrada");
+    }
+
+    // Actualizar el estado de la institución a 'PENDIENTE'
+    await institucion.update({ estado: 'PENDIENTE' });
+
+    // Convertir el logoinstitucion en URL
+    const imageUrl = getImageUrl(institucion.logoinstitucion);
+
+    // Crear DTO para sector pertenencia
+    let sectorPertenenciaDTO = null;
+    if (institucion.sectorpertenencia) {
+      sectorPertenenciaDTO = new SectorPertenenciaDTO(
+        institucion.sectorpertenencia.id,
+        institucion.sectorpertenencia.nombresectorpertenencia
+      );
+    }
+
+    // Crear DTO para el usuario
+    let usuarioDTO = null;
+    if (institucion.usuario) {
+      usuarioDTO = new UsuarioDTO(
+        institucion.usuario.id,
+        institucion.usuario.idusuario
+      );
+    }
+
+    // Crear DTO para la institución, incluyendo el usuario actualizado
+    const actulizadoInstitucionDTO = new InstitucionDTO(
+      institucion.id,
+      institucion.nombreinstitucion,
+      institucion.reseniainstitucion,
+      imageUrl,
+      institucion.nombrecontacto,
+      institucion.correocontacto,
+      institucion.celularcontacto,
+      institucion.estado,
+      usuarioDTO,
+      sectorPertenenciaDTO
+    );
+
+    console.log(`Institución puesta en pendiente con ID: ${id}.`);
+    return new ResponseDTO(
+      "I-0000",
+      actulizadoInstitucionDTO,
+      "Institución puesta en pendiente."
+    );
+  }
+  catch (error) {
+    console.error(`Error al poner en pendiente la institución con ID: ${id}.`, error);
+    return new ResponseDTO(
+      "I-1004",
+      null,
+      `Error al poner en pendiente la institución: ${error}`
+    );
+  }
+};
+
 
 
 module.exports = {
@@ -861,4 +930,5 @@ module.exports = {
   getInstitutionIdByUserId,
   getPostulationsByInstitutionId,
   rejectInstitution,
+  pendingInstitution,
 };
