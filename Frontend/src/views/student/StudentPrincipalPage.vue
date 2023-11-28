@@ -17,7 +17,7 @@
                             </div>
                         </div>
                         <div class="content__more">
-                            <button class="profile__button bn23">
+                            <button class="profile__button bn23" @click="openResume">
                                 <font-awesome-icon :icon="['fas', 'file-alt']" size="2xl" />
                                 <span class="see_vitae">
                                     Hoja de vida
@@ -223,6 +223,13 @@ export default {
         },
         moreInformation(id){
             this.$router.push(`/student/ApplyForAnInternship/${id}`);
+        },
+        openResume(){
+            const link = this.dataUserStore.user.linkcurriculumvitae;
+            if(link == null || link == "")
+                alert("No tienes una hoja de vida registrada, por favor registra una en la sección de editar perfil");
+            else
+                window.open(link, '_blank');
         }
     },
     computed: {
