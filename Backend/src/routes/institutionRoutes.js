@@ -4,6 +4,7 @@ const estadosolicitudinstitucionService = require('../services/estadoSolicitudIn
 const historicoConvocatoriasService = require('../services/historicoConvocatoriasService');
 const institucionService = require('../services/institucionService');
 const postulacionService = require('../services/postulacionService');
+const estudianteService = require('../services/estudianteService');
 const router = express.Router();
 
 //Fotos
@@ -395,4 +396,88 @@ router.get('/institucion/:institucionId/postulaciones/rechazadas', async (req, r
         res.status(500).json({ error: error.message });
     }
 });
+
+// Ruta para obtener las postulaciones pendientes por ID de institución
+router.get('/postulaciones/:convocatoriaId/pendientes', async (req, res) => {
+    const { convocatoriaId } = req.params;
+    if (!convocatoriaId) {
+        return res.status(400).json({ error: 'Se requiere el ID de la institución.' });
+    }
+
+    try {
+        console.log(`GET request received for getPostulacionesPendientesPorIdConvocatoria with ID: ${convocatoriaId}`);
+        const response = await postulacionService.getPostulacionesPendientesPorIdConvocatoria(convocatoriaId);
+        res.json({
+            method: 'getPostulacionesPendientesPorIdConvocatoria',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulations for convocatoria ID ${convocatoriaId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener el perfil de un estudiante por su id
+router.get('/perfil-estudiante/:id', async (req, res) => {
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ error: 'Se requiere el ID del estudiante.' });
+    }
+
+    try {
+        console.log(`GET request received for getStudentById with ID: ${id}`);
+        const response = await estudianteService.getStudentById(id);
+        res.json({
+            method: 'getStudentById',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting student by ID ${id}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+}
+);
+
+// Ruta para actualizar el estado de una postulación a Rechazado (3)
+router.put('/postulaciones/:id/rechazar', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        console.log(`PUT request received to set postulación ID ${id} as Rechazado`);
+        const response = await postulacionService.updatePostulacionRechazadas(id);
+        res.json({
+            method: 'updatePostulacionRechazadas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error setting postulación ID ${id} as Rechazado:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para actualizar el estado de una postulación a Aceptado (1)
+router.put('/postulaciones/:id/aprobar', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        console.log(`PUT request received to set postulación ID ${id} as Aprobado`);
+        const response = await postulacionService.updatePostulacionAprobadas(id);
+        res.json({
+            method: 'updatePostulacionAprobadas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error setting postulación ID ${id} as Aprobado:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

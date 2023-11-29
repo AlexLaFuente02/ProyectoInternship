@@ -227,15 +227,8 @@ CREATE TABLE postulacion (
 
 INSERT INTO `postulacion` VALUES (1, '2023-10-25', 1, 1, 3);
 INSERT INTO `postulacion` VALUES (2, '2012-01-11', 2, 1, 1);
-INSERT INTO `postulacion` VALUES (3, '2014-06-20', 2, 1, 2);
-INSERT INTO `postulacion` VALUES (4, '2016-04-08', 1, 1, 2);
-INSERT INTO `postulacion` VALUES (5, '2017-02-15', 3, 1, 2);
-INSERT INTO `postulacion` VALUES (6, '2006-12-07', 2, 1, 1);
-INSERT INTO `postulacion` VALUES (7, '2013-10-17', 1, 1, 3);
-INSERT INTO `postulacion` VALUES (8, '2015-06-21', 2, 1, 2);
-INSERT INTO `postulacion` VALUES (9, '2001-07-12', 3, 1, 1);
-INSERT INTO `postulacion` VALUES (10, '2016-05-29', 2, 1, 3);
-INSERT INTO `postulacion` VALUES (11, '2006-05-05', 2, 1, 3);
+INSERT INTO `postulacion` VALUES (3, '2014-06-20', 3, 1, 2);
+
 
 CREATE TABLE historico_postulaciones (
     id_h int NOT NULL AUTO_INCREMENT PRIMARY KEY,

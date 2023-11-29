@@ -72,24 +72,32 @@ export const getPendingInternshipsByInstitutionId = async (institution_id) => {
 export const getApprovedPostulationsByInstitutionId = async (
   institution_id
 ) => {
-  const response = await axios.get();
+  const response = await axios.get(
+    `${institutionAPIRoute}/institucion/${institution_id}/postulaciones/activas`
+  );
   return response.data;
 };
 
 export const getPendingPostulationsByInstitutionId = async (institution_id) => {
-  const response = await axios.get();
+  const response = await axios.get(
+    `${institutionAPIRoute}/institucion/${institution_id}/postulaciones/pendientes`
+  );
   return response.data;
 };
 
 export const getRejectedPostulationsByInstitutionId = async (
   institution_id
 ) => {
-  const response = await axios.get();
+  const response = await axios.get(
+    `${institutionAPIRoute}/institucion/${institution_id}/postulaciones/rechazadas`
+  );
   return response.data;
 };
 
 export const getPendingPostulationsByInternshipId = async (internship_id) => {
-  const response = await axios.get();
+  const response = await axios.get(
+    `${institutionAPIRoute}/postulaciones/${internship_id}/pendientes`
+  );
   return response.data;
 };
 
@@ -98,6 +106,11 @@ export const createInternship = async (internshipData) => {
     `${institutionAPIRoute}/convocatoria/`,
     internshipData
   );
+  return response.data;
+};
+
+export const getStudentByIdInApplicationTray = async (student_id) => {
+  const response = await axios.get(`http://localhost:3000/student/${student_id}`);
   return response.data;
 };
 
