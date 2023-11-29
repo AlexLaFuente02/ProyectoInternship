@@ -109,6 +109,11 @@ tr:first-child {
   border: none;
 }
 
+.accept-postulation-request:hover,
+.reject-postulation-request:hover {
+  transform: scale(1.2);
+}
+
 /* DARK THEME */
 .dark-theme .students-container {
   background-color: #353e48;

@@ -3,6 +3,7 @@
     <div v-if="institutionInformationIsLoaded">
       <div class="inicio2">
         <h1>
+          <font-awesome-icon :icon="['fas', 'user-circle']" />
           PERFIL DE TU EMPRESA ¡{{ institutionInformation.nombreinstitucion }}!
         </h1>
       </div>
