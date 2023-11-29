@@ -89,8 +89,26 @@
   </template>
   
   <script>
+  import {useLoaderStore} from "@/store/common/loaderStore";
+import {useUserByIdStore} from "@/store/common/dataUserStore";
   export default {
-    // Código de tu componente
+    data() {
+      return {
+        dataUserStore: useUserByIdStore(),
+        dataUser: {},
+      };
+    },
+    methods: {
+      async getUser(){
+          await this.dataUserStore.getUserByIdUsuario( $cookies.get("id"));
+          this.dataUser = this.dataUserStore.user;
+      }
+    },
+    async mounted() {
+      useLoaderStore().activateLoader();
+      await this.getUser();
+      useLoaderStore().desactivateLoader();
+    },
   };
   </script>
   

@@ -20,6 +20,7 @@
             :list="listIntershipsComputed"
             :title="title"
             v-if="everyInternshipsAreLoaded"
+            @more-information="moreInformation"
             />
         </div>
     </div>
@@ -75,6 +76,10 @@ export default {
             this.selected = option;
             useLoaderStore().desactivateLoader();
         },
+        
+        moreInformation(id){
+            this.$router.push(`/student/ApplyForAnInternship/${id}`);
+        }
     },
     computed: {
         listIntershipsComputed() {
@@ -140,6 +145,13 @@ export default {
     align-items: center;
     width: 100%;
     margin-left: 0.2rem;
+}
+.content__internship{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 /* Estilos para dispositivos pequeños (teléfonos) */
 

@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <h1>POSTULAR A UNA PASANTÍA</h1>
-    <div class="internship-container">
+    <div class="internship-container" v-if="allDataIsLoaded">
       <div class="first-grid-container">
         <img
           src="https://www.cainco.org.bo/empresaydesarrollo/wp-content/uploads/2021/05/1550703145451.png"
@@ -9,21 +9,15 @@
         />
       </div>
       <div class="second-grid-container">
-        <div class="i_title">
-          <h2>Desarrollo Web Backend con Spring en Jala Soft</h2>
-        </div>
         <div class="i_description">
           <h4>Descripción de la Pasantía:</h4>
           <p>
-            ¡Gracias por tu interés en la pasantía de desarrollo web backend con
-            Spring en Jala Soft! Esta es una oportunidad emocionante para
-            adentrarte en el mundo del desarrollo web y trabajar en proyectos
-            significativos con un equipo experimentado.
+            {{ this.dataInternship.descripcionfunciones }}
           </p>
         </div>
         <div class="institution_name">
           <h4>Empresa:</h4>
-          <p>JALA SOFT</p>
+          <p>{{ this.dataInternship.institucion.nombreinstitucion }}</p>
         </div>
       </div>
       <div class="third-grid-container">
@@ -36,25 +30,32 @@
               <h4 class="information-title">Detalles de la Pasantía:</h4>
               <div class="i_details">
                 <ul class="internship-details">
-                  <li><strong>Empresa: </strong>Jala Soft</li>
-                  <li><strong>Ubicación: </strong>Ubicación de la empresa</li>
-                  <li><strong>Duración: </strong>Duración de la pasantía</li>
-                  <li><strong>Fecha de Inicio: </strong>Fecha de inicio</li>
+                  <li><strong>Empresa: </strong>{{ this.dataInternship.institucion.nombreinstitucion }}</li>
                   <li>
-                    <strong>Fecha de Finalización: </strong>Fecha de
-                    finalización
+                    <strong>
+                      Fecha de Inicio para la selección:
+                    </strong>
+                    {{ this.dataInternship.fechasolicitud  }}
                   </li>
                   <li>
-                    <strong>Tipo de Pasantía: </strong>Pasantía de Desarrollo
-                    Web Backend
+                    <strong>Fecha de Finalización para la selección: </strong>{{ this.dataInternship.fechaseleccionpasante  }}
                   </li>
-                  <li><strong>Tecnologías: </strong>Spring, Java, SQL, etc.</li>
-                  <li><strong>Ciudad: </strong>Cochabamba</li>
+                  <li>
+                    <strong>Tipo de Pasantía: </strong>{{ this.dataInternship.estadoconvocatoria.nombreestadoconvocatoria  }}
+                  </li>
+                  <li>
+                    <strong>
+                      Hora de Inicio de la Pasantía: 
+                    </strong>
+                    {{ this.dataInternship.horario_inicio  }}
+                  </li>
+                  <li>
+                    <strong>
+                      Hora de Finalización de la Pasantía: 
+                    </strong>
+                    {{ this.dataInternship.horario_fin  }}
+                  </li>
                 </ul>
-              </div>
-              <div class="download-internship">
-                <p class="i_download"><strong>Descargar aplicativo:</strong></p>
-                <Button text="Descargar" :color="0"></Button>
               </div>
             </div>
           </div>
@@ -65,20 +66,19 @@
             <div class="information-grid">
               <h4 class="information-title">Requisitos de Postulación:</h4>
               <div class="i_details">
-                <ul class="internship-details">
-                  <li>Conocimiento básico de programación en Java.</li>
-                  <li>Interés en el desarrollo web backend.</li>
-                  <li>Habilidades de comunicación y trabajo en equipo.</li>
-                </ul>
+                <div class="internship-details">
+                  <p>
+                    {{ this.dataInternship.requisitoscompetencias }}
+                  </p>
+                </div>
               </div>
               <h4 class="information-title">Carreras a las que va dirigida:</h4>
               <div class="i_details">
-                <ul class="internship-details">
-                  <li>
-                    Estudiantes de carreras relacionadas con la informática o
-                    desarrollo de software.
-                  </li>
-                </ul>
+                <div class="internship-details">
+                  <p>
+                    {{ this.dataInternship.areapasantia }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -99,14 +99,12 @@
                 <Button
                   text="Subir PDF"
                   :color="4"
-                  @click="openFileInput"
                 ></Button>
                 <input
                   type="file"
                   id="fileInput"
                   ref="fileInput"
                   style="display: none"
-                  @change="handleFileChange"
                 />
               </div>
               <div class="insert-curriculum">
@@ -115,7 +113,6 @@
                   name="uploadCV"
                   id="uploadCV"
                   placeholder="Link de Curriculum Vitae"
-                  v-model="CurriculumVitae.fileName"
                 />
               </div>
               <div class="submit-container">
@@ -146,6 +143,9 @@
 
 <script>
 import Button from "@/components/common/Button.vue";
+import {useInternshipsByIDStore } from "@/store/student/internshipsByIDStore";
+import {useLoaderStore} from "@/store/common/loaderStore";
+import {useUserByIdStore} from "@/store/common/dataUserStore";
 export default {
   name: "ApplyForAnInternshipPage",
   components: {
@@ -153,23 +153,33 @@ export default {
   },
   data() {
     return {
-      CurriculumVitae: {
-        fileName: "",
-      },
+      idInternship: null,
+      dataInternship: {},
+      dataUserStore: useUserByIdStore(),
+      dataUser: {},
+      allDataIsLoaded: false,
     };
   },
   methods: {
-    openFileInput() {
-      this.$refs.fileInput.click();
+    async getInternship() {
+      await useInternshipsByIDStore().loadInternshipById(this.idInternship);
+      this.dataInternship = useInternshipsByIDStore().internship;
     },
-    handleFileChange() {
-      const fileInput = this.$refs.fileInput;
-      if (fileInput.files.length > 0) {
-        const selectedFile = fileInput.files[0];
-        this.CurriculumVitae.fileName = selectedFile.name;
-        console.log("Archivo seleccionado:", this.CurriculumVitae.fileName);
-      }
+    async getUser() {
+      const id = $cookies.get("id");
+      await this.dataUserStore.getUserByIdUsuario(id);
+      this.dataUser = this.dataUserStore.user;
     },
+  },
+  async mounted() {
+    useLoaderStore().activateLoader();
+    await this.getInternship();
+    await this.getUser();
+    this.allDataIsLoaded = true;
+    useLoaderStore().desactivateLoader();
+  },
+  created() {
+    this.idInternship = this.$route.params.id;
   },
 };
 </script>

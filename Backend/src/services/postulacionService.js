@@ -229,6 +229,19 @@ const createPostulacion = async (postulationData) => {
             return new ResponseDTO('P-1002', null, 'Datos de postulación incompletos o inválidos');
         }
 
+        // Verificamos si el estudiante ya postuló a la convocatoria
+        const existingPostulation = await PostulacionENT.findOne({
+            where: {
+                estudiante_id: postulationData.estudiante.id,
+                convocatoria_id: postulationData.convocatoria.id
+            }
+        });
+
+        if (existingPostulation) {
+            console.log('El estudiante ya postuló a esta convocatoria.');
+            return new ResponseDTO('P-1005', null, 'Ya postulaste a esta convocatoria');
+        }
+
         // Creamos la postulación y asociamos las relaciones
         const postulation = await PostulacionENT.create({
             fechapostulacion: postulationData.fechapostulacion,

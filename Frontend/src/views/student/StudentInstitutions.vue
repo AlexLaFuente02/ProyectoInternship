@@ -62,7 +62,8 @@
                 </div>
               </div>
               <!--Boton de más informacion-->
-              <button @click="showMoreInfo" class="more-info-button">Más información</button>
+              <button @click="showMoreInfo(card.id)"
+              class="more-info-button">Más información</button>
               <div class="badge">
                 <strong>
                   {{ card.nombreinstitucion }}
@@ -123,8 +124,8 @@ export default {
                 return institution.nombreinstitucion.toLowerCase().includes(this.searchTerms.toLowerCase());
             });
         },
-        showMoreInfo() {
-            this.$router.push({name: 'InstitutionProfile'});
+        showMoreInfo(idInstitution) {
+          this.$router.push(`/student/instistutions/${idInstitution}`);
         }
 
     },

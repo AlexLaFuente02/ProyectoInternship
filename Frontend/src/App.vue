@@ -10,7 +10,9 @@
     <FooterCommon/>
     <div class="overlay" v-show="showMobileMenu" @click="closeMobileMenu"></div>
     <div class="overlay" v-show="isLoading">
-      <span class="loader"></span>
+      <div class="section">
+        <span class="loader"></span>
+      </div>
     </div>
   </div>
 </template>
@@ -152,28 +154,71 @@ export default {
   cursor: pointer;
   z-index: 2;
 }
+
+.section{
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .loader {
-    width: 48px;
-    height: 48px;
-    border: 5px solid #FFF;
-    border-bottom-color: #FF3D00;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  width: 54px;
+  height: 54px;
+  position: relative;
+  border-radius: 4px;
+  background-color: #fff;
+  background-image:
+    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
+    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
+    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
+    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
+    radial-gradient(circle 5px , #FF3D00 100%, transparent 0),
+    radial-gradient(circle 5px , #FF3D00 100%, transparent 0);
+    background-repeat: no-repeat;
+  animation: move 4s linear infinite , rotate 2s linear infinite;
+}
 
-    }
-
-    @keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-  } 
+@keyframes rotate {
+  0% , 20%{ transform: rotate(0deg)}
+  30% , 40% { transform: rotate(90deg)}
+  50% , 60% { transform: rotate(180deg)}
+  70% , 80% { transform: rotate(270deg)}
+  90%,  100% { transform: rotate(360deg)}
+}
+@keyframes move {
+  0% ,  9%{
+      background-position:
+      -12px -15px,  -12px 0px, -12px 15px,
+      12px -15px,  12px 0px,  12px 15px;
+  }
+  10% , 25%{
+      background-position:
+      0px -15px,  -12px 0px, -12px 15px,
+      34px -15px,  12px 0px,  12px 15px;
+  }
+  30% , 45%{
+      background-position:
+      0px -34px, -12px -10px, -12px 12px,
+      34px -15px, 12px -10px, 12px 12px;
+  }
+  50% , 65% {
+      background-position:
+      0px -34px, -12px -34px, -12px 12px,
+      34px -12px, 0px -10px, 12px 12px;
+  }
+  70% , 85% {
+      background-position:
+      0px -34px, -12px -34px, 0px 12px,
+      34px -12px, 0px -10px, 34px 12px;
+  }
+ 90% , 100% {
+      background-position:
+      0px -34px, -12px -34px, 0px 0px,
+      34px -12px, 0px 0px, 34px 12px;
+  }
+}
 </style>
