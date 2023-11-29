@@ -72,7 +72,7 @@
                   </p>
                 </div>
               </div>
-              <h4 class="information-title">Carreras a las que va dirigida:</h4>
+              <h4 class="information-title">Áreas a la que va dirigida la pasantía:</h4>
               <div class="i_details">
                 <div class="internship-details">
                   <p>

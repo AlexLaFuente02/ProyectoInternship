@@ -258,3 +258,19 @@ export const loadInstitutionById = async (idInstitution) => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 }
+export const loadRequestById = async (idRequest) => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/postulacion/${idRequest}`);
+        const data = response.data;
+        if (data.code === "P-0000") {
+            return data.result;
+        }else{
+            alert("No se pudo cargar la postulacion");
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar la postulacion: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}

@@ -11,6 +11,7 @@ const ConvocatoriaDTO = require("../DTO/ConvocatoriaDTO");
 const historicoService = require('./historicoPostulacionesService');
 
 const sequelize = require("../../database/db");
+const InstitucionENT = require("../ENT/InstitucionENT");
 
 const getAllPostulaciones = async () => {
   console.log("Obteniendo todas las postulaciones...");
@@ -125,7 +126,7 @@ const getPostulacionById = async (id) => {
       fechasolicitud: postulacion.convocatoria.fechasolicitud,
       fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
       estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
-      institucion: postulacion.convocatoria.institucion,
+      institucion: postulacion.convocatoria.institucion_id,
       tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
     };
 

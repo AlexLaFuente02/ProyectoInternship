@@ -1,6 +1,7 @@
 import {loadRequestsByIdStudent} from '../../services/student';
 import { defineStore } from "pinia";
 import {loadRequestsByEstatus} from '../../services/student';
+import {loadRequestById} from '../../services/student';
 export const useRequestsByIDStore = defineStore({
     id: "requestsByID",
     state: () => ({
@@ -9,6 +10,7 @@ export const useRequestsByIDStore = defineStore({
         requestsAccepted: [],
         requestsRejected: [],
         requestsPending: [],
+        request: null,
     }),
     actions: {
         async loadRequestsByIdStudent(idStudent) {
@@ -31,5 +33,11 @@ export const useRequestsByIDStore = defineStore({
             }
             this.isDataLoaded = true;
         },
+        async loadRequestById(idRequest) {
+            this.request = await loadRequestById(idRequest);
+            if(this.request === null){
+                this.request = [];
+            }
+        }
     },
 });
