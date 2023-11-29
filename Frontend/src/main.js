@@ -36,6 +36,7 @@ import InstitutionProfile from "@/views/institution/InstitutionProfile.vue";
 import InstitutionSettings from "@/views/institution/InstitutionSettings.vue";
 import InstitutionInternshipFilter from "@/views/institution/InstitutionInternshipFilter.vue";
 import InstitutionInternshipApplicationTray from "@/views/institution/InstitutionInternshipApplicationTray.vue";
+import InstitutionApplicationTrayStudentProfile from "./views/institution/InstitutionApplicationTrayStudentProfile.vue";
 import InstitutionPrincipalPage from '@/views/institution/InstitutionPrincipalPage.vue'
 //Paginas Admin
 import UseiPrincipalPage from '@/views/usei/UseiPrincipalPage.vue'
@@ -96,6 +97,7 @@ const routes = [
     {name: "InstitutionSettings", path: "/institution/Settings", component: InstitutionSettings},
     {name: "InstitutionInternshipFilter", path: "/institution/InternshipFilter", component: InstitutionInternshipFilter},
     {name: "InstitutionInternshipApplicationTray", path: "/institution/InternshipApplicationTray/:internshipId", component: InstitutionInternshipApplicationTray},
+    {name: "InstitutionApplicationTrayStudentProfile", path: "/institution/InternshipApplicationTray/StudentProfile/:studentId", component: InstitutionApplicationTrayStudentProfile},
     {name: 'InstitutionPrincipalPage', path : '/institution/home', component:InstitutionPrincipalPage},
     //Usei-Admin
     {name: 'UseiPrincipalPage', path : '/usei/principal', component:UseiPrincipalPage},

@@ -3,34 +3,22 @@
     <div class="inicio2">
       <h1>
         <font-awesome-icon :icon="['fas', 'user-circle']" />
-        ¡Bienvenido, {{ dataUser.nombres }}!
+        Perfil del estudiante {{ studentInformation.nombres }}
       </h1>
     </div>
     <div class="container">
       <div class="profile">
         <div class="personal-description box1">
-          <!-- Título y botón para editar -->
           <div class="description-header">
-            <h2>Acerca de mí</h2>
+            <h2>ACERCA DE MI</h2>
           </div>
-          <!-- Texto de ejemplo -->
-          <p>
-            Inserta aquí la descripción personal del usuario. onal del
-            usuario.Inserta aquí la descripción personal del usuario.Inserta
-            aquí la descripción personal del usuario.Inserta aquí la descripción
-            personal del usuari o.Inserta aquí la descripción personal del
-            usuario.Inse rta aquí la descripción personal del usuario.Inserta
-            aquí al del usuario.Inserta aquí la descripción personal del
-            usuario.
-          </p>
+          <p>Inserta aquí la descripción personal del usuario.</p>
         </div>
-        <!-- Sección "Mi Perfil" -->
         <div class="social-media box2">
           <h2>Mi perfil</h2>
-          <!-- Imagen de perfil -->
           <img
-            src="https://t2.ea.ltmcdn.com/es/razas/2/3/5/pug-o-carlino_532_0_orig.jpg"
-            alt="Mi Foto de Perfil"
+            src="https://cdn-icons-png.flaticon.com/128/3175/3175575.png"
+            alt="Foto de Perfil de estudiante"
             class="profile-picture"
           />
           <div class="links__pack">
@@ -65,12 +53,19 @@
           </div>
         </div>
         <div class="user-details box3">
-          <!-- Detalles del usuario -->
-          <h2>Datos del usuario</h2>
-          <p>Nombre: {{ dataUser.nombres }}</p>
-          <p>Apellido: {{ dataUser.apellidos }}</p>
-          <p>Carnet: {{ dataUser.carnetidentidad }}</p>
-          <p>Celular: {{ dataUser.celularcontacto }}</p>
+          <h2>TUS DATOS</h2>
+          <ul class="student-information">
+            <li><strong>Nombre:</strong> {{ studentInformation.nombres }}</li>
+            <li>
+              <strong>Apellido:</strong> {{ studentInformation.apellidos }}
+            </li>
+            <li>
+              <strong>Carnet:</strong> {{ studentInformation.carnetidentidad }}
+            </li>
+            <li>
+              <strong>Celular:</strong> {{ studentInformation.celularcontacto }}
+            </li>
+          </ul>
           <a href="https://www.google.com/" class="profile__button bn23">
             <font-awesome-icon :icon="['fas', 'file-alt']" size="2xl" />
             <span class="see_vitae"> Hoja de vida </span>
@@ -83,24 +78,30 @@
 
 <script>
 import { useLoaderStore } from "@/store/common/loaderStore";
-import { useUserByIdStore } from "@/store/common/dataUserStore";
+import { studentByIdInApplicationTrayStore } from "../../store/institution/StudentByIdInApplicationTrayStore";
 export default {
   data() {
     return {
-      dataUserStore: useUserByIdStore(),
-      dataUser: {},
+      studentByIdInApplicationTrayStore: studentByIdInApplicationTrayStore(),
+      studentInformationIsLoaded: false,
+      studentInformation: {},
     };
   },
   methods: {
-    async getUser() {
-      await this.dataUserStore.getUserByIdUsuario($cookies.get("id"));
-      this.dataUser = this.dataUserStore.user;
+    async getStudentInformation(studentID) {
+      useLoaderStore().activateLoader();
+      await this.studentByIdInApplicationTrayStore.loadStudentByIdInApplicationTray(
+        studentID
+      );
+      this.studentInformation =
+        this.studentByIdInApplicationTrayStore.student.result;
+      this.studentInformationIsLoaded = true;
+      console.log(this.studentInformation);
+      useLoaderStore().desactivateLoader();
     },
   },
-  async mounted() {
-    useLoaderStore().activateLoader();
-    await this.getUser();
-    useLoaderStore().desactivateLoader();
+  mounted() {
+    // this.getStudentInformation(this.$route.params.studentId);
   },
 };
 </script>
@@ -116,6 +117,7 @@ export default {
   align-items: center;
   width: 100%;
 }
+
 .user-details {
   flex: 1; /* Permite que los contenedores ocupen el mismo ancho */
   border: 100px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
@@ -152,6 +154,10 @@ export default {
   width: 20px;
   height: 20px;
   color: #fff;
+}
+
+.student-information {
+  list-style: none;
 }
 
 a {
@@ -213,7 +219,7 @@ a {
   display: flex;
   border: 2px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
   padding: 1rem;
-  color: #000;
+  color: white;
 }
 
 @keyframes gradient {

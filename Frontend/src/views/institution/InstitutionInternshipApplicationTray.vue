@@ -56,9 +56,13 @@
           </td>
           <td class="request-table-cell">
             <div class="postulation-buttons">
-              <router-link class="link" to="/student/profile">
-                <Button text="Ver perfil" :color="3"></Button>
-              </router-link>
+              <div class="student-profile-button">
+                <Button
+                  text="Ver perfil"
+                  :color="3"
+                  @option-selected="goToApplicationStudentProfile(pendingPostulation.estudiante_id.id)"
+                ></Button>
+              </div>
               <button type="button" class="accept-postulation-request"></button>
               <button
                 type="button"
@@ -101,6 +105,11 @@ export default {
       } else {
         return "❌";
       }
+    },
+    goToApplicationStudentProfile(student_id) {
+      this.$router.push(
+        `/institution/InternshipApplicationTray/StudentProfile/${student_id}`
+      );
     },
     handleDeletePostulation() {
       const swalWithBootstrapButtons = this.$swal.mixin({
@@ -176,8 +185,7 @@ export default {
   padding: 10px;
 }
 
-.link {
-  text-decoration: none;
+.student-profile-button {
   width: 40%;
 }
 
