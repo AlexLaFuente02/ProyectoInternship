@@ -395,4 +395,27 @@ router.get('/institucion/:institucionId/postulaciones/rechazadas', async (req, r
         res.status(500).json({ error: error.message });
     }
 });
+
+// Ruta para obtener las postulaciones pendientes por ID de institución
+router.get('/postulaciones/:convocatoriaId/pendientes', async (req, res) => {
+    const { convocatoriaId } = req.params;
+    if (!convocatoriaId) {
+        return res.status(400).json({ error: 'Se requiere el ID de la institución.' });
+    }
+
+    try {
+        console.log(`GET request received for getPostulacionesPendientesPorIdConvocatoria with ID: ${convocatoriaId}`);
+        const response = await postulacionService.getPostulacionesPendientesPorIdConvocatoria(convocatoriaId);
+        res.json({
+            method: 'getPostulacionesPendientesPorIdConvocatoria',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulations for convocatoria ID ${convocatoriaId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

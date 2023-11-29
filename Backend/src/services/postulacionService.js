@@ -218,6 +218,76 @@ const getPostulacionesPorIdConvocatoria = async (idConvocatoria) => {
   }
 };
 
+const getPostulacionesPendientesPorIdConvocatoria = async (idConvocatoria) => {
+  console.log(`Obteniendo postulaciones para la convocatoria con ID: ${idConvocatoria}...`);
+  try {
+      const postulaciones = await PostulacionENT.findAll({
+          where: { convocatoria_id: idConvocatoria,
+                  estadopostulacion_id: 2,
+          },
+          include: [
+              { model: EstadoPostulacionENT, as: 'estadopostulacion' },
+              { model: EstudianteENT, as: 'estudiante' },
+              { model: ConvocatoriaENT, as: "convocatoria" },
+          ]
+      });
+
+      if (!postulaciones || postulaciones.length === 0) {
+          console.log(`No se encontraron postulaciones para la convocatoria con ID: ${idConvocatoria}.`);
+          return new ResponseDTO('P-1002', null, 'No se encontraron postulaciones para la convocatoria.');
+      }
+
+      const postulacionesDTO = postulaciones.map((postulacion) => {
+          const estadoPostulacionDTO = {
+              id: postulacion.estadopostulacion.id,
+              nombreestadopostulacion: postulacion.estadopostulacion.nombreestadopostulacion
+          };
+          const estudianteDTO = {
+            id: postulacion.estudiante.id,
+            usuario_id: postulacion.estudiante.usuario_id,
+            nombres: postulacion.estudiante.nombres,
+            apellidos: postulacion.estudiante.apellidos,
+            carnetidentidad: postulacion.estudiante.carnetidentidad,
+            correoelectronico: postulacion.estudiante.correoelectronico,
+            celularcontacto: postulacion.estudiante.celularcontacto,
+            graduado: postulacion.estudiante.graduado,
+            carrera_id: postulacion.estudiante.carrera_id,
+            semestre_id: postulacion.estudiante.semestre_id,
+            sede_id: postulacion.estudiante.sede_id,
+            aniograduacion: postulacion.estudiante.aniograduacion,
+            linkcurriculumvitae: postulacion.estudiante.linkcurriculumvitae
+        };
+        const convocatoriaDTO = {
+          id: postulacion.convocatoria.id,
+          areapasantia: postulacion.convocatoria.areapasantia,
+          descripcionfunciones: postulacion.convocatoria.descripcionfunciones,
+          requisitoscompetencias: postulacion.convocatoria.requisitoscompetencias,
+          horario_inicio: postulacion.convocatoria.horario_inicio,
+          horario_fin: postulacion.convocatoria.horario_fin,
+          fechasolicitud: postulacion.convocatoria.fechasolicitud,
+          fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
+          estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
+          institucion: postulacion.convocatoria.institucion,
+          tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
+        };
+        
+          return new PostulacionDTO(
+              postulacion.id,
+              postulacion.fechapostulacion,
+              estadoPostulacionDTO,
+              estudianteDTO,
+              convocatoriaDTO // No incluimos la convocatoria en este caso
+          );
+      });
+
+      console.log(`Postulaciones obtenidas correctamente para la convocatoria con ID: ${idConvocatoria}.`);
+      return new ResponseDTO('P-0000', postulacionesDTO, 'Postulaciones obtenidas correctamente');
+  } catch (error) {
+      console.error(`Error al obtener las postulaciones para la convocatoria con ID: ${idConvocatoria}.`, error);
+      return new ResponseDTO('P-1002', null, `Error al obtener las postulaciones: ${error}`);
+  }
+};
+
 
 const createPostulacion = async (postulationData) => {
     console.log('Creando una nueva postulación...');
@@ -813,5 +883,6 @@ module.exports = {
   getPostulacionesPorIdConvocatoria,
   getPostulacionesActivasPorIdInstitucion,
   getPostulacionPendientesPorIdInstitucion,
-  getPostulacionesRechazadasPorIdInstitucion
+  getPostulacionesRechazadasPorIdInstitucion,
+  getPostulacionesPendientesPorIdConvocatoria
 };
