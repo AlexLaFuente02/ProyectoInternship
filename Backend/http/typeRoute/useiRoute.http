@@ -69,10 +69,37 @@ GET {{baseURL}}/convocatorias/inactivas
 Accept: application/json
 
 
-### PUT Institucion activa
+### PUT para ACTIVAR una INSTITUCION
 @institucionID = 3
 PUT {{baseURL}}/institucion/activate/{{institucionID}}
-Content-Type: application/json
 Accept: application/json
 
 
+### PUT para RECHAZAR una INSTITUCION
+@institucioonID = 2
+PUT {{baseURL}}/institucion/reject/{{institucioonID}}
+Accept: application/json
+
+
+###PUT para volver PENDIENTE una INSTITUCION
+@instituciionID = 2
+PUT {{baseURL}}/institucion/pending/{{instituciionID}}
+Accept: application/json
+
+
+### PUT para ACTIVAR una CONVOCATORIA
+@convocatoriaaID = 2
+PUT {{baseURL}}/convocatoria/activate/{{convocatoriaaID}}
+Accept: application/json
+
+
+### PUT para RECHAZAR una CONVOCATORIA
+@convocatoriaID = 1
+PUT {{baseURL}}/convocatoria/reject/{{convocatoriaID}}
+Accept: application/json
+
+
+###PUT para volver PENDIENTE una CONVOCATORIA
+@convocatoriiaID = 3
+PUT {{baseURL}}/convocatoria/pending/{{convocatoriiaID}}
+Accept: application/json

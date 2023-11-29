@@ -102,3 +102,22 @@ Accept: application/json
 ###ENDPOINT de cantidad de convocatorias activas e inactivas
 GET {{baseURL}}/institucion/{{institutionID}}/postulaciones
 Accept: application/json
+
+
+###ENDPOINT para obtener POSTULACIONES APROBADAS por INSTITUCIONID
+@institutioonID = 1
+GET {{baseURL}}/institucion/{{institutioonID}}/postulaciones/activas
+Accept: application/json
+
+
+
+###ENDPOINT para obtener POSTULACIONES PENDIENTES por INSTITUCIONID
+@instiID = 1
+GET {{baseURL}}/institucion/{{instiID}}/postulaciones/pendientes
+Accept: application/json
+
+
+###ENDPOINT para obtener POSTULACIONES RECHAZADAS por INSTITUCIONID
+@institutiionID = 1
+GET {{baseURL}}/institucion/{{institutiionID}}/postulaciones/rechazadas
+Accept: application/json

@@ -528,6 +528,185 @@ const getInactiveConvocatoriasById = async (institucionId) => {
     }
 };
 
+const activateConvocatoria = async (idConvocatoria) => {
+    try {
+        console.log(`Activando la convocatoria con ID: ${idConvocatoria}...`);
+        
+        // Encuentra la convocatoria por su ID
+        const convocatoria = await ConvocatoriaENT.findByPk(idConvocatoria);
+        if (!convocatoria) {
+            console.log(`Convocatoria con ID: ${idConvocatoria} no encontrada.`);
+            return new ResponseDTO("C-1002", {}, "Convocatoria no encontrada");
+        }
+        
+        // Asume que '1' es el ID para el estado 'ACTIVA'
+        const estadoActivaId = 1;
+        
+        // Actualiza el estado de la convocatoria
+        await convocatoria.update({ estadoconvocatoria_id: estadoActivaId });
+        
+        // Vuelve a buscar la convocatoria para obtener datos actualizados
+        const updatedConvocatoria = await ConvocatoriaENT.findByPk(idConvocatoria, {
+            include: [
+            { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+            { model: InstitucionENT, as: 'institucion' },
+            { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
+            ]
+        });
+    
+        // Crea el DTO para la convocatoria actualizada
+        const convocatoriaDTO = new ConvocatoriaDTO(
+            updatedConvocatoria.id,
+            updatedConvocatoria.areapasantia,
+            updatedConvocatoria.descripcionfunciones,
+            updatedConvocatoria.requisitoscompetencias,
+            updatedConvocatoria.horario_inicio,
+            updatedConvocatoria.horario_fin,
+            updatedConvocatoria.fechasolicitud,
+            updatedConvocatoria.fechaseleccionpasante,
+            new EstadoConvocatoriaDTO(
+            updatedConvocatoria.estadoconvocatoria.id,
+            updatedConvocatoria.estadoconvocatoria.nombreestadoconvocatoria
+            ),
+            new InstitucionDTO(
+            updatedConvocatoria.institucion.id,
+            updatedConvocatoria.institucion.nombreinstitucion
+            ),
+            new TiempoAcumplirDTO(
+            updatedConvocatoria.tiempoacumplir.id,
+            updatedConvocatoria.tiempoacumplir.descripcion
+            )
+        );
+        
+        console.log(`Convocatoria con ID: ${idConvocatoria} ha sido activada.`);
+        return new ResponseDTO("C-0001", convocatoriaDTO, "Convocatoria activada correctamente");
+        
+        } catch (error) {
+        console.error(`Error al activar la convocatoria con ID: ${idConvocatoria}: ${error}`);
+        return new ResponseDTO("C-1003", {}, `Error al activar la convocatoria: ${error}`);
+    }
+};
+
+const rejectConvocatoria = async (idConvocatoria) => {
+    try {
+        console.log(`Rechazando la convocatoria con ID: ${idConvocatoria}...`);
+        
+        // Encuentra la convocatoria por su ID
+        const convocatoria = await ConvocatoriaENT.findByPk(idConvocatoria);
+        if (!convocatoria) {
+            console.log(`Convocatoria con ID: ${idConvocatoria} no encontrada.`);
+            return new ResponseDTO("C-1002", {}, "Convocatoria no encontrada");
+        }
+        
+        // Asume que '3' es el ID para el estado 'INACTIVA'
+        const estadoInactivaId = 3;
+        
+        // Actualiza el estado de la convocatoria
+        await convocatoria.update({ estadoconvocatoria_id: estadoInactivaId });
+        
+        // Vuelve a buscar la convocatoria para obtener datos actualizados
+        const updatedConvocatoria = await ConvocatoriaENT.findByPk(idConvocatoria, {
+            include: [
+            { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+            { model: InstitucionENT, as: 'institucion' },
+            { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
+            ]
+        });
+    
+        // Crea el DTO para la convocatoria actualizada
+        const convocatoriaDTO = new ConvocatoriaDTO(
+            updatedConvocatoria.id,
+            updatedConvocatoria.areapasantia,
+            updatedConvocatoria.descripcionfunciones,
+            updatedConvocatoria.requisitoscompetencias,
+            updatedConvocatoria.horario_inicio,
+            updatedConvocatoria.horario_fin,
+            updatedConvocatoria.fechasolicitud,
+            updatedConvocatoria.fechaseleccionpasante,
+            new EstadoConvocatoriaDTO(
+            updatedConvocatoria.estadoconvocatoria.id,
+            updatedConvocatoria.estadoconvocatoria.nombreestadoconvocatoria
+            ),
+            new InstitucionDTO(
+            updatedConvocatoria.institucion.id,
+            updatedConvocatoria.institucion.nombreinstitucion
+            ),
+            new TiempoAcumplirDTO(
+            updatedConvocatoria.tiempoacumplir.id,
+            updatedConvocatoria.tiempoacumplir.descripcion
+            )
+        );
+        
+        console.log(`Convocatoria con ID: ${idConvocatoria} ha sido rechazada.`);
+            return new ResponseDTO("C-0001", convocatoriaDTO, "Convocatoria rechazada correctamente");
+
+        } catch (error) {
+            console.error(`Error al rechazar la convocatoria con ID: ${idConvocatoria}: ${error}`);
+            return new ResponseDTO("C-1003", {}, `Error al rechazar la convocatoria: ${error}`);
+            }
+};
+
+const pendingConvocatoria = async (idConvocatoria) => {
+    try {
+        console.log(`Pendiente la convocatoria con ID: ${idConvocatoria}...`);
+        
+        // Encuentra la convocatoria por su ID
+        const convocatoria = await ConvocatoriaENT.findByPk(idConvocatoria);
+        if (!convocatoria) {
+            console.log(`Convocatoria con ID: ${idConvocatoria} no encontrada.`);
+            return new ResponseDTO("C-1002", {}, "Convocatoria no encontrada");
+        }
+        
+        // Asume que '2' es el ID para el estado 'PENDIENTE'
+        const estadoPendienteId = 2;
+        
+        // Actualiza el estado de la convocatoria
+        await convocatoria.update({ estadoconvocatoria_id: estadoPendienteId });
+        
+        // Vuelve a buscar la convocatoria para obtener datos actualizados
+        const updatedConvocatoria = await ConvocatoriaENT.findByPk(idConvocatoria, {
+            include: [
+            { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+            { model: InstitucionENT, as: 'institucion' },
+            { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
+            ]
+        });
+    
+        // Crea el DTO para la convocatoria actualizada
+        const convocatoriaDTO = new ConvocatoriaDTO(
+            updatedConvocatoria.id,
+            updatedConvocatoria.areapasantia,
+            updatedConvocatoria.descripcionfunciones,
+            updatedConvocatoria.requisitoscompetencias,
+            updatedConvocatoria.horario_inicio,
+            updatedConvocatoria.horario_fin,
+            updatedConvocatoria.fechasolicitud,
+            updatedConvocatoria.fechaseleccionpasante,
+            new EstadoConvocatoriaDTO(
+            updatedConvocatoria.estadoconvocatoria.id,
+            updatedConvocatoria.estadoconvocatoria.nombreestadoconvocatoria
+            ),
+            new InstitucionDTO(
+            updatedConvocatoria.institucion.id,
+            updatedConvocatoria.institucion.nombreinstitucion
+            ),
+            new TiempoAcumplirDTO(
+            updatedConvocatoria.tiempoacumplir.id,
+            updatedConvocatoria.tiempoacumplir.descripcion
+            )
+        );
+        
+        console.log(`Convocatoria con ID: ${idConvocatoria} ha sido pendiente.`);
+        return new ResponseDTO("C-0001", convocatoriaDTO, "Convocatoria pendiente correctamente");
+
+        } catch (error) {
+            console.error(`Error al pendiente la convocatoria con ID: ${idConvocatoria}: ${error}`);
+            return new ResponseDTO("C-1003", {}, `Error al pendiente la convocatoria: ${error}`);
+            }
+};
+
+
+
 module.exports = {
     getAllConvocatorias,
     getConvocatoriaById,
@@ -542,4 +721,7 @@ module.exports = {
     getSummaryOfConvocatorias,
     getActiveConvocatoriasById,
     getInactiveConvocatoriasById,
+    activateConvocatoria,
+    rejectConvocatoria,
+    pendingConvocatoria,
 };

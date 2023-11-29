@@ -329,4 +329,70 @@ router.get('/institucion/:institucionId/postulaciones', async (req, res) => {
     }
 });
 
+
+// Ruta para obtener las postulaciones aprobadas por ID de institución
+router.get('/institucion/:institucionId/postulaciones/activas', async (req, res) => {
+    const { institucionId } = req.params;
+    if (!institucionId) {
+        return res.status(400).json({ error: 'Se requiere el ID de la institución.' });
+    }
+
+    try {
+        console.log(`GET request received for getPostulacionesActivasPorIdInstitucion with ID: ${institucionId}`);
+        const response = await postulacionService.getPostulacionesActivasPorIdInstitucion(institucionId);
+        res.json({
+            method: 'getPostulacionesActivasPorIdInstitucion',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulations for institution ID ${institucionId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener las postulaciones pendientes por ID de institución
+router.get('/institucion/:institucionId/postulaciones/pendientes', async (req, res) => {
+    const { institucionId } = req.params;
+    if (!institucionId) {
+        return res.status(400).json({ error: 'Se requiere el ID de la institución.' });
+    }
+
+    try {
+        console.log(`GET request received for getPostulacionesPendientesPorIdInstitucion with ID: ${institucionId}`);
+        const response = await postulacionService.getPostulacionPendientesPorIdInstitucion(institucionId);
+        res.json({
+            method: 'getPostulacionesPendientesPorIdInstitucion',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulations for institution ID ${institucionId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener las postulaciones rechazadas por ID de institución
+router.get('/institucion/:institucionId/postulaciones/rechazadas', async (req, res) => {
+    const { institucionId } = req.params;
+    if (!institucionId) {
+        return res.status(400).json({ error: 'Se requiere el ID de la institución.' });
+    }
+
+    try {
+        console.log(`GET request received for getPostulacionesRechazadasPorIdInstitucion with ID: ${institucionId}`);
+        const response = await postulacionService.getPostulacionesRechazadasPorIdInstitucion(institucionId);
+        res.json({
+            method: 'getPostulacionesRechazadasPorIdInstitucion',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting postulations for institution ID ${institucionId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
 module.exports = router;
