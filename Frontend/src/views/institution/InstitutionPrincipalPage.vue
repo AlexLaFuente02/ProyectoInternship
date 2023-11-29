@@ -65,7 +65,7 @@
         </div>
         <div class="container__Arrow">
           <ArrowCards
-            :listRequests="postulationsByInstitution"
+            :listRequests="allPostulationsByInstitution"
             :type="{
               id: 4,
               title: 'Todo',
@@ -118,126 +118,134 @@
 </template>
 
 <script>
-import { useInternshipsByIDStore } from "@/store/student/internshipsByIDStore";
-import CardList from "@/components/common/CardList.vue";
 import Button from "../../components/common/Button.vue";
 import { useLoaderStore } from "@/store/common/loaderStore";
 import SimpleCard from "@/components/common/SimpleCard.vue";
 import ArrowCards from "@/components/common/ArrowCards.vue";
-import LittleNav from "@/components/common/LittleNav.vue";
 import InternshipsLittleNavBar from "@/components/institution/InternshipsLittleNavBar.vue";
+import PostulationsLittleNavBar from "@/components/institution/PostulationsLittleNavBar.vue";
 import { useRequestsByIDStore } from "@/store/student/requestsByIDStore";
 import { InstitutionByIdStore } from "@/store/institution/InstitutionByIdStore";
 import { QuantityOfActiveNInactiveInternshipsStore } from "../../store/institution/QuantityOfActiveNInactiveInternshipsStore";
+import { totalPostulationsByInstitutionIdStore } from "../../store/institution/TotalPostulationsByInstitutionIdStore";
 import { activeInternshipsByInstitutionIdStore } from "../../store/institution/ActiveInternshipsByInstitutionIdStore";
+import { pendingInternshipsByInstitutionIdStore } from "../../store/institution/PendingInternshipsByInstitutionIdStore";
+import { inactiveInternshipsByInstitutionIdStore } from "../../store/institution/InactiveInternshipsByInstitutionIdStore";
+import { internshipsByInstitutionIdStore } from "../../store/institution/InternshipsByInstitutionIdStore";
+import { approvedPostulationsByInstitutionIdStore } from "../../store/institution/ApprovedPostulationsByInstitutionIdStore";
+import { pendingPostulationsByInstitutionIdStore } from "../../store/institution/PendingPostulationsByInstitutionIdStore";
+import { rejectedPostulationsByInstitutionIdStore } from "../../store/institution/RejectedPostulationsByInstitutionIdStore";
 import { postulationsByInstitutionIdStore } from "../../store/institution/PostulationsByInstitutionIdStore";
-import PostulationsLittleNavBar from "@/components/institution/PostulationsLittleNavBar.vue";
 export default {
   name: "InstitutionPrincipalPage",
   components: {
     Button,
-    CardList,
     SimpleCard,
     ArrowCards,
-    LittleNav,
     InternshipsLittleNavBar,
     PostulationsLittleNavBar,
   },
   data() {
     return {
       listInternships: [],
-      title: "Pasantías Populares",
-      everyInternshipsAreLoaded: false,
-      listRequests: [],
-      requestsAccepted: [],
-      requestsRejected: [],
-      requestsPending: [],
-      type: "Pendiente",
-
+      internshipsType: "Pasantías activas",
+      postulationsType: "Postulaciones aprobadas",
       companyInformationIsLoaded: false,
-      institutionById: InstitutionByIdStore(),
+      institutionByIdStore: InstitutionByIdStore(),
       activeNInactiveInternshipsQuantityStore:
         QuantityOfActiveNInactiveInternshipsStore(),
+      totalPostulationsByInstitutionIdStore: 
+        totalPostulationsByInstitutionIdStore(),
       activeInternshipsByInstitutionIdStore:
         activeInternshipsByInstitutionIdStore(),
-      postulationsByInstitutionIdStore: postulationsByInstitutionIdStore(),
+      pendingInternshipsByInstitutionIdStore:
+        pendingInternshipsByInstitutionIdStore(),
+      inactiveInternshipsByInstitutionIdStore:
+        inactiveInternshipsByInstitutionIdStore(),
+      allInternshipsByInstitutionIdStore: 
+        internshipsByInstitutionIdStore(),
+      approvedPostulationsByInstitutionIdStore:
+        approvedPostulationsByInstitutionIdStore(),
+      pendingPostulationsByInstitutionIdStore:
+        pendingPostulationsByInstitutionIdStore(),
+      rejectedPostulationsByInstitutionIdStore:
+        rejectedPostulationsByInstitutionIdStore(),
+      allPostulationsByInstitutionIdStore: 
+        postulationsByInstitutionIdStore(),
       companyInformation: [],
       internshipsQuantities: [],
+      postulationsQuantity: [],
       activeInternships: [],
-      postulationsByInstitution: [],
+      pendingInternships: [],
+      inactiveInternships: [],
+      allInternshipsByInstitution: [],
+      approvedPostulations: [],
+      pendingPostulations: [],
+      rejectedPostulations: [],
+      allPostulationsByInstitution: [],
     };
   },
   methods: {
     async getInstitutionData(institutionID) {
       useLoaderStore().activateLoader();
-      await this.institutionById.loadInstitutionById(institutionID);
-      this.companyInformation = this.institutionById.institution.result;
-      await this.activeNInactiveInternshipsQuantityStore.loadQuantitiesOfInternships(
-        institutionID
-      );
-      this.internshipsQuantities =
-        this.activeNInactiveInternshipsQuantityStore.quantityResults.result;
-      await this.activeInternshipsByInstitutionIdStore.loadActiveInternshipsByInstitutionId(
-        institutionID
-      );
-      this.activeInternships =
-        this.activeInternshipsByInstitutionIdStore.internships.result;
-      await this.postulationsByInstitutionIdStore.loadPostulationsByInstitutionId(
-        institutionID
-      );
-      this.postulationsByInstitution =
-        this.postulationsByInstitutionIdStore.postulations.result;
-      console.log(this.companyInformation);
-      console.log(this.internshipsQuantities);
-      console.log(this.activeInternships);
-      console.log(this.postulationsByInstitution);
+      await this.institutionByIdStore.loadInstitutionById(institutionID);
+      this.companyInformation = this.institutionByIdStore.institution.result;
+      await this.activeNInactiveInternshipsQuantityStore.loadQuantitiesOfInternships(institutionID);
+      this.internshipsQuantities = this.activeNInactiveInternshipsQuantityStore.quantityResults.result;
+      // await this.totalPostulationsByInstitutionIdStore.loadTotalPostulationsByInstitutionId(institutionID);
+      // this.postulationsQuantity = this.totalPostulationsByInstitutionIdStore.totalPostulationsResult.result;
+      await this.activeInternshipsByInstitutionIdStore.loadActiveInternshipsByInstitutionId(institutionID);
+      this.activeInternships = this.activeInternshipsByInstitutionIdStore.internships.result;
+      // await this.pendingInternshipsByInstitutionIdStore.loadPendingInternshipsByInstitutionId(institutionID);
+      // this.pendingInternships = this.pendingInternshipsByInstitutionIdStore.pendingInternships.result;
+      await this.inactiveInternshipsByInstitutionIdStore.loadInactiveInternshipsByInstitutionId(institutionID);
+      this.inactiveInternships = this.inactiveInternshipsByInstitutionIdStore.inactiveInternships.result;
+      await this.allInternshipsByInstitutionIdStore.loadInternshipsByInstitutionId(institutionID);
+      this.allInternshipsByInstitution = this.allInternshipsByInstitutionIdStore.internships.result;
+      await this.approvedPostulationsByInstitutionIdStore.loadApprovedPostulationsByInstitutionId(institutionID);
+      this.approvedPostulations = this.approvedPostulationsByInstitutionIdStore.approvedPostulations.result;
+      await this.pendingPostulationsByInstitutionIdStore.loadPendingPostulationsByInstitutionId(institutionID);
+      this.pendingPostulations = this.pendingInternshipsByInstitutionIdStore.pendingInternships.result;
+      await this.rejectedPostulationsByInstitutionIdStore.loadRejectedPostulationsByInstitutionId(institutionID);
+      this.rejectedPostulations = this.rejectedPostulationsByInstitutionIdStore.rejectedPostulations.result;
+      await this.allPostulationsByInstitutionIdStore.loadPostulationsByInstitutionId(institutionID);
+      this.allPostulationsByInstitution = this.allPostulationsByInstitutionIdStore.postulations.result;
+      console.log("Información de la empresa:", this.companyInformation);
+      console.log("Cantidades de pasantías activas e inactivas:", this.internshipsQuantities);
+      console.log("Total de postulaciones:", this.postulationsQuantity);
+      console.log("Pasantías activas:", this.activeInternships);
+      console.log("Pasantías pendientes:", this.pendingInternships);
+      console.log("Pasantías inactivas:", this.inactiveInternships);
+      console.log("Todas las pasantías:", this.allInternshipsByInstitution);
+      console.log("Postulaciones aprobadas:", this.approvedPostulations);
+      console.log("Postulaciones pendientes:", this.pendingPostulations);
+      console.log("Postulaciones rechazadas:", this.rejectedPostulations);
+      console.log("Todas las postulaciones:", this.allPostulationsByInstitution);
       this.companyInformationIsLoaded = true;
       useLoaderStore().desactivateLoader();
-    },
-    async getData() {
-      useLoaderStore().activateLoader();
-      await useInternshipsByIDStore().loadInternshipsByIdStudent();
-      await useRequestsByIDStore().loadRequestsByIdStudent();
-      this.listInternships = useInternshipsByIDStore().internships;
-      this.listRequests = useRequestsByIDStore().requests.result;
-      this.listRequests.forEach((element) => {
-        if (
-          element.estadopostulacion_id.nombreestadopostulacion == "EN ESPERA"
-        ) {
-          this.requestsPending.push(element);
-        } else if (
-          element.estadopostulacion_id.nombreestadopostulacion == "APROBADO"
-        ) {
-          this.requestsAccepted.push(element);
-        } else {
-          this.requestsRejected.push(element);
-        }
-      });
-      this.everyInternshipsAreLoaded = true;
-      useLoaderStore().desactivateLoader();
-    },
-    filterPostulations(key) {
-      if (key == "Todo") {
-        this.listRequests = useRequestsByIDStore().requests.result;
-        this.type = "Todo";
-      } else if (key == "Pendiente") {
-        this.listRequests = this.requestsPending;
-        this.type = "Pendiente";
-      } else if (key == "Aceptado") {
-        this.listRequests = this.requestsAccepted;
-        this.type = "Aceptado";
-      }
     },
     filterInternships(key) {
       if (key == "Todo") {
         this.listRequests = useRequestsByIDStore().requests.result;
-        this.type = "Todo";
+        this.internshipsType = "Todo";
       } else if (key == "Pendiente") {
         this.listRequests = this.requestsPending;
-        this.type = "Pendiente";
+        this.internshipsType = "Pendiente";
       } else if (key == "Aceptado") {
         this.listRequests = this.requestsAccepted;
-        this.type = "Aceptado";
+        this.internshipsType = "Aceptado";
+      }
+    },
+    filterPostulations(key) {
+      if (key == "Todo") {
+        this.listRequests = useRequestsByIDStore().requests.result;
+        this.postulationsType = "Todo";
+      } else if (key == "Pendiente") {
+        this.listRequests = this.requestsPending;
+        this.postulationsType = "Pendiente";
+      } else if (key == "Aceptado") {
+        this.listRequests = this.requestsAccepted;
+        this.postulationsType = "Aceptado";
       }
     },
   },
@@ -245,13 +253,15 @@ export default {
     listRequestsComputed() {
       return this.listRequests;
     },
-    typeComputed() {
-      return this.type;
+    internshipTypeComputed() {
+      return this.internshipsType;
+    },
+    postulationsTypeComputed() {
+      return this.postulationsType;
     },
   },
   created() {
     this.getInstitutionData($cookies.get("institutionID"));
-    // this.getData();
   },
 };
 </script>
