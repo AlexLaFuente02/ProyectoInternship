@@ -53,7 +53,7 @@
            
             <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
         
-        <Tarjetitas 
+        <CardsSoli 
         :name="card.institucion.nombreinstitucion" 
         :description="card.areapasantia "
         :a="card.tiempoacumplir.descripcion"
@@ -83,7 +83,7 @@
            
         <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
           
-        <TarjetitasPasantias 
+        <CardsSoli 
         :name="card.nombreinstitucion"
         :a="card.sectorpertenencia.nombresectorpertenencia "
         :b="card.nombrecontacto "
@@ -138,7 +138,7 @@
   </template>
   <script>
   import Tarjetitas from '../../components/common/Tarjetitas.vue';
-  import TarjetitasPasantias from '../../components/common/TarjetitasPasantias.vue';
+  import CardsSoli from '../../components/common/CardsSoli.vue';
   import Carousel from "@/components/common/Carousel.vue";
   import Button from "@/components/common/Button.vue";
   import SimpleCard from "@/components/common/SimpleCard.vue";
@@ -151,7 +151,8 @@
       SimpleCard,
       Button,
       Tarjetitas,
-      TarjetitasPasantias
+      TarjetitasPasantias,
+      CardsSoli
     },
     data() {
       return {

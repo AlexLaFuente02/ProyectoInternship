@@ -1,939 +1,296 @@
 <template>
-  <div class="student__principalPage">
-           <div class="student__profile">
-               <div class="profile__content__header1">
-                       <div class="content__welcome">
-                         
-                           <div class="student__data">
-                               <span class="welcome__student">
-                                 ¡Bienvenido a la plataforma!
-                               </span>
-                               <br>
-                               <span class="career__student">
-                                 En esta plataforma administrar las empresas y pasantias que tenemos.
-           
-                               </span>
-                               
-                               <span class="career__student1">
-                                 <img src="@/components/images/USEI.png" alt="Logo de la empresa" class="company-logo" />
-                               </span>
-                           </div>
-                       </div>
-                       
-               </div>
-               <div class="summary">
-                   <span class="summary__title">
-                       Resumen general de tus pasantías
-                   </span>
-                   <div class="summary__content">
-                      
-                       <span class="summary__content__number">10 
-                           <span class="summary__content__text">Solicitudes deInstituciones</span>
-                       </span>
-                       
-                       <span class="summary__content__number">12
-                           <span class="summary__content__text">Solicitudes de Pasantias</span>
-                       </span>
-                   </div>
-               </div>
-           </div>
-
-         </div>
+  <div class="inicio">
+    <h1>TUS SOLICITUDES DE EMPRESAS</h1>
+    <p>Te mostramos tus solicitudes de empresas para entrar a la pagina</p>
+    <div class="card-inicio">
+      <div class="card">
+        <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="card-individual">
+          <div class="content">
+            <div class="image">
+              <img :src="card.logoinstitucion || defaultImage" alt="Imagen de la Empresa" class="card-image">
+            </div>
+            <div class="text-content">
+              <div class="button-container">
+                <div class="button-group">
+                  <button class="edit-btn" @click="editCard(card.id)">Aceptar</button>
+                  <button class="delete-btn" @click="deleteCard(card.id)">Rechazar</button>
+                </div>
+              </div>
+                  <div class="title">{{ card.nombreinstitucion }}</div>
+                  <div class="description"><strong>Sector:</strong>{{card.sectorpertenencia.nombresectorpertenencia}}</div>
+                  <div class="description"><strong>Nombre del Contacto:</strong>{{card.nombrecontacto}}</div>
+                  <div class="description"><strong>Correo electr&oacute;nico:</strong>{{ card.correocontacto }}</div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 
-       <!--prueba -->
-        
-
-     
-   
-       <div class="card-inicio">
-       <div class="card">
-         <h1>Solicitudes de convocatorias</h1>
-         <div class="EmpresasDestacadas">
-          
-           <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
-       
-       <Tarjetitas 
-       :name="card.institucion.nombreinstitucion" 
-       :description="card.areapasantia "
-       :a="card.tiempoacumplir.descripcion"
-       :b="card.fechasolicitud"
-       :c="card.fechaseleccionpasante"
-       />
-     
-       </div>
-      
-     </div>
-     <div class="container__button">
-         <Button 
-           text="Revisa tus convocatorias de empresas" 
-           :color="1" 
-           :disabled="false"
-           @option-selected="Convocatorias">
-         </Button>
-       </div>
-       </div>
-     </div>
-   
-       
-       <div class="card-inicio">
-       <div class="card">
-         <h1>Solicitudes de empresas</h1>
-         <div class="EmpresasDestacadas">
-          
-       <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
-         
-       <TarjetitasPasantias 
-       :name="card.nombreinstitucion"
-       :a="card.sectorpertenencia.nombresectorpertenencia "
-       :b="card.nombrecontacto "
-       :c="card.correocontacto "
-       :d="card.celularcontacto "/>
-       
-       </div>
-     
-     </div>
-     <div class="container__button">
-         <Button 
-           text="Revisa tus solicitudes de empresas " 
-           :color="0" 
-           :disabled="false"
-           @option-selected="Empresas"
-           >
-         </Button>
-       </div>
-       </div>
-     </div>
+<script>
+import { useLoaderStore } from "@/store/common/loaderStore";
+import { UseUseiInstitutionStore } from "@/store/usei/UseiInstitutionStore";
 
 
-         <div class="student__principalPage">
-           <div class="student__profile">
-               <div class="profile__content__header">
-                       <div class="content__welcome">
-                         
-                           <div class="student__data">
-                               <span class="welcome__student">
-                                 ¡Convocatorias activas o Solicitudes recibidas!
-                               </span>
-                               <br>
-                               <span class="career__student">
-                                
-                                 En esta plataforma podrás encontrar pasantías y prácticas
-             profesionales que te ayudarán a desarrollar tus habilidades y
-             competencias en el mundo laboral.
-           </span>
-           <div class="container__carrousel">
-           <Carousel :listImages="PhotoService" />
-         </div>
-                           </div>
-                       </div>
-                       
-               </div>
-             
-           </div>
-
-         </div>
-     
-
- </template>
- <script>
- import Tarjetitas from '../../components/common/Tarjetitas.vue';
- import TarjetitasPasantias from '../../components/common/TarjetitasPasantias.vue';
- import Carousel from "@/components/common/Carousel.vue";
- import Button from "@/components/common/Button.vue";
- import SimpleCard from "@/components/common/SimpleCard.vue";
- import { useLoaderStore } from "@/store/common/loaderStore";
- import {UseUseiInternshipStore }from "@/store/usei/UseiInternshipStore";
- import { UseUseiInstitutionStore } from "@/store/usei/UseiInstitutionStore";
- export default {
-   components: {
-     Carousel,
-     SimpleCard,
-     Button,
-     Tarjetitas,
-     TarjetitasPasantias
-   },
-   data() {
-     return {
-       listInstitution: [],
-       listInternship: [],
-       everyInternshipsAreLoaded: false,
-       PhotoService:[
-       {
-             itemImageSrc: 'https://www.animafestexperience.net/internshipsabroad/wp-content/uploads/2019/08/ANIMAFEST-PASANTIAS-REMUNERADAS-min-min-800x333.jpg',
-             thumbnailImageSrc: 'https://www.animafestexperience.net/internshipsabroad/wp-content/uploads/2019/08/ANIMAFEST-PASANTIAS-REMUNERADAS-min-min-800x333.jpg',
-             alt: 'Explota todas tus habilidades ¡Enhorabuena!',
-             title: '¡Bienvenido al Mundo Laboral!'
-           },
-           {
-             itemImageSrc: 'https://idiomasseif.com/wp-content/uploads/2019/04/importancia-del-ingles-en-el-mundo-laboral.jpg',
-             thumbnailImageSrc: 'https://idiomasseif.com/wp-content/uploads/2019/04/importancia-del-ingles-en-el-mundo-laboral.jpg',
-             alt: 'Renueva tu empresa con los mejores estudiantes del país.',
-             title: '¡Como institución puedes contratar a estudiantes y graduados!'
-           },
-           {
-             itemImageSrc: 'https://media.gq.com.mx/photos/642447f1c632255eae24a045/master/w_1920,c_limit/trabajo.jpg',
-             thumbnailImageSrc: 'https://media.gq.com.mx/photos/642447f1c632255eae24a045/master/w_1920,c_limit/trabajo.jpg',
-             alt: '¡Estamos seguros de que pronto encontraras tu lugar...!',
-             title: '¡Muéstranos todo lo que sabes!'
-           },
-       ],
-     };
-   },
-   methods: {
-     createAccount(option) {
-       if (option) {
-         console.log("createAccount");
-         this.$router.push("/UserRegister");
-       }
-     },
-     Empresas(option) {
-     if (option) {
-       console.log("createAccount");
-       this.$router.push("/usei/Business");
-     }
-   },
-   Convocatorias(option) {
-     if (option) {
-       console.log("createAccount");
-       this.$router.push("/usei/InternshipApp");
-     }
-   },
-   async getData() {
-     
-     useLoaderStore().activateLoader();
-
-     await UseUseiInternshipStore().LoadPendenInternship();
-// Asumiendo que LoadPendenInternship() actualiza InternshipList de manera similar a LoadInstitutions() en tu ejemplo.
-     this.listInternship = UseUseiInternshipStore().InternshipList.result;
-     await UseUseiInstitutionStore().LoadPendentInstitutions();
-     // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
-     this.listInstitution = UseUseiInstitutionStore().InstitutionList.result;
-
-this.everyInternshipsAreLoaded = true;
-useLoaderStore().desactivateLoader();
-
-
-
-       
-     },
-   },
-   created() {
-     this.getData();
-   },
- };
+export default {
+data() {
+  return {
+    listInstitution: [],
+    everyInternshipsAreLoaded: false,
+    defaultImage: 'https://i.pinimg.com/564x/0f/76/1c/0f761c01d1fb284eb429061e577aa623.jpg',
+  };
+},
+methods: {
+  async getData() {
+    useLoaderStore().activateLoader();
+    // Asegúrate de que LoadPendentInstitutions() se implemente correctamente y devuelva los datos esperados.
+    await UseUseiInstitutionStore().LoadPendentInstitutions();
+    // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
+    this.listInstitution = UseUseiInstitutionStore().InstitutionList.result;
+    this.everyInternshipsAreLoaded = true;
+    useLoaderStore().desactivateLoader();
+  },
+  async editCard(institutionId) {
+    try {
+      const result = await UseUseiInstitutionStore().ActivateInstitution(institutionId);
+      console.log('Institución activada correctamente', result);
+      // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
+    } catch (error) {
+      console.error('Error al activar la institución', error);
+      // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+    }
+  },
+    deleteCard(cardId) {
+      // Lógica para rechazar la solicitud
+      console.log(`Rechazar solicitud con ID: ${cardId}`);
+      // Aquí iría la llamada al backend o la lógica para actualizar el estado
+    },
+},
+created() {
+  this.getData();
+},
+};
 </script>
- <style scoped>
+
   
- 
- @media screen and (max-width: 1250px) {
-   .container__header__page{
-     flex-direction: column;
-   }
-   .container__header__description{
-     padding: 3% 7%;
-   }
-   .container__carrousel {
-     width: 400px;
-     height: 300px;
-   }
-   .container__problem{
-     flex-direction: column-reverse;
-   }
-   .container__problem__description{
-     padding: 3% 7%;
-   }
-   .container__problem__image{
-     padding: 3% 7%;
-   }
-   .container__problem__image img{
-     width: 300px;
-     height: 200px;
-   }
-   .container__solution{
-     flex-direction: column;
-   }
-   .container__solution__description{
-     padding: 3% 7%;
-   }
-   .company-logo{
-     height: 400px;
-   }
-   .student__profile{
-     padding-bottom: 70%;
-   }
- }
-
- @media screen and (max-width: 1025px) {
-   
-   .company-logo{
-     height: 10%;
-   }
- }
-
- @media screen and (max-width: 768px) {
-   .container__header__page{
-     flex-direction: column;
-   }
-   .container__header__description{
-     padding: 3% 7%;
-   }
-   .container__carrousel {
-     width: 300px;
-     height: 200px;
-   }
-   .container__problem{
-     flex-direction: column-reverse;
-   }
-   .container__problem__description{
-     padding: 3% 7%;
-   }
-   .container__problem__image{
-     padding: 3% 7%;
-   }
-   .container__problem__image img{
-     width: 200px;
-     height: 150px;
-   }
-   .container__solution{
-     flex-direction: column;
-   }
-   .container__solution__description{
-     padding: 3% 7%;
-   }
- }
- @media screen and (max-width: 425px) {
-   .container__header__page{
-     flex-direction: column;
-   }
-   .container__header__description{
-     padding: 3% 7%;
-   }
-   .container__carrousel {
-     width: 200px;
-     height: 150px;
-   }
-   .container__problem{
-     flex-direction: column-reverse;
-   }
-   .container__problem__description{
-     padding: 3% 7%;
-   }
-   .container__problem__image{
-     padding: 3% 7%;
-   }
-   .container__problem__image img{
-     width: 150px;
-     height: 100px;
-   }
-   .container__solution{
-     flex-direction: column;
-   }
-   .container__solution__description{
-     padding: 3% 7%;
-   }
- }
- @media screen and (max-width: 375px) {
-   .container__header__page{
-     flex-direction: column;
-   }
-   .container__header__description{
-     padding: 3% 7%;
-   }
-   .container__carrousel {
-     width: 200px;
-     height: 150px;
-   }
-   .container__problem{
-     flex-direction: column-reverse;
-   }
-   .container__problem__description{
-     padding: 3% 7%;
-   }
-   .container__problem__image{
-     padding: 3% 7%;
-   }
-   .container__problem__image img{
-     width: 150px;
-     height: 100px;
-   }
-   .container__solution{
-     flex-direction: column;
-   }
-   .container__solution__description{
-     padding: 3% 7%;
-   }
- }
- /**ARREGLO0S   DE COSAS */
- 
- /* Estilos para la página de inicio de sesión */
- @media (max-width: 480px) {
-   .top-section {
-     flex-direction: column;
-     align-items: center;
-   }
- 
-   .left-section {
-     width: 100%;
-   }
- 
-   .right-section {
-     width: 100%;
-     text-align: center;
-   }
- 
-   .company-logo {
-     margin-top: 15px;
-   }
- }
-   
-   .company-logo {
-     height: 100%;
-   }
-   
-   
-   h3 {
-     font-size: 18px;
-     color: #333;
-     text-align: center;
-     margin-bottom: 10px;
-   }
-   
-
-   
-   @media (max-width: 370px) {
-     .company-logo {
-     height: 70px;
+  <style scoped>
+  /** estilo eltra de titulo*/
+  
+  
+  /**iniiciooo  boton  */
+  .text-content {
+    position: relative;
     
-   }}
- 
-   @media (max-width: 700px) {
-     .company-logo {
-     max-width:auto;
-   }}
-   @media (max-width: 275px) {
-     .company-logo {
-       margin-top: 50px;
-    height: 50px;
-   }
-   
- }
-.h1{
- margin-top: 10%
-}
- /**prueba */
+  }
+  .text-content2 {
+    position: relative;
 
- .student__principalPage{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   padding: 2rem;
-   
-}
-.card-inicio{
- padding: 1rem;
-}
+  }
+  .text-content3 {
+    position: relative;
 
-.student__content__internship{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-}
-
-
-/*Estilos para el perfil del estudiante*/
-.student__profile{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-   padding: 1rem;
-   border-radius: 10px;
-   background-color: #Fff;
-   padding-top: 3%;
-   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.card{
- width: 100%;
-   border-radius: 10px;
-padding:2% ;
-   background-color: #Fff;
-   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);}
-
-
-.dark-theme .card{
-   background-color: #434B54;
-}
-.dark-theme .student__profile{
-   background-color: #434B54;
-}
-.profile__content__header{
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-   padding-bottom: 10%;
-}
-.profile__content__header1{
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-   padding-bottom: 10%;
-}
-
-.content__welcome{
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   width: 50%;
-}
-
-.student__data{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   margin-left: 1rem;
-}
-.welcome__student{
-   font-size: 1.5rem;
-   font-weight: 700;
-}
-.career__student{
-   font-size: 1rem;
-   font-weight: 400;
-   margin-top: 10px;
-   margin-bottom: 30px;
-   height: 20px;
-
-}
-.career__student1{
-   font-size: 1rem;
-   font-weight: 400;
-   height:100px;
-   width: 100%;
-}
-
-.content__more{
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   width: 50%;
-}
-.profile__button {
- padding: 0.9rem;
- margin: 0.5rem;
- color: #fff;
- cursor: pointer;
- text-align:center;
- border: none;
- background-size: 300% 100%;
- border-radius: 50px;
- -o-transition: all .4s ease-in-out;
- -webkit-transition: all .4s ease-in-out;
- transition: all .4s ease-in-out;
-}
-
-.profile__button:hover {
- background-position: 100% 0;
- -o-transition: all .4s ease-in-out;
- -webkit-transition: all .4s ease-in-out;
- transition: all .4s ease-in-out;
-}
-
-.profile__button:focus {
- outline: none;
-}
-
-.profile__button.bn23 {
-   background-image: linear-gradient(
-   to right,
-   #25aae1,
-   #4481eb,
-   #04befe,
-   #3f86ed
- );
- box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
-}
-.dark-theme .profile__button.bn23{
-   background-image: linear-gradient(
-   to right,
-   #29323c,
-   #485563,
-   #2b5876,
-   #4e4376
- );
- box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
-}
-
-.see_vitae{
-   font-size: 1rem;
-   font-weight: 700;
-   margin-left: 0.5rem;
-}
-.edit__Profile{
-   font-size: 1rem;
-   font-weight: 700;
-   margin-left: 0.5rem;
-}
-.summary{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   width: 100%;
-   padding: 0.5rem;
-   margin: 0.5rem;
-}
-.summary__title{
-   font-size: 1.5rem;
-   font-weight: 700;
-}
-.summary__content{
-   display: flex;
-   flex-direction: row;
-   width: 100%;
-   font-size: 1rem;
-}
-.summary__content__number{
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   padding: 0.5rem;
-   font-size: 3rem;
-   font-weight: 700;
-}
-.summary__content__text{
-   font-size: 1rem;
-   font-weight: 700;
-   margin-left: 0.5rem;
-}
-/*Estilos para las pasantías del estudiante*/
-/*Estilos para las pasantías activas del estudiante*/
-.internship__active__by__student{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-   padding: 0.5rem;
-   margin: 0 0 1.5rem 0;
-   height: 500px; 
-   border-radius: 10px;
-   background-color: #Fff;
-   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.dark-theme .internship__active__by__student{
-   background-color: #434B54;
-}
-.internship__active__by__student h1{
-   font-size: 1.5rem;
-   font-weight: 700;
-   margin: 1rem;
-}
-.container__cards{
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   flex-wrap: wrap;
-   overflow-y: scroll;
-   height: 100%;
-   width: 80%;
-}
-/*Estilos para las solicitudes del estudiante*/
-
-.requests__by__student{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-   padding: 0.5rem;
-   margin: 0 0 1.5rem 0;
-   height: 500px; 
-   border-radius: 10px;
-   background-color: #Fff;
-   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.container__requests{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-}
-
-.dark-theme .requests__by__student{
-   background-color: #434B54;
-}
-.container__little__nav{
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-}
-.container__Arrow{
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-   height: 300px;
-}
-
-
-
-/* Estilos para dispositivos pequeños (teléfonos) */
-
-@media only screen and (max-width: 600px) {
- /* Estilos específicos para dispositivos pequeños */
-   .student__principalPage{
-           padding: 0.5rem;
-   }
-   .profile__content__header{
-       flex-direction: column;
- }
-   .content__welcome{
-       width: 100%;
-       margin-bottom: 0.3rem;
-   }
-   .content__more{
-       width: 100%;
-   }
-   .profile__button{
-       margin: 0.2rem;
-       padding: 0.5rem;
-       font-size: 0.4rem;
-   }
-   .profile__button span{
-       font-size: 0.6rem;
-   }
-   .summary__content{
-       flex-wrap: wrap;
-   }
-   .summary__title{
-       font-size: 1rem;
-       font-weight: 700;
-   }
-   .summary__content__number{
-       font-size: 1.2rem;
-   }
-   .summary__content__text{
-       font-size: 0.6rem;
-   }
-
-
-
-
-
-}
-
-@media only screen and (max-width: 480px) {
- /* Estilos específicos para dispositivos pequeños */
-   .student__profile{
-          flex-direction: column;
-   }
-   
-}
-@media only screen and (max-width: 451px) {
- /* Estilos específicos para dispositivos pequeños */
- .profile__content__header{
+  }
+  @media (max-width: 585px) {
+    .text-content2 {
+    position: relative;
+    margin-bottom:20%;
+  }
+  .text-a{
+      margin-top: 30px;
+     
+  }
+  .text-content {
+    margin-bottom:20%;
+  }
+  }
+  @media (max-width: 290px) {
+    .text-content2 {
+    margin-bottom:90%;
   
-  padding-bottom: 20%;
-}
-   
-}
-
-
-
-/* Estilos para tabletas */
-@media only screen and (min-width: 600px) and (max-width: 1024px) {
- /* Estilos específicos para tabletas */
- .student__principalPage{
-       padding: 1rem;
-   
- }
- .profile__content__header{
-       flex-direction: column;
- }
-   .content__welcome{
-       width: 100%;
-       margin-bottom: 0.5rem;
-   }
-   .content__more{
-       width: 100%;
-   }
-   .profile__button{
-       margin: 0.3rem 0.3rem;
-       padding: 0.8rem;
-       font-size: 0.6rem;
-   }
-   .profile__button span{
-       font-size: 0.8rem;
-   }
-   .summary__content{
-       flex-wrap: wrap;
-   }
-   .summary__title{
-       font-size: 1.3rem;
-       font-weight: 700;
-   }
-   .summary__content__number{
-       font-size: 1.5rem;
-   }
-   .summary__content__text{
-       font-size: 0.8rem;
-   }
-}
-@media only screen and (min-width: 600px) and (max-width: 1024px) {
- /* Estilos específicos para tabletas */
- .student__principalPage{
-       padding: 1rem;
-   
- }
- .profile__content__header{
-       flex-direction: column;
- }
-   .content__welcome{
-       width: 100%;
-       margin-bottom: 0.5rem;
-   }
-   .content__more{
-       width: 100%;
-   }
-   .profile__button{
-       margin: 0.3rem 0.3rem;
-       padding: 0.8rem;
-       font-size: 0.6rem;
-   }
-   .profile__button span{
-       font-size: 0.8rem;
-   }
-   .summary__content{
-       flex-wrap: wrap;
-   }
-   .summary__title{
-       font-size: 1.3rem;
-       font-weight: 700;
-   }
-   .summary__content__number{
-       font-size: 1.5rem;
-   }
-   .summary__content__text{
-       font-size: 0.8rem;
-   }
-}
-
-/* Estilos para dispositivos medianos */
-@media only screen and (min-width: 1025px) and (max-width: 1440px) {
- /* Estilos específicos para dispositivos medianos */
- .student__principalPage{
-       padding: 1.5rem;
- }
-}
-
-/* Estilos para dispositivos grandes (pantallas de escritorio) */
-@media only screen and (min-width: 1441px) {
- /* Estilos específicos para dispositivos grandes */
-}
-
-.EmpresasDestacadas {
- display: flex;
-   flex-direction: row;
-   align-items: center;
-   padding: 30px;
-   border-radius: 10px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-   background: #434B54;
-   margin: 0.5rem;
-   
-   overflow: auto;
-   overflow-x: scroll;
-   
-}
-.EmpresasDestacadas {
- background-color: #Fff;
-   
-}
-
-.dark-theme .EmpresasDestacadas {
-background: #434B54;
-padding: 0.1rem;
+  }
+  }
+  @media (max-width: 380px) {
+    .text-content2 {
+    position: relative;
+    margin-bottom:40%;
+  }
+ 
+  }
+  @media (max-width: 290px) {
+    .text-content2 {
+    margin-bottom:60%;
   
+  }
+  }
+  .content-text {
+    margin-right: 10%; /* Ajusta el espacio para el botón de reserva */
+  }
+  
+  .book-btn {
+    position: absolute;
+    top: 5%;
+    right: 1%;
+  }
+  /**fin  boton  */
+  .inicio{
+    position: relative;
+    top: 10px;
+    left: 10px;
+    margin-bottom: 30px;
+  }
+  /**colores de texto de si esta aporbado o no */
+  
+  /**finnnnnnnnnnnnnnnnnnnnnnnn*/
+  .card {/**contenedore de indivialues */
+    border: 0px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 30px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 15px;
+    color: #000;
+    background: rgb(255, 255, 255);
+  }
+  .card-individual {
+    border: 3px solid #000000;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background: rgb(116, 181, 203);
+  }
+  .card-inicio{
+    border: 3px solid #000000;
+background:  #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 15px;
+    margin-right: 10%;
+    margin-left: 1%;
+     /* Ajusta este valor según el espacio que desees */
+  }
+
+  .dark-theme .card {/**contenedore de indivialues */
+    border: 0px solid #ccc;
+    color: #ffffff;
+    background: rgb(255, 255, 255);
+ 
+  }
+  .dark-theme .card-individual {
+    border: 3px solid #000000;
+    background: rgb(52, 87, 184);
+  }
+  .dark-theme .card-inicio{
+    border: 3px solid #000000;
+background:  #ffffff;
    
-}
-.company-cards-container {
- display: inline-flex;
-}
-.container__button{
- display: flex;
-   flex-direction: row;
-   align-items: center;
-   text-decoration: none;
-   justify-content: space-around;
-}
-.button{
- height: 50px;
-}
-
-
-@media screen and (max-width: 380px){
- 
- .EmpresasDestacadas{
-   padding: 0.5rem;
-   height: 320px;
- }
-
-}
-@media screen and (max-width: 360px){
- 
- .profile__content__header{
+  }
   
-   padding-bottom: 20%;
-}
-
-}
-.dark-theme .company-logo{
- filter:invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
-}
-@media screen and (max-width: 335px){
- 
- .profile__content__header{
+  .content {
+    display: flex;
+  }
   
-   padding-bottom: 30%;
-}
-
-}
-@media screen and (max-width: 300px){
- 
- .profile__content__header{
+  .image {
+    flex: 0 0 auto; /* Ancho fijo para la imagen */
+  }
   
-   padding-bottom: 40%;
+  .image .card-image {
+    width: 200px; /* Tamaño fijo para la imagen */
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .text-content {
+    flex: 1;
+    padding: 20px;
+  }
+  /* Estilos responsivos */
+  @media (max-width: 880px) {
+    .content {
+      flex-direction: column;
+    }
+    .text-content {
+      padding: 20px;
+    }
+  }
+  .title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    margin-bottom: 15px;
+  }
+  
+  .info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+  
+  .book-btn {
+    padding: 10px 20px;
+    background-color: #5a99dd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .disclaimer {
+    font-size: 12px;
+    color: #777;
+    margin-top: 10px;
+  }
+  
+  .star {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-image: url("https://image.flaticon.com/icons/svg/148/148841.svg");
+    background-size: contain;
+    margin-right: 3px;
+  }
+  
+  .review-count {
+    color: #777;
+  }
+
+/* Estilos para los botones Editar y Borrar */
+.edit-btn {
+padding: 10px 20px;
+background-color: rgb(3, 170, 14);
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-size: 16px;
+margin: 0 5px;
 }
 
+.delete-btn {
+padding: 10px 20px;
+background-color: #ff0000;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-size: 16px;
+margin: 0 5px;
 }
 
-
-
-@media screen and (max-width: 540px){
- 
- .student__profile{
-   padding-top: 10%;
-     padding-bottom: 10%;
-   }
-
+/* Estilos para alinear botones a la derecha */
+.button-container {
+display: flex;
+justify-content: flex-end;
+align-items: flex-start;
+margin-bottom: 10px;
 }
 
-
-</style>
+  </style>
+  

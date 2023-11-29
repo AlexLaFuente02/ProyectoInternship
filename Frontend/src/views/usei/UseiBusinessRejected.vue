@@ -1,51 +1,6 @@
 <template>
-    <div class="student__principalPage">
-             <div class="student__profile">
-                 <div class="profile__content__header1">
-                         <div class="content__welcome">
-                           
-                             <div class="student__data">
-                                 <span class="welcome__student">
-                                   ¡Bienvenido a la plataforma!
-                                 </span>
-                                 <br>
-                                 <span class="career__student">
-                                   En esta plataforma administrar las empresas y pasantias que tenemos.
-             
-                                 </span>
-                                 
-                                 <span class="career__student1">
-                                   <img src="@/components/images/USEI.png" alt="Logo de la empresa" class="company-logo" />
-                                 </span>
-                             </div>
-                         </div>
-                         
-                 </div>
-                 <div class="summary">
-                     <span class="summary__title">
-                         Resumen general de tus pasantías
-                     </span>
-                     <div class="summary__content">
-                        
-                         <span class="summary__content__number">10 
-                             <span class="summary__content__text">Solicitudes deInstituciones</span>
-                         </span>
-                         
-                         <span class="summary__content__number">12
-                             <span class="summary__content__text">Solicitudes de Pasantias</span>
-                         </span>
-                     </div>
-                 </div>
-             </div>
+   
  
-           </div>
- 
- 
-         <!--prueba -->
-          
- 
-       
-     
          <div class="card-inicio">
          <div class="card">
            <h1>Solicitudes de convocatorias</h1>
@@ -53,7 +8,7 @@
             
              <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
          
-         <Tarjetitas 
+         <CardsSoli 
          :name="card.institucion.nombreinstitucion" 
          :description="card.areapasantia "
          :a="card.tiempoacumplir.descripcion"
@@ -83,7 +38,7 @@
             
          <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
            
-         <TarjetitasPasantias 
+         <CardsSoli 
          :name="card.nombreinstitucion"
          :a="card.sectorpertenencia.nombresectorpertenencia "
          :b="card.nombrecontacto "
@@ -106,39 +61,13 @@
        </div>
   
  
-           <div class="student__principalPage">
-             <div class="student__profile">
-                 <div class="profile__content__header">
-                         <div class="content__welcome">
-                           
-                             <div class="student__data">
-                                 <span class="welcome__student">
-                                   ¡Convocatorias activas o Solicitudes recibidas!
-                                 </span>
-                                 <br>
-                                 <span class="career__student">
-                                  
-                                   En esta plataforma podrás encontrar pasantías y prácticas
-               profesionales que te ayudarán a desarrollar tus habilidades y
-               competencias en el mundo laboral.
-             </span>
-             <div class="container__carrousel">
-             <Carousel :listImages="PhotoService" />
-           </div>
-                             </div>
-                         </div>
-                         
-                 </div>
-               
-             </div>
+           
  
-           </div>
        
  
    </template>
    <script>
-   import Tarjetitas from '../../components/common/Tarjetitas.vue';
-   import TarjetitasPasantias from '../../components/common/TarjetitasPasantias.vue';
+   import CardsSoli from '../../components/common/CardsSoli.vue';
    import Carousel from "@/components/common/Carousel.vue";
    import Button from "@/components/common/Button.vue";
    import SimpleCard from "@/components/common/SimpleCard.vue";
@@ -150,8 +79,7 @@
        Carousel,
        SimpleCard,
        Button,
-       Tarjetitas,
-       TarjetitasPasantias
+       CardsSoli
      },
      data() {
        return {
@@ -419,7 +347,8 @@
      
    }
  .h1{
-   margin-top: 10%
+   margin-top: 10%;
+   margin-bottom: 10px;
  }
    /**prueba */
  
@@ -849,18 +778,12 @@
  }
  
  .EmpresasDestacadas {
-   display: flex;
-     flex-direction: row;
-     align-items: center;
-     padding: 30px;
-     border-radius: 10px;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+     /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);*/
      background: #434B54;
-     margin: 0.5rem;
-     
-     overflow: auto;
-     overflow-x: scroll;
-     
+     margin-bottom: 20px;
+     padding: 10px;
+    
  }
  .EmpresasDestacadas {
    background-color: #Fff;
@@ -868,13 +791,10 @@
  }
  
  .dark-theme .EmpresasDestacadas {
-  background: #434B54;
-  padding: 0.1rem;
-    
-     
+  background: #434B54;     
  }
  .company-cards-container {
-   display: inline-flex;
+   display:inline-flex;
  }
  .container__button{
    display: flex;
