@@ -71,13 +71,10 @@
           <p>Apellido: {{ dataUser.apellidos }}</p>
           <p>Carnet: {{ dataUser.carnetidentidad }}</p>
           <p>Celular: {{ dataUser.celularcontacto }}</p>
-          <router-link
-            to="https://www.google.com/"
-            class="profile__button bn23"
-          >
+          <a href="https://www.google.com/" class="profile__button bn23">
             <font-awesome-icon :icon="['fas', 'file-alt']" size="2xl" />
             <span class="see_vitae"> Hoja de vida </span>
-          </router-link>
+          </a>
         </div>
       </div>
     </div>
