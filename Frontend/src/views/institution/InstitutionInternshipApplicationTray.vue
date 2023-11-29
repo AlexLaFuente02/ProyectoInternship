@@ -21,20 +21,13 @@
           <td class="request-table-cell">Ingeniería de Sistemas</td>
           <td class="request-table-cell">Si</td>
           <td class="request-table-cell">
-            <router-link class="link" to="/student/profile">
-              <Button text="Ver perfil" :color="3"></Button>
-            </router-link>
-          </td>
-        </tr>
-        <tr class="request-table-row">
-          <td class="request-table-cell">Oscar</td>
-          <td class="request-table-cell">2020</td>
-          <td class="request-table-cell">Ingeniería de Sistemas</td>
-          <td class="request-table-cell">Si</td>
-          <td class="request-table-cell">
-            <router-link class="link" to="/student/profile">
-              <Button text="Ver perfil" :color="3"></Button>
-            </router-link>
+            <div class="postulation-buttons">
+              <router-link class="link" to="/student/profile">
+                <Button text="Ver perfil" :color="3"></Button>
+              </router-link>
+              <button type="button" class="accept-postulation-request"></button>
+              <button type="button" class="reject-postulation-request"></button>
+            </div>
           </td>
         </tr>
       </table>
@@ -50,9 +43,7 @@ export default {
     Button,
   },
   data() {
-    return {
-      
-    }
+    return {};
   },
 };
 </script>
@@ -93,6 +84,31 @@ tr:first-child {
   border-bottom: 2px solid black;
 }
 
+.postulation-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.accept-postulation-request {
+  background-image: url("../../components//images/approved.png");
+}
+
+.reject-postulation-request {
+  background-image: url("../../components//images/rejected.png");
+}
+
+.accept-postulation-request,
+.reject-postulation-request {
+  width: 18%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0;
+  border: none;
+}
+
 /* DARK THEME */
 .dark-theme .students-container {
   background-color: #353e48;
@@ -112,5 +128,13 @@ tr:first-child {
   .studentsRequests-table {
     margin: 3%;
   }
+
+  /* .accept-postulation-request {
+    width: 100%;
+  }
+
+  .reject-postulation-request {
+    width: 18%;
+  } */
 }
 </style>

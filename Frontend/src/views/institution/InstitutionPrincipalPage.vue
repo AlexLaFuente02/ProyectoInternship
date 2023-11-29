@@ -43,8 +43,11 @@
       </div>
     </div>
     <div class="active-internships-by-institution">
-      <h1>Pasantías activas</h1>
+      <h1>Tus pasant&iacute;as</h1>
       <div class="container__cards" v-if="companyInformationIsLoaded">
+        <div class="container__little__nav">
+          <InternshipsLittleNavBar @filter-internships="filterInternships" />
+        </div>
         <div
           class="card"
           v-for="internship in activeInternships"
@@ -55,10 +58,10 @@
       </div>
     </div>
     <div class="requests-by-institution">
-      <h1>Solicitudes</h1>
+      <h1>Solicitudes a tus pasant&iacute;as</h1>
       <div class="container__requests" v-if="companyInformationIsLoaded">
         <div class="container__little__nav">
-          <LittleNav @filter="filterRequests" />
+          <PostulationsLittleNavBar @filter-postulations="filterPostulations" />
         </div>
         <div class="container__Arrow">
           <ArrowCards
@@ -122,12 +125,24 @@ import { useLoaderStore } from "@/store/common/loaderStore";
 import SimpleCard from "@/components/common/SimpleCard.vue";
 import ArrowCards from "@/components/common/ArrowCards.vue";
 import LittleNav from "@/components/common/LittleNav.vue";
+import InternshipsLittleNavBar from "@/components/institution/InternshipsLittleNavBar.vue";
 import { useRequestsByIDStore } from "@/store/student/requestsByIDStore";
 import { InstitutionByIdStore } from "@/store/institution/InstitutionByIdStore";
 import { QuantityOfActiveNInactiveInternshipsStore } from "../../store/institution/QuantityOfActiveNInactiveInternshipsStore";
 import { activeInternshipsByInstitutionIdStore } from "../../store/institution/ActiveInternshipsByInstitutionIdStore";
 import { postulationsByInstitutionIdStore } from "../../store/institution/PostulationsByInstitutionIdStore";
+import PostulationsLittleNavBar from "@/components/institution/PostulationsLittleNavBar.vue";
 export default {
+  name: "InstitutionPrincipalPage",
+  components: {
+    Button,
+    CardList,
+    SimpleCard,
+    ArrowCards,
+    LittleNav,
+    InternshipsLittleNavBar,
+    PostulationsLittleNavBar,
+  },
   data() {
     return {
       listInternships: [],
@@ -141,8 +156,10 @@ export default {
 
       companyInformationIsLoaded: false,
       institutionById: InstitutionByIdStore(),
-      activeNInactiveInternshipsQuantityStore: QuantityOfActiveNInactiveInternshipsStore(),
-      activeInternshipsByInstitutionIdStore: activeInternshipsByInstitutionIdStore(),
+      activeNInactiveInternshipsQuantityStore:
+        QuantityOfActiveNInactiveInternshipsStore(),
+      activeInternshipsByInstitutionIdStore:
+        activeInternshipsByInstitutionIdStore(),
       postulationsByInstitutionIdStore: postulationsByInstitutionIdStore(),
       companyInformation: [],
       internshipsQuantities: [],
@@ -150,24 +167,26 @@ export default {
       postulationsByInstitution: [],
     };
   },
-  components: {
-    Button,
-    CardList,
-    SimpleCard,
-    ArrowCards,
-    LittleNav,
-  },
   methods: {
     async getInstitutionData(institutionID) {
       useLoaderStore().activateLoader();
       await this.institutionById.loadInstitutionById(institutionID);
       this.companyInformation = this.institutionById.institution.result;
-      await this.activeNInactiveInternshipsQuantityStore.loadQuantitiesOfInternships(institutionID);
-      this.internshipsQuantities = this.activeNInactiveInternshipsQuantityStore.quantityResults.result;
-      await this.activeInternshipsByInstitutionIdStore.loadActiveInternshipsByInstitutionId(institutionID);
-      this.activeInternships = this.activeInternshipsByInstitutionIdStore.internships.result;
-      await this.postulationsByInstitutionIdStore.loadPostulationsByInstitutionId(institutionID);
-      this.postulationsByInstitution = this.postulationsByInstitutionIdStore.postulations.result;
+      await this.activeNInactiveInternshipsQuantityStore.loadQuantitiesOfInternships(
+        institutionID
+      );
+      this.internshipsQuantities =
+        this.activeNInactiveInternshipsQuantityStore.quantityResults.result;
+      await this.activeInternshipsByInstitutionIdStore.loadActiveInternshipsByInstitutionId(
+        institutionID
+      );
+      this.activeInternships =
+        this.activeInternshipsByInstitutionIdStore.internships.result;
+      await this.postulationsByInstitutionIdStore.loadPostulationsByInstitutionId(
+        institutionID
+      );
+      this.postulationsByInstitution =
+        this.postulationsByInstitutionIdStore.postulations.result;
       console.log(this.companyInformation);
       console.log(this.internshipsQuantities);
       console.log(this.activeInternships);
@@ -197,7 +216,19 @@ export default {
       this.everyInternshipsAreLoaded = true;
       useLoaderStore().desactivateLoader();
     },
-    filterRequests(key) {
+    filterPostulations(key) {
+      if (key == "Todo") {
+        this.listRequests = useRequestsByIDStore().requests.result;
+        this.type = "Todo";
+      } else if (key == "Pendiente") {
+        this.listRequests = this.requestsPending;
+        this.type = "Pendiente";
+      } else if (key == "Aceptado") {
+        this.listRequests = this.requestsAccepted;
+        this.type = "Aceptado";
+      }
+    },
+    filterInternships(key) {
       if (key == "Todo") {
         this.listRequests = useRequestsByIDStore().requests.result;
         this.type = "Todo";
@@ -406,7 +437,7 @@ export default {
   justify-content: center;
   padding: 3% 7%;
 }
-.container__header__description h1 {
+.container__header__description {
   font-size: 1.5rem;
   text-align: center;
 }

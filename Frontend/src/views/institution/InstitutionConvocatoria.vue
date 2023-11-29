@@ -1,33 +1,23 @@
 <template>
-  <div class="inicio">
+  <div class="main-container">
     <h1>TUS CONVOCATORIAS</h1>
-    <h5>Te mostramos tus convocatorias</h5>
-    <div class="card-inicio">
-      <div class="card" v-if="internshipsAreLoaded">
+    <h5>Te mostramos tus convocatorias activas</h5>
+    <div class="internships-container">
+      <div v-if="internshipsAreLoaded">
         <div
           v-for="internship in activeInternshipsByInstitutionList"
           :key="internship.id"
-          class="card-individual"
+          class="card-inicio"
         >
-          <div class="content">
-            <div class="image">
-              <img
-                :src="internship.logoinstitucion"
-                alt="Internship image"
-                class="card-image"
-              />
-            </div>
-            <div class="text-content">
-              <div class="button-container">
-                <div class="button-group">
-                  <button class="edit-btn" @click="editCard(internship.id)">
-                    Editar
-                  </button>
-                  <button class="delete-btn" @click="deleteCard(internship.id)">
-                    Borrar
-                  </button>
-                </div>
-              </div>
+          <div class="image">
+            <img
+              :src="getRandomImage"
+              alt="Internship image"
+              class="card-image"
+            />
+          </div>
+          <div class="text-content">
+            <div class="internship-information">
               <div class="title">ID: {{ internship.id }}</div>
               <div class="description">
                 &Aacute;rea de la pasant&iacute;a: {{ internship.areapasantia }}
@@ -63,6 +53,18 @@
               </div>
             </div>
           </div>
+          <div>
+            <div class="button-container">
+              <div class="button-group">
+                <button class="edit-btn" @click="editCard(internship.id)">
+                  Editar
+                </button>
+                <button class="delete-btn" @click="deleteCard(internship.id)">
+                  Borrar
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -72,9 +74,19 @@
 <script>
 import { useLoaderStore } from "@/store/common/loaderStore";
 import { activeInternshipsByInstitutionIdStore } from "../../store/institution/ActiveInternshipsByInstitutionIdStore";
+import firstInternshipImage from "@/components/institution/staticImages/firstInternshipStaticImage.jpg";
+import secondInternshipImage from "@/components/institution/staticImages/secondInternshipStaticImage.png";
+import thirdInternshipImage from "@/components/institution/staticImages/thirdInternshipStaticImage.png";
+import fourthInternshipImage from "@/components/institution/staticImages/fourthInternshipStaticImage.png";
 export default {
   data() {
     return {
+      internshipsImages: [
+        firstInternshipImage,
+        secondInternshipImage,
+        thirdInternshipImage,
+        fourthInternshipImage,
+      ],
       activeInternshipsByInstitutionIdStore: activeInternshipsByInstitutionIdStore(),
       internshipsAreLoaded: false,
       activeInternshipsByInstitutionList: [],
@@ -97,7 +109,6 @@ export default {
           fechaseleccionpasante: internship.fechaseleccionpasante,
           nombreestadoconvocatoria: internship.estadoconvocatoria.nombreestadoconvocatoria,
           tiempoacumplir: internship.tiempoacumplir.descripcion,
-          // logoinstitucion: internship.institucion.logoinstitucion,
         };
       });
       console.log(this.activeInternshipsByInstitutionList);
@@ -105,12 +116,16 @@ export default {
       useLoaderStore().desactivateLoader();
     },
     editCard(cardId) {
-      // Lógica para editar la tarjeta con el ID proporcionado
       console.log(`Editar tarjeta con ID: ${cardId}`);
     },
     deleteCard(cardId) {
-      // Lógica para borrar la tarjeta con el ID proporcionado
       console.log(`Borrar tarjeta con ID: ${cardId}`);
+    },
+  },
+  computed: {
+    getRandomImage() {
+      const randomImage = Math.floor(Math.random() * this.internshipsImages.length);
+      return this.internshipsImages[randomImage];
     },
   },
   created() {
@@ -120,191 +135,71 @@ export default {
 </script>
 
 <style scoped>
-.text-content {
-  position: relative;
-}
-.text-content2 {
-  position: relative;
-}
-.text-content3 {
-  position: relative;
-}
-@media (max-width: 585px) {
-  .text-content2 {
-    position: relative;
-    margin-bottom: 20%;
-  }
-  .text-a {
-    margin-top: 30px;
-  }
-  .text-content {
-    margin-bottom: 20%;
-  }
-}
-@media (max-width: 290px) {
-  .text-content2 {
-    margin-bottom: 90%;
-  }
-}
-@media (max-width: 380px) {
-  .text-content2 {
-    position: relative;
-    margin-bottom: 40%;
-  }
-}
-@media (max-width: 290px) {
-  .text-content2 {
-    margin-bottom: 60%;
-  }
-}
-.content-text {
-  margin-right: 10%; /* Ajusta el espacio para el botón de reserva */
+.card-image {
+  width: 100%;
 }
 
-.book-btn {
-  position: absolute;
-  top: 5%;
-  right: 1%;
-}
-/**fin  boton  */
-.inicio {
+.main-container {
   margin: 3% 5%;
+  width: 90%;
 }
 
-/**colores de texto de si esta aprobado o no */
-.text-a,
-.text-p,
-.text-r {
-  position: relative;
-  left: 10%;
-  right: 60%;
-  transform: translate(50%, -50%);
-  text-transform: uppercase;
-  font-family: verdana;
-  font-size: 200%;
-  font-weight: 50%;
-  text-shadow: 1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191,
-    1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191,
-    1px 7px 1px #919191, 1px 8px 1px #919191, 1px 9px 1px #919191,
-    1px 10px 1px #919191, 1px 18px 6px rgba(16, 16, 16, 0.4),
-    1px 22px 10px rgba(16, 16, 16, 0.2), 1px 25px 35px rgba(16, 16, 16, 0.2),
-    1px 30px 60px rgba(16, 16, 16, 0.4);
-}
-.text-a {
-  color: #00c123;
-}
-.text-p {
-  color: #fee900;
-}
-.text-r {
-  color: #dc0c0c;
-}
-/**finnnnnnnnnnnnnnnnnnnnnnnn*/
-.card {
-  /**contenedore de indivialues */
-  border: 0px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-top: 30px;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-bottom: 15px;
-}
-.card-individual {
+.internships-container {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
   border: 2px solid black;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 2%;
+  padding-bottom: 2%;
 }
-.dark-theme .card-individual {
-  border: 2px solid white;
+
+.text-content {
+  margin: 5% auto;
+}
+
+.internship-information {
+  text-align: start;
 }
 
 .card-inicio {
-  background-color: rgb(255, 255, 255);
-  border-radius: 8px;
-  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 20% 55% auto;
+  align-items: center;
+  margin: 2% auto 0;
+  width: 92%;
   border: 2px solid black;
 }
+
 .dark-theme .card-inicio {
   background-color: #353e48;
   border: 2px solid white;
 }
 
-.content {
-  display: flex;
-}
-
 .image {
-  flex: 0 0 auto; /* Ancho fijo para la imagen */
+  text-align: center;
 }
 
-.image .card-image {
-  width: 200px; /* Tamaño fijo para la imagen */
-  height: auto;
-  border-radius: 8px;
-}
-
-.text-content {
-  flex: 1;
-  padding: 20px;
-}
-/* Estilos responsivos */
 @media (max-width: 880px) {
-  .content {
-    flex-direction: column;
-  }
   .text-content {
-    padding: 20px;
+    padding: 10%;
+  }
+
+  .card-inicio {
+    display: block;
+  }
+
+  .button-container {
+    margin-bottom: 5%;
   }
 }
+
 .title {
   font-weight: bold;
   font-size: 20px;
-  margin-bottom: 10px;
 }
 
-.description {
-  margin-bottom: 15px;
-}
-
-.info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  font-size: 16px;
-}
-
-.book-btn {
-  padding: 10px 20px;
-  background-color: #5a99dd;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.disclaimer {
-  font-size: 12px;
-  color: #777;
-  margin-top: 10px;
-}
-
-.star {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  background-image: url("https://image.flaticon.com/icons/svg/148/148841.svg");
-  background-size: contain;
-  margin-right: 3px;
-}
-
-.review-count {
-  color: #777;
-}
-
-/* Estilos para los botones Editar y Borrar */
 .edit-btn,
 .delete-btn {
   padding: 10px 20px;
@@ -314,14 +209,6 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  margin: 0 5px;
-}
-
-/* Estilos para alinear botones a la derecha */
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  margin-bottom: 10px;
+  margin: auto 3%;
 }
 </style>
