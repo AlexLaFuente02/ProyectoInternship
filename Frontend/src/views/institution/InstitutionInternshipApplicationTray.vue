@@ -63,11 +63,15 @@
                   @option-selected="goToApplicationStudentProfile(pendingPostulation.estudiante_id.id)"
                 ></Button>
               </div>
-              <button type="button" class="accept-postulation-request" @click="handleAcceptPostulation(pendingPostulation)"></button>
+              <button 
+                type="button" 
+                class="accept-postulation-request" 
+                @click="handleAcceptPostulation(pendingPostulation)"
+              ></button>
               <button
                 type="button"
                 class="reject-postulation-request"
-                @click="handleDeletePostulation()"
+                @click="handleRejectPostulation(pendingPostulation)"
               ></button>
             </div>
           </td>
@@ -107,11 +111,12 @@ export default {
       }
     },
     goToApplicationStudentProfile(student_id) {
+      console.log(`Redirigiendo a la Vista de Perfil de ${student_id}`);
       this.$router.push(
         `/institution/InternshipApplicationTray/StudentProfile/${student_id}`
       );
     },
-    handleDeletePostulation() {
+    async handleAcceptPostulation(postulation) {
       const swalWithBootstrapButtons = this.$swal.mixin({
         customClass: {
           confirmButton: "accept-confirm-button",

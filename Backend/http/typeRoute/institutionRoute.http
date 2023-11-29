@@ -127,3 +127,7 @@ Accept: application/json
 GET {{baseURL}}/postulaciones/{{convocatoriaID}}/pendientes
 Accept: application/json
 
+###ENDPOINT para obtener Perfil de Estudiante por ID
+@estudianteID=1
+GET {{baseURL}}/perfil-estudiante/{{estudianteID}}
+Accept: application/json

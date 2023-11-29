@@ -4,6 +4,7 @@ const estadosolicitudinstitucionService = require('../services/estadoSolicitudIn
 const historicoConvocatoriasService = require('../services/historicoConvocatoriasService');
 const institucionService = require('../services/institucionService');
 const postulacionService = require('../services/postulacionService');
+const estudianteService = require('../services/estudianteService');
 const router = express.Router();
 
 //Fotos
@@ -417,5 +418,30 @@ router.get('/postulaciones/:convocatoriaId/pendientes', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// Ruta para obtener el perfil de un estudiante por su id
+router.get('/perfil-estudiante/:id', async (req, res) => {
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ error: 'Se requiere el ID del estudiante.' });
+    }
+
+    try {
+        console.log(`GET request received for getStudentById with ID: ${id}`);
+        const response = await estudianteService.getStudentById(id);
+        res.json({
+            method: 'getStudentById',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error getting student by ID ${id}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+}
+);
+
+
 
 module.exports = router;
