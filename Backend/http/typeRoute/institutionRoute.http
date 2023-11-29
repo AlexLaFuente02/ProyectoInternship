@@ -121,3 +121,9 @@ Accept: application/json
 @institutiionID = 1
 GET {{baseURL}}/institucion/{{institutiionID}}/postulaciones/rechazadas
 Accept: application/json
+
+###ENDPOINT para obtener POSTULACIONES PENDIENTES por CONVOCATORIAID
+@convocatoriaID=3
+GET {{baseURL}}/postulaciones/{{convocatoriaID}}/pendientes
+Accept: application/json
+
