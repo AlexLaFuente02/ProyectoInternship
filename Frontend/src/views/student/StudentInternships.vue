@@ -146,6 +146,13 @@ export default {
     width: 100%;
     margin-left: 0.2rem;
 }
+.content__internship{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 /* Estilos para dispositivos pequeños (teléfonos) */
 
 @media only screen and (max-width: 600px) {

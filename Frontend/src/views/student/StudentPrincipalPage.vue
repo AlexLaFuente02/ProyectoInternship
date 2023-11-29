@@ -51,7 +51,8 @@
                     </div>
                 </div>
             </div>
-        <div class="internship__active__by__student">
+        <div class="sector">
+            <div class="internship__active__by__student">
             <h1>Pasantías activas</h1>
             <div class="container__cards">
                 <div class="card" v-for="internship in listInterships" v-if="everyInternshipsAreLoaded">
@@ -119,6 +120,8 @@
             </div>
         </div>
 
+        </div>
+        
 
 
 
@@ -424,12 +427,13 @@ export default {
 /*Estilos para las pasantías activas del estudiante*/
 .internship__active__by__student{
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     padding: 0.5rem;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0.5rem 1.5rem 0;
     height: 500px; 
     border-radius: 10px;
     background-color: #Fff;
@@ -438,11 +442,7 @@ export default {
 .dark-theme .internship__active__by__student{
     background-color: #434B54;
 }
-.internship__active__by__student h1{
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 1rem;
-}
+
 .container__cards{
     display: flex;
     flex-direction: row;
@@ -454,15 +454,22 @@ export default {
     width: 80%;
 }
 /*Estilos para las solicitudes del estudiante*/
-
+.sector{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 .requests__by__student{
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     padding: 0.5rem;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.5rem 0.5rem;
     height: 500px; 
     border-radius: 10px;
     background-color: #Fff;
@@ -503,6 +510,7 @@ export default {
   /* Estilos específicos para dispositivos pequeños */
     .student__principalPage{
             padding: 0.5rem;
+        
     }
     .profile__content__header{
         flex-direction: column;
@@ -539,6 +547,16 @@ export default {
     font-size: 0.5rem;
     font-weight: 400;
 }
+
+    .sector{
+        flex-direction: column;
+    }
+    .internship__active__by__student{
+        margin: 0 0 1.5rem 0;
+    }
+    .requests__by__student{
+        margin: 0 0 1.5rem 0;
+    }
 
 
 
@@ -583,6 +601,15 @@ export default {
     }
     .summary__content__text{
         font-size: 0.8rem;
+    }
+    .sector{
+        flex-direction: column;
+    }
+    .internship__active__by__student{
+        margin: 0 0 1.5rem 0;
+    }
+    .requests__by__student{
+        margin: 0 0 1.5rem 0;
     }
 }
 

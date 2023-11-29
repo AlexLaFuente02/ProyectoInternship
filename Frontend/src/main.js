@@ -27,6 +27,7 @@ import StudentProfile from '@/views/student/StudentProfile.vue';
 import StudentInstitutions from '@/views/student/StudentInstitutions.vue';
 import StudentInternships from '@/views/student/StudentInternships.vue'; 
 import StudentSettings from '@/views/student/StudentSettings.vue';
+import StudentInstitutionByID from '@/views/student/StudentInstitutionByID.vue';
 //Paginas Institution
 import InstitutionRegister from '@/views/institution/InstitutionRegister.vue'
 import InstitutionAddConvocatoria from "@/views/institution/InstitutionAddConvocatoria.vue";
@@ -75,13 +76,14 @@ const routes = [
     {name: 'StudentRegister', path: '/student/register', component: StudentRegister },
     {name: 'StudentPrincipalPage', path: '/student', component: StudentPrincipalPage,},
     {name: 'StudentApplications', path: '/student/applications', component: StudentApplications},
-    {name: "PostulationStatus", path: "/student/applications/PostulationStatus", component: PostulationStatus},
+    {name: "PostulationStatus", path: "/student/applications/PostulationStatus/:id", component: PostulationStatus, props: true},
     {name: 'StudentProfile', path: '/student/profile', component: StudentProfile},
     {name: 'ApplyForAnInternship',
     path: '/student/ApplyForAnInternship/:id',component: ApplyForAnInternship, props: true},
     {name: 'StudentInstitutions', path: '/student/institutions', component: StudentInstitutions},
     {name: 'StudentInternships', path: '/student/internships', component: StudentInternships},
     {name: 'StudentSettings', path: '/student/settings', component: StudentSettings},
+    {name: "StudentInstitutionByID", path: "/student/instistutions/:id", component: StudentInstitutionByID, props: true},
     //Institution
     {name: 'InstitutionRegister', path : '/institution/register', component:InstitutionRegister},
     {name: 'InstitutionAddConvocatoria', path : '/institution/addConvocatoria', component:InstitutionAddConvocatoria},

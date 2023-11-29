@@ -15,7 +15,8 @@
               <div class="text-content">
                 <div class="text-content2">
                   <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
-                  <button class="book-btn">Mas informacion</button>
+                  <button class="book-btn" @click="goToDetails(card.convocatoria_id.id)"
+                  >Mas informacion</button>
                 </div>
                 
                 <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
@@ -47,7 +48,7 @@
               <div class="text-content">
                 <div class="text-content2">
                   <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
-                  <button class="book-btn">Mas informacion</button>
+                  <button @click="goToDetails(card.convocatoria_id.id)" class="book-btn">Mas informacion</button>
                 </div>
                 
                 <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
@@ -78,7 +79,7 @@
               <div class="text-content">
                 <div class="text-content2">
                   <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
-                  <button class="book-btn">Mas informacion</button>
+                  <button @click="goToDetails(card.convocatoria_id.id)" class="book-btn">Mas informacion</button>
                 </div>
                 
                 <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
@@ -135,6 +136,9 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
         async getUser(){
           await this.dataUserStore.getUserByIdUsuario( $cookies.get("id"));
           this.dataUser = this.dataUserStore.user;
+        },
+        goToDetails(id){
+          this.$router.push({name: 'PostulationStatus', params: {id: id}});
         }
       },
       async mounted() {
