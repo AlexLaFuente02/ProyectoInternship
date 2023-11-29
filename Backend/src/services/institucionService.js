@@ -87,19 +87,32 @@ const getInstitutionById = async (id) => {
         { model: Usuario, as: "usuario" },
       ],
     });
+
     if (!institucion) {
       console.log(`Institución con ID: ${id} no encontrada.`);
       return new ResponseDTO("I-1002", null, "Institución no encontrada");
     }
-    const sectorPertenenciaDTO = new SectorPertenenciaDTO(
-      institucion.sectorpertenencia.id,
-      institucion.sectorpertenencia.nombresectorpertenencia
-    );
-    const usuarioDTO = new UsuarioDTO(
-      institucion.usuario.id,
-      institucion.usuario.idusuario
-    );
-    const imageUrl = getImageUrl(institucion.logoinstitucion);
+
+    let sectorPertenenciaDTO = null;
+    if (institucion.sectorpertenencia) {
+      sectorPertenenciaDTO = new SectorPertenenciaDTO(
+        institucion.sectorpertenencia.id,
+        institucion.sectorpertenencia.nombresectorpertenencia
+      );
+    }
+
+    let usuarioDTO = null;
+    if (institucion.usuario) {
+      usuarioDTO = new UsuarioDTO(
+        institucion.usuario.id,
+        institucion.usuario.idusuario
+      );
+    }
+
+    const imageUrl = institucion.logoinstitucion
+      ? `${baseURL}/images/${institucion.logoinstitucion}`
+      : null;
+
     const institucionDTO = new InstitucionDTO(
       institucion.id,
       institucion.nombreinstitucion,
@@ -108,10 +121,11 @@ const getInstitutionById = async (id) => {
       institucion.nombrecontacto,
       institucion.correocontacto,
       institucion.celularcontacto,
-      institucion.estado, 
+      institucion.estado,
       usuarioDTO,
       sectorPertenenciaDTO
     );
+
     console.log("Institución obtenida correctamente.");
     return new ResponseDTO(
       "I-0000",
@@ -127,6 +141,7 @@ const getInstitutionById = async (id) => {
     );
   }
 };
+
 
 const createInstitution = async (institutionData) => {
   console.log("Creando una nueva institución...");
