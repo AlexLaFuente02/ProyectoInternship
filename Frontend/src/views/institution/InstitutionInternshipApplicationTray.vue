@@ -111,7 +111,7 @@ export default {
       }
     },
     goToApplicationStudentProfile(student_id) {
-      console.log(`Redirigiendo a la Vista de Perfil de ${student_id}`);
+      console.log(`Redirigiendo al Perfil del Estudiante con ID: ${student_id}`);
       this.$router.push(
         `/institution/InternshipApplicationTray/StudentProfile/${student_id}`
       );
