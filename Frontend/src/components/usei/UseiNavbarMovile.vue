@@ -85,6 +85,20 @@
             >
               <li class="dropdown-item">Solicitudes de Pasant&iacute;as</li>
             </router-link>
+            <router-link
+              to="/usei/Business/Rejected"
+              class="dropdown-link"
+              @click="handleClickForRequestsList"
+            >
+              <li class="dropdown-item">Solicitudes de empresas rechazadas</li>
+            </router-link>
+            <router-link
+              to="/usei/Internship/Rejected"
+              class="dropdown-link"
+              @click="handleClickForRequestsList"
+            >
+              <li class="dropdown-item">Solicitudes de convocatorias rechazadas</li>
+            </router-link>
           </ul>
         </li>
         <li class="container__menu--options__item" @click="closeMobileMenu">
