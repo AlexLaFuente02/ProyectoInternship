@@ -56,11 +56,19 @@
           </td>
           <td class="request-table-cell">
             <div class="postulation-buttons">
-              <router-link class="link" :to="{ name: 'StudentProfile', params: { id: pendingPostulation.estudiante_id.id }}">
-                <Button text="Ver perfil" :color="3" @click="navigateToStudentProfile(pendingPostulation.estudiante_id.id)"></Button>
-              </router-link>
+              <div class="student-profile-button">
+                <Button
+                  text="Ver perfil"
+                  :color="3"
+                  @option-selected="goToApplicationStudentProfile(pendingPostulation.estudiante_id.id)"
+                ></Button>
+              </div>
               <button type="button" class="accept-postulation-request" @click="handleAcceptPostulation(pendingPostulation)"></button>
-              <button type="button" class="reject-postulation-request" @click="handleRejectPostulation(pendingPostulation)"></button>
+              <button
+                type="button"
+                class="reject-postulation-request"
+                @click="handleDeletePostulation()"
+              ></button>
             </div>
           </td>
         </tr>
@@ -98,11 +106,12 @@ export default {
         return "❌";
       }
     },
-    navigateToStudentProfile(studentId) {
-      console.log(`Moviendo a pagina de perfil de estudiante con StudentID: ${studentId}`);
-      this.$router.push({ name: 'StudentProfile', params: { id: studentId } });
+    goToApplicationStudentProfile(student_id) {
+      this.$router.push(
+        `/institution/InternshipApplicationTray/StudentProfile/${student_id}`
+      );
     },
-    async handleAcceptPostulation(postulation) {
+    handleDeletePostulation() {
       const swalWithBootstrapButtons = this.$swal.mixin({
         customClass: {
           confirmButton: "accept-confirm-button",
@@ -220,8 +229,7 @@ export default {
   padding: 10px;
 }
 
-.link {
-  text-decoration: none;
+.student-profile-button {
   width: 40%;
 }
 

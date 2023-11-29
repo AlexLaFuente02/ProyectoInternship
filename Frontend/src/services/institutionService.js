@@ -109,6 +109,11 @@ export const createInternship = async (internshipData) => {
   return response.data;
 };
 
+export const getStudentByIdInApplicationTray = async (student_id) => {
+  const response = await axios.get(`http://localhost:3000/student/${student_id}`);
+  return response.data;
+};
+
 export const createInstitution = async (formData) => {
   try {
     const response = await axios.post(
