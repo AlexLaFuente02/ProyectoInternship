@@ -56,15 +56,11 @@
           </td>
           <td class="request-table-cell">
             <div class="postulation-buttons">
-              <router-link class="link" to="/student/profile">
-                <Button text="Ver perfil" :color="3"></Button>
+              <router-link class="link" :to="{ name: 'StudentProfile', params: { id: pendingPostulation.estudiante_id.id }}">
+                <Button text="Ver perfil" :color="3" @click="navigateToStudentProfile(pendingPostulation.estudiante_id.id)"></Button>
               </router-link>
-              <button type="button" class="accept-postulation-request"></button>
-              <button
-                type="button"
-                class="reject-postulation-request"
-                @click="handleDeletePostulation()"
-              ></button>
+              <button type="button" class="accept-postulation-request" @click="handleAcceptPostulation(pendingPostulation)"></button>
+              <button type="button" class="reject-postulation-request" @click="handleRejectPostulation(pendingPostulation)"></button>
             </div>
           </td>
         </tr>
@@ -102,13 +98,16 @@ export default {
         return "❌";
       }
     },
-    handleDeletePostulation() {
+    navigateToStudentProfile(studentId) {
+      console.log(`Moviendo a pagina de perfil de estudiante con StudentID: ${studentId}`);
+      this.$router.push({ name: 'StudentProfile', params: { id: studentId } });
+    },
+    async handleAcceptPostulation(postulation) {
       const swalWithBootstrapButtons = this.$swal.mixin({
         customClass: {
-          confirmButton: "delete-confirm-button",
-          cancelButton: "delete-cancel-button",
+          confirmButton: "accept-confirm-button",
+          cancelButton: "accept-cancel-button",
         },
-        // buttonsStyling: false,
         showClass: {
           popup: "animate__animated animate__fadeInDown",
         },
@@ -116,30 +115,75 @@ export default {
           popup: "animate__animated animate__fadeOutUp",
         },
       });
+
       swalWithBootstrapButtons
         .fire({
-          title: "Está seguro?",
-          text: "No será capaz de revertir esta acción.",
-          icon: "warning",
+          title: "¿Está seguro?",
+          text: "Esta acción aceptará la postulación y no podrá ser revertida.",
+          icon: "question",
           showCancelButton: true,
-          confirmButtonText: "Si, eliminar!",
-          cancelButtonText: "No, cancelar!",
-          // reverseButtons: true,
+          confirmButtonText: "Sí, aceptar",
+          cancelButtonText: "No, cancelar",
         })
         .then(async (result) => {
           if (result.isConfirmed) {
+            console.log(`Aceptando a ${postulation.estudiante_id.nombres} con postulación ${postulation.id}`);
+            // Lugar para tu llamada a la API
+            // Ejemplo: await acceptPostulation(postulation.id);
+            // Después del consumo de la API, mostramos una alerta de éxito
             swalWithBootstrapButtons.fire(
-              "¡Éxito!",
-              "Postulación eliminada correctamente.",
+              "Aceptado",
+              `La postulación de ${postulation.estudiante_id.nombres} ha sido aceptada.`,
               "success"
             );
-            // const res = await delete(this.$route.params.id);
-            // console.log(res);
-            // swalWithBootstrapButtons.fire("¡Success!", res.message, "success");
           } else if (result.dismiss === this.$swal.DismissReason.cancel) {
             swalWithBootstrapButtons.fire(
               "Cancelado",
-              "Eliminación de postulante cancelada exitosamente.",
+              "La acción ha sido cancelada.",
+              "error"
+            );
+          }
+        });
+    },
+
+    async handleRejectPostulation(postulation) {
+      const swalWithBootstrapButtons = this.$swal.mixin({
+        customClass: {
+          confirmButton: "reject-confirm-button",
+          cancelButton: "reject-cancel-button",
+        },
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+
+      swalWithBootstrapButtons
+        .fire({
+          title: "¿Está seguro?",
+          text: "Esta acción rechazará la postulación y no podrá ser revertida.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Sí, rechazar",
+          cancelButtonText: "No, cancelar",
+        })
+        .then(async (result) => {
+          if (result.isConfirmed) {
+            console.log(`Rechazando a ${postulation.estudiante_id.nombres} con postulación ${postulation.id}`);
+            // Lugar para tu llamada a la API
+            // Ejemplo: await rejectPostulation(postulation.id);
+            // Después del consumo de la API, mostramos una alerta de éxito
+            swalWithBootstrapButtons.fire(
+              "Rechazado",
+              `La postulación de ${postulation.estudiante_id.nombres} ha sido rechazada.`,
+              "success"
+            );
+          } else if (result.dismiss === this.$swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire(
+              "Cancelado",
+              "La acción ha sido cancelada.",
               "error"
             );
           }
