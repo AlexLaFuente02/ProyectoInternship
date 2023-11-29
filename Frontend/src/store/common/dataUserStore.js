@@ -8,8 +8,11 @@ export const useUserByIdStore = defineStore({
     }),
     actions: {
         async getUserByIdUsuario(idUsuario) {
-            this.user = await getUserByIdUsuario(idUsuario);
+            if(this.isDataLoaded) {
+                return;
+            }
             this.isDataLoaded = true;
+            this.user = await getUserByIdUsuario(idUsuario);
         },
     },
 });

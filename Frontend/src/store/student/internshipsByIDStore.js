@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import {popularInternships} from "../../services/student";
 import { loadAllInternships } from "../../services/student";
 import { loadActiveInternships } from "../../services/student";
+import { loadInternshipById } from "../../services/student";
 export const useInternshipsByIDStore = defineStore({
     id: "internshipsByID",
     state: () => ({
@@ -12,6 +13,7 @@ export const useInternshipsByIDStore = defineStore({
         isPopularDataLoaded: false,
         activeInternships: [],
         isActiveDataLoaded: false,
+        internship: null,
     }),
     actions: {
         async loadAllInternships() {
@@ -25,6 +27,9 @@ export const useInternshipsByIDStore = defineStore({
         async loadActiveInternships() {
             this.activeInternships = await loadActiveInternships();
             this.isActiveDataLoaded = true;
+        },
+        async loadInternshipById(idInternship) {
+            this.internship = await loadInternshipById(idInternship);
         },
     },
 });
