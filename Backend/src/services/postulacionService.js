@@ -400,6 +400,68 @@ const updatePostulacion = async (id, postulacionData) => {
   }
 };
 
+const updatePostulacionAprobadas = async (id) => {
+  console.log(`Actualizando el estado de la postulación con ID: ${id} a Activo...`);
+  try {
+    const postulacion = await PostulacionENT.findByPk(id);
+    if (!postulacion) {
+      console.log(`Postulación con ID: ${id} no encontrada.`);
+      return new ResponseDTO("P-1004", null, "Postulación no encontrada");
+    }
+
+    // Actualiza el campo estadopostulacion_id a 1 (Activo)
+    await postulacion.update({ estadopostulacion_id: 1 });
+
+    // Insertar en histórico después de actualizar el estado de una postulación
+    await historicoService.insertHistoricoPostulacion({ ...postulacion.dataValues, estadopostulacion_id: 1 }, 'PUT');
+
+    console.log("Estado de la postulación actualizado a Activo correctamente.");
+    return new ResponseDTO(
+      "P-0000",
+      postulacion,
+      "Estado de la postulación actualizado a Activo correctamente"
+    );
+  } catch (error) {
+    console.error(`Error al actualizar el estado de la postulación con ID: ${id} a Activo.`, error);
+    return new ResponseDTO(
+      "P-1004",
+      null,
+      `Error al actualizar el estado de la postulación a Activo: ${error}`
+    );
+  }
+};
+
+const updatePostulacionRechazadas = async (id) => {
+  console.log(`Actualizando el estado de la postulación con ID: ${id} a Inactivo...`);
+  try {
+    const postulacion = await PostulacionENT.findByPk(id);
+    if (!postulacion) {
+      console.log(`Postulación con ID: ${id} no encontrada.`);
+      return new ResponseDTO("P-1004", null, "Postulación no encontrada");
+    }
+
+    // Actualiza el campo estadopostulacion_id a 3 (Inactivo)
+    await postulacion.update({ estadopostulacion_id: 3 });
+
+    // Insertar en histórico después de actualizar el estado de una postulación
+    await historicoService.insertHistoricoPostulacion({ ...postulacion.dataValues, estadopostulacion_id: 3 }, 'PUT');
+
+    console.log("Estado de la postulación actualizado a Inactivo correctamente.");
+    return new ResponseDTO(
+      "P-0000",
+      postulacion,
+      "Estado de la postulación actualizado a Inactivo correctamente"
+    );
+  } catch (error) {
+    console.error(`Error al actualizar el estado de la postulación con ID: ${id} a Inactivo.`, error);
+    return new ResponseDTO(
+      "P-1004",
+      null,
+      `Error al actualizar el estado de la postulación a Inactivo: ${error}`
+    );
+  }
+};
+
 const deletePostulacion = async (id) => {
   console.log(`Eliminando la postulación con ID: ${id}...`);
   try {
@@ -884,5 +946,7 @@ module.exports = {
   getPostulacionesActivasPorIdInstitucion,
   getPostulacionPendientesPorIdInstitucion,
   getPostulacionesRechazadasPorIdInstitucion,
-  getPostulacionesPendientesPorIdConvocatoria
+  getPostulacionesPendientesPorIdConvocatoria,
+  updatePostulacionRechazadas,
+  updatePostulacionAprobadas
 };

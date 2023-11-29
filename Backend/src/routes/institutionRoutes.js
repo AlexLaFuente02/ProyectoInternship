@@ -442,6 +442,42 @@ router.get('/perfil-estudiante/:id', async (req, res) => {
 }
 );
 
+// Ruta para actualizar el estado de una postulación a Rechazado (3)
+router.put('/postulaciones/:id/rechazar', async (req, res) => {
+    const { id } = req.params;
 
+    try {
+        console.log(`PUT request received to set postulación ID ${id} as Rechazado`);
+        const response = await postulacionService.updatePostulacionRechazadas(id);
+        res.json({
+            method: 'updatePostulacionRechazadas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error setting postulación ID ${id} as Rechazado:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para actualizar el estado de una postulación a Aceptado (1)
+router.put('/postulaciones/:id/aprobar', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        console.log(`PUT request received to set postulación ID ${id} as Aprobado`);
+        const response = await postulacionService.updatePostulacionAprobadas(id);
+        res.json({
+            method: 'updatePostulacionAprobadas',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error setting postulación ID ${id} as Aprobado:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 module.exports = router;

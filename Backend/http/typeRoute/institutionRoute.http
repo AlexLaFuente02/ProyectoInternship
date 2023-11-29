@@ -131,3 +131,14 @@ Accept: application/json
 @estudianteID=1
 GET {{baseURL}}/perfil-estudiante/{{estudianteID}}
 Accept: application/json
+
+###ENDPOINT para actualizar estado de postulación a APROBADO por POSTULACIONID
+@postulacionID = 1
+PUT {{baseURL}}/postulaciones/{{postulacionID}}/aprobar
+Content-Type: application/json
+Accept: application/json
+
+###ENDPOINT para actualizar estado de postulación a RECHAZADO por POSTULACIONID
+PUT {{baseURL}}/postulaciones/{{postulacionID}}/rechazar
+Content-Type: application/json
+Accept: application/json
