@@ -9,11 +9,11 @@
              <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
          
          <CardsSoli 
-         :name="card.institucion.nombreinstitucion" 
-         :description="card.areapasantia "
+         :b="card.institucion.nombreinstitucion" 
+         :c="card.areapasantia "
          :a="card.tiempoacumplir.descripcion"
-         :b="card.fechasolicitud"
-         :c="card.fechaseleccionpasante"
+         :d="card.fechasolicitud"
+         :e="card.fechaseleccionpasante"
          />
        
          </div>
@@ -21,10 +21,10 @@
        </div>
        <div class="container__button">
            <Button 
-             text="Revisa tus convocatorias de empresas" 
+             text="Revisa tus convocatorias pendientes" 
              :color="1" 
              :disabled="false"
-             @option-selected="Convocatorias">
+             @option-selected="Empresas">
            </Button>
          </div>
          </div>
@@ -50,10 +50,10 @@
        </div>
        <div class="container__button">
            <Button 
-             text="Revisa tus solicitudes de empresas " 
+             text="Revisa tus empresas pendientes " 
              :color="0" 
              :disabled="false"
-             @option-selected="Empresas"
+             @option-selected="Convocatorias"
              >
            </Button>
          </div>
@@ -68,6 +68,7 @@
    </template>
    <script>
    import CardsSoli from '../../components/common/CardsSoli.vue';
+   import CardsSoliEmpresa from '../../components/common/CardsSoliEmpresa.vue';
    import Carousel from "@/components/common/Carousel.vue";
    import Button from "@/components/common/Button.vue";
    import SimpleCard from "@/components/common/SimpleCard.vue";
@@ -79,7 +80,9 @@
        Carousel,
        SimpleCard,
        Button,
+       CardsSoliEmpresa,
        CardsSoli
+       
      },
      data() {
        return {
@@ -812,7 +815,6 @@
    
    .EmpresasDestacadas{
      padding: 0.5rem;
-     height: 320px;
    }
  
  }

@@ -5,8 +5,9 @@
       <div class="content">
         <h2>{{a}}</h2><!--NUMEO-->
         <h3>{{b}}</h3><!--CARD ONE-->
-        <p>{{c }}</p><!--descripcion-->
-        <p>{{d }}</p><!--descripcion-->
+        <p><strong>Area :</strong> {{c }}</p><!--descripcion-->
+        <p><strong>Solicitud :</strong> {{d }}</p><!--descripcion-->
+        <p><strong>Limite : </strong> {{e }}</p><!--descripcion-->
         <a @click="JhessPayasita()">Reconsiderar</a>
       </div>
     </div>
@@ -34,6 +35,10 @@
         required: true,
       },
       c: {
+        type: String,
+        required: true,
+      },
+      e: {
         type: String,
         required: true,
       },
@@ -159,7 +164,7 @@ body .container .card .box .content {
 body .container .card .box .content h2 {
   position: absolute;
   top: -10px;
-  right: 30px;
+  left: 5px;
   font-size: 8rem;
   color: rgba(255, 255, 255, 0.1);
 }
@@ -210,8 +215,43 @@ body .container .card .box .content a:hover {
   color: #ffffff;
 }
 
-@media screen and (max-width: 300px){
-   /* Estilos específicos para tabletas */
+@media screen and (max-width: 939px){
+  body .container .card {
+  position: relative;
+  height: 320px;
+  min-width: 240px;
+ margin-top: 10px;
+}
+   
+ }
+
+ @media screen and (max-width: 589px){
+  body .container .card {
+  position: relative;
+  height: 220px;
+  min-width: 400px;
+ transition: 0.5s;
+ margin-top: 10px;
+}
+   
+ }
+
+@media screen and (max-width: 480px){
+  body .container .card {
+  position: relative;
+  height: 220px;
+  min-width: 300px;
+
+
+}
+   
+ }
+ @media screen and (max-width: 366px){
+  body .container .card {
+  position:relative;
+  height: 300px;
+  min-width: 220px;
+}
    
  }
 

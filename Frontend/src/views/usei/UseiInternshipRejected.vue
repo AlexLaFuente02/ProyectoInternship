@@ -83,7 +83,7 @@
           
        <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
          
-       <CardsSoli 
+       <CardsSoliEmpresa 
        :name="card.nombreinstitucion"
        :a="card.sectorpertenencia.nombresectorpertenencia "
        :b="card.nombrecontacto "
