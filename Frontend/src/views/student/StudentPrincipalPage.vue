@@ -25,6 +25,12 @@
                             </button>
                             <button class="profile__button bn23">
                                 <router-link class="link" to="/student/profile">
+                                    <font-awesome-icon :icon="['fas', 'user-circle']" size="2xl" />
+                                    <span class="edit__Profile">Ver Perfil</span>
+                                </router-link>
+                            </button>
+                            <button class="profile__button bn23">
+                                <router-link class="link" to="/student/settings">
                                     <font-awesome-icon :icon="['fas', 'user-edit']" size="2xl" />
                                     <span class="edit__Profile">Editar Perfil</span>
                                 </router-link>
@@ -45,7 +51,7 @@
                         <span class="summary__content__number">{{ requestsRejected.length }}
                             <span class="summary__content__text">rechazado</span>
                         </span>
-                        <span class="summary__content__number">{{ listRequests.length }}
+                        <span class="summary__content__number">{{ allRequests}}
                             <span class="summary__content__text">Totales</span>
                         </span>
                     </div>
@@ -165,6 +171,7 @@ export default {
             nombre: "",
             correo: "",
             popularInternships: [],
+            allRequests: null,
         };
     },
     components: {
@@ -184,6 +191,7 @@ export default {
             await useInternshipsByIDStore().loadPopularInternships();
             this.listInterships = useInternshipsByIDStore().activeInternships;
             this.listRequests = useRequestsByIDStore().requests;
+            this.allRequests = useRequestsByIDStore().requests.length;
             this.popularInternships = useInternshipsByIDStore().popularInternships;
             if(this.listRequests != null){
                 this.listRequests.forEach(element => {
@@ -552,9 +560,11 @@ export default {
         flex-direction: column;
     }
     .internship__active__by__student{
+        flex:auto  ;
         margin: 0 0 1.5rem 0;
     }
     .requests__by__student{
+        flex:auto  ;
         margin: 0 0 1.5rem 0;
     }
 
@@ -607,9 +617,11 @@ export default {
     }
     .internship__active__by__student{
         margin: 0 0 1.5rem 0;
+        flex: auto;
     }
     .requests__by__student{
         margin: 0 0 1.5rem 0;
+        flex: auto;
     }
 }
 

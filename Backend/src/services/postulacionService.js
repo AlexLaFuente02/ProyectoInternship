@@ -4,7 +4,7 @@ const PostulacionENT = require("../ENT/PostulacionENT");
 const EstadoPostulacionENT = require("../ENT/EstadoPostulacionENT");
 const EstudianteENT = require("../ENT/EstudianteENT");
 const ConvocatoriaENT = require("../ENT/ConvocatoriaENT");
-const CarreraENT = require("../ENT/carreraENT");
+const CarreraENT = require("../ENT/CarreraENT");
 const SedeENT = require("../ENT/SedeENT");
 const EstadoPostulacionDTO = require("../DTO/EstadoPostulacionDTO");
 const EstudianteDTO = require("../DTO/EstudianteDTO");
@@ -14,11 +14,6 @@ const ConvocatoriaDTO = require("../DTO/ConvocatoriaDTO");
 const historicoService = require('./historicoPostulacionesService');
 
 const sequelize = require("../../database/db");
-const { baseURL } = require("../../config/constants");
-
-const getImageUrl = (imageName) => {
-  return imageName ? `${baseURL}/images/${imageName}` : null;
-};
 
 const getAllPostulaciones = async () => {
   console.log("Obteniendo todas las postulaciones...");
@@ -133,7 +128,7 @@ const getPostulacionById = async (id) => {
       fechasolicitud: postulacion.convocatoria.fechasolicitud,
       fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
       estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
-      institucion: postulacion.convocatoria.institucion,
+      institucion: postulacion.convocatoria.institucion_id,
       tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
     };
 

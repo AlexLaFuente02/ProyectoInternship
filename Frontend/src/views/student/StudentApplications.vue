@@ -1,5 +1,5 @@
 <template>
-    <div class="inicio">
+    <div class="inicio" v-if="isAllDataLoaded">
       <h1>TUS SOLICITUDES DE PASANTIAS</h1> 
       <p>Te mostramos tus pasantias</p>
       <div class="card-inicio">
@@ -15,7 +15,7 @@
               <div class="text-content">
                 <div class="text-content2">
                   <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
-                  <button class="book-btn" @click="goToDetails(card.convocatoria_id.id)"
+                  <button class="book-btn" @click="goToDetails(card.id)"
                   >Mas informacion</button>
                 </div>
                 
@@ -48,7 +48,7 @@
               <div class="text-content">
                 <div class="text-content2">
                   <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
-                  <button @click="goToDetails(card.convocatoria_id.id)" class="book-btn">Mas informacion</button>
+                  <button @click="goToDetails(card.id)" class="book-btn">Mas informacion</button>
                 </div>
                 
                 <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
@@ -79,7 +79,7 @@
               <div class="text-content">
                 <div class="text-content2">
                   <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
-                  <button @click="goToDetails(card.convocatoria_id.id)" class="book-btn">Mas informacion</button>
+                  <button @click="goToDetails(card.id)" class="book-btn">Mas informacion</button>
                 </div>
                 
                 <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
@@ -117,6 +117,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
           requestsRejected:[],
           dataUserStore: useUserByIdStore(),
           dataUser: {},
+          isAllDataLoaded: false,
           
         };
       },
@@ -128,6 +129,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
         async getRequestsPending(){
           await useRequestsByIDStore().loadRequestsByEstatus(this.dataUser.id,2);
           this.requestsPending = useRequestsByIDStore().requestsPending;
+          console.log(this.requestsPending);
         },
         async getRequestsRejected(){
           await useRequestsByIDStore().loadRequestsByEstatus(this.dataUser.id,3);
@@ -138,7 +140,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
           this.dataUser = this.dataUserStore.user;
         },
         goToDetails(id){
-          this.$router.push({name: 'PostulationStatus', params: {id: id}});
+          this.$router.push(`/student/applications/PostulationStatus/${id}`);
         }
       },
       async mounted() {
@@ -147,6 +149,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
         await this.getRequestsAccepted();
         await this.getRequestsPending();
         await this.getRequestsRejected();
+        this.isAllDataLoaded = true;
         useLoaderStore().desactivateLoader();
       }
     };

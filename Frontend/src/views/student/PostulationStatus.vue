@@ -1,30 +1,38 @@
 <template>
   <div class="main-container">
     <h1>ESTADO DE POSTULACIÓN</h1>
-    <div class="internship-container">
+    <div class="internship-container" v-if="allDataIsLoaded">
       <div class="first-grid-container">
-        <img
+        <img v-if="srcLogo !== ''"
           src="https://www.cainco.org.bo/empresaydesarrollo/wp-content/uploads/2021/05/1550703145451.png"
+          alt="Logo de la Empresa"
+          class="company-logo"
+        />
+        <img v-else
+          :src="srcLogo"
           alt="Logo de la Empresa"
           class="company-logo"
         />
       </div>
       <div class="second-grid-container">
         <div class="i_title">
-          <h2>Desarrollo Web Backend con Spring en Jala Soft</h2>
+          <h2>
+            {{ institution.nombreinstitucion }}
+          </h2>
         </div>
         <div class="i_description">
           <h4>Descripción de la Pasantía:</h4>
           <p>
-            ¡Gracias por tu interés en la pasantía de desarrollo web backend con
-            Spring en Jala Soft! Esta es una oportunidad emocionante para
-            adentrarte en el mundo del desarrollo web y trabajar en proyectos
-            significativos con un equipo experimentado.
+            ¡Gracias por tu interés en la pasantía de {{
+              institution.nombreinstitucion
+            }}! Esta es una oportunidad emocionante para
+            adentrarte en el mundo de 
+            {{ institution.sectorpertenencia.nombresectorpertenencia }}!
           </p>
         </div>
         <div class="institution_name">
           <h4>Empresa:</h4>
-          <p>JALA SOFT</p>
+          <p>{{ institution.nombreinstitucion }}</p>
         </div>
       </div>
       <div class="third-grid-container">
@@ -37,26 +45,37 @@
               <h4 class="information-title">Detalles de la Pasantía:</h4>
               <div class="i_details">
                 <ul class="internship-details">
-                  <li><strong>Empresa: </strong>Jala Soft</li>
-                  <li><strong>Ubicación: </strong>Ubicación de la empresa</li>
-                  <li><strong>Duración: </strong>Duración de la pasantía</li>
-                  <li><strong>Fecha de Inicio: </strong>Fecha de inicio</li>
+                  <li><strong>Empresa: </strong>{{ institution.nombreinstitucion }}</li>
                   <li>
-                    <strong>Fecha de Finalización: </strong>Fecha de
-                    finalización
+                    <strong>
+                      Fecha de Inicio para la selección:
+                    </strong>
+                    {{ postulation.convocatoria_id.fechasolicitud  }}
                   </li>
                   <li>
-                    <strong>Tipo de Pasantía: </strong>Pasantía de Desarrollo
-                    Web Backend
+                    <strong>Fecha de Finalización para la selección: </strong>{{ this.postulation.convocatoria_id.fechaseleccionpasante  }}
                   </li>
-                  <li><strong>Tecnologías: </strong>Spring, Java, SQL, etc.</li>
-                  <li><strong>Ciudad: </strong>Cochabamba</li>
+                  <li>
+                    <strong>Tipo de Pasantía: </strong>{{ this.postulation.estadopostulacion_id.nombreestadopostulacion  }}
+                  </li>
+                  <li>
+                    <strong>
+                      Hora de Inicio de la Pasantía: 
+                    </strong>
+                    {{ this.postulation.convocatoria_id.horario_inicio  }}
+                  </li>
+                  <li>
+                    <strong>
+                      Hora de Finalización de la Pasantía: 
+                    </strong>
+                    {{ this.postulation.convocatoria_id.horario_fin  }}
+                  </li>
                 </ul>
               </div>
-              <div class="download-internship">
+              <!--<div class="download-internship">
                 <p class="i_download"><strong>Descargar aplicativo:</strong></p>
                 <Button text="Descargar" :color="0"></Button>
-              </div>
+              </div>-->
             </div>
           </div>
           <div class="second-information-grid">
@@ -66,20 +85,21 @@
             <div class="information-grid">
               <h4 class="information-title">Requisitos de Postulación:</h4>
               <div class="i_details">
-                <ul class="internship-details">
-                  <li>Conocimiento básico de programación en Java.</li>
-                  <li>Interés en el desarrollo web backend.</li>
-                  <li>Habilidades de comunicación y trabajo en equipo.</li>
-                </ul>
+                <div class="internship-details">
+                  <p>
+                    {{ this.postulation.convocatoria_id.requisitoscompetencias }}
+                  </p>
+                </div>
               </div>
-              <h4 class="information-title">Carreras a las que va dirigida:</h4>
+              <h4 class="information-title">
+                Áreas a la que va dirigida la pasantía:
+              </h4>
               <div class="i_details">
-                <ul class="internship-details">
-                  <li>
-                    Estudiantes de carreras relacionadas con la informática o
-                    desarrollo de software.
-                  </li>
-                </ul>
+                <div class="internship-details">
+                  <p>
+                    {{ this.postulation.convocatoria_id.areapasantia }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -105,7 +125,7 @@
               </div>
               <div
                 class="postulation-status"
-                v-if="postulationStatus.status === 'EN ESPERA'"
+                v-if="postulationStatus.status === 'PENDIENTE'"
               >
                 <h4 class="status on-hold-status">EN ESPERA</h4>
                 <img
@@ -156,7 +176,10 @@
 </template>
 
 <script>
+import {useRequestsByIDStore} from '@/store/student/requestsByIDStore';
+import {useLoaderStore} from "@/store/common/loaderStore";
 import Button from "@/components/common/Button.vue";
+import {useInstitutionsByIDSectorStore} from "@/store/student/institutionsByIDSectorStore";
 export default {
   name: "PostulationStatusPage",
   components: {
@@ -167,9 +190,40 @@ export default {
       postulationStatus: {
         status: "APROBADO", // APROBADO | EN ESPERA | RECHAZADO
       },
+      idPostulation: null,
+      postulation: null,
+      isPostulationLoaded: false,
+      institution: null,
+      allDataIsLoaded: false,
+      srcLogo: "",
     };
   },
-  methods: {},
+  methods: {
+    async getPostulationStatus() {
+      await useRequestsByIDStore().loadRequestById(this.idPostulation);
+      this.postulation = useRequestsByIDStore().request;
+      this.isPostulationLoaded = true;
+    },
+    async getInstitution() {
+      await useInstitutionsByIDSectorStore().loadInstitutionById(
+        this.postulation.convocatoria_id.institucion
+      );
+      this.institution = useInstitutionsByIDSectorStore().institution;
+    },
+
+  },
+  async mounted() {
+    useLoaderStore().activateLoader();
+    await this.getPostulationStatus();
+    await this.getInstitution();
+    this.postulationStatus.status = this.postulation.estadopostulacion_id.nombreestadopostulacion;
+    this.srcLogo = this.institution.logoinstitucion;
+    this.allDataIsLoaded = true;
+    useLoaderStore().desactivateLoader();
+  },
+  created() {
+    this.idPostulation = this.$route.params.id;
+  },
 };
 </script>
 
