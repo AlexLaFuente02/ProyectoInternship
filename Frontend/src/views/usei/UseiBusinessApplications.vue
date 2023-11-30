@@ -57,6 +57,7 @@ export default {
         const result = await UseUseiInstitutionStore().ActivateInstitution(institutionId);
         console.log('Institución activada correctamente', result);
         window.location.reload(true);
+        this.$router.go();
         // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
       } catch (error) {
         console.error('Error al activar la institución', error);
