@@ -132,9 +132,9 @@
      },
      async getData() {
       useLoaderStore().activateLoader();
-      await UseUseiInternshipStore().LoadPendenInternship();
+      await UseUseiInternshipStore().LoadRechazadoInternship();
       this.listInternship = UseUseiInternshipStore().InternshipList.result;
-       await UseUseiInstitutionStore().LoadPendentInstitutions();
+       await UseUseiInstitutionStore().LoadRechazadoInstitutions();
         this.listInstitution = UseUseiInstitutionStore().InstitutionList.result;
         this.everyInternshipsAreLoaded = true;
       useLoaderStore().desactivateLoader();

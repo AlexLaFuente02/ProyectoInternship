@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import {loadUseiInstitution, loadUseiInstitutionPendent, activateInstitution} from "@/services/usei.js";
+import {loadUseiInstitution, loadUseiInstitutionPendent, activateInstitution,loadUseiInstitutionRechazado} from "@/services/usei.js";
 export const UseUseiInstitutionStore = defineStore({
     id: "useiInstitution",
     state: () => ({
@@ -14,6 +14,10 @@ export const UseUseiInstitutionStore = defineStore({
         },   
         async LoadPendentInstitutions(){
             const institucion=await loadUseiInstitutionPendent();
+            this.InstitutionList= institucion;
+        },
+        async LoadRechazadoInstitutions(){
+            const institucion=await loadUseiInstitutionRechazado();
             this.InstitutionList= institucion;
         },
         async ActivateInstitution(institutionId){

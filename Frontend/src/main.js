@@ -49,9 +49,9 @@ import UseiBusinessRejected  from '@/views/usei/UseiBusinessRejected.vue';
 import UseiInternshipRejected  from '@/views/usei/UseiInternshipRejected.vue';
 
 // Librerías de Animate & SweetAlert2
-import "../node_modules/animate.css/animate.min.css";
-import "sweetalert2/dist/sweetalert2.min.css";
-import VueSweetalert2 from "vue-sweetalert2";
+//import "../node_modules/animate.css/animate.min.css";
+//import "sweetalert2/dist/sweetalert2.min.css";
+//import VueSweetalert2 from "vue-sweetalert2";
 
 //Librerias de PrimeVue
 import ButtonPrime from "primevue/button";
@@ -141,7 +141,7 @@ app.use(VueCookies,{
   httpOnly: true,
 
 });
-app.use(VueSweetalert2);
+//app.use(VueSweetalert2);
 
 //Componentes de fontawesome
 app.component("font-awesome-icon", FontAwesomeIcon);

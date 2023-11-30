@@ -12,6 +12,10 @@ export const loadUseiInstitutionPendent = async () => {
     const response = await axios.get(`${rutaUsei}/instituciones/pendientes`);
     return response.data;
 }
+export const loadUseiInstitutionRechazado = async () => {
+  const response = await axios.get(`${rutaUsei}/instituciones/rechazadas`);
+  return response.data;
+}
 
 export const activateInstitution = async (institutionId) => {
     try {
@@ -32,5 +36,10 @@ export const loadUseiInternship = async () => {
 
 export const loadPendentinternship = async () => {
   const response = await axios.get(`${rutaUsei}/convocatorias/pendientes`);
+  return response.data;
+}
+
+export const loadRechazadointernship = async () => {
+  const response = await axios.get(`${rutaUsei}/convocatorias/inactivas`);
   return response.data;
 }
