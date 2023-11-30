@@ -44,7 +44,7 @@
                         <font-awesome-icon :icon="['fas', 'circle-user']" />
                     </div>
                     <div class="container__sidebar--profile__name">
-                        <span>Invitado</span>
+                        <span>Estudiante</span>
                     </div>
                 </div>
                 <div class="container__sidebar--options">
