@@ -132,6 +132,12 @@ Accept: application/json
 GET {{baseURL}}/perfil-estudiante/{{estudianteID}}
 Accept: application/json
 
+###ENDPOINT para obtener sumatoria de postulaciones por InstitucionID
+GET {{baseURL}}/institucion/{{institutiionID}}/postulaciones/sumatoria
+Accept: application/json
+
+
+
 ###ENDPOINT para actualizar estado de postulación a APROBADO por POSTULACIONID
 @postulacionID = 1
 PUT {{baseURL}}/postulaciones/{{postulacionID}}/aprobar

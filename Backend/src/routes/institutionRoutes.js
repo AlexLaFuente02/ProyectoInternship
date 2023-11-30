@@ -480,4 +480,26 @@ router.put('/postulaciones/:id/aprobar', async (req, res) => {
     }
 });
 
+// Ruta para obtener la suma de postulaciones para una institución por su ID
+router.get('/institucion/:institutionId/postulaciones/sumatoria', async (req, res) => {
+    const { institutionId } = req.params;
+    try {
+        const response = await institucionService.getPostulationsCountByInstitutionId(institutionId);
+        res.json({
+            method: 'getPostulationsCountByInstitutionId',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error al obtener la suma de postulaciones para la institución con ID: ${institutionId}:`, error);
+        res.status(500).json({
+            method: 'getPostulationsCountByInstitutionId',
+            code: 'IP-1001',
+            result: null,
+            message: `Error al obtener la suma de postulaciones para la institución con ID: ${institutionId}: ${error.message}`
+        });
+    }
+});
+
 module.exports = router;
