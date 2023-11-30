@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import {loadUseiInternship, loadPendentinternship,loadRechazadointernship} from "@/services/usei.js";
+import {loadUseiInternship, loadPendentinternship,loadRechazadointernship,activateInternship,rechazarInternship,pendienteInternship} from "@/services/usei.js";
 export const UseUseiInternshipStore = defineStore({
     id: "useiInternship",
     state: () => ({
@@ -19,6 +19,24 @@ export const UseUseiInternshipStore = defineStore({
         async LoadRechazadoInternship(){
             const internship=await loadRechazadointernship();
             this.InternshipList= internship;
+        },
+        async ActivateInternship(internshipId){
+            const result = await activateInternship(internshipId);
+            // Aquí puedes manejar la respuesta, por ejemplo, actualizando la lista de instituciones
+            // o emitiendo un mensaje de éxito o error.
+            return result;
+        },
+        async RechazarInternship(internshipId){
+            const result = await rechazarInternship(internshipId);
+            // Aquí puedes manejar la respuesta, por ejemplo, actualizando la lista de instituciones
+            // o emitiendo un mensaje de éxito o error.
+            return result;
+        },
+        async PendienteInternship(internshipId){
+            const result = await pendienteInternship(internshipId);
+            // Aquí puedes manejar la respuesta, por ejemplo, actualizando la lista de instituciones
+            // o emitiendo un mensaje de éxito o error.
+            return result;
         },
 
     },

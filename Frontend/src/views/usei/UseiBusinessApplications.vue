@@ -56,16 +56,23 @@ export default {
       try {
         const result = await UseUseiInstitutionStore().ActivateInstitution(institutionId);
         console.log('Institución activada correctamente', result);
+        window.location.reload(true);
         // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
       } catch (error) {
         console.error('Error al activar la institución', error);
         // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
       }
     },
-      deleteCard(cardId) {
-        // Lógica para rechazar la solicitud
-        console.log(`Rechazar solicitud con ID: ${cardId}`);
-        // Aquí iría la llamada al backend o la lógica para actualizar el estado
+    async deleteCard(institutionId) {
+        try {
+        const result = await UseUseiInstitutionStore().RechazarInstitution(institutionId);
+        console.log('Institución rechazada correctamente', result);
+        window.location.reload(true);
+        // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
+      } catch (error) {
+        console.error('Error al rechazar la institución', error);
+        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
       },
   },
   created() {

@@ -8,7 +8,7 @@
         <p><strong>Area :</strong> {{c }}</p><!--descripcion-->
         <p><strong>Solicitud :</strong> {{d }}</p><!--descripcion-->
         <p><strong>Limite : </strong> {{e }}</p><!--descripcion-->
-        <a @click="JhessPayasita()">Reconsiderar</a>
+        <a @click="JhessPayasita(id)">Reconsiderar</a>
       </div>
     </div>
   </div>
@@ -16,8 +16,14 @@
 </template>
   
   <script>
+   import {UseUseiInternshipStore }from "@/store/usei/UseiInternshipStore";
+
   export default {
     props: {
+      id: {
+        type: String,
+        required: true,
+      },
       name: {
         type: String,
         required: true,
@@ -42,11 +48,22 @@
         type: String,
         required: true,
       },
+      id:{
+        type: String,
+        required: true,
+      },
     },
     methods:{
-        JhessPayasita(){
-            alert("PAYASA");
+      async JhessPayasita(numero){
+        try {
+            const result = await UseUseiInternshipStore().PendienteInternship(numero);
+            console.log('Institución en pendiente correctamente', result);
+            window.location.reload(true);
+        } catch (error) {
+              console.error('Error al poner en pendiente la institución', error);
+                // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
         }
+      }
     }
   };
   </script>
@@ -228,7 +245,7 @@ body .container .card .box .content a:hover {
  @media screen and (max-width: 589px){
   body .container .card {
   position: relative;
-  height: 220px;
+  height: 260px;
   min-width: 400px;
  transition: 0.5s;
  margin-top: 10px;

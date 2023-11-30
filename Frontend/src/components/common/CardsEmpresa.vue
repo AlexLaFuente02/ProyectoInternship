@@ -8,7 +8,7 @@
             <p><strong>Nombre :</strong> {{c }}</p><!--descripcion-->
             <p><strong>Correo :</strong> {{d }}</p><!--descripcion-->
             <p><strong>Contacto : </strong> {{e }}</p><!--descripcion-->
-            <a @click="JhessPayasita()">Reconsiderar</a>
+            <a @click="JhessPayasita( a )">Reconsiderar</a>
           </div>
         </div>
       </div>
@@ -16,7 +16,15 @@
     </template>
       
       <script>
-      export default {
+     import { UseUseiInstitutionStore } from "@/store/usei/UseiInstitutionStore";
+
+
+export default {
+  data() {
+    return {
+        key: 0, // Inicializa la key
+      };
+  },
         props: {
           name: {
             type: String,
@@ -44,9 +52,23 @@
           },
         },
         methods:{
-            JhessPayasita(){
-                alert("PAYASA");
-            }
+            async JhessPayasita(numero){
+                try {
+                    const result = await UseUseiInstitutionStore().PendienteInstitution(numero);
+                    console.log('Institución en pendiente correctamente', result);
+                    window.location.reload(true);
+                    // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
+                } catch (error) {
+                    console.error('Error al poner en pendiente la institución', error);
+                    // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+                }
+            },
+            async reloadPage() {
+            // Incrementa el valor de key para forzar la recarga del componente
+            this.$nextTick(() => {
+                this.$data.key += 1;
+            });
+            },
         }
       };
       </script>
@@ -123,6 +145,10 @@
       background: #7bcd7b;
     
     }
+
+   
+
+
     .dark-then body .container .card .box {
       position: absolute;
       top: 20px;
@@ -138,7 +164,7 @@
       transition: 0.5s;
     }
     
-    body .container .card .box:hover {
+    .dark-then body .container .card .box:hover {
       transform: translateY(-50px);
       background: #7bcd7b;
     
@@ -184,7 +210,7 @@
     
     body .container .card .box .content h3:hover {
      
-      color: #9e4747;
+      color: #715f5f;
      
     }
     
@@ -228,7 +254,7 @@
      @media screen and (max-width: 589px){
       body .container .card {
       position: relative;
-      height: 220px;
+      height: 250px;
       min-width: 400px;
      transition: 0.5s;
      margin-top: 10px;

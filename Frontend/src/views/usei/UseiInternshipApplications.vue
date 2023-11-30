@@ -1,13 +1,13 @@
 <template>
   <div class="inicio">
-    <h1>TUS SOLICITUDES DE EMPRESAS</h1>
-    <p>Te mostramos tus solicitudes de empresas para entrar a la pagina</p>
+    <h1>TUS SOLICITUDES DE PASANTIAS</h1>
+    <p>Te mostramos tus solicitudes de pasantias de las empresas</p>
     <div class="card-inicio">
       <div class="card">
-        <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="card-individual">
+        <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="card-individual">
           <div class="content">
             <div class="image">
-              <img :src="card.logoinstitucion || defaultImage" alt="Imagen de la Empresa" class="card-image">
+              <img :src="card.imageUrl|| defaultImage" alt="Imagen de la Empresa" class="card-image">
             </div>
             <div class="text-content">
               <div class="button-container">
@@ -16,11 +16,19 @@
                   <button class="delete-btn" @click="deleteCard(card.id)">Rechazar</button>
                 </div>
               </div>
-                  <div class="title">{{ card.nombreinstitucion }}</div>
-                  <div class="description"><strong>Sector:</strong>{{card.sectorpertenencia.nombresectorpertenencia}}</div>
-                  <div class="description"><strong>Nombre del Contacto:</strong>{{card.nombrecontacto}}</div>
-                  <div class="description"><strong>Correo electr&oacute;nico:</strong>{{ card.correocontacto }}</div>
-              </div>
+              <div class="title">{{ card.empresa }}</div>
+              <div class="description"> <ul class="internship-details">
+            <li><strong>Empresa: </strong>{{card.institucion.nombreinstitucion}}</li>
+            <li><strong>Requisitos: </strong>{{card.requisitoscompetencias}}</li>
+            <li><strong>Duración: </strong>{{card.tiempoacumplir.descripcion}}</li>
+            <li><strong>Fecha de Inicio: </strong>{{card.fechasolicitud}}</li>
+            <li>
+              <strong>Fecha de Finalización: </strong>{{card.fechaseleccionpasante}}</li>
+            <li>
+              <strong>Tipo de Pasantía: </strong>{{card.areapasantia}}</li>
+    
+          </ul></div>
+            </div>
           </div>
         </div>
       </div>
@@ -28,57 +36,64 @@
   </div>
 </template>
 
-
-<script>
-import { useLoaderStore } from "@/store/common/loaderStore";
-import { UseUseiInstitutionStore } from "@/store/usei/UseiInstitutionStore";
-
-
-export default {
-data() {
-  return {
-    listInstitution: [],
-    everyInternshipsAreLoaded: false,
-    defaultImage: 'https://i.pinimg.com/564x/0f/76/1c/0f761c01d1fb284eb429061e577aa623.jpg',
+  
+  <script>
+import {UseUseiInternshipStore }from "@/store/usei/UseiInternshipStore";
+import {useLoaderStore} from "@/store/common/loaderStore";
+  export default {
+    data() {
+      return{
+        listInternship: [],
+        everyInternshipsAreLoaded: false,
+    defaultImage: "https://cdn-icons-png.flaticon.com/512/9715/9715942.png",
   };
 },
 methods: {
-  async getData() {
-    useLoaderStore().activateLoader();
-    // Asegúrate de que LoadPendentInstitutions() se implemente correctamente y devuelva los datos esperados.
-    await UseUseiInstitutionStore().LoadPendentInstitutions();
-    // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
-    this.listInstitution = UseUseiInstitutionStore().InstitutionList.result;
-    this.everyInternshipsAreLoaded = true;
-    useLoaderStore().desactivateLoader();
-  },
-  async editCard(institutionId) {
-    try {
-      const result = await UseUseiInstitutionStore().ActivateInstitution(institutionId);
-      console.log('Institución activada correctamente', result);
-      // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
-    } catch (error) {
-      console.error('Error al activar la institución', error);
-      // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
-    }
-  },
-    deleteCard(cardId) {
-      // Lógica para rechazar la solicitud
-      console.log(`Rechazar solicitud con ID: ${cardId}`);
-  
-      // Aquí iría la llamada al backend o la lógica para actualizar el estado
+      async getData() {
+
+  useLoaderStore().activateLoader();
+
+  await UseUseiInternshipStore().LoadPendenInternship();
+  // Asumiendo que LoadPendenInternship() actualiza InternshipList de manera similar a LoadInstitutions() en tu ejemplo.
+  this.listInternship = UseUseiInternshipStore().InternshipList.result;
+
+  this.everyInternshipsAreLoaded = true;
+  useLoaderStore().desactivateLoader();
+
+},
+
+async editCard(internshipId) {
+      try {
+        const result = await UseUseiInternshipStore().ActivateInternship(internshipId);
+        console.log('Institución activada correctamente', result);
+        window.location.reload(true);
+        // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
+      } catch (error) {
+        console.error('Error al activar la institución', error);
+        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
     },
+    async deleteCard(internshipId) {
+        try {
+        const result = await UseUseiInternshipStore().RechazarInternship(internshipId);
+        console.log('Institución rechazada correctamente', result);
+        window.location.reload(true);
+        // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
+      } catch (error) {
+        console.error('Error al rechazar la institución', error);
+        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
+      },
 },
 created() {
   this.getData();
 },
 };
-</script>
-
+  </script>
   
   <style scoped>
-  /** estilo eltra de titulo*/
-  
+  /* estilo eltra de titulo/
+ 
   
   /**iniiciooo  boton  */
   .text-content {
@@ -143,7 +158,7 @@ created() {
   }
   /**colores de texto de si esta aporbado o no */
   
-  /**finnnnnnnnnnnnnnnnnnnnnnnn*/
+
   .card {/**contenedore de indivialues */
     border: 0px solid #ccc;
     border-radius: 8px;
@@ -176,18 +191,18 @@ background:  #ffffff;
   .dark-theme .card {/**contenedore de indivialues */
     border: 0px solid #ccc;
     color: #ffffff;
-    background: rgb(255, 255, 255);
- 
+    background: rgb(0, 0, 0);
   }
   .dark-theme .card-individual {
-    border: 3px solid #000000;
-    background: rgb(52, 87, 184);
+    border: 3px solid #ffffff;
+    background: rgb(119, 129, 216);
   }
   .dark-theme .card-inicio{
-    border: 3px solid #000000;
-background:  #ffffff;
+    border: 3px solid #ffffff;
+background:  #000000;
    
   }
+
   
   .content {
     display: flex;
@@ -294,4 +309,3 @@ margin-bottom: 10px;
 }
 
   </style>
-  

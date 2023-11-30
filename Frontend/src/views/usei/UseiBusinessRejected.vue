@@ -9,6 +9,7 @@
              <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
          
          <CardsSoli 
+         :id="card.id"
          :b="card.institucion.nombreinstitucion" 
          :c="card.areapasantia "
          :a="card.tiempoacumplir.descripcion"
@@ -24,7 +25,7 @@
              text="Revisa tus convocatorias pendientes" 
              :color="1" 
              :disabled="false"
-             @option-selected="Empresas">
+             @option-selected="Convocatorias">
            </Button>
          </div>
          </div>
@@ -38,7 +39,7 @@
             
          <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
            
-         <CardsSoli 
+         <CardsEmpresa 
          :a="card.id "
          :b="card.nombreinstitucion "
          :c="card.nombrecontacto "
@@ -53,7 +54,7 @@
              text="Revisa tus empresas pendientes " 
              :color="0" 
              :disabled="false"
-             @option-selected="Convocatorias"
+             @option-selected="Empresas"
              >
            </Button>
          </div>
@@ -67,8 +68,8 @@
  
    </template>
    <script>
+   import CardsEmpresa from "../../components/common/CardsEmpresa.vue";
    import CardsSoli from "@/components/common/CardsSoli.vue";
-   //import CardsSoliEmpresa from "@/components/common/CardsSoliEmpresa.vue";
    import Carousel from "@/components/common/Carousel.vue";
    import Button from "@/components/common/Button.vue";
    import SimpleCard from "@/components/common/SimpleCard.vue";
@@ -80,7 +81,7 @@
        Carousel,
        SimpleCard,
        Button,
-       //CardsSoliEmpresa,
+       CardsEmpresa,
        CardsSoli
        
      },
