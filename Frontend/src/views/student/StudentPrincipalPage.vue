@@ -45,7 +45,7 @@
                         <span class="summary__content__number">{{ requestsRejected.length }}
                             <span class="summary__content__text">rechazado</span>
                         </span>
-                        <span class="summary__content__number">{{ listRequests.length }}
+                        <span class="summary__content__number">{{ allRequests}}
                             <span class="summary__content__text">Totales</span>
                         </span>
                     </div>
@@ -165,6 +165,7 @@ export default {
             nombre: "",
             correo: "",
             popularInternships: [],
+            allRequests: null,
         };
     },
     components: {
@@ -184,6 +185,7 @@ export default {
             await useInternshipsByIDStore().loadPopularInternships();
             this.listInterships = useInternshipsByIDStore().activeInternships;
             this.listRequests = useRequestsByIDStore().requests;
+            this.allRequests = useRequestsByIDStore().requests.length;
             this.popularInternships = useInternshipsByIDStore().popularInternships;
             if(this.listRequests != null){
                 this.listRequests.forEach(element => {

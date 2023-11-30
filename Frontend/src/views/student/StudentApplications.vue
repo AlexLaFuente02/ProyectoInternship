@@ -1,5 +1,5 @@
 <template>
-    <div class="inicio">
+    <div class="inicio" v-if="isAllDataLoaded">
       <h1>TUS SOLICITUDES DE PASANTIAS</h1> 
       <p>Te mostramos tus pasantias</p>
       <div class="card-inicio">
@@ -117,6 +117,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
           requestsRejected:[],
           dataUserStore: useUserByIdStore(),
           dataUser: {},
+          isAllDataLoaded: false,
           
         };
       },
@@ -128,6 +129,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
         async getRequestsPending(){
           await useRequestsByIDStore().loadRequestsByEstatus(this.dataUser.id,2);
           this.requestsPending = useRequestsByIDStore().requestsPending;
+          console.log(this.requestsPending);
         },
         async getRequestsRejected(){
           await useRequestsByIDStore().loadRequestsByEstatus(this.dataUser.id,3);
@@ -147,6 +149,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
         await this.getRequestsAccepted();
         await this.getRequestsPending();
         await this.getRequestsRejected();
+        this.isAllDataLoaded = true;
         useLoaderStore().desactivateLoader();
       }
     };
