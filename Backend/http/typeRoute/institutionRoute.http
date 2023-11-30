@@ -91,6 +91,11 @@ Accept: application/json
 GET {{baseURL}}/convocatorias/activas/{{institutionID}}
 Accept: application/json
 
+### ENDPOINT de Convoctorias pendientes
+GET {{baseURL}}/convocatorias/pendientes/{{institutionID}}
+Accept: application/json
+
+
 ###ENDPOINT de Convoctorias inactivas
 GET {{baseURL}}/convocatorias/inactivas/{{institutionID}}
 Accept: application/json

@@ -309,6 +309,47 @@ const getActiveConvocatoriasById = async (institucionId) => {
     }
 };
 
+const getPendingConvocatoriasById = async (institucionId) => {
+    console.log('Obteniendo todas las convocatorias PENDIENTES para la institución con ID: ${institucionId}...');
+    try {
+        const convocatoriasActivas = await ConvocatoriaENT.findAll({
+            where: { estadoconvocatoria_id: [2],
+                        institucion_id: institucionId
+                }, // 2 = Pendiente
+            include: [
+                { model: EstadoConvocatoriaENT, as: 'estadoconvocatoria' },
+                { model: InstitucionENT, as: 'institucion' },
+                { model: TiempoAcumplirENT, as: 'tiempoacumplir' }
+            ]
+        });
+
+        const convocatoriasActivasDTO = convocatoriasActivas.map(convocatoria => {
+            const estadoDTO = new EstadoConvocatoriaDTO(convocatoria.estadoconvocatoria.id, convocatoria.estadoconvocatoria.nombreestadoconvocatoria);
+            const institucionDTO = new InstitucionDTO(convocatoria.institucion.id, convocatoria.institucion.nombreinstitucion);
+            const tiempoDTO = new TiempoAcumplirDTO(convocatoria.tiempoacumplir.id, convocatoria.tiempoacumplir.descripcion);
+            return new ConvocatoriaDTO(
+                convocatoria.id,
+                convocatoria.areapasantia,
+                convocatoria.descripcionfunciones,
+                convocatoria.requisitoscompetencias,
+                convocatoria.horario_inicio,
+                convocatoria.horario_fin,
+                convocatoria.fechasolicitud,
+                convocatoria.fechaseleccionpasante,
+                estadoDTO,
+                institucionDTO,
+                tiempoDTO
+            );
+        });
+
+        console.log('Convocatorias PENDIENTES obtenidas correctamente.');
+        return new ResponseDTO('C-0000', convocatoriasActivasDTO, 'Convocatorias PENDIENTES obtenidas correctamente');
+    } catch (error) {
+        console.error('Error al obtener las convocatorias PENDIENTES:', error);
+        return new ResponseDTO('C-1006', null, `Error al obtener las convocatorias PENDIENTES: ${error}`);
+    }
+};
+
 const getPopularConvocatorias = async () => {
     console.log('Obteniendo convocatorias populares...');
     try {
@@ -720,6 +761,7 @@ module.exports = {
     getConvocatoriasPorIdInstitucion,
     getSummaryOfConvocatorias,
     getActiveConvocatoriasById,
+    getPendingConvocatoriasById,
     getInactiveConvocatoriasById,
     activateConvocatoria,
     rejectConvocatoria,

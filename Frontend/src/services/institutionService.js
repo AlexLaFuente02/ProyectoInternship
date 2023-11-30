@@ -43,6 +43,13 @@ export const getActiveInternshipsByInstitutionId = async (institution_id) => {
   return response.data;
 };
 
+export const getPendingInternshipsByInstitutionId = async (institution_id) => {
+  const response = await axios.get(
+    `${institutionAPIRoute}/convocatorias/pendientes/${institution_id}`
+  );
+  return response.data;
+};
+
 export const getInactiveInternshipsByInstitutionId = async (institution_id) => {
   const response = await axios.get(
     `${institutionAPIRoute}/convocatorias/inactivas/${institution_id}`
@@ -60,11 +67,6 @@ export const getQuantityOfActiveNInactiveInternships = async (
 };
 
 export const getTotalPostulationsByInstitutionId = async (institution_id) => {
-  const response = await axios.get();
-  return response.data;
-};
-
-export const getPendingInternshipsByInstitutionId = async (institution_id) => {
   const response = await axios.get();
   return response.data;
 };

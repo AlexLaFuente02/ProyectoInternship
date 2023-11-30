@@ -272,6 +272,26 @@ router.get('/convocatorias/activas/:institutionId', async (req, res) => {
     }
 });
 
+
+// Ruta para obtener las convoctarias pendientes
+router.get('/convocatorias/pendientes/:institutionId', async (req, res) => {
+    const institutionId = req.params.institutionId;
+    try {
+        console.log('GET request received for getPendingConvocatoriasById for INSTITUTION');
+        const response = await convocatoriaService.getPendingConvocatoriasById(institutionId);
+        res.json({
+            method: 'getPendingConvocatoriasById',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias pendientes for INSTITUTION:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+        
+
 // Ruta para obtener las convoctarias inactivas para estudiantes
 router.get('/convocatorias/inactivas/:institutionId', async (req, res) => {
     const institutionId = req.params.institutionId;
