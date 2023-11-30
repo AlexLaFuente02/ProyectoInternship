@@ -3,16 +3,44 @@
     <div class="inicio2">
       <h1>
         <font-awesome-icon :icon="['fas', 'user-circle']" />
-        Perfil del estudiante {{ studentInformation.nombres }}
+        Perfil del estudiante
+        {{ studentInformation.nombres + " " + studentInformation.apellidos }}
       </h1>
     </div>
     <div class="container">
-      <div class="profile">
+      <div class="profile" v-if="studentInformationIsLoaded">
         <div class="personal-description box1">
           <div class="description-header">
             <h2>ACERCA DE MI</h2>
           </div>
-          <p>Inserta aquí la descripción personal del usuario.</p>
+          <div class="student-information">
+            <ul class="student-list">
+              <li><strong>Nombre:</strong> {{ studentInformation.nombres }}</li>
+              <li>
+                <strong>Apellido:</strong> {{ studentInformation.apellidos }}
+              </li>
+              <li>
+                <strong>Carnet de Identidad:</strong>
+                {{ studentInformation.carnetidentidad }}
+              </li>
+              <li>
+                <strong>Sede:</strong>
+                {{ studentInformation.sede_id.nombresede }}
+              </li>
+              <li>
+                <strong>Carrera:</strong>
+                {{ studentInformation.carrera_id.nombrecarrera }}
+              </li>
+              <li>
+                <strong>Graduado:</strong>
+                {{ isTheStudentGraduated(studentInformation) }}
+              </li>
+              <li v-if="studentInformation.graduado">
+                <strong> Año de graduaci&oacute;n: </strong>
+                {{ studentInformation.aniograduacion }}
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="social-media box2">
           <h2>Mi perfil</h2>
@@ -53,23 +81,26 @@
           </div>
         </div>
         <div class="user-details box3">
-          <h2>TUS DATOS</h2>
-          <ul class="student-information">
-            <li><strong>Nombre:</strong> {{ studentInformation.nombres }}</li>
-            <li>
-              <strong>Apellido:</strong> {{ studentInformation.apellidos }}
-            </li>
-            <li>
-              <strong>Carnet:</strong> {{ studentInformation.carnetidentidad }}
-            </li>
-            <li>
-              <strong>Celular:</strong> {{ studentInformation.celularcontacto }}
-            </li>
-          </ul>
-          <a href="https://www.google.com/" class="profile__button bn23">
-            <font-awesome-icon :icon="['fas', 'file-alt']" size="2xl" />
-            <span class="see_vitae"> Hoja de vida </span>
-          </a>
+          <h2>CONTACTO</h2>
+          <div class="student-information">
+            <ul class="student-list">
+              <li>
+                <strong>Celular:</strong>
+                {{ studentInformation.celularcontacto }}
+              </li>
+              <li>
+                <strong>Correo electr&oacute;nico:</strong>
+                {{ studentInformation.correoelectronico }}
+              </li>
+            </ul>
+            <a
+              :href="studentInformation.linkcurriculumvitae"
+              class="profile__button bn23"
+            >
+              <font-awesome-icon :icon="['fas', 'file-alt']" size="2xl" />
+              <span class="see_vitae"> Hoja de vida </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -90,24 +121,27 @@ export default {
   methods: {
     async getStudentInformation(studentID) {
       useLoaderStore().activateLoader();
-      await this.studentByIdInApplicationTrayStore.loadStudentByIdInApplicationTray(
-        studentID
-      );
-      this.studentInformation =
-        this.studentByIdInApplicationTrayStore.student.result;
+      await this.studentByIdInApplicationTrayStore.loadStudentByIdInApplicationTray(studentID);
+      this.studentInformation = this.studentByIdInApplicationTrayStore.student.result;
       this.studentInformationIsLoaded = true;
       console.log(this.studentInformation);
       useLoaderStore().desactivateLoader();
     },
+    isTheStudentGraduated(student) {
+      if (student.graduado) {
+        return "✅";
+      } else {
+        return "❌";
+      }
+    },
   },
   mounted() {
-    // this.getStudentInformation(this.$route.params.studentId);
+    this.getStudentInformation(this.$route.params.studentId);
   },
 };
 </script>
 
 <style scoped>
-/*contendores para ordenas*/
 .personal-description,
 .social-media,
 .container {
@@ -119,8 +153,6 @@ export default {
 }
 
 .user-details {
-  flex: 1; /* Permite que los contenedores ocupen el mismo ancho */
-  border: 100px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -156,8 +188,15 @@ export default {
   color: #fff;
 }
 
+.student-list {
+  list-style: none;
+  text-align: start;
+  margin-bottom: 15%;
+}
+
 .student-information {
   list-style: none;
+  padding: 0;
 }
 
 a {
@@ -166,7 +205,6 @@ a {
 
 .profile__button {
   padding: 0.9rem;
-  margin: 0.5rem;
   color: #fff;
   cursor: pointer;
   text-align: center;
@@ -199,25 +237,15 @@ a {
   );
   box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
 }
-.dark-theme .profile__button.bn23 {
-  background-image: linear-gradient(
-    to right,
-    #29323c,
-    #485563,
-    #2b5876,
-    #4e4376
-  );
-  box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
-}
 
 /**perfil */
 .profile {
   background: linear-gradient(-45deg, #eb52ee, #b93ce7, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
-  border-radius: 10px; /* Añade bordes redondeados */
+  border-radius: 10px;
   display: flex;
-  border: 2px dotted #000; /* Ancho del borde de 2px, estilo punteado y color negro (#000) */
+  border: 2px dotted #000;
   padding: 1rem;
   color: white;
 }
@@ -238,6 +266,7 @@ a {
 .inicio {
   display: flex;
   justify-content: center;
+  text-align: center;
   align-items: center;
   flex-direction: column;
   padding: 2rem;
@@ -246,7 +275,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10%; /* Ajusta la altura según tus necesidades */
+  height: 10%;
 }
 
 .profile-picture {
@@ -258,7 +287,6 @@ a {
   border-radius: 50%;
 }
 
-/** */
 .description-header {
   display: flex;
   justify-content: space-between;
@@ -282,10 +310,9 @@ a {
   padding: 1rem;
   border: 1px solid #ccc;
   flex: 1;
-  /* Ancho mínimo para evitar que se colapsen completamente */
 }
 
-/* Media query para responsividad */
+/* Media query */
 @media (max-width: 600px) {
   .profile {
     flex-direction: column;
@@ -338,15 +365,6 @@ a {
   .inicio {
     padding: 1rem;
   }
-
-  .profile__button {
-    margin: 0.2rem;
-    padding: 0.5rem;
-    font-size: 0.4rem;
-  }
-  .profile__button span {
-    font-size: 0.6rem;
-  }
 }
 
 /* Estilos para dispositivos medianos */
@@ -376,15 +394,6 @@ a {
   }
   .content__more {
     width: 100%;
-  }
-
-  .profile__button {
-    margin: 0.2rem;
-    padding: 0.5rem;
-    font-size: 0.4rem;
-  }
-  .profile__button span {
-    font-size: 0.6rem;
   }
 
   .summary__content {
