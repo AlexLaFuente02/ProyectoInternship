@@ -48,7 +48,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     margin: 1.5rem;
     width: 250px;
-    height: 350px;
+    height: 380px;
     color: #000000;
     transition: all 0.3s ease-in-out;
   }

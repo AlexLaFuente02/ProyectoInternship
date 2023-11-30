@@ -36,6 +36,7 @@
           >
             <li class="dropdown-item">Pasant&iacute;as</li>
           </router-link>
+
         </ul>
         <span class="link" @click="showDropdownRequestsList">
           <font-awesome-icon :icon="['fas', 'file']" size="xl" />
@@ -59,6 +60,15 @@
           >
             <li class="dropdown-item">Solicitudes de pasant&iacute;as</li>
           </router-link>
+          <router-link
+            to="/usei/Business/Rejected"
+            class="dropdown-link"
+            @click="showDropdownRequestsList"
+          >
+            <li class="dropdown-item">Solicitudes de rechazadas</li>
+          </router-link>
+
+          
         </ul>
         <router-link class="link" to="/usei/AnalyticsDashboard">
           <font-awesome-icon :icon="['fas', 'chart-simple']" size="xl" />

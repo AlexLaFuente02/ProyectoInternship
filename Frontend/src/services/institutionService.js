@@ -112,7 +112,23 @@ export const createInternship = async (internshipData) => {
 };
 
 export const getStudentByIdInApplicationTray = async (student_id) => {
-  const response = await axios.get(`http://localhost:3000/student/${student_id}`);
+  const response = await axios.get(
+    `${institutionAPIRoute}/perfil-estudiante/${student_id}`
+  );
+  return response.data;
+};
+
+export const acceptStudentPostulation = async (postulation_id) => {
+  const response = await axios.put(
+    `${institutionAPIRoute}/postulaciones/${postulation_id}/aprobar`
+  );
+  return response.data;
+};
+
+export const rejectStudentPostulation = async (postulation_id) => {
+  const response = await axios.put(
+    `${institutionAPIRoute}/postulaciones/${postulation_id}/rechazar`
+  );
   return response.data;
 };
 

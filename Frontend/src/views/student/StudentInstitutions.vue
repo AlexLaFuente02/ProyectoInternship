@@ -99,11 +99,6 @@ export default {
         async getSectors() {
             await useSectorStore().loadSectors();
             this.sectors = useSectorStore().sectors.result;
-            //Aumentar el valor de la variable para que se muestren todos los sectores
-            this.sectors.push({
-                id: 0,
-                nombresectorpertenencia: 'Todos los sectores',
-            });
         },
         async getInstitutions() {
             await useInstitutionsByIDSectorStore().loadInstitutions();
@@ -138,6 +133,11 @@ export default {
                 id: sector.id,
                 label: sector.nombresectorpertenencia,
             }
+        });
+        //Aumentar el valor de la variable para que se muestren todos los sectores
+        this.options.unshift({
+            id: 0,
+            label: 'Todos los sectores',
         });
         useLoaderStore().desactivateLoader() ;
     },

@@ -32,35 +32,6 @@
           </div>
         </div>
       </div>
-
-      <div class="company-information-grid">
-        <img
-          src="https://i.pinimg.com/564x/6b/d1/e7/6bd1e7c2aaa62cabc9890c4f82b39a11.jpg"
-          alt="Logo de la Empresa"
-        />
-        <div class="information-grid">
-          <h4 class="information-title">Detalles de la Empresa:</h4>
-          <div class="c_details">
-            <ul class="company-details">
-              <li><strong>Nombre: </strong>Apple</li>
-              <li>
-                <strong>Pertenece al sector: </strong>
-                Sector de pertenencia de la empresa
-              </li>
-              <li><strong>Rese&ntilde;a: </strong>Descripción de la empresa</li>
-              <li><strong>Contacto: </strong>Contacto de la empresa</li>
-              <li>
-                <strong>Correo electr&oacute;nico: </strong>
-                Correo electr&oacute;nico de la empresa
-              </li>
-              <li>
-                <strong>N&uacute;mero de celular: </strong>
-                N&uacute;mero de celular de la empresa
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -109,6 +80,12 @@ img {
   text-align: center;
   border: 2px solid black;
   padding-bottom: 2%;
+  border-radius: 10px;
+  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+     transition: 0.5s;
+     background:rgb(255, 208, 0);
 }
 
 .company-information-grid {
@@ -118,7 +95,19 @@ img {
   align-items: center;
   margin: 2% auto 0;
   width: 92%;
+  border-radius: 10px;
   border: 2px solid black;
+   box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+   
+     transition: 0.5s;
+     background-color: rgb(255, 255, 255);
+}
+
+.dark-theme .company-information-grid {
+
+     background-color: rgb(136, 100, 154);
 }
 
 .information-title {
@@ -135,7 +124,7 @@ img {
   list-style: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 568px) {
   .companies-container,
   .company-information-grid {
     display: block;
@@ -148,7 +137,9 @@ img {
 
 /* DARK THEME */
 .dark-theme .companies-container {
-  background-color: #353e48;
+  background-color: rgb(86, 63, 100);
+
+
 }
 
 .dark-theme .companies-container {

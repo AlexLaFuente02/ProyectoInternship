@@ -53,7 +53,7 @@
            
             <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
         
-        <Tarjetitas 
+        <Tarjetitas
         :name="card.institucion.nombreinstitucion" 
         :description="card.areapasantia "
         :a="card.tiempoacumplir.descripcion"
@@ -852,7 +852,7 @@ useLoaderStore().desactivateLoader();
   display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 30px;
+   
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     background: #434B54;

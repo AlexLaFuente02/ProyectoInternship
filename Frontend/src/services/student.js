@@ -258,3 +258,47 @@ export const loadInstitutionById = async (idInstitution) => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 }
+export const loadRequestById = async (idRequest) => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/postulacion/${idRequest}`);
+        const data = response.data;
+        if (data.code === "P-0000") {
+            return data.result;
+        }else{
+            alert("No se pudo cargar la postulacion");
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar la postulacion: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}
+export const postPostulation = async (postulationData) => {
+    try {
+        const response = await axios.post(`${rutaApi}/student/postulacion`, postulationData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        });
+        const data = response.data;
+        if (data.code === "P-0000") {
+            alert("Postulacion creada exitosamente");
+            return data.result;
+        }
+        else if(data.code === "P-1005") {
+            alert("Ya te has postulado a esta pasantia");
+            return data.code;
+            
+        }
+        else{
+            alert("No se pudo crear la postulacion");
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al crear la postulacion: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}

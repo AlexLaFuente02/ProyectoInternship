@@ -97,6 +97,6 @@ Accept: application/json
 
 
 ### GET Postulacion por PostulacionID
-@postulacionID = 1
+@postulacionID = 18
 GET {{baseURL}}/postulacion/{{postulacionID}}
 Accept: application/json

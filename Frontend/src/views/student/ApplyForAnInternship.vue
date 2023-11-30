@@ -72,7 +72,7 @@
                   </p>
                 </div>
               </div>
-              <h4 class="information-title">Carreras a las que va dirigida:</h4>
+              <h4 class="information-title">Áreas a la que va dirigida la pasantía:</h4>
               <div class="i_details">
                 <div class="internship-details">
                   <p>
@@ -94,44 +94,44 @@
                   pasos:
                 </p>
               </div>
-              <div class="upload-CV">
-                <h6>Subir CV:</h6>
-                <Button
-                  text="Subir PDF"
-                  :color="4"
-                ></Button>
-                <input
-                  type="file"
-                  id="fileInput"
-                  ref="fileInput"
-                  style="display: none"
-                />
-              </div>
-              <div class="insert-curriculum">
-                <input
-                  type="text"
-                  name="uploadCV"
-                  id="uploadCV"
-                  placeholder="Link de Curriculum Vitae"
-                />
+              <div class="steps">
+                <ol>
+                  <li>
+                    <p>
+                      Verifica que tienes cargao el link de tu CV en tu perfil.
+                      <font-awesome-icon
+                        icon="question-circle"
+                        class="icon"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Si no sabes cómo hacerlo, haz click en el icono de ayuda"
+                        size="2xl"
+                        @click="openResume">
+                      </font-awesome-icon>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Verifica que tu perfil esté completo y actualizado. Si no
+                      lo está, por favor, actualízalo. Recuerda que tu perfil
+                      es tu carta de presentación.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Si tu perfil está completo y actualizado, haz click en el
+                      botón "POSTULAR" y espera a que la empresa te contacte.
+                    </p>
+                  </li>
+                </ol>
               </div>
               <div class="submit-container">
-                <div class="presentation-letter">
-                  <p>
-                    Escribe una breve carta de presentación en la que expliques
-                    por qué estás interesado en esta pasantía y cómo tu
-                    formación y habilidades pueden contribuir al equipo de Jala
-                    Soft.
-                  </p>
-                </div>
-                <textarea
-                  name="userDescription"
-                  id="userDescription"
-                  cols="25"
-                  rows="10"
-                  placeholder="Breve carta de presentación"
-                ></textarea>
-                <Button text="POSTULAR" :color="2"></Button>
+                <Button 
+                text="POSTULAR" 
+                :color="0"
+                :disabled="false"
+                @option-selected="postulate"
+                ></Button>
               </div>
             </div>
           </div>
@@ -145,6 +145,7 @@
 import Button from "@/components/common/Button.vue";
 import {useInternshipsByIDStore } from "@/store/student/internshipsByIDStore";
 import {useLoaderStore} from "@/store/common/loaderStore";
+import {useRequestsByIDStore} from "@/store/student/requestsByIDStore";
 import {useUserByIdStore} from "@/store/common/dataUserStore";
 export default {
   name: "ApplyForAnInternshipPage",
@@ -158,6 +159,9 @@ export default {
       dataUserStore: useUserByIdStore(),
       dataUser: {},
       allDataIsLoaded: false,
+      idRequest : null,
+      idStudent : null,
+      idStatus : null,
     };
   },
   methods: {
@@ -170,6 +174,42 @@ export default {
       await this.dataUserStore.getUserByIdUsuario(id);
       this.dataUser = this.dataUserStore.user;
     },
+      openResume(){
+            const link = this.dataUserStore.user.linkcurriculumvitae;
+            if(link == null || link == "")
+                alert("No tienes una hoja de vida registrada, por favor registra una en la sección de editar perfil");
+            else
+                window.open(link, '_blank');
+        },
+    async postulate(value){
+      useLoaderStore().activateLoader();
+      try{
+        const postulationData = {
+                fechapostulacion: new Date(),
+                estadopostulacion: {
+                    id: 2,
+                },
+                estudiante: {
+                    id: this.dataUser.id,
+                },
+                convocatoria: {
+                    id: this.dataInternship.id,
+                },
+            };
+        useRequestsByIDStore().postulationData = postulationData;
+        
+        await useRequestsByIDStore().postPostulation2(); 
+        const request = useRequestsByIDStore().requestPostulation;
+        if(!request === "P-1005")
+        {
+          this.$router.go();
+        }
+      }catch(error){
+        console.log(error);
+      }finally{
+        useLoaderStore().desactivateLoader();
+      }
+    }
   },
   async mounted() {
     useLoaderStore().activateLoader();
@@ -267,9 +307,7 @@ img {
   margin: 4% auto;
 }
 
-.i_download {
-  margin: 7% auto 5%;
-}
+
 
 .download-internship,
 .submit-container {
@@ -284,6 +322,20 @@ img {
 
 #userDescription {
   margin-bottom: 4%;
+}
+.steps {
+  width: 90%;
+  margin: 0 auto;
+}
+ol{
+  margin-left: 5%;
+}
+li{
+  margin-bottom: 2%;
+}
+.icon {
+  margin-left: 2%;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

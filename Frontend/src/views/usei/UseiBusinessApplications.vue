@@ -13,7 +13,7 @@
                 <div class="button-container">
                   <div class="button-group">
                     <button class="edit-btn" @click="editCard(card.id)">Aceptar</button>
-                    <button class="delete-btn" @click="deleteCard(card.id)">Rechazar</button>
+                    <button class="edit-btn" @click="deleteCard(card.id)">Rechazar</button>
                   </div>
                 </div>
                     <div class="title">{{ card.nombreinstitucion }}</div>
@@ -56,16 +56,24 @@ export default {
       try {
         const result = await UseUseiInstitutionStore().ActivateInstitution(institutionId);
         console.log('Institución activada correctamente', result);
+        window.location.reload(true);
+        this.$router.go();
         // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
       } catch (error) {
         console.error('Error al activar la institución', error);
         // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
       }
     },
-      deleteCard(cardId) {
-        // Lógica para rechazar la solicitud
-        console.log(`Rechazar solicitud con ID: ${cardId}`);
-        // Aquí iría la llamada al backend o la lógica para actualizar el estado
+    async deleteCard(institutionId) {
+        try {
+        const result = await UseUseiInstitutionStore().RechazarInstitution(institutionId);
+        console.log('Institución rechazada correctamente', result);
+        window.location.reload(true);
+        // Aquí podrías llamar a getData() para refrescar la lista o quitar la tarjeta de la vista
+      } catch (error) {
+        console.error('Error al rechazar la institución', error);
+        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
       },
   },
   created() {
@@ -108,16 +116,30 @@ export default {
     @media (max-width: 290px) {
       .text-content2 {
       margin-bottom:90%;
+      
     
     }
     }
+    @media (max-width: 387px) {
+      .image .card-image {
+        display: none;
+    }
+    .button-group{
+margin-bottom: 15px;
+
+}
+}
     @media (max-width: 380px) {
       .text-content2 {
       position: relative;
-      margin-bottom:40%;
-    }
+      margin-bottom:40%;}
+      .image .card-image {
+      width: 50px; /* Tamaño fijo para la imagen */
+      
+      border-radius: 8px;
+    }}
    
-    }
+   
     @media (max-width: 290px) {
       .text-content2 {
       margin-bottom:60%;
@@ -160,6 +182,11 @@ export default {
       overflow: hidden;
       margin-bottom: 1rem;
       background: rgb(116, 181, 203);
+      box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+     transition: 0.5s;
     }
     .card-inicio{
       border: 3px solid #000000;
@@ -169,6 +196,11 @@ background:  #ffffff;
       margin-top: 15px;
       margin-right: 10%;
       margin-left: 1%;
+      box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+     transition: 0.5s;
        /* Ajusta este valor según el espacio que desees */
     }
 
@@ -197,7 +229,7 @@ background:  #ffffff;
     }
     
     .image .card-image {
-      width: 200px; /* Tamaño fijo para la imagen */
+      width: 300px; /* Tamaño fijo para la imagen */
       height: auto;
       border-radius: 8px;
     }
@@ -264,22 +296,29 @@ background:  #ffffff;
 /* Estilos para los botones Editar y Borrar */
 .edit-btn {
   padding: 10px 20px;
-  background-color: rgb(3, 170, 14);
+  background-color: rgb(71, 249, 0);
   color: white;
-  border: none;
+  border:  inset 5px 5px 5px rgba(0, 0, 0, 0.2);
+       
+     transition: 0.5s;
   border-radius: 5px;
-  cursor: pointer;
+  cursor:progress;
   font-size: 16px;
   margin: 0 5px;
+  
 }
 
 .delete-btn {
   padding: 10px 20px;
   background-color: #ff0000;
   color: white;
-  border: none;
+  border:  inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+      
+     transition: 0.5s;
   border-radius: 5px;
-  cursor: pointer;
+  cursor:progress;
   font-size: 16px;
   margin: 0 5px;
 }
@@ -290,7 +329,85 @@ background:  #ffffff;
   justify-content: flex-end;
   align-items: flex-start;
   margin-bottom: 10px;
+  --b: 5px;   /* the border thickness */
+  --h: 1.8em; /* the height */
 }
+
+
+
+.button-container .edit-btn {
+  --_c: #88C100;
+  flex: calc(1.25 + var(--_s,0));
+  min-width: 0;
+  font-size: 20px;
+  font-weight: bold;
+  height: var(--h);
+  cursor: pointer;
+  color: var(--_c);
+  border: var(--b) solid var(--_c);
+  background: 
+    conic-gradient(at calc(100% - 1.3*var(--b)) 0,var(--_c) 209deg, #0000 211deg) 
+    border-box;
+  clip-path: polygon(0 0,100% 0,calc(100% - 0.577*var(--h)) 100%,0 100%);
+  padding: 0 calc(0.288*var(--h)) 0 0;
+  margin: 0 calc(-0.288*var(--h)) 0 0;
+  box-sizing: border-box;
+  transition: flex .4s;
+}
+.button-container .edit-btn + .edit-btn {
+  --_c: #FF003C;
+  flex: calc(.75 + var(--_s,0));
+  background: 
+    conic-gradient(from -90deg at calc(1.3*var(--b)) 100%,var(--_c) 119deg, #0000 121deg) 
+    border-box;
+  clip-path: polygon(calc(0.577*var(--h)) 0,100% 0,100% 100%,0 100%);
+  margin: 0 0 0 calc(-0.288*var(--h));
+  padding: 0 0 0 calc(0.288*var(--h));
+}
+.button-container .edit-btn:focus-visible {
+  outline-offset: calc(-2*var(--b));
+  outline: calc(var(--b)/2) solid #000;
+  background: none;
+  clip-path: none;
+  margin: 0;
+  padding: 0;
+}
+.button-container .edit-btn:focus-visible + .edit-btn {
+  background: none;
+  clip-path: none;
+  margin: 0;
+  padding: 0;
+}
+.button-container .edit-btn:has(+ .edit-btn:focus-visible) {
+  background: none;
+  clip-path: none;
+  margin: 0;
+  padding: 0;
+}
+.edit-btn:hover,
+.edit-btn:active:not(:focus-visible) {
+  --_s: .75;
+ 
+}
+
+
+
+
+.edit-btn:active {
+  box-shadow: inset 0 0 0 100vmax var(--_c);
+  color: #fff;
+}
+.button-group{
+
+  border:  inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+      
+     transition: 0.5s;
+  border-radius: 10px;
+  
+}
+
 
     </style>
     

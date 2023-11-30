@@ -23,6 +23,12 @@
                     <font-awesome-icon icon="user-cog" size="2x" />
                     Estudiante
                 </label>
+				<!--Modificar Hoja de vida-->
+				<input type="radio" name="pcss3t" id="tab3" class="tab-content-3">
+				<label for="tab3">
+					<font-awesome-icon icon="user-graduate" size="2x" />
+					Hoja de vida
+				</label>
 				
 				
 				<ul>
@@ -101,15 +107,22 @@
                                 </div>
                                 <div class="entrada">
                                     <label for="carreara">Carrera:</label>
-                                    <input type="text" name="carreara" id="carreara" v-model="dataUser.carrera">
+                                    <Dropdown :options="this.listCareers" :selectedValue="career"
+									placeholderValue="Seleccione una carrera"
+									@option-selected="updateCareer" />
                                 </div>
                                 <div class="entrada">
                                     <label for="semestre">Semestre de ingreso:</label>
-                                    <input type="text" name="semestre" id="semestre" v-model="dataUser.semestreingreso">
+                                    <Dropdown :options="this.listSemester" 
+									:selectedValue="semester"
+									placeholderValue="Seleccione un semestre"
+									@option-selected="updateSemester" />
                                 </div>
                                 <div class="entrada">
                                     <label for="sede">Sede:</label>
-                                    <input type="text" name="sede" id="sede" v-model="dataUser.sede">
+									<Dropdown :options="this.listCampus" :selectedValue="campus"
+												placeholderValue="Seleccione una sede"
+												@option-selected="updateCampus" />
                                 </div>
                                 <div class="entrada" v-if="dataUser.graduado">
                                     <label for="semestre">Año de graduación:</label>
@@ -129,6 +142,39 @@
 
                         </div>
 					</li>
+					<li class="tab-content tab-content-3 typography">
+						<div class="information">
+                            <h1>
+																			Modificar Hoja de vida						
+                            	
+                            </h1>
+                            <p>
+								Aquí puedes modificar tu hoja de vida. Recuerda que 
+								puedes subir un link de tu hoja de vida en PDF, almacenado en Google 
+								Drive, Dropbox, etc. También no te olvides de hacer público el link.
+                                
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="formulario">
+                            <form action="">
+                                <div class="entrada" v-if="dataUser.graduado">
+									<label for="hojadevida">Hoja de vida:</label>
+									<input type="text" name="semestre" id="semestre" v-model="dataUser.linkcurriculumvitae">
+                                </div>
+                                <div class="entradaButton">
+                                    <Button 
+                                        text="Actualizar Hoja de vida"
+                                        :color="0" 
+                                        :disabled="false"
+                                        @option-selected="updateData"
+                                        >
+                                    </Button>
+                                </div>
+                            </form> 
+
+                        </div>
+					</li>
 					
 					
 				</ul>
@@ -143,16 +189,31 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
 import {useLoaderStore} from "@/store/common/loaderStore";
 import Button from "../../components/common/Button.vue";
 import InputPassword from "../../components/common/InputPassword.vue";
+import {useCampusStore} from "@/store/common/campusStore";
+import {useCareersStore} from "@/store/common/careersStore";
+import {useSemesterStore} from "@/store/common/semesterStore";
+import Dropdown from "../../components/common/Dropdown.vue";
 export default {
     name: "StudentSettings",
     components:{
         Button,
-        InputPassword
+        InputPassword,
+		Dropdown,
     },
     data(){
         return {
             dataUserStore: useUserByIdStore(),
-            dataUser: {}
+            dataUser: {},
+			campusStore: useCampusStore(),
+			careerStore: useCareersStore(),
+			semesterStore: useSemesterStore(),
+			listCampus: [],
+			listCareers: [],
+			listSemester: [],
+			campus: "",
+			career: "",
+			semester: "",
+
         }
     },
     methods:{
@@ -165,17 +226,66 @@ export default {
         },
         async updateData(){
         },
+		//Obtener todas las sedes
+        async getCampus(){
+            await this.campusStore.loadCampuse();
+            this.listCampus= this.campusStore.campuses.result;
+            //Convertir el array de sedes en un array de objetos con id y label
+            this.listCampus = this.listCampus.map((campus) => {
+                return {
+                    id: campus.id,
+                    label: campus.nombresede,
+                };
+            });
+        },
+        //Obtener todas las carreras
+        async getCareers(){
+            await this.careerStore.loadCareer();
+            this.listCareers= this.careerStore.careers.result;
+            //Convertir el array de carreras en un array de objetos con id y label
+            this.listCareers = this.listCareers.map((career) => {
+                return {
+                    id: career.id,
+                    label: career.nombrecarrera,
+                };
+            });
+        },
+        async getSemester(){
+            await this.semesterStore.loadSemester();
+            this.listSemester= this.semesterStore.semesters.result;
+            //Convertir el array de carreras en un array de objetos con id y label
+            this.listSemester = this.listSemester.map((semester) => {
+                return {
+                    id: semester.id,
+                    label: semester.codigosemestre,
+                };
+            });
+        },
         password(value){
             this.dataUser.contrasena = value;
         },
         confirmPassword(value){
             this.dataUser.confirmPassword = value;
         },
+		updateCampus (option) {
+			this.campus = option.label;
+        },
+        updateCareer (option) {
+			this.career = option.label;
 
+        },
+        updateSemester (option) {
+			this.semester = option.label;
+		
+        },
     },
     async mounted(){
         useLoaderStore().activateLoader();
         await this.getUserById();
+		await this.getCampus();
+		await this.getCareers();
+		await this.getSemester();
+
         useLoaderStore().desactivateLoader();
         
     },

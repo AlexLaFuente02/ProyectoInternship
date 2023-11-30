@@ -15,13 +15,10 @@
           </div>
           <!-- Texto de ejemplo -->
           <p>
-            Inserta aquí la descripción personal del usuario. onal del
-            usuario.Inserta aquí la descripción personal del usuario.Inserta
-            aquí la descripción personal del usuario.Inserta aquí la descripción
-            personal del usuari o.Inserta aquí la descripción personal del
-            usuario.Inse rta aquí la descripción personal del usuario.Inserta
-            aquí al del usuario.Inserta aquí la descripción personal del
-            usuario.
+            Soy {{ dataUser.nombres }} {{ dataUser.apellidos }}, un  {{ dataUser.graduado? 'graduado': 'estudiante' }} de la Universidad Católica Boliviana "San Pablo".
+            Mi número de carnet es {{ dataUser.carnetidentidad }} y
+            puedes contactarme a través de mi correo electrónico {{ dataUser.correoelectronico }} o
+            mi número de celular {{ dataUser.celularcontacto }}.
           </p>
         </div>
         <!-- Sección "Mi Perfil" -->
@@ -33,36 +30,7 @@
             alt="Mi Foto de Perfil"
             class="profile-picture"
           />
-          <div class="links__pack">
-            <a
-              class="link"
-              style="background-color: #3b5998"
-              href="https://www.facebook.com/usei.lpz"
-              role="button"
-              ><font-awesome-icon :icon="['fab', 'facebook']"
-            /></a>
-            <a
-              class="link"
-              style="background-color: #55acee"
-              href="https://twitter.com/UCBLaPaz"
-              role="button"
-              ><font-awesome-icon :icon="['fab', 'twitter']"
-            /></a>
-            <a
-              class="link"
-              style="background-color: #ac2bac"
-              href="https://www.instagram.com/usei.lapaz/?fbclid=IwAR07aYlD7DflEtSJDuW6ERzw_r7DjawQAQVxbXcShM4RmZjLHQAUPensFyc"
-              role="button"
-              ><font-awesome-icon :icon="['fab', 'instagram']"
-            /></a>
-            <a
-              class="link"
-              style="background-color: #0082ca"
-              href="https://www.linkedin.com/in/usei-la-paz-080327253/?originalSubdomain=bo"
-              role="button"
-              ><font-awesome-icon :icon="['fab', 'linkedin']"
-            /></a>
-          </div>
+          
         </div>
         <div class="user-details box3">
           <!-- Detalles del usuario -->
@@ -71,7 +39,7 @@
           <p>Apellido: {{ dataUser.apellidos }}</p>
           <p>Carnet: {{ dataUser.carnetidentidad }}</p>
           <p>Celular: {{ dataUser.celularcontacto }}</p>
-          <a href="https://www.google.com/" class="profile__button bn23">
+          <a  class="profile__button bn23" @click="openResume">
             <font-awesome-icon :icon="['fas', 'file-alt']" size="2xl" />
             <span class="see_vitae"> Hoja de vida </span>
           </a>
@@ -96,12 +64,21 @@ export default {
       await this.dataUserStore.getUserByIdUsuario($cookies.get("id"));
       this.dataUser = this.dataUserStore.user;
     },
+    openResume(){
+            const link = this.dataUser.linkcurriculumvitae;
+            if(link == null || link == "")
+                alert("No tienes una hoja de vida registrada, por favor registra una en la sección de editar perfil");
+            else
+                window.open(link, '_blank');
+        }
   },
   async mounted() {
     useLoaderStore().activateLoader();
     await this.getUser();
+    console.log(this.dataUser);
     useLoaderStore().desactivateLoader();
   },
+  
 };
 </script>
 
