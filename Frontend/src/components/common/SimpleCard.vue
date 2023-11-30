@@ -1,5 +1,5 @@
 <template>
-                <div class="member">
+                <div class="member" @click="moreInformation">
                     <div class="thumb">
                         <img src="https://pbs.twimg.com/profile_images/1026937398855389186/1fpmfMrK_400x400.jpg" alt="Imagen de la empresa">
                     </div>
@@ -14,6 +14,8 @@
 </template>
 <script>
 export default {
+    name: "SimpleCard",
+    emits: ['more-information'],
     props: {
         internship: {
             type: Object,
@@ -28,8 +30,10 @@ export default {
     methods: {
         getData(){
             this.Cardinternship = this.internship;
-
         },
+        moreInformation(){
+            this.$emit('more-information', this.Cardinternship.id);
+        }
     },
     created(){
         this.getData();

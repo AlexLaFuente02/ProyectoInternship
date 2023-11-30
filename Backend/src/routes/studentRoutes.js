@@ -271,4 +271,24 @@ router.get('/institucion/:institucionId', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// Ruta para obtener Postulacion por ID
+router.get('/postulacion/:postulacionId', async (req, res) => {
+    try {
+        console.log(`GET request received for getPostulacionById with postulacionId: ${req.params.postulacionId}`);
+        const postulacionId = req.params.postulacionId;
+        const response = await postulacionService.getPostulacionById(postulacionId);
+        res.json({
+            method: 'getPostulacionById',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    }	
+    catch (error) {
+        console.error(`Error getting postulacion for postulacion ID: ${req.params.postulacionId}:`, error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

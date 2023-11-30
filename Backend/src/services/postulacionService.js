@@ -4,11 +4,21 @@ const PostulacionENT = require("../ENT/PostulacionENT");
 const EstadoPostulacionENT = require("../ENT/EstadoPostulacionENT");
 const EstudianteENT = require("../ENT/EstudianteENT");
 const ConvocatoriaENT = require("../ENT/ConvocatoriaENT");
+const CarreraENT = require("../ENT/carreraENT");
+const SedeENT = require("../ENT/SedeENT");
 const EstadoPostulacionDTO = require("../DTO/EstadoPostulacionDTO");
 const EstudianteDTO = require("../DTO/EstudianteDTO");
 const ConvocatoriaDTO = require("../DTO/ConvocatoriaDTO");
+
 //para el trigger
 const historicoService = require('./historicoPostulacionesService');
+
+const sequelize = require("../../database/db");
+const { baseURL } = require("../../config/constants");
+
+const getImageUrl = (imageName) => {
+  return imageName ? `${baseURL}/images/${imageName}` : null;
+};
 
 const getAllPostulaciones = async () => {
   console.log("Obteniendo todas las postulaciones...");
@@ -216,6 +226,94 @@ const getPostulacionesPorIdConvocatoria = async (idConvocatoria) => {
   }
 };
 
+const getPostulacionesPendientesPorIdConvocatoria = async (idConvocatoria) => {
+  console.log(`Obteniendo postulaciones para la convocatoria con ID: ${idConvocatoria}...`);
+  try {
+      const postulaciones = await PostulacionENT.findAll({
+          where: { convocatoria_id: idConvocatoria,
+                  estadopostulacion_id: 2,
+          },
+          include: [
+              { model: EstadoPostulacionENT, as: 'estadopostulacion' },
+              { model: EstudianteENT, as: 'estudiante',
+              include: [ 
+              {
+                model: CarreraENT,
+                as: 'carrera'
+              },
+              {
+                model: SedeENT,
+                as: 'sede'
+              },
+            ] },
+              { model: ConvocatoriaENT, as: "convocatoria" },
+          ]
+      });
+
+      if (!postulaciones || postulaciones.length === 0) {
+          console.log(`No se encontraron postulaciones para la convocatoria con ID: ${idConvocatoria}.`);
+          return new ResponseDTO('P-1002', null, 'No se encontraron postulaciones para la convocatoria.');
+      }
+
+      const postulacionesDTO = postulaciones.map((postulacion) => {
+        const carreraDTO = {
+          id: postulacion.estudiante.carrera.id,
+          nombreestadopostulacion: postulacion.estudiante.carrera.nombrecarrera
+      };
+      const sedeDTO = {
+        id: postulacion.estudiante.sede.id,
+        nombreestadopostulacion: postulacion.estudiante.sede.nombresede
+    };
+          const estadoPostulacionDTO = {
+              id: postulacion.estadopostulacion.id,
+              nombreestadopostulacion: postulacion.estadopostulacion.nombreestadopostulacion
+          };
+          const estudianteDTO = {
+            id: postulacion.estudiante.id,
+            usuario_id: postulacion.estudiante.usuario_id,
+            nombres: postulacion.estudiante.nombres,
+            apellidos: postulacion.estudiante.apellidos,
+            carnetidentidad: postulacion.estudiante.carnetidentidad,
+            correoelectronico: postulacion.estudiante.correoelectronico,
+            celularcontacto: postulacion.estudiante.celularcontacto,
+            graduado: postulacion.estudiante.graduado,
+            carrera_id: carreraDTO,
+            semestre_id: postulacion.estudiante.semestre_id,
+            sede_id:sedeDTO,
+            aniograduacion: postulacion.estudiante.aniograduacion,
+            linkcurriculumvitae: postulacion.estudiante.linkcurriculumvitae
+        };
+        const convocatoriaDTO = {
+          id: postulacion.convocatoria.id,
+          areapasantia: postulacion.convocatoria.areapasantia,
+          descripcionfunciones: postulacion.convocatoria.descripcionfunciones,
+          requisitoscompetencias: postulacion.convocatoria.requisitoscompetencias,
+          horario_inicio: postulacion.convocatoria.horario_inicio,
+          horario_fin: postulacion.convocatoria.horario_fin,
+          fechasolicitud: postulacion.convocatoria.fechasolicitud,
+          fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
+          estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
+          institucion: postulacion.convocatoria.institucion,
+          tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
+        };
+        
+          return new PostulacionDTO(
+              postulacion.id,
+              postulacion.fechapostulacion,
+              estadoPostulacionDTO,
+              estudianteDTO,
+              convocatoriaDTO 
+          );
+      });
+
+      console.log(`Postulaciones obtenidas correctamente para la convocatoria con ID: ${idConvocatoria}.`);
+      return new ResponseDTO('P-0000', postulacionesDTO, 'Postulaciones obtenidas correctamente');
+  } catch (error) {
+      console.error(`Error al obtener las postulaciones para la convocatoria con ID: ${idConvocatoria}.`, error);
+      return new ResponseDTO('P-1002', null, `Error al obtener las postulaciones: ${error}`);
+  }
+};
+
 
 const createPostulacion = async (postulationData) => {
     console.log('Creando una nueva postulación...');
@@ -225,6 +323,19 @@ const createPostulacion = async (postulationData) => {
             !postulationData.estudiante || !postulationData.estudiante.id ||
             !postulationData.convocatoria || !postulationData.convocatoria.id) {
             return new ResponseDTO('P-1002', null, 'Datos de postulación incompletos o inválidos');
+        }
+
+        // Verificamos si el estudiante ya postuló a la convocatoria
+        const existingPostulation = await PostulacionENT.findOne({
+            where: {
+                estudiante_id: postulationData.estudiante.id,
+                convocatoria_id: postulationData.convocatoria.id
+            }
+        });
+
+        if (existingPostulation) {
+            console.log('El estudiante ya postuló a esta convocatoria.');
+            return new ResponseDTO('P-1005', null, 'Ya postulaste a esta convocatoria');
         }
 
         // Creamos la postulación y asociamos las relaciones
@@ -311,6 +422,68 @@ const updatePostulacion = async (id, postulacionData) => {
       "P-1004",
       null,
       `Error al actualizar la postulación: ${error}`
+    );
+  }
+};
+
+const updatePostulacionAprobadas = async (id) => {
+  console.log(`Actualizando el estado de la postulación con ID: ${id} a Activo...`);
+  try {
+    const postulacion = await PostulacionENT.findByPk(id);
+    if (!postulacion) {
+      console.log(`Postulación con ID: ${id} no encontrada.`);
+      return new ResponseDTO("P-1004", null, "Postulación no encontrada");
+    }
+
+    // Actualiza el campo estadopostulacion_id a 1 (Activo)
+    await postulacion.update({ estadopostulacion_id: 1 });
+
+    // Insertar en histórico después de actualizar el estado de una postulación
+    await historicoService.insertHistoricoPostulacion({ ...postulacion.dataValues, estadopostulacion_id: 1 }, 'PUT');
+
+    console.log("Estado de la postulación actualizado a Activo correctamente.");
+    return new ResponseDTO(
+      "P-0000",
+      postulacion,
+      "Estado de la postulación actualizado a Activo correctamente"
+    );
+  } catch (error) {
+    console.error(`Error al actualizar el estado de la postulación con ID: ${id} a Activo.`, error);
+    return new ResponseDTO(
+      "P-1004",
+      null,
+      `Error al actualizar el estado de la postulación a Activo: ${error}`
+    );
+  }
+};
+
+const updatePostulacionRechazadas = async (id) => {
+  console.log(`Actualizando el estado de la postulación con ID: ${id} a Inactivo...`);
+  try {
+    const postulacion = await PostulacionENT.findByPk(id);
+    if (!postulacion) {
+      console.log(`Postulación con ID: ${id} no encontrada.`);
+      return new ResponseDTO("P-1004", null, "Postulación no encontrada");
+    }
+
+    // Actualiza el campo estadopostulacion_id a 3 (Inactivo)
+    await postulacion.update({ estadopostulacion_id: 3 });
+
+    // Insertar en histórico después de actualizar el estado de una postulación
+    await historicoService.insertHistoricoPostulacion({ ...postulacion.dataValues, estadopostulacion_id: 3 }, 'PUT');
+
+    console.log("Estado de la postulación actualizado a Inactivo correctamente.");
+    return new ResponseDTO(
+      "P-0000",
+      postulacion,
+      "Estado de la postulación actualizado a Inactivo correctamente"
+    );
+  } catch (error) {
+    console.error(`Error al actualizar el estado de la postulación con ID: ${id} a Inactivo.`, error);
+    return new ResponseDTO(
+      "P-1004",
+      null,
+      `Error al actualizar el estado de la postulación a Inactivo: ${error}`
     );
   }
 };
@@ -479,6 +652,315 @@ const getPostulacionByStudentByStatus = async (studentId, estadopostulacionId) =
   }
 };
 
+const getPostulacionesActivasPorIdInstitucion = async (institutionId) => {
+  console.log(`Obteniendo postulaciones activas para la institución con ID: ${institutionId}...`);
+  try {
+    const postulaciones = await sequelize.query(
+      `SELECT 
+        p.id,
+        p.fechapostulacion,
+        ep.id as 'estadopostulacion_id',
+        ep.nombreestadopostulacion,
+        e.id as 'estudiante_id',
+        e.nombres as 'estudiante_nombres',
+        e.apellidos as 'estudiante_apellidos',
+        e.carnetidentidad,
+        e.correoelectronico,
+        e.celularcontacto,
+        e.graduado,
+        e.carrera_id,
+        e.semestre_id,
+        e.sede_id,
+        e.aniograduacion,
+        e.linkcurriculumvitae,
+        c.id as 'convocatoria_id',
+        c.areapasantia,
+        c.descripcionfunciones,
+        c.requisitoscompetencias,
+        c.horario_inicio,
+        c.horario_fin,
+        c.fechasolicitud,
+        c.fechaseleccionpasante,
+        i.nombreinstitucion
+      FROM 
+        postulacion p
+      JOIN 
+        convocatoria c ON p.convocatoria_id = c.id
+      JOIN 
+        institucion i ON c.institucion_id = i.id
+      JOIN
+        estadopostulacion ep ON p.estadopostulacion_id = ep.id
+      JOIN
+        estudiante e ON p.estudiante_id = e.id
+      WHERE 
+        i.id = :institutionId AND ep.id = 1;`, // Filtra por estado 'activo'
+      { 
+        replacements: { institutionId: institutionId },
+        type: sequelize.QueryTypes.SELECT 
+      }
+    );
+
+    // Mapear resultados a DTOs
+    const postulacionesDTO = postulaciones.map(postulacion => {
+      return new PostulacionDTO(
+        postulacion.id,
+        postulacion.fechapostulacion,
+        new EstadoPostulacionDTO(postulacion.estadopostulacion_id, postulacion.nombreestadopostulacion),
+        new EstudianteDTO(
+          postulacion.estudiante_id,
+          postulacion.estudiante_nombres,
+          postulacion.estudiante_apellidos,
+          postulacion.carnetidentidad,
+          postulacion.correoelectronico,
+          postulacion.celularcontacto,
+          postulacion.graduado,
+          postulacion.carrera_id,
+          postulacion.semestre_id,
+          postulacion.sede_id,
+          postulacion.aniograduacion,
+          postulacion.linkcurriculumvitae
+        ),
+        new ConvocatoriaDTO(
+          postulacion.convocatoria_id,
+          postulacion.areapasantia,
+          postulacion.descripcionfunciones,
+          postulacion.requisitoscompetencias,
+          postulacion.horario_inicio,
+          postulacion.horario_fin,
+          postulacion.fechasolicitud,
+          postulacion.fechaseleccionpasante
+        )
+      );
+    });
+
+    console.log(
+      `Postulaciones activas obtenidas correctamente para la institución con ID: ${institutionId}.`
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      postulacionesDTO,
+      `Postulaciones activas obtenidas correctamente para la institución con ID: ${institutionId}`
+    );
+  } catch (error) {
+    console.error(
+      `Error al obtener postulaciones activas para la institución con ID: ${institutionId}:`,
+      error
+    );
+    return new ResponseDTO(
+      "IP-1002",
+      null,
+      `Error al obtener postulaciones activas para la institución con ID: ${institutionId}: ${error}`
+    );
+  }
+};
+
+const getPostulacionPendientesPorIdInstitucion = async (institutionId) => {
+  console.log(`Obteniendo postulaciones pendientes para la institución con ID: ${institutionId}...`);
+  try {
+    const postulaciones = await sequelize.query(
+      `SELECT 
+        p.id,
+        p.fechapostulacion,
+        ep.id as 'estadopostulacion_id',
+        ep.nombreestadopostulacion,
+        e.id as 'estudiante_id',
+        e.nombres as 'estudiante_nombres',
+        e.apellidos as 'estudiante_apellidos',
+        e.carnetidentidad,
+        e.correoelectronico,
+        e.celularcontacto,
+        e.graduado,
+        e.carrera_id,
+        e.semestre_id,
+        e.sede_id,
+        e.aniograduacion,
+        e.linkcurriculumvitae,
+        c.id as 'convocatoria_id',
+        c.areapasantia,
+        c.descripcionfunciones,
+        c.requisitoscompetencias,
+        c.horario_inicio,
+        c.horario_fin,
+        c.fechasolicitud,
+        c.fechaseleccionpasante,
+        i.nombreinstitucion
+      FROM 
+        postulacion p
+      JOIN 
+        convocatoria c ON p.convocatoria_id = c.id
+      JOIN 
+        institucion i ON c.institucion_id = i.id
+      JOIN
+        estadopostulacion ep ON p.estadopostulacion_id = ep.id
+      JOIN
+        estudiante e ON p.estudiante_id = e.id
+      WHERE 
+        i.id = :institutionId AND ep.id = 2;`, // Filtra por estado 'pendiente'
+      { 
+        replacements: { institutionId: institutionId },
+        type: sequelize.QueryTypes.SELECT 
+      }
+    );
+
+    // Mapear resultados a DTOs
+    const postulacionesDTO = postulaciones.map(postulacion => {
+      return new PostulacionDTO(
+        postulacion.id,
+        postulacion.fechapostulacion,
+        new EstadoPostulacionDTO(postulacion.estadopostulacion_id, postulacion.nombreestadopostulacion),
+        new EstudianteDTO(
+          postulacion.estudiante_id,
+          postulacion.estudiante_nombres,
+          postulacion.estudiante_apellidos,
+          postulacion.carnetidentidad,
+          postulacion.correoelectronico,
+          postulacion.celularcontacto,
+          postulacion.graduado,
+          postulacion.carrera_id,
+          postulacion.semestre_id,
+          postulacion.sede_id,
+          postulacion.aniograduacion,
+          postulacion.linkcurriculumvitae
+        ),
+        new ConvocatoriaDTO(
+          postulacion.convocatoria_id,
+          postulacion.areapasantia,
+          postulacion.descripcionfunciones,
+          postulacion.requisitoscompetencias,
+          postulacion.horario_inicio,
+          postulacion.horario_fin,
+          postulacion.fechasolicitud,
+          postulacion.fechaseleccionpasante
+        )
+      );
+    });
+
+    console.log(
+      `Postulaciones pendientes obtenidas correctamente para la institución con ID: ${institutionId}.`
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      postulacionesDTO,
+      `Postulaciones pendientes obtenidas correctamente para la institución con ID: ${institutionId}`
+    );
+  }
+  catch (error) {
+    console.error(
+      `Error al obtener postulaciones pendientes para la institución con ID: ${institutionId}:`,
+      error
+    );
+    return new ResponseDTO(
+      "IP-1002",
+      null,
+      `Error al obtener postulaciones pendientes para la institución con ID: ${institutionId}: ${error}`
+    );
+  }
+};
+
+const getPostulacionesRechazadasPorIdInstitucion = async (institutionId) => {
+  console.log(`Obteniendo postulaciones rechazadas para la institución con ID: ${institutionId}...`);
+  try {
+    const postulaciones = await sequelize.query(
+      `SELECT 
+        p.id,
+        p.fechapostulacion,
+        ep.id as 'estadopostulacion_id',
+        ep.nombreestadopostulacion,
+        e.id as 'estudiante_id',
+        e.nombres as 'estudiante_nombres',
+        e.apellidos as 'estudiante_apellidos',
+        e.carnetidentidad,
+        e.correoelectronico,
+        e.celularcontacto,
+        e.graduado,
+        e.carrera_id,
+        e.semestre_id,
+        e.sede_id,
+        e.aniograduacion,
+        e.linkcurriculumvitae,
+        c.id as 'convocatoria_id',
+        c.areapasantia,
+        c.descripcionfunciones,
+        c.requisitoscompetencias,
+        c.horario_inicio,
+        c.horario_fin,
+        c.fechasolicitud,
+        c.fechaseleccionpasante,
+        i.nombreinstitucion
+      FROM 
+        postulacion p
+      JOIN 
+        convocatoria c ON p.convocatoria_id = c.id
+      JOIN 
+        institucion i ON c.institucion_id = i.id
+      JOIN
+        estadopostulacion ep ON p.estadopostulacion_id = ep.id
+      JOIN
+        estudiante e ON p.estudiante_id = e.id
+      WHERE 
+        i.id = :institutionId AND ep.id = 3;`, // Filtra por estado 'rechazado'
+      { 
+        replacements: { institutionId: institutionId },
+        type: sequelize.QueryTypes.SELECT 
+      }
+    );
+
+    // Mapear resultados a DTOs
+    const postulacionesDTO = postulaciones.map(postulacion => {
+      return new PostulacionDTO(
+        postulacion.id,
+        postulacion.fechapostulacion,
+        new EstadoPostulacionDTO(postulacion.estadopostulacion_id, postulacion.nombreestadopostulacion),
+        new EstudianteDTO(
+          postulacion.estudiante_id,
+          postulacion.estudiante_nombres,
+          postulacion.estudiante_apellidos,
+          postulacion.carnetidentidad,
+          postulacion.correoelectronico,
+          postulacion.celularcontacto,
+          postulacion.graduado,
+          postulacion.carrera_id,
+          postulacion.semestre_id,
+          postulacion.sede_id,
+          postulacion.aniograduacion,
+          postulacion.linkcurriculumvitae
+        ),
+        new ConvocatoriaDTO(
+          postulacion.convocatoria_id,
+          postulacion.areapasantia,
+          postulacion.descripcionfunciones,
+          postulacion.requisitoscompetencias,
+          postulacion.horario_inicio,
+          postulacion.horario_fin,
+          postulacion.fechasolicitud,
+          postulacion.fechaseleccionpasante
+        )
+      );
+    });
+    console.log(
+      `Postulaciones rechazadas obtenidas correctamente para la institución con ID: ${institutionId}.`
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      postulacionesDTO,
+      `Postulaciones rechazadas obtenidas correctamente para la institución con ID: ${institutionId}`
+    );
+  }
+  catch (error) {
+    console.error(
+      `Error al obtener postulaciones rechazadas para la institución con ID: ${institutionId}:`,
+      error
+    );
+    return new ResponseDTO(
+      "IP-1002",
+      null,
+      `Error al obtener postulaciones rechazadas para la institución con ID: ${institutionId}: ${error}`
+    );
+  }
+};
+
+
+
 
 module.exports = {
   getAllPostulaciones,
@@ -489,4 +971,11 @@ module.exports = {
   getPostulacionByStudent,
   getPostulacionByStudentByStatus,
   getPostulacionesPorIdConvocatoria,
+  getPostulacionesActivasPorIdInstitucion,
+  getPostulacionPendientesPorIdInstitucion,
+  getPostulacionesRechazadasPorIdInstitucion,
+  getPostulacionesPendientesPorIdConvocatoria,
+  updatePostulacionRechazadas,
+  updatePostulacionAprobadas,
+  
 };

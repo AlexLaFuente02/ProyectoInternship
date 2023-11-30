@@ -87,19 +87,32 @@ const getInstitutionById = async (id) => {
         { model: Usuario, as: "usuario" },
       ],
     });
+
     if (!institucion) {
       console.log(`Institución con ID: ${id} no encontrada.`);
       return new ResponseDTO("I-1002", null, "Institución no encontrada");
     }
-    const sectorPertenenciaDTO = new SectorPertenenciaDTO(
-      institucion.sectorpertenencia.id,
-      institucion.sectorpertenencia.nombresectorpertenencia
-    );
-    const usuarioDTO = new UsuarioDTO(
-      institucion.usuario.id,
-      institucion.usuario.idusuario
-    );
-    const imageUrl = getImageUrl(institucion.logoinstitucion);
+
+    let sectorPertenenciaDTO = null;
+    if (institucion.sectorpertenencia) {
+      sectorPertenenciaDTO = new SectorPertenenciaDTO(
+        institucion.sectorpertenencia.id,
+        institucion.sectorpertenencia.nombresectorpertenencia
+      );
+    }
+
+    let usuarioDTO = null;
+    if (institucion.usuario) {
+      usuarioDTO = new UsuarioDTO(
+        institucion.usuario.id,
+        institucion.usuario.idusuario
+      );
+    }
+
+    const imageUrl = institucion.logoinstitucion
+      ? `${baseURL}/images/${institucion.logoinstitucion}`
+      : null;
+
     const institucionDTO = new InstitucionDTO(
       institucion.id,
       institucion.nombreinstitucion,
@@ -108,10 +121,11 @@ const getInstitutionById = async (id) => {
       institucion.nombrecontacto,
       institucion.correocontacto,
       institucion.celularcontacto,
-      institucion.estado, 
+      institucion.estado,
       usuarioDTO,
       sectorPertenenciaDTO
     );
+
     console.log("Institución obtenida correctamente.");
     return new ResponseDTO(
       "I-0000",
@@ -127,6 +141,7 @@ const getInstitutionById = async (id) => {
     );
   }
 };
+
 
 const createInstitution = async (institutionData) => {
   console.log("Creando una nueva institución...");
@@ -280,37 +295,69 @@ const getInstitutionPostulations = async () => {
   try {
     const result = await sequelize.query(
       `SELECT 
-            institucion.nombreinstitucion,
-              institucion.reseniainstitucion,
-              institucion.logoinstitucion,
-            COUNT(postulacion.id) AS totalpostulaciones
-          FROM 
-            institucion
-          JOIN 
-            convocatoria ON institucion.id = convocatoria.institucion_id
-          JOIN 
-            postulacion ON convocatoria.id = postulacion.convocatoria_id
-          GROUP BY 
-            institucion.nombreinstitucion, institucion.reseniainstitucion, institucion.logoinstitucion
-          ORDER BY 
-            totalpostulaciones DESC;
+      institucion.id,
+      institucion.nombreinstitucion,
+      institucion.reseniainstitucion,
+      institucion.logoinstitucion,
+      institucion.nombrecontacto,
+      institucion.correocontacto,
+      institucion.celularcontacto,
+      institucion.estado,
+      usuario.id as usuario_id,
+      usuario.idusuario,
+      sectorpertenencia.id as sectorpertenencia_id,
+      sectorpertenencia.nombresectorpertenencia,
+      COUNT(postulacion.id) AS totalpostulaciones
+    FROM 
+      institucion
+    JOIN 
+      usuario ON institucion.usuario_id = usuario.id
+    JOIN 
+      sectorpertenencia ON institucion.sectorpertenencia_id = sectorpertenencia.id
+    JOIN 
+      convocatoria ON institucion.id = convocatoria.institucion_id
+    JOIN 
+      postulacion ON convocatoria.id = postulacion.convocatoria_id
+    GROUP BY 
+      institucion.id, usuario.id, sectorpertenencia.id
+    ORDER BY 
+      totalpostulaciones DESC;    
           `,
       { type: sequelize.QueryTypes.SELECT }
     );
 
-    const resultWithImageUrl = result.map((item) => ({
-      nombreinstitucion: item.nombreinstitucion,
-      reseniainstitucion: item.reseniainstitucion,
-      logoinstitucion: getImageUrl(item.logoinstitucion),
-      totalpostulaciones: item.totalpostulaciones,
-    }));
+    
+    const institucionesDTO = result.map((institucion) => {
+      const sectorPertenenciaDTO = new SectorPertenenciaDTO(
+          institucion.sectorpertenencia_id,
+          institucion.nombresectorpertenencia
+      );
+      const usuarioDTO = new UsuarioDTO(
+          institucion.usuario_id,
+          institucion.idusuario
+      );
+      const imageUrl = getImageUrl(institucion.logoinstitucion);
+      return new InstitucionDTO(
+          institucion.id,
+          institucion.nombreinstitucion,
+          institucion.reseniainstitucion,
+          imageUrl,
+          institucion.nombrecontacto,
+          institucion.correocontacto,
+          institucion.celularcontacto,
+          institucion.estado,
+          usuarioDTO,
+          sectorPertenenciaDTO,
+          institucion.totalpostulaciones
+      );
+  });
 
     console.log(
       "Total de postulaciones por institución obtenido correctamente."
     );
     return new ResponseDTO(
       "IP-0000",
-      resultWithImageUrl,
+      institucionesDTO,
       "Total de postulaciones por institución obtenido correctamente"
     );
   } catch (error) {
@@ -326,7 +373,93 @@ const getInstitutionPostulations = async () => {
   }
 };
 
+const getPostulationsCountByInstitutionId = async (institutionId) => {
+  console.log(`Obteniendo sumatoria de postulaciones para la institución con ID: ${institutionId}...`);
+  try {
+    const result = await sequelize.query(
+      `SELECT 
+      institucion.id,
+      institucion.nombreinstitucion,
+      institucion.reseniainstitucion,
+      institucion.logoinstitucion,
+      institucion.nombrecontacto,
+      institucion.correocontacto,
+      institucion.celularcontacto,
+      institucion.estado,
+      usuario.id as usuario_id,
+      usuario.idusuario,
+      sectorpertenencia.id as sectorpertenencia_id,
+      sectorpertenencia.nombresectorpertenencia,
+      COUNT(postulacion.id) AS totalpostulaciones
+    FROM 
+      institucion
+    JOIN 
+      usuario ON institucion.usuario_id = usuario.id
+    JOIN 
+      sectorpertenencia ON institucion.sectorpertenencia_id = sectorpertenencia.id
+    JOIN 
+      convocatoria ON institucion.id = convocatoria.institucion_id
+    JOIN 
+      postulacion ON convocatoria.id = postulacion.convocatoria_id
+		WHERE
+			institucion.id=1
+    GROUP BY 
+      institucion.id, usuario.id, sectorpertenencia.id
+    ORDER BY 
+      totalpostulaciones DESC;      
+          `,
+      { 
+        replacements: { institutionId: institutionId },
+        type: sequelize.QueryTypes.SELECT 
+      }
+    );
 
+    
+    const institucionesDTO = result.map((institucion) => {
+      const sectorPertenenciaDTO = new SectorPertenenciaDTO(
+          institucion.sectorpertenencia_id,
+          institucion.nombresectorpertenencia
+      );
+      const usuarioDTO = new UsuarioDTO(
+          institucion.usuario_id,
+          institucion.idusuario
+      );
+      const imageUrl = getImageUrl(institucion.logoinstitucion);
+      return new InstitucionDTO(
+          institucion.id,
+          institucion.nombreinstitucion,
+          institucion.reseniainstitucion,
+          imageUrl,
+          institucion.nombrecontacto,
+          institucion.correocontacto,
+          institucion.celularcontacto,
+          institucion.estado,
+          usuarioDTO,
+          sectorPertenenciaDTO,
+          institucion.totalpostulaciones
+      );
+  });
+
+    console.log(
+      "Total de postulaciones por institución obtenido correctamente."
+    );
+    return new ResponseDTO(
+      "IP-0000",
+      institucionesDTO,
+      "Total de postulaciones por institución obtenido correctamente"
+    );
+  } catch (error) {
+    console.error(
+      "Error al obtener el total de postulaciones por institución:",
+      error
+    );
+    return new ResponseDTO(
+      "IP-1001",
+      null,
+      `Error al obtener el total de postulaciones por institución: ${error}`
+    );
+  }
+};
 
 const getPostulationsByInstitutionId = async (institutionId) => {
   console.log(`Obteniendo postulaciones para la institución con ID: ${institutionId}...`);
@@ -931,4 +1064,5 @@ module.exports = {
   getPostulationsByInstitutionId,
   rejectInstitution,
   pendingInstitution,
+  getPostulationsCountByInstitutionId,
 };

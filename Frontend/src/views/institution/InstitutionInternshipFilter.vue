@@ -9,40 +9,57 @@
           v-for="internship in activeInternshipsByInstitutionList"
           :key="internship.id"
         >
-          <img
-            src="https://i.pinimg.com/564x/0f/76/1c/0f761c01d1fb284eb429061e577aa623.jpg"
-            alt="Logo de la Empresa"
-          />
+          <img :src="getRandomImage" alt="Internship image" />
           <div class="information-grid">
             <h4 class="information-title">Detalles de la Pasantía:</h4>
             <div class="i_details">
               <ul class="internship-details">
-                <li><strong>Ubicación: </strong>Ubicación de la empresa</li>
-                <li><strong>Duración: </strong>Duración de la pasantía</li>
-                <li><strong>Fecha de Inicio: </strong>Fecha de inicio</li>
+                <li class="title">ID: {{ internship.id }}</li>
                 <li>
-                  <strong>Fecha de Finalización: </strong>Fecha de finalización
+                  <strong>&Aacute;rea de la pasant&iacute;a:</strong>
+                  {{ internship.areapasantia }}
                 </li>
                 <li>
-                  <strong>Tipo de Pasantía: </strong>Pasantía de Desarrollo Web
-                  Backend
+                  <strong>Descripci&oacute;n funciones o actividades:</strong>
+                  {{ internship.descripcionfunciones }}
                 </li>
-                <li><strong>Tecnologías: </strong>Spring, Java, SQL, etc.</li>
-                <li><strong>Ciudad: </strong>La Paz</li>
+                <li>
+                  <strong>Requisitos de la pasant&iacute;a:</strong>
+                  {{ internship.requisitoscompetencias }}
+                </li>
+                <li>
+                  <strong>Horario de inicio:</strong>
+                  {{ internship.horario_inicio }}
+                </li>
+                <li>
+                  <strong>Horario de fin:</strong> {{ internship.horario_fin }}
+                </li>
+                <li>
+                  <strong>Fecha de solicitud:</strong>
+                  {{ internship.fechasolicitud }}
+                </li>
+                <li>
+                  <strong>Fecha de selecci&oacute;n del pasante:</strong>
+                  {{ internship.fechaseleccionpasante }}
+                </li>
+                <li>
+                  <strong>Estado de la convocatoria:</strong>
+                  {{ internship.nombreestadoconvocatoria }}
+                </li>
+                <li>
+                  <strong>Tiempo a cumplir de la pasant&iacute;a:</strong>
+                  {{ internship.tiempoacumplir }}
+                </li>
               </ul>
             </div>
           </div>
           <div class="more-information-button">
-            <router-link
-              class="link"
-              to="/institution/InternshipApplicationTray"
-            >
-              <ButtonVue
-                text="Bandeja de Solicitudes"
-                :color="3"
-                :disabled="false"
-              />
-            </router-link>
+            <ButtonVue
+              text="Bandeja de Solicitudes"
+              :color="3"
+              :disabled="false"
+              @option-selected="$router.push(`/institution/InternshipApplicationTray/${internship.id}`)"
+            />
           </div>
         </div>
       </div>
@@ -53,6 +70,10 @@
 <script>
 import { useLoaderStore } from "@/store/common/loaderStore";
 import { activeInternshipsByInstitutionIdStore } from "../../store/institution/ActiveInternshipsByInstitutionIdStore";
+import firstInternshipImage from "@/components/institution/staticImages/firstInternshipStaticImage.jpg";
+import secondInternshipImage from "@/components/institution/staticImages/secondInternshipStaticImage.png";
+import thirdInternshipImage from "@/components/institution/staticImages/thirdInternshipStaticImage.png";
+import fourthInternshipImage from "@/components/institution/staticImages/fourthInternshipStaticImage.png";
 import ButtonVue from "../../components/common/Button.vue";
 export default {
   name: "institutionInternshipFilterPage",
@@ -61,6 +82,12 @@ export default {
   },
   data() {
     return {
+      internshipsImages: [
+        firstInternshipImage,
+        secondInternshipImage,
+        thirdInternshipImage,
+        fourthInternshipImage,
+      ],
       activeInternshipsByInstitutionIdStore: activeInternshipsByInstitutionIdStore(),
       internshipsAreLoaded: false,
       activeInternshipsByInstitutionList: [],
@@ -81,15 +108,19 @@ export default {
           horario_fin: internship.horario_fin,
           fechasolicitud: internship.fechasolicitud,
           fechaseleccionpasante: internship.fechaseleccionpasante,
-          nombreestadoconvocatoria:
-            internship.estadoconvocatoria.nombreestadoconvocatoria,
+          nombreestadoconvocatoria: internship.estadoconvocatoria.nombreestadoconvocatoria,
           tiempoacumplir: internship.tiempoacumplir.descripcion,
-          // logoinstitucion: internship.institucion.logoinstitucion,
         };
       });
       console.log(this.activeInternshipsByInstitutionList);
       this.internshipsAreLoaded = true;
       useLoaderStore().desactivateLoader();
+    },
+  },
+  computed: {
+    getRandomImage() {
+      const randomImage = Math.floor(Math.random() * this.internshipsImages.length);
+      return this.internshipsImages[randomImage];
     },
   },
   created() {
@@ -110,6 +141,12 @@ img {
 
 .link {
   text-decoration: none;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 2%;
 }
 
 .internship-container {
@@ -146,7 +183,11 @@ img {
   list-style: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 880px) {
+  .main-container {
+    text-align: center;
+  }
+
   .internship-container,
   .internship-information-grid {
     display: block;
@@ -154,6 +195,10 @@ img {
 
   .i_details {
     margin: 5% auto;
+  }
+
+  .internship-details {
+    padding: 0;
   }
 
   .more-information-button {

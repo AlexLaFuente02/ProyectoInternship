@@ -33,14 +33,18 @@
             <CardModeList 
             v-for="(internship, index) in paginatedData"
             :key="internship.id" 
-            :internship="internship" />
+            :internship="internship" 
+            @more-information="moreInformation"
+            />
         </div>
         <div class="containerList__cards__modeGRID" v-show="!getMode">
             
             <Card 
             v-for="(internship, index) in paginatedData"
             :key="internship.id" 
-            :internship="internship" />
+            :internship="internship" 
+            @more-information="moreInformation"
+            />
         </div>
         <div class="containerList__footer">
             <div class="containerList__footer__pagination">
@@ -51,6 +55,7 @@
                     :key="page"
                     @click="changePage(page)"
                     :class="{'active': currentPage === page}"
+
                     >{{page}}</button>
                 </div>
                 <button @click="nextPage" :disabled="currentPage === totalPages()">Siguiente</button>
@@ -64,6 +69,7 @@ import Card from "@/components/common/Card.vue";
 import CardModeList from "@/components/common/CardModeList.vue";
 import { useModeViewStore } from '@/store/common/modeViewListStore';
 export default {
+    
     data() {
         return {
             listInterships:[],
@@ -127,6 +133,9 @@ export default {
             this.currentPage = 1;
             this.getData();
         },
+        moreInformation(id){
+            this.$emit('more-information', id);
+        }
     },
     created(){
         this.loadModeView();

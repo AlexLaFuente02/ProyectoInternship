@@ -1,66 +1,66 @@
 <template>
-  <div class="inicio">
+  <div class="main-container">
     <h1>TUS CONVOCATORIAS</h1>
-    <h5>Te mostramos tus convocatorias</h5>
-    <div class="card-inicio">
-      <div class="card" v-if="internshipsAreLoaded">
+    <h5>Te mostramos tus convocatorias activas</h5>
+    <div class="internship-container">
+      <div v-if="internshipsAreLoaded">
         <div
+          class="internship-information-grid"
           v-for="internship in activeInternshipsByInstitutionList"
           :key="internship.id"
-          class="card-individual"
         >
-          <div class="content">
-            <div class="image">
-              <img
-                :src="internship.logoinstitucion"
-                alt="Internship image"
-                class="card-image"
-              />
+          <img :src="getRandomImage" alt="Internship image" />
+          <div class="information-grid">
+            <h4 class="information-title">Detalles de la Pasantía:</h4>
+            <div class="i_details">
+              <ul class="internship-details">
+                <li class="title">ID: {{ internship.id }}</li>
+                <li>
+                  <strong>&Aacute;rea de la pasant&iacute;a:</strong>
+                  {{ internship.areapasantia }}
+                </li>
+                <li>
+                  <strong>Descripci&oacute;n funciones o actividades:</strong>
+                  {{ internship.descripcionfunciones }}
+                </li>
+                <li>
+                  <strong>Requisitos de la pasant&iacute;a:</strong>
+                  {{ internship.requisitoscompetencias }}
+                </li>
+                <li>
+                  <strong>Horario de inicio:</strong>
+                  {{ internship.horario_inicio }}
+                </li>
+                <li>
+                  <strong>Horario de fin:</strong> {{ internship.horario_fin }}
+                </li>
+                <li>
+                  <strong>Fecha de solicitud:</strong>
+                  {{ internship.fechasolicitud }}
+                </li>
+                <li>
+                  <strong>Fecha de selecci&oacute;n del pasante:</strong>
+                  {{ internship.fechaseleccionpasante }}
+                </li>
+                <li>
+                  <strong>Estado de la convocatoria:</strong>
+                  {{ internship.nombreestadoconvocatoria }}
+                </li>
+                <li>
+                  <strong>Tiempo a cumplir de la pasant&iacute;a:</strong>
+                  {{ internship.tiempoacumplir }}
+                </li>
+              </ul>
             </div>
-            <div class="text-content">
-              <div class="button-container">
-                <div class="button-group">
-                  <button class="edit-btn" @click="editCard(internship.id)">
-                    Editar
-                  </button>
-                  <button class="delete-btn" @click="deleteCard(internship.id)">
-                    Borrar
-                  </button>
-                </div>
-              </div>
-              <div class="title">ID: {{ internship.id }}</div>
-              <div class="description">
-                &Aacute;rea de la pasant&iacute;a: {{ internship.areapasantia }}
-              </div>
-              <div class="description">
-                Descripci&oacute;n funciones o actividades:
-                {{ internship.descripcionfunciones }}
-              </div>
-              <div class="description">
-                Requisitos de la pasant&iacute;a:
-                {{ internship.requisitoscompetencias }}
-              </div>
-              <div class="description">
-                Horario de inicio: {{ internship.horario_inicio }}
-              </div>
-              <div class="description">
-                Horario de fin: {{ internship.horario_fin }}
-              </div>
-              <div class="description">
-                Fecha de solicitud: {{ internship.fechasolicitud }}
-              </div>
-              <div class="description">
-                Fecha de selecci&oacute;n del pasante:
-                {{ internship.fechaseleccionpasante }}
-              </div>
-              <div class="description">
-                Estado de la convocatoria:
-                {{ internship.nombreestadoconvocatoria }}
-              </div>
-              <div class="description">
-                Tiempo a cumplir de la pasant&iacute;a:
-                {{ internship.tiempoacumplir }}
-              </div>
+          </div>
+          <div class="buttons-container">
+            <div class="button-group">
+              <button class="edit-btn" @click="editCard(internship.id)">
+                Editar
+              </button>
+              <button class="delete-btn" @click="deleteCard(internship.id)">
+                Borrar
+              </button>
             </div>
           </div>
         </div>
@@ -72,9 +72,24 @@
 <script>
 import { useLoaderStore } from "@/store/common/loaderStore";
 import { activeInternshipsByInstitutionIdStore } from "../../store/institution/ActiveInternshipsByInstitutionIdStore";
+import firstInternshipImage from "@/components/institution/staticImages/firstInternshipStaticImage.jpg";
+import secondInternshipImage from "@/components/institution/staticImages/secondInternshipStaticImage.png";
+import thirdInternshipImage from "@/components/institution/staticImages/thirdInternshipStaticImage.png";
+import fourthInternshipImage from "@/components/institution/staticImages/fourthInternshipStaticImage.png";
+import ButtonVue from "../../components/common/Button.vue";
 export default {
+  name: "institutionInternshipFilterPage",
+  components: {
+    ButtonVue,
+  },
   data() {
     return {
+      internshipsImages: [
+        firstInternshipImage,
+        secondInternshipImage,
+        thirdInternshipImage,
+        fourthInternshipImage,
+      ],
       activeInternshipsByInstitutionIdStore: activeInternshipsByInstitutionIdStore(),
       internshipsAreLoaded: false,
       activeInternshipsByInstitutionList: [],
@@ -95,22 +110,20 @@ export default {
           horario_fin: internship.horario_fin,
           fechasolicitud: internship.fechasolicitud,
           fechaseleccionpasante: internship.fechaseleccionpasante,
-          nombreestadoconvocatoria: internship.estadoconvocatoria.nombreestadoconvocatoria,
+          nombreestadoconvocatoria:
+            internship.estadoconvocatoria.nombreestadoconvocatoria,
           tiempoacumplir: internship.tiempoacumplir.descripcion,
-          // logoinstitucion: internship.institucion.logoinstitucion,
         };
       });
       console.log(this.activeInternshipsByInstitutionList);
       this.internshipsAreLoaded = true;
       useLoaderStore().desactivateLoader();
     },
-    editCard(cardId) {
-      // Lógica para editar la tarjeta con el ID proporcionado
-      console.log(`Editar tarjeta con ID: ${cardId}`);
-    },
-    deleteCard(cardId) {
-      // Lógica para borrar la tarjeta con el ID proporcionado
-      console.log(`Borrar tarjeta con ID: ${cardId}`);
+  },
+  computed: {
+    getRandomImage() {
+      const randomImage = Math.floor(Math.random() * this.internshipsImages.length);
+      return this.internshipsImages[randomImage];
     },
   },
   created() {
@@ -120,191 +133,78 @@ export default {
 </script>
 
 <style scoped>
-.text-content {
-  position: relative;
-}
-.text-content2 {
-  position: relative;
-}
-.text-content3 {
-  position: relative;
-}
-@media (max-width: 585px) {
-  .text-content2 {
-    position: relative;
-    margin-bottom: 20%;
-  }
-  .text-a {
-    margin-top: 30px;
-  }
-  .text-content {
-    margin-bottom: 20%;
-  }
-}
-@media (max-width: 290px) {
-  .text-content2 {
-    margin-bottom: 90%;
-  }
-}
-@media (max-width: 380px) {
-  .text-content2 {
-    position: relative;
-    margin-bottom: 40%;
-  }
-}
-@media (max-width: 290px) {
-  .text-content2 {
-    margin-bottom: 60%;
-  }
-}
-.content-text {
-  margin-right: 10%; /* Ajusta el espacio para el botón de reserva */
+.main-container {
+  margin: 3% auto;
+  width: 90%;
 }
 
-.book-btn {
-  position: absolute;
-  top: 5%;
-  right: 1%;
-}
-/**fin  boton  */
-.inicio {
-  margin: 3% 5%;
+img {
+  width: 100%;
 }
 
-/**colores de texto de si esta aprobado o no */
-.text-a,
-.text-p,
-.text-r {
-  position: relative;
-  left: 10%;
-  right: 60%;
-  transform: translate(50%, -50%);
-  text-transform: uppercase;
-  font-family: verdana;
-  font-size: 200%;
-  font-weight: 50%;
-  text-shadow: 1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191,
-    1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191,
-    1px 7px 1px #919191, 1px 8px 1px #919191, 1px 9px 1px #919191,
-    1px 10px 1px #919191, 1px 18px 6px rgba(16, 16, 16, 0.4),
-    1px 22px 10px rgba(16, 16, 16, 0.2), 1px 25px 35px rgba(16, 16, 16, 0.2),
-    1px 30px 60px rgba(16, 16, 16, 0.4);
-}
-.text-a {
-  color: #00c123;
-}
-.text-p {
-  color: #fee900;
-}
-.text-r {
-  color: #dc0c0c;
-}
-/**finnnnnnnnnnnnnnnnnnnnnnnn*/
-.card {
-  /**contenedore de indivialues */
-  border: 0px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-top: 30px;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-bottom: 15px;
-}
-.card-individual {
-  border: 2px solid black;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 2%;
-}
-.dark-theme .card-individual {
-  border: 2px solid white;
-}
-
-.card-inicio {
-  background-color: rgb(255, 255, 255);
-  border-radius: 8px;
-  overflow: hidden;
-  border: 2px solid black;
-}
-.dark-theme .card-inicio {
-  background-color: #353e48;
-  border: 2px solid white;
-}
-
-.content {
-  display: flex;
-}
-
-.image {
-  flex: 0 0 auto; /* Ancho fijo para la imagen */
-}
-
-.image .card-image {
-  width: 200px; /* Tamaño fijo para la imagen */
-  height: auto;
-  border-radius: 8px;
-}
-
-.text-content {
-  flex: 1;
-  padding: 20px;
-}
-/* Estilos responsivos */
-@media (max-width: 880px) {
-  .content {
-    flex-direction: column;
-  }
-  .text-content {
-    padding: 20px;
-  }
-}
 .title {
   font-weight: bold;
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 2%;
 }
 
-.description {
-  margin-bottom: 15px;
+.internship-container {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  border: 2px solid black;
+  padding-bottom: 2%;
 }
 
-.info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  font-size: 16px;
+.internship-information-grid {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 20% 55% auto;
+  align-items: center;
+  margin: 2% auto 0;
+  width: 92%;
+  border: 2px solid black;
 }
 
-.book-btn {
-  padding: 10px 20px;
-  background-color: #5a99dd;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+.information-title {
+  margin: 2% auto 0;
 }
 
-.disclaimer {
-  font-size: 12px;
-  color: #777;
-  margin-top: 10px;
+.i_details {
+  width: 70%;
+  margin: 2% auto;
 }
 
-.star {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  background-image: url("https://image.flaticon.com/icons/svg/148/148841.svg");
-  background-size: contain;
-  margin-right: 3px;
+.internship-details {
+  text-align: start;
+  list-style: none;
 }
 
-.review-count {
-  color: #777;
+@media screen and (max-width: 880px) {
+  .main-container {
+    text-align: center;
+  }
+
+  .internship-container,
+  .internship-information-grid {
+    display: block;
+  }
+
+  .i_details {
+    margin: 5% auto;
+  }
+
+  .internship-details {
+    padding: 0;
+  }
+
+  .buttons-container {
+    margin-bottom: 5%;
+  }
 }
 
-/* Estilos para los botones Editar y Borrar */
 .edit-btn,
 .delete-btn {
   padding: 10px 20px;
@@ -314,14 +214,19 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  margin: 0 5px;
+  margin: auto 3%;
 }
 
-/* Estilos para alinear botones a la derecha */
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  margin-bottom: 10px;
+/* DARK THEME */
+.dark-theme .internship-container {
+  background-color: #353e48;
+}
+
+.dark-theme .internship-container {
+  border: 2px solid white;
+}
+
+.dark-theme .internship-information-grid {
+  border: 2px solid white;
 }
 </style>

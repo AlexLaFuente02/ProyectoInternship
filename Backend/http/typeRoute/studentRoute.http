@@ -85,7 +85,7 @@ GET {{baseURL}}/institucion
 Accept: application/json
 
 ###GET de institucion por ID
-@institucionID = 1
+@institucionID = 3
 GET {{baseURL}}/institucion/{{institucionID}}
 
 
@@ -93,4 +93,10 @@ GET {{baseURL}}/institucion/{{institucionID}}
 ### GET de Student por ID
 @studentID = 1
 GET {{baseURL}}/{{studentID}}
+Accept: application/json
+
+
+### GET Postulacion por PostulacionID
+@postulacionID = 1
+GET {{baseURL}}/postulacion/{{postulacionID}}
 Accept: application/json
