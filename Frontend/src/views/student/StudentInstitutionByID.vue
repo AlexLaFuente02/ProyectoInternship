@@ -3,7 +3,7 @@
       <div >
         <div class="inicio2">
           <h1>
-            PERFIL DE TU EMPRESA ¡{{ institutionInformation.nombreinstitucion }}!
+            EMPRESA ¡{{ institutionInformation.nombreinstitucion }}!
           </h1>
         </div>
         <div class="container">

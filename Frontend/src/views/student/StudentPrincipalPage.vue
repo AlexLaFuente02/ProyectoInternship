@@ -25,6 +25,12 @@
                             </button>
                             <button class="profile__button bn23">
                                 <router-link class="link" to="/student/profile">
+                                    <font-awesome-icon :icon="['fas', 'user-circle']" size="2xl" />
+                                    <span class="edit__Profile">Ver Perfil</span>
+                                </router-link>
+                            </button>
+                            <button class="profile__button bn23">
+                                <router-link class="link" to="/student/settings">
                                     <font-awesome-icon :icon="['fas', 'user-edit']" size="2xl" />
                                     <span class="edit__Profile">Editar Perfil</span>
                                 </router-link>
@@ -554,9 +560,11 @@ export default {
         flex-direction: column;
     }
     .internship__active__by__student{
+        flex:auto  ;
         margin: 0 0 1.5rem 0;
     }
     .requests__by__student{
+        flex:auto  ;
         margin: 0 0 1.5rem 0;
     }
 
@@ -609,9 +617,11 @@ export default {
     }
     .internship__active__by__student{
         margin: 0 0 1.5rem 0;
+        flex: auto;
     }
     .requests__by__student{
         margin: 0 0 1.5rem 0;
+        flex: auto;
     }
 }
 
