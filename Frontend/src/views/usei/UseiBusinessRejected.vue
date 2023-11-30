@@ -3,7 +3,7 @@
  
          <div class="card-inicio">
          <div class="card">
-           <h1>Solicitudes de convocatorias</h1>
+           <h1>Solicitudes rechazadas de convocatorias</h1>
            <div class="EmpresasDestacadas">
             
              <div v-for="card in listInternship" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
@@ -33,17 +33,17 @@
          
          <div class="card-inicio">
          <div class="card">
-           <h1>Solicitudes de empresas</h1>
+           <h1>Solicitudes rechazadas de empresas</h1>
            <div class="EmpresasDestacadas">
             
          <div v-for="card in listInstitution" :key="card.id" v-if="everyInternshipsAreLoaded" class="company-cards-container">
            
          <CardsSoli 
-         :name="card.nombreinstitucion"
-         :a="card.sectorpertenencia.nombresectorpertenencia "
-         :b="card.nombrecontacto "
-         :c="card.correocontacto "
-         :d="card.celularcontacto "/>
+         :a="card.id "
+         :b="card.nombreinstitucion "
+         :c="card.nombrecontacto "
+         :d="card.correocontacto "
+         :e="card.celularcontacto "/>
          
          </div>
        
@@ -68,7 +68,7 @@
    </template>
    <script>
    import CardsSoli from '../../components/common/CardsSoli.vue';
-   import CardsSoliEmpresa from '../../components/common/CardsSoliEmpresa.vue';
+   //import CardsSoliEmpresa from '../../components/common/CardsSoliEmpresa.vue';
    import Carousel from "@/components/common/Carousel.vue";
    import Button from "@/components/common/Button.vue";
    import SimpleCard from "@/components/common/SimpleCard.vue";
@@ -80,7 +80,7 @@
        Carousel,
        SimpleCard,
        Button,
-       CardsSoliEmpresa,
+       //CardsSoliEmpresa,
        CardsSoli
        
      },
@@ -131,23 +131,14 @@
        }
      },
      async getData() {
-       
-       useLoaderStore().activateLoader();
- 
-       await UseUseiInternshipStore().LoadPendenInternship();
- // Asumiendo que LoadPendenInternship() actualiza InternshipList de manera similar a LoadInstitutions() en tu ejemplo.
-       this.listInternship = UseUseiInternshipStore().InternshipList.result;
+      useLoaderStore().activateLoader();
+      await UseUseiInternshipStore().LoadPendenInternship();
+      this.listInternship = UseUseiInternshipStore().InternshipList.result;
        await UseUseiInstitutionStore().LoadPendentInstitutions();
-       // Asumiendo que LoadPendentInstitutions() actualiza InstitutionList de manera similar a LoadInstitutions() en tu ejemplo.
-       this.listInstitution = UseUseiInstitutionStore().InstitutionList.result;
- 
- this.everyInternshipsAreLoaded = true;
- useLoaderStore().desactivateLoader();
- 
- 
- 
-         
-       },
+        this.listInstitution = UseUseiInstitutionStore().InstitutionList.result;
+        this.everyInternshipsAreLoaded = true;
+      useLoaderStore().desactivateLoader();
+    },
      },
      created() {
        this.getData();
@@ -392,7 +383,7 @@
  .card{
    width: 100%;
      border-radius: 10px;
-  padding:2% ;
+  padding:3% ;
      background-color: #Fff;
      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);}
  

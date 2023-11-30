@@ -239,7 +239,7 @@ body .container .card .box .content a:hover {
 @media screen and (max-width: 480px){
   body .container .card {
   position: relative;
-  height: 220px;
+  height: 300px;
   min-width: 300px;
 
 
@@ -249,7 +249,7 @@ body .container .card .box .content a:hover {
  @media screen and (max-width: 366px){
   body .container .card {
   position:relative;
-  height: 300px;
+  height: 310px;
   min-width: 220px;
 }
    
