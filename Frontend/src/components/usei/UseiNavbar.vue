@@ -65,15 +65,9 @@
             class="dropdown-link"
             @click="showDropdownRequestsList"
           >
-            <li class="dropdown-item">Solicitudes de rechazadas de empresas</li>
+            <li class="dropdown-item">Solicitudes de rechazadas</li>
           </router-link>
-          <router-link
-            to="/usei/Internship/Rejected"
-            class="dropdown-link"
-            @click="showDropdownRequestsList"
-          >
-            <li class="dropdown-item">Solicitudes de rechazadas de convocatorias</li>
-          </router-link>
+
           
         </ul>
         <router-link class="link" to="/usei/AnalyticsDashboard">

@@ -65,6 +65,7 @@ methods: {
     deleteCard(cardId) {
       // Lógica para rechazar la solicitud
       console.log(`Rechazar solicitud con ID: ${cardId}`);
+  
       // Aquí iría la llamada al backend o la lógica para actualizar el estado
     },
 },

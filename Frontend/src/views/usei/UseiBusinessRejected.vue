@@ -67,8 +67,8 @@
  
    </template>
    <script>
-   import CardsSoli from '../../components/common/CardsSoli.vue';
-   //import CardsSoliEmpresa from '../../components/common/CardsSoliEmpresa.vue';
+   import CardsSoli from "@/components/common/CardsSoli.vue";
+   //import CardsSoliEmpresa from "@/components/common/CardsSoliEmpresa.vue";
    import Carousel from "@/components/common/Carousel.vue";
    import Button from "@/components/common/Button.vue";
    import SimpleCard from "@/components/common/SimpleCard.vue";
