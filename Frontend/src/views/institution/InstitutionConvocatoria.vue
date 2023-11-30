@@ -110,8 +110,7 @@ export default {
           horario_fin: internship.horario_fin,
           fechasolicitud: internship.fechasolicitud,
           fechaseleccionpasante: internship.fechaseleccionpasante,
-          nombreestadoconvocatoria:
-            internship.estadoconvocatoria.nombreestadoconvocatoria,
+          nombreestadoconvocatoria: internship.estadoconvocatoria.nombreestadoconvocatoria,
           tiempoacumplir: internship.tiempoacumplir.descripcion,
         };
       });

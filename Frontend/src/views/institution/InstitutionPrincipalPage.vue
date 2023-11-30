@@ -36,7 +36,7 @@
             <span class="summary-content-text">inactivas</span>
           </span>
           <span class="summary-content-number">
-            18
+            {{ allPostulationsByInstitution.length }}
             <span class="summary-content-text">total solicitudes</span>
           </span>
         </div>
@@ -124,7 +124,6 @@ import SimpleCard from "@/components/common/SimpleCard.vue";
 import ArrowCards from "@/components/common/ArrowCards.vue";
 import InternshipsLittleNavBar from "@/components/institution/InternshipsLittleNavBar.vue";
 import PostulationsLittleNavBar from "@/components/institution/PostulationsLittleNavBar.vue";
-import { useRequestsByIDStore } from "@/store/student/requestsByIDStore";
 import { InstitutionByIdStore } from "@/store/institution/InstitutionByIdStore";
 import { QuantityOfActiveNInactiveInternshipsStore } from "../../store/institution/QuantityOfActiveNInactiveInternshipsStore";
 import { totalPostulationsByInstitutionIdStore } from "../../store/institution/TotalPostulationsByInstitutionIdStore";
@@ -192,8 +191,8 @@ export default {
       this.companyInformation = this.institutionByIdStore.institution.result;
       await this.activeNInactiveInternshipsQuantityStore.loadQuantitiesOfInternships(institutionID);
       this.internshipsQuantities = this.activeNInactiveInternshipsQuantityStore.quantityResults.result;
-      // await this.totalPostulationsByInstitutionIdStore.loadTotalPostulationsByInstitutionId(institutionID);
-      // this.postulationsQuantity = this.totalPostulationsByInstitutionIdStore.totalPostulationsResult.result;
+      await this.totalPostulationsByInstitutionIdStore.loadTotalPostulationsByInstitutionId(institutionID);
+      this.postulationsQuantity = this.totalPostulationsByInstitutionIdStore.totalPostulationsResult.result;
       await this.activeInternshipsByInstitutionIdStore.loadActiveInternshipsByInstitutionId(institutionID);
       this.activeInternships = this.activeInternshipsByInstitutionIdStore.internships.result;
       await this.pendingInternshipsByInstitutionIdStore.loadPendingInternshipsByInstitutionId(institutionID);

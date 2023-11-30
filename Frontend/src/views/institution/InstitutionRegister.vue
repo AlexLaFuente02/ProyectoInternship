@@ -51,18 +51,11 @@
           <label for="institutionSector"
             >Sector al que pertenece <strong>*</strong>:</label
           >
-          <!-- <Dropdown
+          <Dropdown
             :options="this.sectorList"
             :selectedValue="sector"
             placeholderValue="Seleccione el sector de pertenencia de su empresa"
             @option-selected="updateSector"
-          /> -->
-          <input
-            type="text"
-            name="institutionSector"
-            id="institutionSector"
-            placeholder="Introduzca el sector al que pertenece"
-            v-model="institutionRegisterStore.sectorpertenencia.id"
           />
         </div>
       </div>
@@ -174,7 +167,7 @@ export default {
       this.sectorList = this.sectorList.map((sector) => {
         return {
           id: sector.id,
-          nombresectorpertenencia: sector.nombresectorpertenencia,
+          label: sector.nombresectorpertenencia,
         };
       });
       console.log(this.sectorList);
@@ -231,14 +224,12 @@ export default {
     },
     updateSector(option) {
       this.institutionRegisterStore.$state.sectorpertenencia.id = option.id;
-    //   this.institutionRegisterStore.$state.nombresectorpertenencia = option.nombresectorpertenencia;
-      this.sector = option.nombresectorpertenencia;
+      this.sector = option.label;
     },
   },
   async mounted() {
     useLoaderStore().activateLoader();
     await this.getBelongingSectors();
-    // this.sector = this.institutionRegisterStore.$state.nombresectorpertenencia;
     useLoaderStore().desactivateLoader();
   },
 };

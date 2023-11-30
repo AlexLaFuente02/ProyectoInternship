@@ -94,9 +94,6 @@
         </div>
       </div>
     </div>
-    <div v-else>
-      <h1>No se logró cargar tu perfil, int&eacute;ntalo nuevamente...</h1>
-    </div>
   </div>
 </template>
 
