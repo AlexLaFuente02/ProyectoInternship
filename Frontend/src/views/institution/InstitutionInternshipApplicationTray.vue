@@ -32,7 +32,7 @@
             }}
           </td>
           <td class="request-table-cell">
-            {{ pendingPostulation.estudiante_id.carrera_id }}
+            {{ pendingPostulation.estudiante_id.carrera_id.nombreestadopostulacion }}
           </td>
           <td class="request-table-cell">
             <a :href="pendingPostulation.estudiante_id.linkcurriculumvitae">
@@ -55,7 +55,7 @@
             {{ pendingPostulation.estudiante_id.aniograduacion }}
           </td>
           <td class="request-table-cell">
-            {{ pendingPostulation.estudiante_id.sede_id }}
+            {{ pendingPostulation.estudiante_id.sede_id.nombreestadopostulacion }}
           </td>
           <td class="request-table-cell">
             <div class="postulation-buttons">
