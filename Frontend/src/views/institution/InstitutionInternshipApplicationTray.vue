@@ -322,6 +322,10 @@ tr:first-child {
   border-bottom: 2px solid white;
 }
 
+.dark-theme a {
+  color: aqua;
+}
+
 /* MEDIA QUERIES */
 @media screen and (max-width: 768px) {
   .studentsRequests-table {

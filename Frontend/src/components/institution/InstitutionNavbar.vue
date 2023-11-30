@@ -246,7 +246,7 @@ export default {
   height: auto;
   transition: all 0.3s ease 0s;
 }
-.logo-container {
+.dark-theme .logo-container {
   filter: invert(20%) sepia(100%) saturate(100%) hue-rotate(220deg);
 }
 
