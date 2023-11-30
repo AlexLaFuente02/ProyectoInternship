@@ -75,6 +75,13 @@ img {
   text-align: center;
   border: 2px solid black;
   padding-bottom: 2%;
+  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+     transition: 0.5s;
+     background: #fdfdfd;
+     color: black;
 }
 
 .internship-information-grid {
@@ -85,6 +92,16 @@ img {
   margin: 2% auto 0;
   width: 92%;
   border: 2px solid black;
+  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+     transition: 0.5s;
+
+     background: rgb(255, 226, 5);
+}
+.dark-theme .internship-information-grid{
+  background: #82679d;
 }
 
 .information-title {
@@ -101,7 +118,7 @@ img {
   list-style: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 550px) {
   .internship-container,
   .internship-information-grid {
     display: block;
@@ -114,7 +131,7 @@ img {
 
 /* DARK THEME */
 .dark-theme .internship-container {
-  background-color: #353e48;
+  background-color: rgb(86, 63, 100);
 }
 
 .dark-theme .internship-container {
