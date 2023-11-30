@@ -67,7 +67,9 @@ export const getQuantityOfActiveNInactiveInternships = async (
 };
 
 export const getTotalPostulationsByInstitutionId = async (institution_id) => {
-  const response = await axios.get();
+  const response = await axios.get(
+    `${institutionAPIRoute}/institucion/${institution_id}/postulaciones/sumatoria`
+  );
   return response.data;
 };
 
