@@ -116,6 +116,20 @@ export const getStudentByIdInApplicationTray = async (student_id) => {
   return response.data;
 };
 
+export const acceptStudentPostulation = async (postulation_id) => {
+  const response = await axios.put(
+    `${institutionAPIRoute}/postulaciones/${postulation_id}/aprobar`
+  );
+  return response.data;
+};
+
+export const rejectStudentPostulation = async (postulation_id) => {
+  const response = await axios.put(
+    `${institutionAPIRoute}/postulaciones/${postulation_id}/rechazar`
+  );
+  return response.data;
+};
+
 export const createInstitution = async (formData) => {
   try {
     const response = await axios.post(
