@@ -8,16 +8,6 @@ La bolsa de trabajo de la Universidad Católica Boliviana “San Pablo” busca 
 
 ---
 
-### 📌 Tabla de contenidos
-
-1. [Descripción](#descripción)
-2. [Funcionalidades](#funcionalidades)
-3. [Tecnologías utilizadas](#tecnologías-utilizadas)
-4. [Contacto](#contacto)
-5. [Importante](#importante)
-
----
-
 ### 📘 Descripción
 
 Internship by Cato facilita la publicación de convocatorias para prácticas pre-profesionales y pasantías no curriculares. No solo agiliza el proceso, sino que también brinda herramientas para filtrar, orientar y recolectar datos que serán esenciales para futuros reportes.
@@ -55,9 +45,13 @@ Internship by Cato facilita la publicación de convocatorias para prácticas pre
 
 ---
 
-### 🤝 Importante
+### 🤝 Integrantes
 
-❗️ ¡nos encantan los emojis! ❗️
+- Samael Espozo 🌟
+- Edward Gomez 🚀
+- Alex La Fuente 💼
+- Oscar Menacho 🔍
+- Jhessika Zarate 📞
 
 ---
 
