@@ -124,6 +124,32 @@
           </p>
         </div>
       </section>
+      <section class="comment">
+        <div class="institution-information">
+          <div class="comment-image">
+            <img
+              src="https://scontent.flpb3-1.fna.fbcdn.net/v/t39.30808-6/326368094_757490342424242_7018585822248141862_n.png?_nc_cat=103&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=WfdIui_eHdEAX9zQT4r&_nc_ht=scontent.flpb3-1.fna&oh=00_AfDM_JVOy-AF5Vu_ARORTUJC6wAM9ywFDS2EdGAOzlRL1A&oe=65742FF4"
+              alt="Logo de la Empresa"
+            />
+          </div>
+          <div class="institution">
+            <h4>Tú - Mojix</h4>
+          </div>
+        </div>
+        <div class="institution-comment-container">
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s
+            with the release of Letraset sheets containing Lorem Ipsum passages,
+            and more recently with desktop publishing software like Aldus
+            PageMaker including versions of Lorem Ipsum.
+          </p>
+        </div>
+      </section>
       <div class="comment-textarea-container">
         <label for="InternshipCommentField">Ingresa tu comentario:</label>
         <textarea
@@ -151,7 +177,7 @@ import Button from "@/components/common/Button.vue";
 import { pendingPostulationsByInternshipIdStore } from "../../store/institution/PendingPostulationsByInternshipIdStore";
 import { acceptOrRejectStudentPostulationStore } from "../../store/institution/AcceptOrRejectStudentPostulationStore";
 export default {
-  name: "InstitutionRequestsTrayPage",
+  name: "InstitutionInternshipApplicationTrayPage",
   components: {
     Button,
   },
@@ -386,13 +412,27 @@ tr:first-child {
   align-items: center;
 }
 
-.comment-icon {
+.comment-icon,
+.comment-image {
   margin: auto 2%;
+}
+
+.comment-image {
+  width: 6%;
+}
+
+img {
+  width: 100%;
 }
 
 .student-information {
   display: block;
   width: 38%;
+}
+
+.institution-information {
+  display: flex;
+  align-items: center;
 }
 
 .student-name {
@@ -405,10 +445,18 @@ tr:first-child {
   margin: 2% auto auto;
 }
 
-.comment-container {
+.comment-container,
+.institution-comment-container {
   width: 85%;
-  margin: 2% auto 0;
   text-align: start;
+}
+
+.comment-container {
+  margin: 2% auto 0;
+}
+
+.institution-comment-container {
+  margin: 1% auto 0;
 }
 
 h4,
@@ -461,6 +509,10 @@ p {
     margin: 3%;
   }
 
+  .comment-image {
+    width: 30%;
+  }
+
   .comment {
     width: 90%;
     margin-bottom: 5%;
@@ -470,15 +522,22 @@ p {
     margin-top: 10%;
   }
 
-  .comment-container {
+  .comment-container,
+  .institution-comment-container {
     margin-bottom: 4%;
   }
 
-  .student-information {
+  .student-information,
+  .institution-information {
     width: 100%;
   }
 
-  .user-information {
+  .institution-information {
+    justify-content: center;
+  }
+
+  .user-information,
+  .institution-information {
     margin: 5% auto 8%;
   }
 
