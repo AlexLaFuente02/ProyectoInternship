@@ -153,11 +153,43 @@
                   con los requisitos de la pasantía.
                 </p>
               </div>
-              <div
-                class="submit-container"
-                v-if="postulationStatus.status !== 'RECHAZADO'"
+            </div>
+          </div>
+        </div>
+        <div class="internship-information-grid">
+          
+          <div class="third-information-grif-comments">
+            <div class="title-grid-comments">
+              <h4 class="title">
+                Comentarios
+              </h4>
+            </div>
+            <div class="get-container-comments"
+            v-for="comment in comments"
+            :key="comment.id"
+            >
+              <div 
+              v-bind:class="{'comment-student': comment.userType === 'student', 'comment-company': comment.userType === 'company'}"
+
               >
-                <label for="userDescription">Comentario:</label>
+                <h4 class="comment-title">
+                  {{ comment.user }}
+                </h4>
+                <p class="comment-text">
+                  {{ comment.comment }}
+                </p>
+                <p class="comment-date">
+                  {{ comment.date }}
+                </p>
+              </div>
+            </div>
+            <hr
+            style="width: 90%; margin: 0 auto;"
+            >
+
+            <div
+                class="submit-container-comments"
+              >
                 <textarea
                   name="userDescription"
                   id="userDescription"
@@ -167,10 +199,13 @@
                 ></textarea>
                 <Button text="Enviar" :color="3"></Button>
               </div>
-            </div>
           </div>
+
         </div>
       </div>
+
+
+
     </div>
   </div>
 </template>
@@ -196,6 +231,44 @@ export default {
       institution: null,
       allDataIsLoaded: false,
       srcLogo: "",
+      comments:[
+        {
+          id: 1,
+          user: 'Pepito Perez',
+          userType: 'student',
+          comment: 'Me gustaría saber si...',
+          date: '12/12/2021'
+        },
+        {
+          id: 2,
+          user: 'Empresa X-men',
+          userType: 'company',
+          comment: 'Hola Pepito, gracias por tu interés...',
+          date: '12/12/2021'
+        },
+        {
+          id: 3,
+          user: 'Pepito Perez',
+          userType: 'student',
+          comment: 'Bueno muchas gracias...',
+          date: '12/12/2021'
+        },
+        {
+          id: 4,
+          user: 'Empresa X-men',
+          userType: 'company',
+          comment: 'De nada, estamos para servirte...',
+          date: '12/12/2021'
+        },
+        {
+          id:5,
+          user: 'Empresa X-men',
+          userType: 'company',
+          comment: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ',
+          date: '12/12/2021'
+        }
+
+      ]
     };
   },
   methods: {
@@ -273,7 +346,86 @@ export default {
   background-color: rgb(223, 255, 255);
   border-bottom: 2px solid black;
 }
+.third-information-grif-comments{
+  grid-column: span 3;
+  border-top: 2px solid black;
 
+}
+.title-grid-comments {
+  background-color: rgb(0, 169, 169);
+  border-bottom: 2px solid black;
+  grid-column: span 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.get-container-comments{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin: 0 auto;
+  width: 90%;
+}
+.comment-student {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0 auto 0 0;
+  border: 1px solid rgb(230, 226, 226);
+  padding: 2%;
+  border-radius: 5px;
+  text-align: start;
+  /*Bordes como de globo*/
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  background-color: cadetblue;
+  color: white;
+
+}
+.comment-company {
+  border: 1px solid cadetblue;
+  
+  margin: 0 0 0 auto;
+  padding: 2%;
+  border-radius: 5px;
+  text-align: end;
+  /*Bordes como de globo*/
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  background-color: rgb(230, 226, 226);
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: auto;
+
+
+}
+.comment-title {
+  margin-top: 2%;
+  font-size: 1.2em;
+
+}
+.comment-date {
+  margin-top: 2%;
+  font-size: 0.8em;
+}
+.comment-text {
+  margin-top: 2%;
+  font-size: 1em;
+
+}
+
+
+.submit-container-comments{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
 .second-grid-container {
   margin: auto;
 }
@@ -285,7 +437,12 @@ export default {
 .institution_name {
   margin-top: 2%;
 }
-
+textarea {
+  width: 100%;
+  margin-bottom: 2%;
+  border: 1px solid cadetblue;
+  resize: none;
+}
 .title {
   margin: 0;
   padding: 5% 0;
