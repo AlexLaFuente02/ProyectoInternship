@@ -272,6 +272,26 @@ router.get('/convocatorias/activas/:institutionId', async (req, res) => {
     }
 });
 
+
+// Ruta para obtener las convoctarias pendientes
+router.get('/convocatorias/pendientes/:institutionId', async (req, res) => {
+    const institutionId = req.params.institutionId;
+    try {
+        console.log('GET request received for getPendingConvocatoriasById for INSTITUTION');
+        const response = await convocatoriaService.getPendingConvocatoriasById(institutionId);
+        res.json({
+            method: 'getPendingConvocatoriasById',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error getting convocatorias pendientes for INSTITUTION:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+        
+
 // Ruta para obtener las convoctarias inactivas para estudiantes
 router.get('/convocatorias/inactivas/:institutionId', async (req, res) => {
     const institutionId = req.params.institutionId;
@@ -477,6 +497,28 @@ router.put('/postulaciones/:id/aprobar', async (req, res) => {
     } catch (error) {
         console.error(`Error setting postulación ID ${id} as Aprobado:`, error);
         res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener la suma de postulaciones para una institución por su ID
+router.get('/institucion/:institutionId/postulaciones/sumatoria', async (req, res) => {
+    const { institutionId } = req.params;
+    try {
+        const response = await institucionService.getPostulationsCountByInstitutionId(institutionId);
+        res.json({
+            method: 'getPostulationsCountByInstitutionId',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error al obtener la suma de postulaciones para la institución con ID: ${institutionId}:`, error);
+        res.status(500).json({
+            method: 'getPostulationsCountByInstitutionId',
+            code: 'IP-1001',
+            result: null,
+            message: `Error al obtener la suma de postulaciones para la institución con ID: ${institutionId}: ${error.message}`
+        });
     }
 });
 

@@ -45,6 +45,8 @@ import CompaniesList from "@/views/usei/CompaniesList.vue";
 import UseiBusinessApplications from '@/views/usei/UseiBusinessApplications.vue'
 import UseiInternshipApplications from '@/views/usei/UseiInternshipApplications.vue'
 import UseiAnalyticsDashboard from "@/views/usei/UseiAnalyticsDashboard.vue";
+import UseiBusinessRejected  from '@/views/usei/UseiBusinessRejected.vue';
+import UseiInternshipRejected  from '@/views/usei/UseiInternshipRejected.vue';
 
 // Librerías de Animate & SweetAlert2
 import "../node_modules/animate.css/animate.min.css";
@@ -66,6 +68,8 @@ import Password from 'primevue/password';
 import "./assets/main.css";
 
 import axios from "axios";
+
+
 
 //Rutas
 const routes = [
@@ -106,7 +110,10 @@ const routes = [
     {name: 'UseiBusinessApplications', path : '/usei/Business', component:UseiBusinessApplications},
     {name: 'UseiInternshipApplications', path : '/usei/InternshipApp', component:UseiInternshipApplications},
     {name: "UseiAnalyticsDashboard", path: "/usei/AnalyticsDashboard", component: UseiAnalyticsDashboard},
+    {name: 'UseiBusinessRejected', path : '/usei/Business/Rejected', component:UseiBusinessRejected},
+    {name: 'UseiInternshipRejected', path : '/usei/Internship/Rejected', component:UseiInternshipRejected},  
 ];
+
 // Router
 const router = createRouter({
   history: createWebHistory(),
@@ -148,3 +155,5 @@ app.component("Calendar", Calendar);
 app.component('Password', Password);
 //Montar la aplicacion
 app.mount("#app");
+
+

@@ -6,86 +6,103 @@
     <div class="form__description">
       <h5>Por favor complete el formulario a continuaci&oacute;n:</h5>
     </div>
-    
     <div class="form__container">
       <div class="formVue100">
-      <div class="form__tittle">
-        <h1>Datos generales</h1>
+        <div class="form__tittle">
+          <h1>Datos generales</h1>
+        </div>
+        <div class="container__field">
+          <label for="institutionName"
+            >Nombre de la Instituci&oacute;n <strong>*</strong>:</label
+          >
+          <input
+            type="text"
+            name="institutionName"
+            id="institutionName"
+            placeholder="Introduzca el nombre"
+            v-model="institutionRegisterStore.nombreinstitucion"
+          />
+        </div>
+        <div class="container__field">
+          <label for="institutionDescription"
+            >Reseña de la Instituci&oacute;n <strong>*</strong>:</label
+          >
+          <input
+            type="text"
+            name="institutionDescription"
+            id="institutionDescription"
+            placeholder="Introduzca su segundo apellido"
+            v-model="institutionRegisterStore.reseniainstitucion"
+          />
+        </div>
+        <div class="container__field2">
+          <label for="institutionLogo"
+            >Logo de la Instituci&oacute;n <strong>*</strong>:</label
+          >
+          <input
+            type="file"
+            name="institutionLogo"
+            id="institutionLogo"
+            @change="onFileChange"
+            accept="image/*"
+          />
+        </div>
+        <div class="container__field">
+          <label for="institutionSector"
+            >Sector al que pertenece <strong>*</strong>:</label
+          >
+          <Dropdown
+            :options="this.sectorList"
+            :selectedValue="sector"
+            placeholderValue="Seleccione el sector de pertenencia de su empresa"
+            @option-selected="updateSector"
+          />
+        </div>
       </div>
-      <div class="container__field">
-        <h3>Nombre de la Instituci&oacute;n <strong>*</strong></h3>
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="Introduzca el nombre"
-          v-model="formStore.nombreinstitucion"
-        />
-      </div>
-      <div class="container__field">
-        <h3>Reseña de la Instituci&oacute;n <strong>*</strong></h3>
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="Introduzca su segundo apellido"
-          v-model="formStore.reseniainstitucion"
-        />
-      </div>
-      <div class="container__field2">
-        <h3>Logo de la Instituci&oacute;n <strong>*</strong></h3>
-        <input
-          type="file"
-          @change="onFileChange"
-          accept="image/*"
-        />
-      </div>
-      <div class="container__field">
-        <h3>Sector al que pertenece <strong>*</strong></h3>
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="Introduzca el sector al que pertenece"
-          v-model="formStore.sectorpertenencia.id"
-        />
-      </div></div>
       <div class="formVue100">
-      <div class="form__tittle">
-        <h1>Datos del contacto</h1>
+        <div class="form__tittle">
+          <h1>Datos de contacto</h1>
+        </div>
+        <div class="container__field">
+          <label for="institutionContactName"
+            >Nombre del contacto <strong>*</strong>:</label
+          >
+          <input
+            type="text"
+            name="institutionContactName"
+            id="institutionContactName"
+            placeholder="Introduzca el nombre del contacto"
+            v-model="institutionRegisterStore.nombrecontacto"
+          />
+        </div>
+        <div class="container__field">
+          <label for="institutionContactEmail"
+            >Correo electr&oacute;nico <strong>*</strong>:</label
+          >
+          <input
+            type="text"
+            name="institutionContactEmail"
+            id="institutionContactEmail"
+            placeholder="Introduzca el correo electronico"
+            v-model="institutionRegisterStore.correocontacto"
+          />
+        </div>
+        <div class="container__field">
+          <label for="institutionContactCellphone"
+            >Celular del contacto <strong>*</strong>:</label
+          >
+          <input
+            type="text"
+            name="institutionContactCellphone"
+            id="institutionContactCellphone"
+            placeholder="Introduzca el celular de contacto"
+            v-model="institutionRegisterStore.celularcontacto"
+          />
+        </div>
       </div>
-      <div class="container__field">
-        <h3>Nombre del contacto <strong>*</strong></h3>
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="Introduzca el nombre del contacto"
-          v-model="formStore.nombrecontacto"
-        />
+      <div class="register-message">
+        <span v-text="institutionRegisterMessages.errorMessage"></span>
       </div>
-      <div class="container__field">
-        <h3> Correo electr&oacute;nico <strong>*</strong>:</h3>
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="Introduzca el correo electronico"
-          v-model="formStore.correocontacto"
-        />
-      </div>
-      <div class="container__field">
-        <h3>Celular del contacto <strong>*</strong></h3>
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="Introduzca el celular de contacto"
-          v-model="formStore.celularcontacto"
-        />
-      </div></div>
-      
-
       <div class="buttons-container10">
         <div class="button-left10">
           <Button
@@ -102,16 +119,17 @@
             :disabled="false"
             @option-selected="sendRequest"
           ></Button>
-        
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 <script>
 import Dropdown from "@/components/common/Dropdown.vue";
 import Button from "@/components/common/Button.vue";
+import { useLoaderStore } from "@/store/common/loaderStore";
 import { InstitutionRegisterStore } from "../../store/institution/InstitutionRegisterStore";
+import { useSectorStore } from "../../store/common/sectorStore";
 export default {
   components: {
     Button,
@@ -119,8 +137,13 @@ export default {
   },
   data() {
     return {
-      formStore: InstitutionRegisterStore(),
-      newInstitution: {},
+      institutionRegisterStore: InstitutionRegisterStore(),
+      institutionRegisterMessages: {
+        errorMessage: "",
+      },
+      sectorStore: useSectorStore(),
+      sectorList: [],
+      sector: "",
     };
   },
   methods: {
@@ -135,77 +158,129 @@ export default {
     },
     onFileChange(e) {
       const file = e.target.files[0];
-      this.formStore.setLogoInstitucion(file);
-      console.log(this.formStore.logoinstitucion); 
+      this.institutionRegisterStore.setLogoInstitucion(file);
+      console.log(this.institutionRegisterStore.logoinstitucion);
+    },
+    async getBelongingSectors() {
+      await this.sectorStore.loadSectors();
+      this.sectorList = this.sectorStore.sectors.result;
+      this.sectorList = this.sectorList.map((sector) => {
+        return {
+          id: sector.id,
+          label: sector.nombresectorpertenencia,
+        };
+      });
+      console.log(this.sectorList);
+      console.log(this.sector);
     },
     async sendRequest() {
-      try {
-        await this.formStore.registerInstitution();
-        //mostrar alert de exito con el result
-        alert("Solicitud de registro de institución enviada con éxito");
-
-      } catch (error) {
-        console.error("Hubo un error al enviar la solicitud: ", error);
-        // Mostrar un mensaje de error aquí.
+      if (this.institutionRegisterStore.$state.nombreinstitucion === "") {
+        this.institutionRegisterMessages.errorMessage =
+          "Error, ingrese el nombre de la empresa por favor.";
+      } else if (this.institutionRegisterStore.$state.reseniainstitucion === "") {
+        this.institutionRegisterMessages.errorMessage =
+          "Error, ingrese la reseña de la empresa por favor.";
+      } else if (this.institutionRegisterStore.$state.logoinstitucion === null) {
+        this.institutionRegisterMessages.errorMessage =
+          "Error, ingrese el logo de la empresa por favor.";
+      } else if (this.institutionRegisterStore.$state.sectorpertenencia.id === null) {
+        this.institutionRegisterMessages.errorMessage =
+          "Error, ingrese el sector de pertenencia de la empresa por favor.";
+      } else if (this.institutionRegisterStore.$state.nombrecontacto === "") {
+        this.institutionRegisterMessages.errorMessage =
+          "Error, ingrese el nombre del contacto de la empresa por favor.";
+      } else if (this.institutionRegisterStore.$state.correocontacto === "") {
+        this.institutionRegisterMessages.errorMessage =
+          "Error, ingrese el correo electrónico del contacto de la empresa por favor.";
+      } else if (this.institutionRegisterStore.$state.celularcontacto === "") {
+        this.institutionRegisterMessages.errorMessage =
+          "Error, ingrese el celular del contacto de la empresa por favor.";
+      } else {
+        this.institutionRegisterMessages.errorMessage = "";
+        const response = await this.institutionRegisterStore.registerInstitution();
+        console.log(response);
+        if (response.code === "I-0000") {
+          this.showMessage("¡Éxito!", response.message, "success");
+        } else {
+          this.showMessage("Error", response.message, "error");
+        }
+        this.goBack();
       }
     },
+    showMessage(titleMessage, textMessage, iconMessage) {
+      this.$swal({
+        title: titleMessage,
+        text: textMessage,
+        icon: iconMessage,
+        showConfirmButton: false,
+        timer: 5000,
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+    },
+    updateSector(option) {
+      this.institutionRegisterStore.$state.sectorpertenencia.id = option.id;
+      this.sector = option.label;
+    },
   },
-
-  showPreview(file) {
-    // Lógica para mostrar una vista previa de la imagen
-    // Podría ser asignar el archivo a una propiedad de datos y mostrar la vista previa en tu template
+  async mounted() {
+    useLoaderStore().activateLoader();
+    await this.getBelongingSectors();
+    useLoaderStore().desactivateLoader();
   },
-  
 };
 </script>
 <style scoped>
-.container__stepper{
-    padding: 1rem;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    background: #000000;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    position: relative;
-}
-/*Estilos para el modo oscuro*/
-.dark-theme .container__stepper{
-    background: #434B54;
-}
-.form__description {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5%;
+.form__tittle {
+  text-align: center;
 }
 
-/*CSS del input*/
+strong {
+  color: red;
+}
+
+.formVue10 {
+  margin: 2% 6%;
+  padding: 4% 2%;
+}
+
+.formVue100 {
+  padding: 3% 5%;
+}
+
+.formVue100:first-child {
+  margin: 4% 5% 3%;
+}
+
+.formVue100:nth-child(2) {
+  margin: 0 5% 4%;
+}
+
+.buttons-container10 {
+  margin: 0 auto;
+  justify-content: space-around;
+}
+
+.form__description {
+  text-align: center;
+}
+
 .container__field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
+  margin: 3% auto;
 }
-.container__field label {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 5px;
+
+.register-message {
+  font-size: large;
+  color: red;
+  text-align: center;
+  margin-bottom: 3%;
 }
-.container__field2 {
-  display: flex;
-  border: 0px solid #600d0d;
-  flex-direction: column;
-  margin-bottom: 10px;
-}
-.container__field2 label {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-/*Fin del css*/
-.container__select {
+
+/* .container__select {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
@@ -214,8 +289,32 @@ export default {
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 5px;
+} */
+
+/* DARK THEME */
+.dark-theme .formVue10 {
+  background: rgb(56, 63, 72);
 }
 
+.dark-theme .formVue100 {
+  background-color: rgb(66, 75, 86);
+}
 
+@media screen and (max-width: 880px) {
+  .formVue100 {
+    padding: 8%;
+  }
 
+  .formVue100:first-child {
+    margin-bottom: 10%;
+  }
+
+  .formVue100:nth-child(2) {
+    margin-bottom: 10%;
+  }
+
+  .form__description {
+    padding: 0 10%;
+  }
+}
 </style>

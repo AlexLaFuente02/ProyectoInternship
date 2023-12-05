@@ -91,6 +91,11 @@ Accept: application/json
 GET {{baseURL}}/convocatorias/activas/{{institutionID}}
 Accept: application/json
 
+### ENDPOINT de Convoctorias pendientes
+GET {{baseURL}}/convocatorias/pendientes/{{institutionID}}
+Accept: application/json
+
+
 ###ENDPOINT de Convoctorias inactivas
 GET {{baseURL}}/convocatorias/inactivas/{{institutionID}}
 Accept: application/json
@@ -131,6 +136,12 @@ Accept: application/json
 @estudianteID=1
 GET {{baseURL}}/perfil-estudiante/{{estudianteID}}
 Accept: application/json
+
+###ENDPOINT para obtener sumatoria de postulaciones por InstitucionID
+GET {{baseURL}}/institucion/{{institutiionID}}/postulaciones/sumatoria
+Accept: application/json
+
+
 
 ###ENDPOINT para actualizar estado de postulación a APROBADO por POSTULACIONID
 @postulacionID = 1

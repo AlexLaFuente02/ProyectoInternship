@@ -10,12 +10,12 @@
       <table class="studentsRequests-table" v-if="pendingPostulationsAreLoaded">
         <tr class="request-table-row">
           <th class="request-table-head">Nombre</th>
-          <th class="request-table-head">A&ntilde;o de graduaci&oacute;n</th>
           <th class="request-table-head">Carrera</th>
           <th class="request-table-head">Curriculum Vitae</th>
           <th class="request-table-head">Carnet de Identidad</th>
           <th class="request-table-head">Correo electr&oacute;nico</th>
           <th class="request-table-head">Graduado</th>
+          <th class="request-table-head">A&ntilde;o de graduaci&oacute;n</th>
           <th class="request-table-head">Sede</th>
           <th class="request-table-head">Acciones</th>
         </tr>
@@ -32,10 +32,7 @@
             }}
           </td>
           <td class="request-table-cell">
-            {{ pendingPostulation.estudiante_id.aniograduacion }}
-          </td>
-          <td class="request-table-cell">
-            {{ pendingPostulation.estudiante_id.carrera_id }}
+            {{ pendingPostulation.estudiante_id.carrera_id.nombreestadopostulacion }}
           </td>
           <td class="request-table-cell">
             <a :href="pendingPostulation.estudiante_id.linkcurriculumvitae">
@@ -51,8 +48,14 @@
           <td class="request-table-cell">
             {{ isTheStudentGraduated(pendingPostulation) }}
           </td>
+          <td
+            class="request-table-cell"
+            v-if="pendingPostulation.estudiante_id.graduado"
+          >
+            {{ pendingPostulation.estudiante_id.aniograduacion }}
+          </td>
           <td class="request-table-cell">
-            {{ pendingPostulation.estudiante_id.sede_id }}
+            {{ pendingPostulation.estudiante_id.sede_id.nombreestadopostulacion }}
           </td>
           <td class="request-table-cell">
             <div class="postulation-buttons">
@@ -60,12 +63,16 @@
                 <Button
                   text="Ver perfil"
                   :color="3"
-                  @option-selected="goToApplicationStudentProfile(pendingPostulation.estudiante_id.id)"
+                  @option-selected="
+                    goToApplicationStudentProfile(
+                      pendingPostulation.estudiante_id.id
+                    )
+                  "
                 ></Button>
               </div>
-              <button 
-                type="button" 
-                class="accept-postulation-request" 
+              <button
+                type="button"
+                class="accept-postulation-request"
                 @click="handleAcceptPostulation(pendingPostulation)"
               ></button>
               <button
@@ -84,6 +91,7 @@
 <script>
 import Button from "@/components/common/Button.vue";
 import { pendingPostulationsByInternshipIdStore } from "../../store/institution/PendingPostulationsByInternshipIdStore";
+import { acceptOrRejectStudentPostulationStore } from "../../store/institution/AcceptOrRejectStudentPostulationStore";
 export default {
   name: "InstitutionRequestsTrayPage",
   components: {
@@ -94,6 +102,9 @@ export default {
       pendingPostulationsByInternshipIdStore: pendingPostulationsByInternshipIdStore(),
       pendingPostulationsAreLoaded: false,
       pendingPostulations: [],
+      acceptOrRejectStudentPostulationStore: acceptOrRejectStudentPostulationStore(),
+      acceptedOrRejectedPostulationIsReady: false,
+      postulationResult: [],
     };
   },
   methods: {
@@ -111,13 +122,15 @@ export default {
       }
     },
     goToApplicationStudentProfile(student_id) {
-      console.log(`Redirigiendo a la Vista de Perfil de ${student_id}`);
+      console.log(
+        `Redirigiendo al Perfil del Estudiante con ID: ${student_id}`
+      );
       this.$router.push(
         `/institution/InternshipApplicationTray/StudentProfile/${student_id}`
       );
     },
     async handleAcceptPostulation(postulation) {
-      const swalWithBootstrapButtons = this.$swal.mixin({
+      const sweetAlert = this.$swal.mixin({
         customClass: {
           confirmButton: "accept-confirm-button",
           cancelButton: "accept-cancel-button",
@@ -129,8 +142,7 @@ export default {
           popup: "animate__animated animate__fadeOutUp",
         },
       });
-
-      swalWithBootstrapButtons
+      sweetAlert
         .fire({
           title: "¿Está seguro?",
           text: "Esta acción aceptará la postulación y no podrá ser revertida.",
@@ -141,17 +153,25 @@ export default {
         })
         .then(async (result) => {
           if (result.isConfirmed) {
-            console.log(`Aceptando a ${postulation.estudiante_id.nombres} con postulación ${postulation.id}`);
-            // Lugar para tu llamada a la API
-            // Ejemplo: await acceptPostulation(postulation.id);
-            // Después del consumo de la API, mostramos una alerta de éxito
-            swalWithBootstrapButtons.fire(
+            console.log(
+              `Aceptando a ${
+                postulation.estudiante_id.nombres +
+                " " +
+                postulation.estudiante_id.apellidos
+              } con postulación ID: ${postulation.id}`
+            );
+            await this.acceptOrRejectStudentPostulationStore.acceptPostulation(postulation.id);
+            this.postulationResult = this.acceptOrRejectStudentPostulationStore.updatedPostulation;
+            this.acceptedOrRejectedPostulationIsReady = true;
+            console.log(this.postulationResult);
+            await sweetAlert.fire(
               "Aceptado",
               `La postulación de ${postulation.estudiante_id.nombres} ha sido aceptada.`,
               "success"
             );
+            location.reload();
           } else if (result.dismiss === this.$swal.DismissReason.cancel) {
-            swalWithBootstrapButtons.fire(
+            sweetAlert.fire(
               "Cancelado",
               "La acción ha sido cancelada.",
               "error"
@@ -159,9 +179,8 @@ export default {
           }
         });
     },
-
     async handleRejectPostulation(postulation) {
-      const swalWithBootstrapButtons = this.$swal.mixin({
+      const sweetAlert = this.$swal.mixin({
         customClass: {
           confirmButton: "reject-confirm-button",
           cancelButton: "reject-cancel-button",
@@ -173,8 +192,7 @@ export default {
           popup: "animate__animated animate__fadeOutUp",
         },
       });
-
-      swalWithBootstrapButtons
+      sweetAlert
         .fire({
           title: "¿Está seguro?",
           text: "Esta acción rechazará la postulación y no podrá ser revertida.",
@@ -185,17 +203,25 @@ export default {
         })
         .then(async (result) => {
           if (result.isConfirmed) {
-            console.log(`Rechazando a ${postulation.estudiante_id.nombres} con postulación ${postulation.id}`);
-            // Lugar para tu llamada a la API
-            // Ejemplo: await rejectPostulation(postulation.id);
-            // Después del consumo de la API, mostramos una alerta de éxito
-            swalWithBootstrapButtons.fire(
+            console.log(
+              `Rechazando a ${
+                postulation.estudiante_id.nombres +
+                " " +
+                postulation.estudiante_id.apellidos
+              } con postulación ID: ${postulation.id}`
+            );
+            await this.acceptOrRejectStudentPostulationStore.rejectPostulation(postulation.id);
+            this.postulationResult = this.acceptOrRejectStudentPostulationStore.updatedPostulation;
+            this.acceptedOrRejectedPostulationIsReady = true;
+            console.log(this.postulationResult);
+            await sweetAlert.fire(
               "Rechazado",
               `La postulación de ${postulation.estudiante_id.nombres} ha sido rechazada.`,
               "success"
             );
+            location.reload();
           } else if (result.dismiss === this.$swal.DismissReason.cancel) {
-            swalWithBootstrapButtons.fire(
+            sweetAlert.fire(
               "Cancelado",
               "La acción ha sido cancelada.",
               "error"
@@ -298,6 +324,10 @@ tr:first-child {
 
 .dark-theme tr:first-child {
   border-bottom: 2px solid white;
+}
+
+.dark-theme a {
+  color: aqua;
 }
 
 /* MEDIA QUERIES */

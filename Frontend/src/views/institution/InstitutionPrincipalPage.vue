@@ -9,7 +9,7 @@
               Hola, {{ companyInformation.nombreinstitucion }}!
             </span>
             <span class="institution-sector">
-              {{ companyInformation.sectorpertenencia.nombresectorpertenencia }}
+              {{ companyInformation && companyInformation.sectorpertenencia ? companyInformation.sectorpertenencia.nombresectorpertenencia : '' }}
             </span>
           </div>
         </div>
@@ -36,7 +36,7 @@
             <span class="summary-content-text">inactivas</span>
           </span>
           <span class="summary-content-number">
-            18
+            {{ allPostulationsByInstitution.length }}
             <span class="summary-content-text">total solicitudes</span>
           </span>
         </div>
@@ -50,14 +50,14 @@
         </div>
         <div
           class="card"
-          v-for="internship in activeInternships"
+          v-for="internship in filteredInternships"
           :key="internship.id"
         >
           <SimpleCard :key="internship.id" :internship="internship" />
         </div>
       </div>
     </div>
-    <div class="requests-by-institution">
+    <!-- <div class="requests-by-institution">
       <h1>Solicitudes a tus pasant&iacute;as</h1>
       <div class="container__requests" v-if="companyInformationIsLoaded">
         <div class="container__little__nav">
@@ -97,7 +97,7 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="container__header__page">
       <div class="container__header__description">
         <h1>¡Acción rápida!</h1>
@@ -124,7 +124,6 @@ import SimpleCard from "@/components/common/SimpleCard.vue";
 import ArrowCards from "@/components/common/ArrowCards.vue";
 import InternshipsLittleNavBar from "@/components/institution/InternshipsLittleNavBar.vue";
 import PostulationsLittleNavBar from "@/components/institution/PostulationsLittleNavBar.vue";
-import { useRequestsByIDStore } from "@/store/student/requestsByIDStore";
 import { InstitutionByIdStore } from "@/store/institution/InstitutionByIdStore";
 import { QuantityOfActiveNInactiveInternshipsStore } from "../../store/institution/QuantityOfActiveNInactiveInternshipsStore";
 import { totalPostulationsByInstitutionIdStore } from "../../store/institution/TotalPostulationsByInstitutionIdStore";
@@ -192,12 +191,12 @@ export default {
       this.companyInformation = this.institutionByIdStore.institution.result;
       await this.activeNInactiveInternshipsQuantityStore.loadQuantitiesOfInternships(institutionID);
       this.internshipsQuantities = this.activeNInactiveInternshipsQuantityStore.quantityResults.result;
-      // await this.totalPostulationsByInstitutionIdStore.loadTotalPostulationsByInstitutionId(institutionID);
-      // this.postulationsQuantity = this.totalPostulationsByInstitutionIdStore.totalPostulationsResult.result;
+      await this.totalPostulationsByInstitutionIdStore.loadTotalPostulationsByInstitutionId(institutionID);
+      this.postulationsQuantity = this.totalPostulationsByInstitutionIdStore.totalPostulationsResult.result;
       await this.activeInternshipsByInstitutionIdStore.loadActiveInternshipsByInstitutionId(institutionID);
       this.activeInternships = this.activeInternshipsByInstitutionIdStore.internships.result;
-      // await this.pendingInternshipsByInstitutionIdStore.loadPendingInternshipsByInstitutionId(institutionID);
-      // this.pendingInternships = this.pendingInternshipsByInstitutionIdStore.pendingInternships.result;
+      await this.pendingInternshipsByInstitutionIdStore.loadPendingInternshipsByInstitutionId(institutionID);
+      this.pendingInternships = this.pendingInternshipsByInstitutionIdStore.pendingInternships.result;
       await this.inactiveInternshipsByInstitutionIdStore.loadInactiveInternshipsByInstitutionId(institutionID);
       this.inactiveInternships = this.inactiveInternshipsByInstitutionIdStore.inactiveInternships.result;
       await this.allInternshipsByInstitutionIdStore.loadInternshipsByInstitutionId(institutionID);
@@ -225,28 +224,83 @@ export default {
       useLoaderStore().desactivateLoader();
     },
     filterInternships(key) {
-      if (key == "Todo") {
-        this.listRequests = useRequestsByIDStore().requests.result;
-        this.internshipsType = "Todo";
-      } else if (key == "Pendiente") {
-        this.listRequests = this.requestsPending;
-        this.internshipsType = "Pendiente";
-      } else if (key == "Aceptado") {
-        this.listRequests = this.requestsAccepted;
-        this.internshipsType = "Aceptado";
+      // Puedes mapear las claves con el nombre del estado si difieren
+      const statusMap = {
+        'Pasantías activas': 'ACTIVAS',
+        'Pasantías pendientes': 'PENDIENTES',
+        'Pasantías inactivas': 'INACTIVAS',
+        'Todo': 'TODAS'
+      };
+
+      console.log(`${statusMap[key]} fue seleccionado`);
+
+      // Filtra y muestra las pasantías basado en el botón que fue presionado
+      switch(statusMap[key]) {
+        case 'PENDIENTES':
+          this.showPendingInternships();
+          break;
+        case 'ACTIVAS':
+          this.showActiveInternships();
+          break;
+        case 'INACTIVAS':
+          this.showInactiveInternships();
+          break;
+        case 'TODAS':
+          this.showAllInternships();
+          break;
+        default:
+          this.showAllInternships();
       }
     },
     filterPostulations(key) {
-      if (key == "Todo") {
-        this.listRequests = useRequestsByIDStore().requests.result;
-        this.postulationsType = "Todo";
-      } else if (key == "Pendiente") {
-        this.listRequests = this.requestsPending;
-        this.postulationsType = "Pendiente";
-      } else if (key == "Aceptado") {
-        this.listRequests = this.requestsAccepted;
-        this.postulationsType = "Aceptado";
+      // Puedes mapear las claves con el nombre del estado si difieren
+      const statusMap = {
+        'Postulaciones aprobadas': 'APROBADAS',
+        'Postulaciones pendientes': 'PENDIENTES',
+        'Postulaciones rechazadas': 'RECHAZADAS',
+        'Todo': 'TODAS'
+      };
+
+      console.log(`${statusMap[key]} fue seleccionado`);
+
+      // Filtra y muestra las pasantías basado en el botón que fue presionado
+      switch(statusMap[key]) {
+        case 'APROBADAS':
+          this.showApprovedPostulations();
+          break;
+        case 'PENDIENTES':
+          this.showPendingPostulations();
+          break;
+        case 'RECHAZADAS':
+          this.showRejectedPostulations();
+          break;
+        case 'TODAS':
+          this.showAllPostulations();
+          break;
+        default:
+          this.showAllPostulations();
       }
+    },
+    showPendingInternships() {
+      this.internshipsType = 'PENDIENTES';
+    },
+    showActiveInternships() {
+      this.internshipsType = 'ACTIVAS';
+    },
+    showInactiveInternships() {
+      this.internshipsType = 'INACTIVAS';
+    },
+    showAllInternships() {
+      this.internshipsType = 'TODAS';
+    },
+    showApprovedPostulations() {
+      this.postulationsType = 'APROBADAS';
+    },
+    showPendingPostulations() {
+      this.postulationsType = 'PENDIENTES';
+    },
+    showRejectedPostulations() {
+      this.postulationsType = 'RECHAZADAS';
     },
   },
   computed: {
@@ -258,6 +312,21 @@ export default {
     },
     postulationsTypeComputed() {
       return this.postulationsType;
+    },
+    filteredInternships() {
+      // Aquí es donde realmente filtras las pasantías basado en internshipsType
+      switch(this.internshipsType) {
+        case 'PENDIENTES':
+          return this.pendingInternships;
+        case 'ACTIVAS':
+          return this.activeInternships;
+        case 'INACTIVAS':
+          return this.inactiveInternships;
+        case 'TODAS':
+          return this.allInternshipsByInstitution;
+        default:
+          return [];
+      }
     },
   },
   created() {

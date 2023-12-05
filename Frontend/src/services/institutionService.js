@@ -43,6 +43,13 @@ export const getActiveInternshipsByInstitutionId = async (institution_id) => {
   return response.data;
 };
 
+export const getPendingInternshipsByInstitutionId = async (institution_id) => {
+  const response = await axios.get(
+    `${institutionAPIRoute}/convocatorias/pendientes/${institution_id}`
+  );
+  return response.data;
+};
+
 export const getInactiveInternshipsByInstitutionId = async (institution_id) => {
   const response = await axios.get(
     `${institutionAPIRoute}/convocatorias/inactivas/${institution_id}`
@@ -60,12 +67,9 @@ export const getQuantityOfActiveNInactiveInternships = async (
 };
 
 export const getTotalPostulationsByInstitutionId = async (institution_id) => {
-  const response = await axios.get();
-  return response.data;
-};
-
-export const getPendingInternshipsByInstitutionId = async (institution_id) => {
-  const response = await axios.get();
+  const response = await axios.get(
+    `${institutionAPIRoute}/institucion/${institution_id}/postulaciones/sumatoria`
+  );
   return response.data;
 };
 
@@ -110,7 +114,23 @@ export const createInternship = async (internshipData) => {
 };
 
 export const getStudentByIdInApplicationTray = async (student_id) => {
-  const response = await axios.get(`http://localhost:3000/student/${student_id}`);
+  const response = await axios.get(
+    `${institutionAPIRoute}/perfil-estudiante/${student_id}`
+  );
+  return response.data;
+};
+
+export const acceptStudentPostulation = async (postulation_id) => {
+  const response = await axios.put(
+    `${institutionAPIRoute}/postulaciones/${postulation_id}/aprobar`
+  );
+  return response.data;
+};
+
+export const rejectStudentPostulation = async (postulation_id) => {
+  const response = await axios.put(
+    `${institutionAPIRoute}/postulaciones/${postulation_id}/rechazar`
+  );
   return response.data;
 };
 

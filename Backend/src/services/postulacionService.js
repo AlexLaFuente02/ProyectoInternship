@@ -4,14 +4,16 @@ const PostulacionENT = require("../ENT/PostulacionENT");
 const EstadoPostulacionENT = require("../ENT/EstadoPostulacionENT");
 const EstudianteENT = require("../ENT/EstudianteENT");
 const ConvocatoriaENT = require("../ENT/ConvocatoriaENT");
+const CarreraENT = require("../ENT/CarreraENT");
+const SedeENT = require("../ENT/SedeENT");
 const EstadoPostulacionDTO = require("../DTO/EstadoPostulacionDTO");
 const EstudianteDTO = require("../DTO/EstudianteDTO");
 const ConvocatoriaDTO = require("../DTO/ConvocatoriaDTO");
+
 //para el trigger
 const historicoService = require('./historicoPostulacionesService');
 
 const sequelize = require("../../database/db");
-const InstitucionENT = require("../ENT/InstitucionENT");
 
 const getAllPostulaciones = async () => {
   console.log("Obteniendo todas las postulaciones...");
@@ -228,7 +230,17 @@ const getPostulacionesPendientesPorIdConvocatoria = async (idConvocatoria) => {
           },
           include: [
               { model: EstadoPostulacionENT, as: 'estadopostulacion' },
-              { model: EstudianteENT, as: 'estudiante' },
+              { model: EstudianteENT, as: 'estudiante',
+              include: [ 
+              {
+                model: CarreraENT,
+                as: 'carrera'
+              },
+              {
+                model: SedeENT,
+                as: 'sede'
+              },
+            ] },
               { model: ConvocatoriaENT, as: "convocatoria" },
           ]
       });
@@ -239,6 +251,14 @@ const getPostulacionesPendientesPorIdConvocatoria = async (idConvocatoria) => {
       }
 
       const postulacionesDTO = postulaciones.map((postulacion) => {
+        const carreraDTO = {
+          id: postulacion.estudiante.carrera.id,
+          nombreestadopostulacion: postulacion.estudiante.carrera.nombrecarrera
+      };
+      const sedeDTO = {
+        id: postulacion.estudiante.sede.id,
+        nombreestadopostulacion: postulacion.estudiante.sede.nombresede
+    };
           const estadoPostulacionDTO = {
               id: postulacion.estadopostulacion.id,
               nombreestadopostulacion: postulacion.estadopostulacion.nombreestadopostulacion
@@ -252,9 +272,9 @@ const getPostulacionesPendientesPorIdConvocatoria = async (idConvocatoria) => {
             correoelectronico: postulacion.estudiante.correoelectronico,
             celularcontacto: postulacion.estudiante.celularcontacto,
             graduado: postulacion.estudiante.graduado,
-            carrera_id: postulacion.estudiante.carrera_id,
+            carrera_id: carreraDTO,
             semestre_id: postulacion.estudiante.semestre_id,
-            sede_id: postulacion.estudiante.sede_id,
+            sede_id:sedeDTO,
             aniograduacion: postulacion.estudiante.aniograduacion,
             linkcurriculumvitae: postulacion.estudiante.linkcurriculumvitae
         };
@@ -277,7 +297,7 @@ const getPostulacionesPendientesPorIdConvocatoria = async (idConvocatoria) => {
               postulacion.fechapostulacion,
               estadoPostulacionDTO,
               estudianteDTO,
-              convocatoriaDTO // No incluimos la convocatoria en este caso
+              convocatoriaDTO 
           );
       });
 
@@ -935,6 +955,8 @@ const getPostulacionesRechazadasPorIdInstitucion = async (institutionId) => {
 };
 
 
+
+
 module.exports = {
   getAllPostulaciones,
   getPostulacionById,
@@ -949,5 +971,6 @@ module.exports = {
   getPostulacionesRechazadasPorIdInstitucion,
   getPostulacionesPendientesPorIdConvocatoria,
   updatePostulacionRechazadas,
-  updatePostulacionAprobadas
+  updatePostulacionAprobadas,
+  
 };

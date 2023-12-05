@@ -124,7 +124,7 @@ export default {
     data() {
         return {
             isDarkMode: false,
-            username: "Invitado",
+            username: "Estudiante",
         };
     },
     methods: {

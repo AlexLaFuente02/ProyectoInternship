@@ -17,7 +17,7 @@
           type="text"
           name="internshipAreaField"
           id="internshipAreaField"
-          v-model="formStore.areapasantia"
+          v-model="internshipRegisterStore.areapasantia"
           placeholder="Ingrese el área de la pasantía"
           autofocus
         />
@@ -36,7 +36,7 @@
           cols="30"
           rows="5"
           placeholder="Ingrese la descripción de las funciones o actividades de la pasantía"
-          v-model="formStore.descripcionfunciones"
+          v-model="internshipRegisterStore.descripcionfunciones"
         ></textarea>
       </div>
     </div>
@@ -53,7 +53,7 @@
           cols="30"
           rows="5"
           placeholder="Ingrese la descripción de los requisitos mínimos de la pasantía"
-          v-model="formStore.requisitoscompetencias"
+          v-model="internshipRegisterStore.requisitoscompetencias"
         ></textarea>
       </div>
     </div>
@@ -143,7 +143,7 @@ export default {
   },
   data() {
     return {
-      formStore: InternshipRegisterStore(),
+      internshipRegisterStore: InternshipRegisterStore(),
       newInternship: {},
       internshipMessages: {
         errorMessage: "",
@@ -186,27 +186,27 @@ export default {
       this.$router.push({ name: "InstitutionPrincipalPage" });
     },
     async sendRequest() {
-      this.newInternship = this.formStore.$state;
-      this.formStore.$state.horario_inicio = this.formComponents.beginTimeInput;
-      this.formStore.$state.horario_fin = this.formComponents.endTimeInput;
-      this.formStore.$state.fechaseleccionpasante = this.formComponents.dateInput;
-      this.formStore.$state.fechasolicitud = this.getCurrentDate();
-      if (this.formStore.$state.areapasantia === "") {
+      this.newInternship = this.internshipRegisterStore.$state;
+      this.internshipRegisterStore.$state.horario_inicio = this.formComponents.beginTimeInput;
+      this.internshipRegisterStore.$state.horario_fin = this.formComponents.endTimeInput;
+      this.internshipRegisterStore.$state.fechaseleccionpasante = this.formComponents.dateInput;
+      this.internshipRegisterStore.$state.fechasolicitud = this.getCurrentDate();
+      if (this.internshipRegisterStore.$state.areapasantia === "") {
         this.internshipMessages.errorMessage =
           "Error, ingrese el área de la pasantía por favor.";
-      } else if (this.formStore.$state.descripcionfunciones === "") {
+      } else if (this.internshipRegisterStore.$state.descripcionfunciones === "") {
         this.internshipMessages.errorMessage =
           "Error, ingrese las funciones o actividades de la pasantía por favor.";
-      } else if (this.formStore.$state.requisitoscompetencias === "") {
+      } else if (this.internshipRegisterStore.$state.requisitoscompetencias === "") {
         this.internshipMessages.errorMessage =
           "Error, ingrese los requisitos mínimos de la pasantía por favor.";
-      } else if (this.formStore.$state.horario_inicio === "") {
+      } else if (this.internshipRegisterStore.$state.horario_inicio === "") {
         this.internshipMessages.errorMessage =
           "Error, ingrese la hora de inicio de la pasantía por favor.";
-      } else if (this.formStore.$state.horario_fin === "") {
+      } else if (this.internshipRegisterStore.$state.horario_fin === "") {
         this.internshipMessages.errorMessage =
           "Error, ingrese la hora de finalización de la pasantía por favor.";
-      } else if (this.formStore.$state.fechaseleccionpasante === "") {
+      } else if (this.internshipRegisterStore.$state.fechaseleccionpasante === "") {
         this.internshipMessages.errorMessage =
           "Error, ingrese la fecha de selección del pasante por favor.";
       } else {
@@ -216,7 +216,28 @@ export default {
         this.newInternship.tiempoacumplir.id = 2;
         const response = await createInternship(this.newInternship);
         console.log(response);
+        if (response.code === "C-0000") {
+          this.showMessage("¡Éxito!", response.message, "success");
+        } else {
+          this.showMessage("Error", response.message, "error");
+        }
+        this.goBack();
       }
+    },
+    showMessage(titleMessage, textMessage, iconMessage) {
+      this.$swal({
+        title: titleMessage,
+        text: textMessage,
+        icon: iconMessage,
+        showConfirmButton: false,
+        timer: 5000,
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
     },
   },
 };
