@@ -100,3 +100,8 @@ Accept: application/json
 @postulacionID = 18
 GET {{baseURL}}/postulacion/{{postulacionID}}
 Accept: application/json
+
+
+### GET ComentarioPostulante por ConvocatoriaID
+@convocatoriaaID = 3
+GET {{baseURL}}/comentariopostulante/{{convocatoriaaID}}

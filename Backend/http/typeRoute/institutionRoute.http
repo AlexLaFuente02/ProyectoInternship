@@ -153,3 +153,9 @@ Accept: application/json
 PUT {{baseURL}}/postulaciones/{{postulacionID}}/rechazar
 Content-Type: application/json
 Accept: application/json
+
+
+### GET ComentarioConvocatoria por ConvocatoriaID
+@convocatoriaaID = 3
+GET {{baseURL}}/comentarioconvocatoria/{{convocatoriaaID}}
+Accept: application/json

@@ -17,7 +17,7 @@ const ComentarioPostulanteENT = sequelize.define(
     },
     fecha: {
       type: DataTypes.DATE, 
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

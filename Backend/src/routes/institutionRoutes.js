@@ -529,7 +529,7 @@ router.get('/comentarioconvocatoria/:convocatoriaId', async (req, res) => {
     try {
         const response = await comentarioConvocatoriaService.getComentarioByConvocatoriaId(convocatoriaId);
         res.json({
-            method: 'getComentarioByConvocatoriaId',
+            method: 'getComentarioConvocatoriaByConvocatoriaId',
             code: response.code,
             result: response.result,
             message: response.message,
@@ -537,7 +537,7 @@ router.get('/comentarioconvocatoria/:convocatoriaId', async (req, res) => {
     } catch (error) {
         console.error(`Error al obtener el comentario para la convocatoria con ID: ${convocatoriaId}:`, error);
         res.status(500).json({
-            method: 'getComentarioByConvocatoriaId',
+            method: 'getComentarioConvocatoriaByConvocatoriaId',
             code: 'C-1002',
             result: null,
             message: `Error al obtener el comentario para la convocatoria con ID: ${convocatoriaId}: ${error.message}`

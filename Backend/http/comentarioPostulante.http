@@ -7,7 +7,7 @@ GET http://{{host}}/comentariopostulante/
 Accept: application/json
 
 ### GET Comentario by ID
-GET http://{{host}}/comentariopostulante/1
+GET http://{{host}}/comentariopostulante/2
 Accept: application/json
 
 ### POST Comentario
@@ -17,7 +17,6 @@ Accept: application/json
 
 {
   "comentario": "Este es un comentario de prueba",
-  "puntuacion": 4,
   "postulacion": {
     "id": 1
   },
@@ -33,7 +32,6 @@ Accept: application/json
 
 {
   "comentario": "Comentario actualizado",
-  "puntuacion": 5,
   "postulacion": {
     "id": 1
   },
