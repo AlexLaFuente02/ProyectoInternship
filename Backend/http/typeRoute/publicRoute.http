@@ -29,7 +29,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsI
 {
   "usuario_id": 3,
   "nombres": "Juan2",
-  "apellidos": "Péreza",
+  "apellidopaterno": "Péreza",
+  "apellidomaterno": "Sanchez",
   "carnetidentidad": "12345678912",
   "correoelectronico": "juan.perez@email.com2",
   "celularcontacto": "555-555-5555",

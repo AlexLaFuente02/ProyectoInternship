@@ -37,9 +37,12 @@ const estudianteService = require('../services/estudianteService');
  *               nombres:
  *                 type: string
  *                 example: Juan
- *               apellidos:
+ *               apellidopaterno:
  *                 type: string
  *                 example: Pérez
+ *               apellidomaterno:
+ *                 type: string
+ *                 example: Sanchez
  *               carnetidentidad:
  *                 type: string
  *                 example: 123456789
@@ -131,9 +134,12 @@ const estudianteService = require('../services/estudianteService');
  *               nombres:
  *                 type: string
  *                 example: Juan Modificado
- *               apellidos:
+ *               apellidopaterno:
  *                 type: string
  *                 example: Pérez Modificado
+ *               apellidomaterno:
+ *                 type: string
+ *                 example: Sanchez Modificado
  *               carnetidentidad:
  *                 type: string
  *                 example: 987654321

@@ -9,7 +9,8 @@ export const useFormRegisterStore = defineStore({
         student: {
             usuario_id: 0,
             nombres: "",
-            apellidos: "",
+            apellidopaterno: "",
+            apellidomaterno: "",
             carnetidentidad: "",
             correoelectronico: "",
             celularcontacto: "",
@@ -40,7 +41,8 @@ export const useFormRegisterStore = defineStore({
             this.student = {
                 usuario_id: 0,
                 nombres: "",
-                apellidos: "",
+                apellidopaterno: "",
+                apellidomaterno: "",
                 carnetidentidad: "",
                 correoelectronico: "",
                 celularcontacto: "",
