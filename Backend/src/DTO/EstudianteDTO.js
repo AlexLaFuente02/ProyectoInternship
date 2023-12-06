@@ -73,11 +73,12 @@
  */
 
 class EstudianteDTO {
-    constructor(id, usuario_id, nombres, apellidos, carnetidentidad, correoelectronico, celularcontacto, graduado, carrera_id, semestre_id, sede_id, aniograduacion, linkcurriculumvitae) {
+    constructor(id, usuario_id, nombres, apellidopaterno, apellidomaterno, carnetidentidad, correoelectronico, celularcontacto, graduado, carrera_id, semestre_id, sede_id, aniograduacion, linkcurriculumvitae) {
         this.id = id;
         this.usuario_id = usuario_id;
         this.nombres = nombres;
-        this.apellidos = apellidos;
+        this.apellidopaterno = apellidopaterno;
+        this.apellidomaterno = apellidomaterno;
         this.carnetidentidad = carnetidentidad;
         this.correoelectronico = correoelectronico;
         this.celularcontacto = celularcontacto;

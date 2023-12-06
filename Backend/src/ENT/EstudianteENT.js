@@ -21,7 +21,11 @@ const EstudianteENT = sequelize.define(
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    apellidos: {
+    apellidopaterno: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    apellidomaterno: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
