@@ -102,6 +102,21 @@ GET {{baseURL}}/postulacion/{{postulacionID}}
 Accept: application/json
 
 
+### POST ComentarioPostulante
+POST {{baseURL}}/comentariopostulante
+Content-Type: application/json
+Accept: application/json
+
+{
+  "comentario": "La pasantía fue muy buena",
+  "postulacion": {
+    "id": 1
+  },
+  "convocatoria": {
+    "id": 3
+  }
+}
+
 ### GET ComentarioPostulante por ConvocatoriaID
 @convocatoriaaID = 3
 GET {{baseURL}}/comentariopostulante/{{convocatoriaaID}}

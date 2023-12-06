@@ -292,6 +292,23 @@ router.get('/postulacion/:postulacionId', async (req, res) => {
     }
 });
 
+// Ruta para añadir un comentario a una convocatoria
+router.post('/comentariopostulante', async (req, res) => {
+    try {
+        console.log('POST request received for createComentarioPostulante');
+        const response = await comentarioPostulanteService.createComentario(req.body);
+        res.json({
+            method: 'createComentarioPostulante',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error creating comentarioPostulante:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Ruta para obtener un comentario por ID de convocatoria
 router.get('/comentariopostulante/:convocatoriaId', async (req, res) => {
     const { convocatoriaId } = req.params;
