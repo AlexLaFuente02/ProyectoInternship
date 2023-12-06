@@ -108,7 +108,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "comentario": "La pasantía fue muy buena",
+  "comentario": "Aaaa",
   "postulacion": {
     "id": 1
   },

@@ -169,17 +169,19 @@
             :key="comment.id"
             >
               <div 
-              v-bind:class="{'comment-student': comment.userType === 'student', 'comment-company': comment.userType === 'company'}"
-
+              class="comment-student"
               >
                 <h4 class="comment-title">
-                  {{ comment.user }}
+                  {{ comment.postulacion.estudiante.nombres }}  {{ comment.postulacion.estudiante.apellidopaterno }}  {{ comment.postulacion.estudiante.apellidomaterno }}
                 </h4>
+                <h1 class="comment-information">
+                  Estudiante - {{ comment.postulacion.estudiante.correoelectronico }} - {{ comment.postulacion.estudiante.celularcontacto }}
+                </h1>
                 <p class="comment-text">
-                  {{ comment.comment }}
+                  {{ comment.comentario }}
                 </p>
                 <p class="comment-date">
-                  {{ comment.date }}
+                  {{ comment.fecha }}
                 </p>
               </div>
             </div>
@@ -189,15 +191,27 @@
 
             <div
                 class="submit-container-comments"
+                v-if="postulationStatus.status === 'APROBADO'"
               >
+              <p>
+                Tenga en cuenta que los comentarios que realice serán visibles para todos los estudiantes que postulen a esta pasantía.
+              </p>
                 <textarea
                   name="userDescription"
                   id="userDescription"
                   cols="25"
                   rows="5"
                   placeholder="Comentario..."
+                  v-model="comment"
                 ></textarea>
-                <Button text="Enviar" :color="3"></Button>
+                <Button 
+                text="Enviar" 
+                :color="3"
+                :disabled="false"
+                @option-selected="sendComment"
+
+
+                ></Button>
               </div>
           </div>
 
@@ -215,6 +229,7 @@ import {useRequestsByIDStore} from '@/store/student/requestsByIDStore';
 import {useLoaderStore} from "@/store/common/loaderStore";
 import Button from "@/components/common/Button.vue";
 import {useInstitutionsByIDSectorStore} from "@/store/student/institutionsByIDSectorStore";
+import {useCommentsByIDInternshipStore} from "@/store/student/commentsByIDInternshipStore";
 export default {
   name: "PostulationStatusPage",
   components: {
@@ -231,44 +246,10 @@ export default {
       institution: null,
       allDataIsLoaded: false,
       srcLogo: "",
-      comments:[
-        {
-          id: 1,
-          user: 'Pepito Perez',
-          userType: 'student',
-          comment: 'Me gustaría saber si...',
-          date: '12/12/2021'
-        },
-        {
-          id: 2,
-          user: 'Empresa X-men',
-          userType: 'company',
-          comment: 'Hola Pepito, gracias por tu interés...',
-          date: '12/12/2021'
-        },
-        {
-          id: 3,
-          user: 'Pepito Perez',
-          userType: 'student',
-          comment: 'Bueno muchas gracias...',
-          date: '12/12/2021'
-        },
-        {
-          id: 4,
-          user: 'Empresa X-men',
-          userType: 'company',
-          comment: 'De nada, estamos para servirte...',
-          date: '12/12/2021'
-        },
-        {
-          id:5,
-          user: 'Empresa X-men',
-          userType: 'company',
-          comment: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ',
-          date: '12/12/2021'
-        }
+      comments: [
 
-      ]
+      ],
+      comment: "",
     };
   },
   methods: {
@@ -283,12 +264,33 @@ export default {
       );
       this.institution = useInstitutionsByIDSectorStore().institution;
     },
+    async getComments(){
+      await useCommentsByIDInternshipStore().loadCommentsByIdInternship(this.postulation.convocatoria_id.id);
+      this.comments = useCommentsByIDInternshipStore().comments;
+    },
+    async sendComment(value){
+      useLoaderStore().activateLoader();
+      try{
+        const response = await useCommentsByIDInternshipStore().postComment(this.comment,this.postulation.id, this.postulation.convocatoria_id.id);
+        if(response)
+        {
+          await this.getComments();
+          this.comment = "";
+        }
+        
+      }catch(error){
+        console.log(error);
+      } finally{
+        useLoaderStore().desactivateLoader();
+      }
+    }
 
   },
   async mounted() {
     useLoaderStore().activateLoader();
     await this.getPostulationStatus();
     await this.getInstitution();
+    await this.getComments();
     this.postulationStatus.status = this.postulation.estadopostulacion_id.nombreestadopostulacion;
     this.srcLogo = this.institution.logoinstitucion;
     this.allDataIsLoaded = true;
@@ -404,13 +406,19 @@ export default {
 
 }
 .comment-title {
+  margin: 0%;
   margin-top: 2%;
   font-size: 1.2em;
 
 }
+.comment-information {
+  margin: 0%;
+  margin-bottom: 2%;
+  font-size: 0.8em;
+}
 .comment-date {
   margin-top: 2%;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 .comment-text {
   margin-top: 2%;
