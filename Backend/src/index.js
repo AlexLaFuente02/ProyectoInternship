@@ -63,6 +63,8 @@ const postulacionAPI = require("./API/postulacionAPI");
 const aprobacionConvocatoriaAPI = require("./API/aprobacionConvocatoriaAPI");
 const estadoSolicitudInstitucionAPI = require("./API/estadoSolicitudInstitucionAPI");
 const historicoPostulacionesAPI = require("./API/historicoPostulacionesAPI");
+const comentarioConvocatoriaAPI = require("./API/comentarioConvocatoriaAPI");
+const comentarioPostulanteAPI = require("./API/comentarioPostulanteAPI");
 
 const authAPI = require("./API/authAPI");
 
@@ -93,6 +95,8 @@ app.use("/semestre", semestreAPI); //SIN AUTENTICACION usado en FRONT getAll por
 app.use("/tiempoacumplir", tiempoAcumplirAPI); //utilizado por INSTIUTICION en FRONT para POST
 app.use("/tipoUsuario", tipoUsuarioAPI);  //no tiene uso en FRONT, USEI
 app.use("/usuario", UsuarioAPI); //no tiene uso en FRONT, a no ser modificar contraseña**
+app.use("/comentarioConvocatoria", comentarioConvocatoriaAPI); 
+app.use("/comentarioPostulante", comentarioPostulanteAPI);
 
 app.use("/auth", authAPI); 
 

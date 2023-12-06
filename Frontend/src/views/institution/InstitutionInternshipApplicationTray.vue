@@ -32,7 +32,10 @@
             }}
           </td>
           <td class="request-table-cell">
-            {{ pendingPostulation.estudiante_id.carrera_id.nombreestadopostulacion }}
+            {{
+              pendingPostulation.estudiante_id.carrera_id
+                .nombreestadopostulacion
+            }}
           </td>
           <td class="request-table-cell">
             <a :href="pendingPostulation.estudiante_id.linkcurriculumvitae">
@@ -55,7 +58,9 @@
             {{ pendingPostulation.estudiante_id.aniograduacion }}
           </td>
           <td class="request-table-cell">
-            {{ pendingPostulation.estudiante_id.sede_id.nombreestadopostulacion }}
+            {{
+              pendingPostulation.estudiante_id.sede_id.nombreestadopostulacion
+            }}
           </td>
           <td class="request-table-cell">
             <div class="postulation-buttons">
@@ -85,6 +90,85 @@
         </tr>
       </table>
     </div>
+    <div class="comments-container">
+      <h2>Comentarios</h2>
+      <section class="comment">
+        <div class="user-information">
+          <div class="comment-icon">
+            <font-awesome-icon :icon="['fas', 'user-circle']" size="3x" />
+          </div>
+          <div class="student-information">
+            <div class="student-name">
+              <h4>Oscar Menacho Silva</h4>
+            </div>
+            <div class="student-details">
+              <p><i>12345678</i></p>
+              <p><i>LA PAZ</i></p>
+              <p><i>INGENIERÍA DE SISTEMAS</i></p>
+            </div>
+          </div>
+        </div>
+        <div class="comment-container">
+          <p>
+            La pasantía fue muy interesante, provechosa y me abrirá muchas
+            puertas con la experiencia que adquirí. ¡Muchas gracias! Lorem Ipsum
+            is simply dummy text of the printing and typesetting industry. Lorem
+            Ipsum has been the industry's standard dummy text ever since the
+            1500s, when an unknown printer took a galley of type and scrambled
+            it to make a type specimen book. It has survived not only five
+            centuries, but also the leap into electronic typesetting, remaining
+            essentially unchanged. It was popularised in the 1960s with the
+            release of Letraset sheets containing Lorem Ipsum passages, and more
+            recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+          </p>
+        </div>
+      </section>
+      <section class="comment">
+        <div class="institution-information">
+          <div class="comment-image">
+            <img
+              src="https://scontent.flpb3-1.fna.fbcdn.net/v/t39.30808-6/326368094_757490342424242_7018585822248141862_n.png?_nc_cat=103&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=WfdIui_eHdEAX9zQT4r&_nc_ht=scontent.flpb3-1.fna&oh=00_AfDM_JVOy-AF5Vu_ARORTUJC6wAM9ywFDS2EdGAOzlRL1A&oe=65742FF4"
+              alt="Logo de la Empresa"
+            />
+          </div>
+          <div class="institution">
+            <h4>Tú - Mojix</h4>
+          </div>
+        </div>
+        <div class="institution-comment-container">
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s
+            with the release of Letraset sheets containing Lorem Ipsum passages,
+            and more recently with desktop publishing software like Aldus
+            PageMaker including versions of Lorem Ipsum.
+          </p>
+        </div>
+      </section>
+      <div class="comment-textarea-container">
+        <label for="InternshipCommentField">Ingresa tu comentario:</label>
+        <textarea
+          name="InternshipCommentField"
+          id="InternshipCommentField"
+          cols="100"
+          rows="5"
+          placeholder="Tu Comentario..."
+        ></textarea>
+      </div>
+      <div class="postComment-button-container">
+        <Button
+          text="Publicar Comentario"
+          :color="0"
+          :disabled="false"
+          @option-selected="postComment"
+        ></Button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -93,7 +177,7 @@ import Button from "@/components/common/Button.vue";
 import { pendingPostulationsByInternshipIdStore } from "../../store/institution/PendingPostulationsByInternshipIdStore";
 import { acceptOrRejectStudentPostulationStore } from "../../store/institution/AcceptOrRejectStudentPostulationStore";
 export default {
-  name: "InstitutionRequestsTrayPage",
+  name: "InstitutionInternshipApplicationTrayPage",
   components: {
     Button,
   },
@@ -229,6 +313,9 @@ export default {
           }
         });
     },
+    postComment() {
+      console.log("Comment posted!");
+    },
   },
   mounted() {
     this.getPendingPostulationsByInternshipId(this.$route.params.internshipId);
@@ -302,14 +389,88 @@ tr:first-child {
   transform: scale(1.2);
 }
 
-.delete-confirm-button {
-  background-color: greenyellow !important;
-  color: white;
+.comments-container {
+  background-color: rgb(253, 255, 245);
+  border: 2px solid rgb(168, 168, 235);
+  border-radius: 50px;
+  margin: 5% auto 0;
+  width: 90%;
+  padding: 2% 0;
 }
 
-.delete-cancel-button {
-  background-color: rgb(207, 101, 101);
-  color: white;
+.comment {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20px;
+  margin: 0 auto 2%;
+  padding: 2% 0;
+  width: 80%;
+}
+
+.user-information {
+  display: flex;
+  align-items: center;
+}
+
+.comment-icon,
+.comment-image {
+  margin: auto 2%;
+}
+
+.comment-image {
+  width: 6%;
+}
+
+img {
+  width: 100%;
+}
+
+.student-information {
+  display: block;
+  width: 38%;
+}
+
+.institution-information {
+  display: flex;
+  align-items: center;
+}
+
+.student-name {
+  display: flex;
+}
+
+.student-details {
+  display: flex;
+  justify-content: space-between;
+  margin: 2% auto auto;
+}
+
+.comment-container,
+.institution-comment-container {
+  width: 85%;
+  text-align: start;
+}
+
+.comment-container {
+  margin: 2% auto 0;
+}
+
+.institution-comment-container {
+  margin: 1% auto 0;
+}
+
+h4,
+p {
+  margin: 0;
+}
+
+#InternshipCommentField {
+  resize: none;
+}
+
+.postComment-button-container {
+  width: 30%;
+  margin: 1.5% auto 0;
 }
 
 /* DARK THEME */
@@ -330,18 +491,63 @@ tr:first-child {
   color: aqua;
 }
 
+.dark-theme .comments-container {
+  background-color: #353e48;
+}
+
+.dark-theme .comment {
+  background-color: #4c5865;
+}
+
+.dark-theme textarea {
+  border: 1px solid rgb(103, 176, 153);
+}
+
 /* MEDIA QUERIES */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 880px) {
   .studentsRequests-table {
     margin: 3%;
   }
 
-  /* .accept-postulation-request {
+  .comment-image {
+    width: 30%;
+  }
+
+  .comment {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+
+  .comments-container {
+    margin-top: 10%;
+  }
+
+  .comment-container,
+  .institution-comment-container {
+    margin-bottom: 4%;
+  }
+
+  .student-information,
+  .institution-information {
     width: 100%;
   }
 
-  .reject-postulation-request {
-    width: 18%;
-  } */
+  .institution-information {
+    justify-content: center;
+  }
+
+  .user-information,
+  .institution-information {
+    margin: 5% auto 8%;
+  }
+
+  .student-name,
+  .student-details {
+    display: block;
+  }
+
+  textarea {
+    width: 90%;
+  }
 }
 </style>
