@@ -17,10 +17,14 @@
  *           type: string
  *           description: Nombres del estudiante.
  *           example: "Juan"
- *         apellidos:
+ *         apellidopaterno:
  *           type: string
- *           description: Apellidos del estudiante.
+ *           description: Apellido paterno del estudiante.
  *           example: "Perez"
+ *         apellidomaterno:
+ *           type: string
+ *           description: Apellido materno del estudiante.
+ *           example: "Sanchez"
  *         carnetidentidad:
  *           type: string
  *           description: Carné de identidad del estudiante.
@@ -61,7 +65,8 @@
  *         - id
  *         - usuario_id
  *         - nombres
- *         - apellidos
+ *         - apellidopaterno
+ *         - apellidomaterno
  *         - carnetidentidad
  *         - correoelectronico
  *         - celularcontacto

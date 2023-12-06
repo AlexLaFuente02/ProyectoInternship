@@ -4,7 +4,7 @@
       <h1>
         <font-awesome-icon :icon="['fas', 'user-circle']" />
         Perfil del estudiante
-        {{ studentInformation.nombres + " " + studentInformation.apellidos }}
+        {{ studentInformation.nombres + " " + studentInformation.apellidopaterno + " " + studentInformation.apellidomaterno }}
       </h1>
     </div>
     <div class="container">
@@ -17,7 +17,7 @@
             <ul class="student-list">
               <li><strong>Nombre:</strong> {{ studentInformation.nombres }}</li>
               <li>
-                <strong>Apellido:</strong> {{ studentInformation.apellidos }}
+                <strong>Apellido:</strong> {{ studentInformation.apellidopaterno + " " + studentInformation.apellidomaterno }}
               </li>
               <li>
                 <strong>Carnet de Identidad:</strong>
