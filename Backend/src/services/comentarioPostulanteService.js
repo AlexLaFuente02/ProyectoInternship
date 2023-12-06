@@ -179,7 +179,6 @@ const getComentarioById = async (id) => {
     }
 };
 
-
 const createComentario = async (data) => {
     try {
         const comentario = await ComentarioPostulanteENT.create({

@@ -18,10 +18,16 @@ completa el siguiente formulario para registrarte como estudiante o graduado.</p
                 v-model="formStore.student.nombres" type="text" class="field">
             </div>
             <div class="container__field">
-                <label>Apellidos *:</label>
+                <label>Apellido paterno *:</label>
                 <input placeholder="Introduzca su primer apellido"
                 
-                v-model="formStore.student.apellidos" type="text" class="field">
+                v-model="formStore.student.apellidopaterno" type="text" class="field">
+            </div>
+            <div class="container__field">
+                <label>Apellido materno *:</label>
+                <input placeholder="Introduzca su primer apellido"
+                
+                v-model="formStore.student.apellidomaterno" type="text" class="field">
             </div>
             <!--INPUT-->
             <div class="container__field">

@@ -15,7 +15,7 @@
           </div>
           <!-- Texto de ejemplo -->
           <p>
-            Soy {{ dataUser.nombres }} {{ dataUser.apellidos }}, un  {{ dataUser.graduado? 'graduado': 'estudiante' }} de la Universidad Católica Boliviana "San Pablo".
+            Soy {{ dataUser.nombres }} {{ dataUser.apellidopaterno }}, un  {{ dataUser.graduado? 'graduado': 'estudiante' }} de la Universidad Católica Boliviana "San Pablo".
             Mi número de carnet es {{ dataUser.carnetidentidad }} y
             puedes contactarme a través de mi correo electrónico {{ dataUser.correoelectronico }} o
             mi número de celular {{ dataUser.celularcontacto }}.
@@ -36,7 +36,7 @@
           <!-- Detalles del usuario -->
           <h2>Datos del usuario</h2>
           <p>Nombre: {{ dataUser.nombres }}</p>
-          <p>Apellido: {{ dataUser.apellidos }}</p>
+          <p>Apellido: {{ dataUser.apellidopaterno }}</p>
           <p>Carnet: {{ dataUser.carnetidentidad }}</p>
           <p>Celular: {{ dataUser.celularcontacto }}</p>
           <a  class="profile__button bn23" @click="openResume">

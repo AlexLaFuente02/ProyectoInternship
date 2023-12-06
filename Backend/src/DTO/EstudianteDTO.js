@@ -17,10 +17,14 @@
  *           type: string
  *           description: Nombres del estudiante.
  *           example: "Juan"
- *         apellidos:
+ *         apellidopaterno:
  *           type: string
- *           description: Apellidos del estudiante.
+ *           description: Apellido paterno del estudiante.
  *           example: "Perez"
+ *         apellidomaterno:
+ *           type: string
+ *           description: Apellido materno del estudiante.
+ *           example: "Sanchez"
  *         carnetidentidad:
  *           type: string
  *           description: Carné de identidad del estudiante.
@@ -61,7 +65,8 @@
  *         - id
  *         - usuario_id
  *         - nombres
- *         - apellidos
+ *         - apellidopaterno
+ *         - apellidomaterno
  *         - carnetidentidad
  *         - correoelectronico
  *         - celularcontacto
@@ -73,11 +78,12 @@
  */
 
 class EstudianteDTO {
-    constructor(id, usuario_id, nombres, apellidos, carnetidentidad, correoelectronico, celularcontacto, graduado, carrera_id, semestre_id, sede_id, aniograduacion, linkcurriculumvitae) {
+    constructor(id, usuario_id, nombres, apellidopaterno, apellidomaterno, carnetidentidad, correoelectronico, celularcontacto, graduado, carrera_id, semestre_id, sede_id, aniograduacion, linkcurriculumvitae) {
         this.id = id;
         this.usuario_id = usuario_id;
         this.nombres = nombres;
-        this.apellidos = apellidos;
+        this.apellidopaterno = apellidopaterno;
+        this.apellidomaterno = apellidomaterno;
         this.carnetidentidad = carnetidentidad;
         this.correoelectronico = correoelectronico;
         this.celularcontacto = celularcontacto;

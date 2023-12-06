@@ -1,8 +1,8 @@
 class ComentarioPostulanteDTO {
-    constructor(id, comentario, puntuacion, postulacion, convocatoria) {
+    constructor(id, comentario, fecha, postulacion, convocatoria) {
       this.id = id;
       this.comentario = comentario;
-      this.puntuacion = puntuacion;
+      this.fecha = fecha;
       this.postulacion = postulacion;
       this.convocatoria = convocatoria;
     }

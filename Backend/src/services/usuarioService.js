@@ -196,7 +196,11 @@ const getEstudianteByIdUsuario = async (idusuario) => {
             console.log(`Estudiante con idusuario: ${idusuario} no encontrado.`);
             return new ResponseDTO('U-1002', null, 'Estudiante no encontrado');
         }
-        const estudianteDTO = new EstudianteDTO(estudiante.id, estudiante.usuario_id, estudiante.nombres, estudiante.apellidos, estudiante.carnetidentidad, estudiante.correoelectronico, estudiante.celularcontacto, estudiante.graduado, estudiante.carrera_id, estudiante.semestre_id, estudiante.sede_id, estudiante.aniograduacion, estudiante.linkcurriculumvitae);
+        const estudianteDTO = 
+        new EstudianteDTO(estudiante.id, estudiante.usuario_id, estudiante.nombres, 
+            estudiante.apellidopaterno, estudiante.apellidomaterno, estudiante.carnetidentidad, estudiante.correoelectronico, 
+            estudiante.celularcontacto, estudiante.graduado, estudiante.carrera_id, estudiante.semestre_id, 
+            estudiante.sede_id, estudiante.aniograduacion, estudiante.linkcurriculumvitae);
         console.log('Estudiante obtenido correctamente.');
         return new ResponseDTO('U-0000', estudianteDTO, 'Estudiante obtenido correctamente');
     } catch (error) {

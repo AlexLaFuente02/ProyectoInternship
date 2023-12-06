@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="entrada">
                                     <label for="apellido">Apellido:</label>
-                                    <input type="text" name="apellido" id="apellido" v-model="dataUser.apellidos">
+                                    <input type="text" name="apellido" id="apellido" v-model="dataUser.apellidopaterno">
                                 </div>
                                 <div class="entrada">
                                     <label for="cedula">Cédula:</label>
