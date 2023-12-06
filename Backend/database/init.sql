@@ -282,23 +282,23 @@ INSERT INTO estadosolicitudinstitucion (fechaaprobacion, estadosolicitud, adminu
 CREATE TABLE ComentarioConvocatoria (
     id int AUTO_INCREMENT PRIMARY KEY,
     comentario text NOT NULL,
-    puntuacion int NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     postulacion_id int NOT NULL,
     convocatoria_id int NOT NULL,
     CONSTRAINT fk_comentarioconvocatoria_postulacion FOREIGN KEY (postulacion_id) REFERENCES postulacion (ID),
     CONSTRAINT fk_comentarioconvocatoria_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (ID)
 );
 
-INSERT INTO ComentarioConvocatoria (comentario, puntuacion, postulacion_id, convocatoria_id) VALUES ('El desempeño del estudiante fue bueno', 5, 1, 3);
+INSERT INTO ComentarioConvocatoria (comentario, puntuacion, postulacion_id, convocatoria_id) VALUES ('El desempeño del estudiante fue bueno', 5, 3);
 
 CREATE TABLE ComentarioPostulante (
     id int AUTO_INCREMENT PRIMARY KEY,
     comentario text NOT NULL,
-    puntuacion int NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     postulacion_id int NOT NULL,
     convocatoria_id int NOT NULL,
     CONSTRAINT fk_comentarioconvocatoria_postulacion FOREIGN KEY (postulacion_id) REFERENCES postulacion (ID),
     CONSTRAINT fk_comentarioconvocatoria_convocatoria FOREIGN KEY (convocatoria_id) REFERENCES convocatoria (ID)
 );
 
-INSERT INTO ComentarioPostulante (comentario, puntuacion, postulacion_id, convocatoria_id) VALUES ('La pasantia fue buena', 5, 1, 3);
+INSERT INTO ComentarioPostulante (comentario, puntuacion, postulacion_id, convocatoria_id) VALUES ('La pasantia fue buena', 5, 3);
