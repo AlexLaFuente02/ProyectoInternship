@@ -1,8 +1,25 @@
 <template>
     <div class="inicio" v-if="isAllDataLoaded">
       <h1>TUS SOLICITUDES DE PASANTIAS</h1> 
-      <p>Te mostramos tus pasantias</p>
-      <div class="card-inicio">
+      <div class="buttons-container">
+        <button
+        @click="showSection('aprobadas')" :class="{'active': section === 'aprobadas'}"
+        >
+          Aprobadas
+        </button>
+        <button
+        @click="showSection('enEspera')" :class="{'active': section === 'enEspera'}"
+        >
+          En espera
+        </button>
+        <button
+        @click="showSection('rechazadas')" :class="{'active': section === 'rechazadas'}"
+        >
+          Rechazadas
+        </button>
+      </div>
+      <div class="card-inicio" v-show="section === 'aprobadas'"
+      >
       <span class="text-a">PASANTIAS APROBADAS</span>
         <div class="card">
           <div v-for="card in requestsAccepted" :key="card.id" class="card-individual">
@@ -16,6 +33,7 @@
                 <div class="text-content2">
                   <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
                   <button class="book-btn" @click="goToDetails(card.id)"
+                  style="background-image: none;"
                   >Mas informacion</button>
                 </div>
                 
@@ -33,8 +51,10 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="card-inicio">
+      </div>
+      <div class="card-inicio" v-show="section === 'enEspera'"
+
+      >
           <span class="text-p">PASANTIAS EN ESPERA</span>
         <div class="card">
           <div v-for="card in requestsPending"
@@ -48,7 +68,9 @@
               <div class="text-content">
                 <div class="text-content2">
                   <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
-                  <button @click="goToDetails(card.id)" class="book-btn">Mas informacion</button>
+                  <button @click="goToDetails(card.id)" 
+                  style="background-image: none;"
+                  class="book-btn">Mas informacion</button>
                 </div>
                 
                 <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
@@ -65,8 +87,9 @@
                 </div>
               </div>
         </div>
-        </div>
-        <div class="card-inicio">
+      </div>
+      <div class="card-inicio" v-show="section === 'rechazadas'"
+      >
           <span class="text-r">PASANTIAS RECHAZADAS</span>
         <div class="card">
           <div v-for="card in requestsRejected" :key="card.id" class="card-individual">
@@ -79,7 +102,9 @@
               <div class="text-content">
                 <div class="text-content2">
                   <div class="title">{{ card.convocatoria_id.areapasantia }}</div>
-                  <button @click="goToDetails(card.id)" class="book-btn">Mas informacion</button>
+                  <button @click="goToDetails(card.id)" class="book-btn"
+                  style="background-image: none;"
+                  >Mas informacion</button>
                 </div>
                 
                 <div class="description">{{ card.convocatoria_id.descripcionfunciones }}</div>
@@ -96,8 +121,8 @@
                 </div>
               </div>
         </div>
-        </div>
-        </div>
+      </div>
+    </div>
 
         
        
@@ -118,6 +143,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
           dataUserStore: useUserByIdStore(),
           dataUser: {},
           isAllDataLoaded: false,
+          section: 'enEspera'
           
         };
       },
@@ -141,6 +167,9 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
         },
         goToDetails(id){
           this.$router.push(`/student/applications/PostulationStatus/${id}`);
+        },
+        showSection(section){
+          this.section = section;
         }
       },
       async mounted() {
@@ -168,6 +197,55 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
     padding: 2rem;
     
 }
+.buttons-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+button {
+  padding: 0.9rem;
+  margin: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  text-align:center;
+  border: 1px solid #fff;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  background-image: linear-gradient(
+    to right,
+    #29323c,
+    #485563,
+    #2b5876,
+    #4e4376
+  );
+
+}
+button.active {
+  background-image: linear-gradient(
+    
+    to right,
+    #25aae1,
+    #4481eb,
+    #04befe,
+    #3f86ed
+  );
+}
+
+button:hover {
+  background-position: 100% 0;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+button:focus {
+  outline: none;
+}
+
+
     /** estilo eltra de titulo*/
     h1 {
       font-weight: 900;
@@ -265,6 +343,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
       border-radius: 8px;
       overflow: hidden;
       margin: 1rem;
+      
     }
     .card-inicio{
       border: 3px solid #ffffff;
@@ -272,6 +351,7 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
       border-radius: 8px;
       overflow: hidden;
       margin: 1rem;
+      width: 100%;
     }
     .dark-theme .card-inicio {
       background-color: #434B54;
@@ -355,6 +435,16 @@ import {useUserByIdStore} from "@/store/common/dataUserStore";
 /* Estilos para dispositivos pequeños (teléfonos) */
 
 @media only screen and (max-width: 600px) {
+  .buttons-container{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0%;
+  }
+  button{
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
   .inicio{
     padding: 0.2rem;
   }
