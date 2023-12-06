@@ -8,6 +8,7 @@ const postulacionService = require('../services/postulacionService');
 const sedeService = require('../services/sedeService');
 const institucionService = require('../services/institucionService');
 const estudianteService = require('../services/estudianteService');
+const comentarioConvocatoriaService=require('../services/comentarioConvocatoriaService');
 const router = express.Router();
 
 const { sendEmail } = require('../services/emailService');
@@ -288,6 +289,28 @@ router.get('/postulacion/:postulacionId', async (req, res) => {
     catch (error) {
         console.error(`Error getting postulacion for postulacion ID: ${req.params.postulacionId}:`, error);
         res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener un comentario por ID de convocatoria
+router.get('/comentarioconvocatoria/:convocatoriaId', async (req, res) => {
+    const { convocatoriaId } = req.params;
+    try {
+        const response = await comentarioConvocatoriaService.getComentarioByConvocatoriaId(convocatoriaId);
+        res.json({
+            method: 'getComentarioByConvocatoriaId',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error(`Error al obtener el comentario para la convocatoria con ID: ${convocatoriaId}:`, error);
+        res.status(500).json({
+            method: 'getComentarioByConvocatoriaId',
+            code: 'C-1002',
+            result: null,
+            message: `Error al obtener el comentario para la convocatoria con ID: ${convocatoriaId}: ${error.message}`
+        });
     }
 });
 
