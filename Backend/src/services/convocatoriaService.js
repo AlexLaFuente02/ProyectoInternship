@@ -35,6 +35,7 @@ const getAllConvocatorias = async () => {
                 convocatoria.horario_fin,
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
+                convocatoria.duracion,
                 estadoDTO,
                 institucionDTO,
                 tiempoDTO
@@ -75,6 +76,7 @@ const getConvocatoriaById = async (id) => {
             convocatoria.horario_fin,
             convocatoria.fechasolicitud,
             convocatoria.fechaseleccionpasante,
+            convocatoria.duracion,
             estadoDTO,
             institucionDTO,
             tiempoDTO
@@ -116,6 +118,7 @@ const getConvocatoriasPorIdInstitucion = async (idInstitucion) => {
                 convocatoria.horario_fin,
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
+                convocatoria.duracion,
                 estadoDTO,
                 institucionDTO, // No incluimos la institución en este caso
                 tiempoDTO
@@ -142,6 +145,7 @@ const createConvocatoria = async (data) => {
             horario_fin: data.horario_fin,
             fechasolicitud: data.fechasolicitud,
             fechaseleccionpasante: data.fechaseleccionpasante,
+            duracion: data.duracion,
             estadoconvocatoria_id: data.estadoconvocatoria.id,
             institucion_id: data.institucion.id,
             tiempoacumplir_id: data.tiempoacumplir.id
@@ -158,6 +162,7 @@ const createConvocatoria = async (data) => {
             convocatoria.horario_fin,
             convocatoria.fechasolicitud,
             convocatoria.fechaseleccionpasante,
+            convocatoria.duracion,
             new EstadoConvocatoriaDTO(data.estadoconvocatoria.id, data.estadoconvocatoria.nombreestadoconvocatoria),
             new InstitucionDTO(data.institucion.id, data.institucion.nombreinstitucion),
             new TiempoAcumplirDTO(data.tiempoacumplir.id, data.tiempoacumplir.descripcion)
@@ -184,6 +189,7 @@ const updateConvocatoria = async (id, data) => {
             horario_fin: data.horario_fin,
             fechasolicitud: data.fechasolicitud,
             fechaseleccionpasante: data.fechaseleccionpasante,
+            duracion: data.duracion,
             estadoconvocatoria_id: data.estadoconvocatoria.id,
             institucion_id: data.institucion.id,
             tiempoacumplir_id: data.tiempoacumplir.id
@@ -200,6 +206,7 @@ const updateConvocatoria = async (id, data) => {
             convocatoria.horario_fin,
             convocatoria.fechasolicitud,
             convocatoria.fechaseleccionpasante,
+            convocatoria.duracion,
             new EstadoConvocatoriaDTO(data.estadoconvocatoria.id, data.estadoconvocatoria.nombreestadoconvocatoria),
             new InstitucionDTO(data.institucion.id, data.institucion.nombreinstitucion),
             new TiempoAcumplirDTO(data.tiempoacumplir.id, data.tiempoacumplir.descripcion)
@@ -254,6 +261,7 @@ const getActiveConvocatorias = async () => {
                 convocatoria.horario_fin,
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
+                convocatoria.duracion,
                 estadoDTO,
                 institucionDTO,
                 tiempoDTO
@@ -295,6 +303,7 @@ const getActiveConvocatoriasById = async (institucionId) => {
                 convocatoria.horario_fin,
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
+                convocatoria.duracion,
                 estadoDTO,
                 institucionDTO,
                 tiempoDTO
@@ -336,6 +345,7 @@ const getPendingConvocatoriasById = async (institucionId) => {
                 convocatoria.horario_fin,
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
+                convocatoria.duracion,
                 estadoDTO,
                 institucionDTO,
                 tiempoDTO
@@ -363,6 +373,7 @@ const getPopularConvocatorias = async () => {
                 c.horario_fin,
                 c.fechasolicitud,
                 c.fechaseleccionpasante,
+                c.duracion,
                 c.estadoconvocatoria_id,
                 c.institucion_id,
                 c.tiempoacumplir_id,
@@ -382,7 +393,7 @@ const getPopularConvocatorias = async () => {
                 institucion i ON c.institucion_id = i.id
             GROUP BY 
                 c.id, c.areapasantia, c.descripcionfunciones, c.requisitoscompetencias, c.horario_inicio,
-                c.horario_fin, c.fechasolicitud, c.fechaseleccionpasante, c.estadoconvocatoria_id,
+                c.horario_fin, c.fechasolicitud, c.fechaseleccionpasante, c.duracion, c.estadoconvocatoria_id,
                 c.institucion_id, c.tiempoacumplir_id, ta.descripcion, e.nombreestadoconvocatoria, i.nombreinstitucion
             ORDER BY 
                 totalPostulaciones DESC
@@ -406,6 +417,7 @@ const getPopularConvocatorias = async () => {
                 convocatoria.horario_fin,
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
+                convocatoria.duracion,
                 estadoDTO,
                 institucionDTO,
                 tiempoDTO,
@@ -475,6 +487,7 @@ const getPendingConvocatorias = async () => {
                 convocatoria.horario_fin,
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
+                convocatoria.duracion,
                 estadoDTO,
                 institucionDTO,
                 tiempoDTO
@@ -514,6 +527,7 @@ const getInactiveConvocatorias = async () => {
                 convocatoria.horario_fin,
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
+                convocatoria.duracion,
                 estadoDTO,
                 institucionDTO,
                 tiempoDTO
@@ -555,6 +569,7 @@ const getInactiveConvocatoriasById = async (institucionId) => {
                 convocatoria.horario_fin,
                 convocatoria.fechasolicitud,
                 convocatoria.fechaseleccionpasante,
+                convocatoria.duracion,
                 estadoDTO,
                 institucionDTO,
                 tiempoDTO
@@ -605,6 +620,7 @@ const activateConvocatoria = async (idConvocatoria) => {
             updatedConvocatoria.horario_fin,
             updatedConvocatoria.fechasolicitud,
             updatedConvocatoria.fechaseleccionpasante,
+            updatedConvocatoria.duracion,
             new EstadoConvocatoriaDTO(
             updatedConvocatoria.estadoconvocatoria.id,
             updatedConvocatoria.estadoconvocatoria.nombreestadoconvocatoria
@@ -664,6 +680,7 @@ const rejectConvocatoria = async (idConvocatoria) => {
             updatedConvocatoria.horario_fin,
             updatedConvocatoria.fechasolicitud,
             updatedConvocatoria.fechaseleccionpasante,
+            updatedConvocatoria.duracion,
             new EstadoConvocatoriaDTO(
             updatedConvocatoria.estadoconvocatoria.id,
             updatedConvocatoria.estadoconvocatoria.nombreestadoconvocatoria
@@ -723,6 +740,7 @@ const pendingConvocatoria = async (idConvocatoria) => {
             updatedConvocatoria.horario_fin,
             updatedConvocatoria.fechasolicitud,
             updatedConvocatoria.fechaseleccionpasante,
+            updatedConvocatoria.duracion,
             new EstadoConvocatoriaDTO(
             updatedConvocatoria.estadoconvocatoria.id,
             updatedConvocatoria.estadoconvocatoria.nombreestadoconvocatoria

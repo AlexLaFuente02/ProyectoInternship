@@ -10,6 +10,7 @@ export const InternshipRegisterStore = defineStore({
     horario_fin: "",
     fechasolicitud: "",
     fechaseleccionpasante: "",
+    duracion: parseInt(""),
     estadoconvocatoria: {
       id: parseInt(""),
     },
@@ -41,6 +42,9 @@ export const InternshipRegisterStore = defineStore({
     },
     setFechaSeleccionPasante(fechaseleccionpasante) {
       this.fechaseleccionpasante = fechaseleccionpasante;
+    },
+    setDuracion(duracion) {
+      this.duracion = duracion;
     },
     setEstadoConvacatoria(estadoconvocatoria_id) {
       this.estadoconvocatoria_id = estadoconvocatoria_id;

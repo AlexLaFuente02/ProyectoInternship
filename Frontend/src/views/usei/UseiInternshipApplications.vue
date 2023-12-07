@@ -25,6 +25,9 @@
             <li>
               <strong>Fecha de Finalización: </strong>{{card.fechaseleccionpasante}}</li>
             <li>
+              <strong>Duracion:</strong> {{card.duracion}}
+            </li>
+            <li>
               <strong>Tipo de Pasantía: </strong>{{card.areapasantia}}</li>
     
           </ul></div>
