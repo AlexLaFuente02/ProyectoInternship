@@ -43,7 +43,7 @@
                   {{ internship.fechaseleccionpasante }}
                 </li>
                 <li>
-                  <strong>Duracion:</strong>
+                  <strong>Duracion(meses):</strong>
                   {{ internship.duracion }}
                 </li>
                 <li>

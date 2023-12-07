@@ -116,7 +116,7 @@
     <div class="field-container">
       <div class="form-label">
         <label for="internshipDuracionField"
-          >Duracion: <strong>*</strong>:</label
+          >Duracion(meses): <strong>*</strong>:</label
         >
       </div>
       <div class="form-field">

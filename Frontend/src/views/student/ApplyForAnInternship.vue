@@ -41,7 +41,7 @@
                     <strong>Fecha de Finalización para la selección: </strong>{{ this.dataInternship.fechaseleccionpasante  }}
                   </li>
                   <li>
-                    <strong>Duracion de la pasantia:</strong> {{ this.dataInternship.duracion  }}
+                    <strong>Duracion de la pasantia en meses:</strong> {{ this.dataInternship.duracion  }}
                   </li>
                   <li>
                     <strong>Tipo de Pasantía: </strong>{{ this.dataInternship.estadoconvocatoria.nombreestadoconvocatoria  }}
