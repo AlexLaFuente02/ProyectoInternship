@@ -17,8 +17,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsI
 
 {
   "usuario_id": 3,
-  "nombres": "Juan2",
-  "apellidos": "Péreza",
+  "nombres": "Juan",
+  "apellidopaterno": "Pérez",
+  "apellidomaterno": "Sanchez",
   "carnetidentidad": "12345678912",
   "correoelectronico": "juan.perez@email.com2",
   "celularcontacto": "555-555-5555",
@@ -38,7 +39,8 @@ Accept: application/json
 {
   "usuario_id": 1,
   "nombres": "Juan Modificado",
-  "apellidos": "Pérez Modificado",
+  "apellidopaterno": "Pérez Modificado",
+  "apellidomaterno": "Sanchez Modificado",
   "carnetidentidad": "987654321",
   "correoelectronico": "juan.modificado@email.com",
   "celularcontacto": "555-555-5556",

@@ -17,7 +17,6 @@ Accept: application/json
 
 {
   "comentario": "Este es un comentario de prueba",
-  "puntuacion": 4,
   "postulacion": {
     "id": 1
   },
@@ -33,7 +32,6 @@ Accept: application/json
 
 {
   "comentario": "Comentario actualizado",
-  "puntuacion": 5,
   "postulacion": {
     "id": 1
   },

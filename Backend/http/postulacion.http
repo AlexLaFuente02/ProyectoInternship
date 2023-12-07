@@ -23,7 +23,7 @@ Accept: application/json
 }
 
 ### Actualizar una postulación por ID (reemplaza {id} con un ID válido y proporciona los datos actualizados en el cuerpo de la solicitud)
-PUT http://{{host}}/postulacion/12
+PUT http://{{host}}/postulacion/1
 Content-Type: application/json
 Accept: application/json
 

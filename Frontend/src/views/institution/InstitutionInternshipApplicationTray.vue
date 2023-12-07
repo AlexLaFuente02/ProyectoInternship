@@ -28,7 +28,9 @@
             {{
               pendingPostulation.estudiante_id.nombres +
               " " +
-              pendingPostulation.estudiante_id.apellidos
+              pendingPostulation.estudiante_id.apellidopaterno +
+              " " +
+              pendingPostulation.estudiante_id.apellidomaterno
             }}
           </td>
           <td class="request-table-cell">
@@ -241,7 +243,9 @@ export default {
               `Aceptando a ${
                 postulation.estudiante_id.nombres +
                 " " +
-                postulation.estudiante_id.apellidos
+                postulation.estudiante_id.apellidopaterno +
+                " " +
+                postulation.estudiante_id.apellidomaterno
               } con postulación ID: ${postulation.id}`
             );
             await this.acceptOrRejectStudentPostulationStore.acceptPostulation(postulation.id);
@@ -291,7 +295,9 @@ export default {
               `Rechazando a ${
                 postulation.estudiante_id.nombres +
                 " " +
-                postulation.estudiante_id.apellidos
+                postulation.estudiante_id.apellidopaterno +
+                " " +
+                postulation.estudiante_id.apellidomaterno
               } con postulación ID: ${postulation.id}`
             );
             await this.acceptOrRejectStudentPostulationStore.rejectPostulation(postulation.id);

@@ -15,9 +15,9 @@ const ComentarioPostulanteENT = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    puntuacion: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    fecha: {
+      type: DataTypes.DATE, 
+      allowNull: true,
     },
   },
   {
