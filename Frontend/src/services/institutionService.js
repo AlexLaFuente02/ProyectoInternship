@@ -1,5 +1,6 @@
 import axios from "axios";
 import { institutionAPIRoute } from "../assets/apiConfig";
+import { publicAPIRoute } from "../assets/apiConfig";
 
 export const getInstitutionById = async (institution_id) => {
   const response = await axios.get(
@@ -137,7 +138,7 @@ export const rejectStudentPostulation = async (postulation_id) => {
 export const createInstitution = async (formData) => {
   try {
     const response = await axios.post(
-      `${institutionAPIRoute}/crear`,
+      `${publicAPIRoute}/institucion`,
       formData,
       {
         headers: {
