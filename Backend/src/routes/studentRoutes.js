@@ -8,7 +8,7 @@ const postulacionService = require('../services/postulacionService');
 const sedeService = require('../services/sedeService');
 const institucionService = require('../services/institucionService');
 const estudianteService = require('../services/estudianteService');
-const comentarioConvocatoriaService=require('../services/comentarioConvocatoriaService');
+const comentarioPostulanteService = require('../services/comentarioPostulanteService');
 const router = express.Router();
 
 const { sendEmail } = require('../services/emailService');
@@ -292,13 +292,30 @@ router.get('/postulacion/:postulacionId', async (req, res) => {
     }
 });
 
+// Ruta para añadir un comentario a una convocatoria
+router.post('/comentariopostulante', async (req, res) => {
+    try {
+        console.log('POST request received for createComentarioPostulante');
+        const response = await comentarioPostulanteService.createComentario(req.body);
+        res.json({
+            method: 'createComentarioPostulante',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error creating comentarioPostulante:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Ruta para obtener un comentario por ID de convocatoria
-router.get('/comentarioconvocatoria/:convocatoriaId', async (req, res) => {
+router.get('/comentariopostulante/:convocatoriaId', async (req, res) => {
     const { convocatoriaId } = req.params;
     try {
-        const response = await comentarioConvocatoriaService.getComentarioByConvocatoriaId(convocatoriaId);
+        const response = await comentarioPostulanteService.getComentarioByConvocatoriaId(convocatoriaId);
         res.json({
-            method: 'getComentarioByConvocatoriaId',
+            method: 'getComentarioPostulanteByConvocatoriaId',
             code: response.code,
             result: response.result,
             message: response.message,
@@ -306,7 +323,7 @@ router.get('/comentarioconvocatoria/:convocatoriaId', async (req, res) => {
     } catch (error) {
         console.error(`Error al obtener el comentario para la convocatoria con ID: ${convocatoriaId}:`, error);
         res.status(500).json({
-            method: 'getComentarioByConvocatoriaId',
+            method: 'getComentarioPostulanteByConvocatoriaId',
             code: 'C-1002',
             result: null,
             message: `Error al obtener el comentario para la convocatoria con ID: ${convocatoriaId}: ${error.message}`

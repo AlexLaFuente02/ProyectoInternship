@@ -523,13 +523,30 @@ router.get('/institucion/:institutionId/postulaciones/sumatoria', async (req, re
     }
 });
 
+// Ruta para añaadir un comentario a una convocatoria
+router.post('/comentarioconvocatoria', async (req, res) => {
+    try {
+        console.log('POST request received for createComentarioConvocatoria');
+        const response = await comentarioConvocatoriaService.createComentario(req.body);
+        res.json({
+            method: 'createComentarioConvocatoria',
+            code: response.code,
+            result: response.result,
+            message: response.message,
+        });
+    } catch (error) {
+        console.error('Error creating comentario convocatoria:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Ruta para obtener un comentario por ID de convocatoria
 router.get('/comentarioconvocatoria/:convocatoriaId', async (req, res) => {
     const { convocatoriaId } = req.params;
     try {
         const response = await comentarioConvocatoriaService.getComentarioByConvocatoriaId(convocatoriaId);
         res.json({
-            method: 'getComentarioByConvocatoriaId',
+            method: 'getComentarioConvocatoriaByConvocatoriaId',
             code: response.code,
             result: response.result,
             message: response.message,
@@ -537,12 +554,14 @@ router.get('/comentarioconvocatoria/:convocatoriaId', async (req, res) => {
     } catch (error) {
         console.error(`Error al obtener el comentario para la convocatoria con ID: ${convocatoriaId}:`, error);
         res.status(500).json({
-            method: 'getComentarioByConvocatoriaId',
+            method: 'getComentarioConvocatoriaByConvocatoriaId',
             code: 'C-1002',
             result: null,
             message: `Error al obtener el comentario para la convocatoria con ID: ${convocatoriaId}: ${error.message}`
         });
     }
 });
+
+
 
 module.exports = router;

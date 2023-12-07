@@ -153,3 +153,25 @@ Accept: application/json
 PUT {{baseURL}}/postulaciones/{{postulacionID}}/rechazar
 Content-Type: application/json
 Accept: application/json
+
+
+### POST ComentarioConvocatoria
+POST {{baseURL}}/comentarioconvocatoria
+Content-Type: application/json
+Accept: application/json
+
+{
+  "comentario": "El estudiante fue un buen sujeto de pruebas",
+  "postulacion": {
+    "id": 1
+  },
+  "convocatoria": {
+    "id": 3
+  }
+}
+
+
+### GET ComentarioConvocatoria por ConvocatoriaID
+@convocatoriaaID = 3
+GET {{baseURL}}/comentarioconvocatoria/{{convocatoriaaID}}
+Accept: application/json

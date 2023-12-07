@@ -52,7 +52,8 @@ const getAllComentarios = async () => {
                         comentario.postulacion.estudiante.id,
                         comentario.postulacion.estudiante.usuario_id,
                         comentario.postulacion.estudiante.nombres,
-                        comentario.postulacion.estudiante.apellidos,
+                        comentario.postulacion.estudiante.apellidopaterno,
+                        comentario.postulacion.estudiante.apellidomaterno,
                         comentario.postulacion.estudiante.carnetidentidad,
                         comentario.postulacion.estudiante.correoelectronico,
                         comentario.postulacion.estudiante.celularcontacto,
@@ -127,7 +128,8 @@ const getComentarioById = async (id) => {
                 comentario.postulacion.estudiante.id,
                 comentario.postulacion.estudiante.usuario_id,
                 comentario.postulacion.estudiante.nombres,
-                comentario.postulacion.estudiante.apellidos,
+                comentario.postulacion.estudiante.apellidopaterno,
+                comentario.postulacion.estudiante.apellidomaterno,
                 comentario.postulacion.estudiante.carnetidentidad,
                 comentario.postulacion.estudiante.correoelectronico,
                 comentario.postulacion.estudiante.celularcontacto,
@@ -181,7 +183,7 @@ const getComentarioById = async (id) => {
 
 const getComentarioByConvocatoriaId = async (id) => {
     try {
-        const comentario = await ComentarioConvocatoriaENT.findAll({
+        const comentarios = await ComentarioConvocatoriaENT.findAll({
             where: { convocatoria_id: id }, 
             include: [
                 {
@@ -208,66 +210,56 @@ const getComentarioByConvocatoriaId = async (id) => {
             ]
         });
         
-        if (!comentario) {
-            return new ResponseDTO('C-1002', null, 'Comentario no encontrado');
+        if (!comentarios) {
+            return new ResponseDTO('C-1002', null, 'Comentarios no encontrados');
         }
 
-        const postulacionDTO = {
-            id: comentario.postulacion.id,
-            fechapostulacion: comentario.postulacion.fechapostulacion,
-            estadopostulacion: comentario.postulacion.estadopostulacion,
-            estudiante: new EstudianteDTO(
-                comentario.postulacion.estudiante.id,
-                comentario.postulacion.estudiante.usuario_id,
-                comentario.postulacion.estudiante.nombres,
-                comentario.postulacion.estudiante.apellidos,
-                comentario.postulacion.estudiante.carnetidentidad,
-                comentario.postulacion.estudiante.correoelectronico,
-                comentario.postulacion.estudiante.celularcontacto,
-                comentario.postulacion.estudiante.graduado,
-                comentario.postulacion.estudiante.carrera_id,
-                comentario.postulacion.estudiante.semestre_id,
-                comentario.postulacion.estudiante.sede_id,
-                comentario.postulacion.estudiante.aniograduacion,
-                comentario.postulacion.estudiante.linkcurriculumvitae
-            ),
-            convocatoria: {
-                id: comentario.postulacion.convocatoria.id,
-                areapasantia: comentario.postulacion.convocatoria.areapasantia,
-                descripcionfunciones: comentario.postulacion.convocatoria.descripcionfunciones,
-                requisitoscompetencias: comentario.postulacion.convocatoria.requisitoscompetencias,
-                horario_inicio: comentario.postulacion.convocatoria.horario_inicio,
-                horario_fin: comentario.postulacion.convocatoria.horario_fin,
-                fecha_solicitud: comentario.postulacion.convocatoria.fecha_solicitud,
-                fechaslseccionpasante: comentario.postulacion.convocatoria.fechaslseccionpasante,
-                estadoconvocatoria: comentario.postulacion.convocatoria.estadoconvocatoria,
-                institucion: comentario.postulacion.convocatoria.institucion,
-                tiempoacumplir: comentario.postulacion.convocatoria.tiempoacumplir
-            }
-        };
+        const comentariosDTO = comentarios.map(comentario => (
+            new ComentarioConvocatoriaDTO(
+                comentario.id,
+                comentario.comentario,
+                comentario.fecha,
+                {
+                    id: comentario.postulacion.id,
+                    fechapostulacion: comentario.postulacion.fechapostulacion,
+                    estadopostulacion: comentario.postulacion.estadopostulacion,
+                    estudiante: new EstudianteDTO(
+                        comentario.postulacion.estudiante.id,
+                        comentario.postulacion.estudiante.usuario_id,
+                        comentario.postulacion.estudiante.nombres,
+                        comentario.postulacion.estudiante.apellidopaterno,
+                        comentario.postulacion.estudiante.apellidomaterno,
+                        comentario.postulacion.estudiante.carnetidentidad,
+                        comentario.postulacion.estudiante.correoelectronico,
+                        comentario.postulacion.estudiante.celularcontacto,
+                        comentario.postulacion.estudiante.graduado,
+                        comentario.postulacion.estudiante.carrera_id,
+                        comentario.postulacion.estudiante.semestre_id,
+                        comentario.postulacion.estudiante.sede_id,
+                        comentario.postulacion.estudiante.aniograduacion,
+                        comentario.postulacion.estudiante.linkcurriculumvitae
+                    ),
+                    convocatoria: comentario.postulacion.convocatoria
+                },
+                {
+                    id: comentario.convocatoria.id,
+                    areapasantia: comentario.convocatoria.areapasantia,
+                    descripcionfunciones: comentario.convocatoria.descripcionfunciones,
+                    requisitoscompetencias: comentario.convocatoria.requisitoscompetencias,
+                    horario_inicio: comentario.convocatoria.horario_inicio,
+                    horario_fin: comentario.convocatoria.horario_fin,
+                    fecha_solicitud: comentario.convocatoria.fecha_solicitud,
+                    fechaslseccionpasante: comentario.convocatoria.fechaslseccionpasante,
+                    estadoconvocatoria: comentario.convocatoria.estadoconvocatoria,
+                    institucion: comentario.convocatoria.institucion,
+                    tiempoacumplir: comentario.convocatoria.tiempoacumplir
+                }
+            )
+        ));
 
-        const convocatoriaDTO = {
-            id: comentario.convocatoria.id,
-            areapasantia: comentario.convocatoria.areapasantia,
-            descripcionfunciones: comentario.convocatoria.descripcionfunciones,
-            requisitoscompetencias: comentario.convocatoria.requisitoscompetencias,
-            horario_inicio: comentario.convocatoria.horario_inicio,
-            horario_fin: comentario.convocatoria.horario_fin,
-            fecha_solicitud: comentario.convocatoria.fecha_solicitud,
-            fechaslseccionpasante: comentario.convocatoria.fechaslseccionpasante,
-            estadoconvocatoria: comentario.convocatoria.estadoconvocatoria,
-            institucion: comentario.convocatoria.institucion,
-            tiempoacumplir: comentario.convocatoria.tiempoacumplir
-        };
-
-        return new ResponseDTO('C-0000', {
-            id: comentario.id,
-            comentario: comentario.comentario,
-            fecha: comentario.fecha,
-            postulacion: postulacionDTO,
-            convocatoria: convocatoriaDTO
-        }, 'Comentario obtenido correctamente');
+        return new ResponseDTO('C-0000', comentariosDTO , 'Comentario obtenido correctamente');
     } catch (error) {
+        console.error("Error al obtener el comentario: ", error);
         return new ResponseDTO('C-1002', null, `Error al obtener el comentario: ${error}`);
     }
 };
@@ -334,5 +326,6 @@ module.exports = {
     getComentarioById,
     createComentario,
     updateComentario,
-    deleteComentario
+    deleteComentario,
+    getComentarioByConvocatoriaId
 };
