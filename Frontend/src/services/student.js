@@ -302,3 +302,43 @@ export const postPostulation = async (postulationData) => {
         throw error; // O reenviar el error para manejarlo en otro lugar
     }
 }
+export const getCommentsByIdInternship = async (idInternship) => {
+    try {
+        const response = await axios.get(`${rutaApi}/student/comentariopostulante/${idInternship}/`);
+        const data = response.data;
+        if (data.code === "C-0000") {
+            console.log(data.result);
+            return data.result;
+        }else{
+            alert("No se pudo cargar los comentarios");
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al cargar los comentarios: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}
+export const postComment = async (commentData) => {
+    try {
+        const response = await axios.post(`${rutaApi}/student/comentariopostulante`, commentData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        });
+        const data = response.data;
+        if (data.code === "C-0000") {
+            alert("Comentario creado exitosamente");
+            return data.result;
+        }
+        else{
+            alert("No se pudo crear el comentario");
+            return null;
+        }
+    } catch (error) {
+        // Manejar el error aquí, por ejemplo:
+        console.error("Hubo un error al crear el comentario: ", error);
+        throw error; // O reenviar el error para manejarlo en otro lugar
+    }
+}

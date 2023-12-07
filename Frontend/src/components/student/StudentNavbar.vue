@@ -80,7 +80,7 @@
                                     text="Cerrar sesi&oacute;n" 
                                     :color="1" 
                                     :disabled="false"
-                                    @option-selected="logout"
+                                    @option-selected="logoutA"
                                     >
                                 </Button>
                             </div>
@@ -95,6 +95,7 @@ import { useMobileMenuStore } from "../../store/common/mobileMenuStore";
 import { useThemeStore } from "@/store/common/useThemeStore";
 import Button from "@/components/common/Button.vue";
 import { useLoginStore } from "@/store/common/loginStore";
+import {logout} from "@/services/common";
 export default {
   name: "NavbarCommon",
   components:{
@@ -119,15 +120,17 @@ export default {
       this.isDarkMode = !this.isDarkMode;
       darkModeStore.toggleDarkMode();
     },
-    logout(){
+    async logoutA(){
         /*Logout*/
+        logout();
         $cookies.remove("id");
         $cookies.remove("type");
         $cookies.remove("connect.sid");
         $cookies.remove("username");
         useLoginStore().setLogin(0);
-        this.$router.push("/");
         this.closeMobileMenu();
+        await this.$router.push("/");
+        await this.$router.go();
         /*Fin del logout*/
     },
     toggleMobileMenu() {
