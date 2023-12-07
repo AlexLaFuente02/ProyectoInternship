@@ -112,7 +112,24 @@
       </div>
       <div class="form-field">
         <h5>{{ getCurrentDate() }}</h5>
+    </div>
+    <div class="field-container">
+      <div class="form-label">
+        <label for="internshipDuracionField"
+          >Duracion: <strong>*</strong>:</label
+        >
       </div>
+      <div class="form-field">
+        <input
+          type="text"
+          name="internshipDuracionField"
+          id="internshipDuracionField"
+          v-model="internshipRegisterStore.duracion"
+          placeholder="Ingrese la duracion de la pasantia en meses"
+          autofocus
+        />
+      </div>
+    </div>
     </div>
     <div class="internship-message">
       <span v-text="internshipMessages.errorMessage"></span>
@@ -249,7 +266,11 @@ export default {
       } else if (this.internshipRegisterStore.$state.fechaseleccionpasante === "") {
         this.internshipMessages.errorMessage =
           "Error, ingrese la fecha de selección del pasante por favor.";
-      } else {
+      } else if (this.internshipRegisterStore.$state.duracion === "") {
+        this.internshipMessages.errorMessage =
+          "Error, ingrese la duracion por favor.";
+      } 
+      else {
         this.internshipMessages.errorMessage = "";
         this.newInternship.estadoconvocatoria.id = 2;
         this.newInternship.institucion.id = $cookies.get("institutionID");

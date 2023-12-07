@@ -249,7 +249,7 @@ button:focus {
     /** estilo eltra de titulo*/
     h1 {
       font-weight: 900;
-      color: tomato;
+      color: rgb(0, 4, 132);
       --x-offset: -0.0625em;
       --y-offset: 0.0625em;
       
@@ -266,6 +266,11 @@ button:focus {
         0px
         var(--stroke-color);
       
+    }
+    
+    .dark-theme h1 { 
+      color: rgb(99, 63, 117);
+    
     }
     /* for browsers that support spread, added in
     https://drafts.csswg.org/css-text-decor-4/#text-shadow-property
@@ -340,21 +345,37 @@ button:focus {
     }
     .card-individual {
       border: 3px solid #ccc;
-      border-radius: 8px;
-      overflow: hidden;
-      margin: 1rem;
-      
-    }
-    .card-inicio{
-      border: 3px solid #ffffff;
       background-color:  #ffffff;
       border-radius: 8px;
       overflow: hidden;
       margin: 1rem;
+      box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+     transition: 0.5s;
+      
+    }
+    .card-inicio{
+      border: 3px solid #ffffff;
+      background-color:  rgb(233, 180, 4);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem;
       width: 100%;
+      box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+     transition: 0.5s;
     }
     .dark-theme .card-inicio {
-      background-color: #434B54;
+    
+      background-color:  rgb(93, 61, 129);
+    }
+    .dark-theme .card-individual {
+     
+      background-color:  rgb(104, 81, 130);
     }
     
     .content {

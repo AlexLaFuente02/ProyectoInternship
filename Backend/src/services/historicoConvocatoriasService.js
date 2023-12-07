@@ -8,7 +8,7 @@ const InstitucionENT = require("../ENT/InstitucionENT");
 const TiempoAcumplirENT = require("../ENT/TiempoACumplirENT");
 const EstadoConvocatoriaDTO = require("../DTO/EstadoConvocatoriaDTO");
 const InstitucionDTO = require("../DTO/InstitucionDTO");
-const TiempoAcumplirDTO = require("../DTO/TiempoAcumplirDTO");
+const TiempoAcumplirDTO = require("../DTO/TiempoACumplirDTO");
 
 const insertHistoricoConvocatoria = async (convocatoriaData, accion) => {
     console.log('Insertando en historico_convocatorias...');

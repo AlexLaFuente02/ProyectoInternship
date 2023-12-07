@@ -127,6 +127,94 @@
         </div>
       </section>
       <section class="comment">
+  <div class="user-information">
+    <div class="comment-icon">
+      <font-awesome-icon :icon="['fas', 'user-circle']" size="3x" />
+    </div>
+    <div class="student-information">
+      <div class="student-name">
+        <h4>Maria González</h4>
+      </div>
+      <div class="student-details">
+        <p><i>87654321</i></p>
+        <p><i>COCHABAMBA</i></p>
+        <p><i>ADMINISTRACIÓN DE EMPRESAS</i></p>
+      </div>
+    </div>
+  </div>
+  <div class="comment-container">
+    <p>
+      La pasantía superó mis expectativas. Aprendí mucho y me ayudó a aplicar mis conocimientos en un entorno profesional. ¡Gracias por la oportunidad!
+    </p>
+  </div>
+</section>
+<section class="comment">
+  <div class="user-information">
+    <div class="comment-icon">
+      <font-awesome-icon :icon="['fas', 'user-circle']" size="3x" />
+    </div>
+    <div class="student-information">
+      <div class="student-name">
+        <h4>Juan Pérez</h4>
+      </div>
+      <div class="student-details">
+        <p><i>98765432</i></p>
+        <p><i>SANTA CRUZ</i></p>
+        <p><i>MARKETING</i></p>
+      </div>
+    </div>
+  </div>
+  <div class="comment-container">
+    <p>
+      Mi experiencia en la pasantía fue enriquecedora. Agradezco la oportunidad de aplicar mis conocimientos teóricos en situaciones prácticas.
+    </p>
+  </div>
+</section>
+<section class="comment">
+  <div class="user-information">
+    <div class="comment-icon">
+      <font-awesome-icon :icon="['fas', 'user-circle']" size="3x" />
+    </div>
+    <div class="student-information">
+      <div class="student-name">
+        <h4>Laura Torres</h4>
+      </div>
+      <div class="student-details">
+        <p><i>65432198</i></p>
+        <p><i>TARIJA</i></p>
+        <p><i>DERECHO</i></p>
+      </div>
+    </div>
+  </div>
+  <div class="comment-container">
+    <p>
+      La pasantía me permitió adquirir nuevas habilidades y conocer de cerca el funcionamiento del área legal. ¡Una experiencia inolvidable!
+    </p>
+  </div>
+</section>
+<section class="comment">
+  <div class="user-information">
+    <div class="comment-icon">
+      <font-awesome-icon :icon="['fas', 'user-circle']" size="3x" />
+    </div>
+    <div class="student-information">
+      <div class="student-name">
+        <h4>Ricardo Mendoza</h4>
+      </div>
+      <div class="student-details">
+        <p><i>76543210</i></p>
+        <p><i>POTOSÍ</i></p>
+        <p><i>INGENIERÍA CIVIL</i></p>
+      </div>
+    </div>
+  </div>
+  <div class="comment-container">
+    <p>
+      Agradezco la oportunidad de participar en la pasantía. Contribuyó significativamente a mi formación profesional. ¡Gracias por la experiencia!
+    </p>
+  </div>
+</section>
+      <section class="comment">
         <div class="institution-information">
           <div class="comment-image">
             <img
@@ -152,6 +240,28 @@
           </p>
         </div>
       </section>
+      <section class="comment" v-for="comment in comments" :key="comment.id">
+        <div class="user-information">
+          <div class="comment-icon">
+            <font-awesome-icon :icon="['fas', 'user-circle']" size="3x" />
+          </div>
+          <div class="student-information">
+            <div class="student-name">
+              <h4> {{ comment.postulacion.estudiante.nombres }}  {{ comment.postulacion.estudiante.apellidopaterno }}  {{ comment.postulacion.estudiante.apellidomaterno }}
+                </h4>
+            </div>
+            <div class="student-details">
+              <p><i>{{ comment.fecha }}</i></p>
+              <p><i>{{ comment.postulacion.estudiante.correoelectronico }}</i></p>
+              <p><i>{{ comment.postulacion.estudiante.celularcontacto }}</i></p>
+            </div>
+          </div>
+        </div>
+        <div class="comment-container">
+          <p>{{ comment.comentario }}
+          </p>
+        </div>
+      </section>
       <div class="comment-textarea-container">
         <label for="InternshipCommentField">Ingresa tu comentario:</label>
         <textarea
@@ -167,7 +277,8 @@
           text="Publicar Comentario"
           :color="0"
           :disabled="false"
-          @option-selected="postComment"
+
+          @option-selected="sendComment"
         ></Button>
       </div>
     </div>
@@ -175,9 +286,12 @@
 </template>
 
 <script>
+import {useLoaderStore} from "@/store/common/loaderStore";
+
 import Button from "@/components/common/Button.vue";
 import { pendingPostulationsByInternshipIdStore } from "../../store/institution/PendingPostulationsByInternshipIdStore";
 import { acceptOrRejectStudentPostulationStore } from "../../store/institution/AcceptOrRejectStudentPostulationStore";
+import{ useCommentsByIDInternshipStoreinstitucion} from "@/store/institution/institutionComentario";
 export default {
   name: "InstitutionInternshipApplicationTrayPage",
   components: {
@@ -191,6 +305,17 @@ export default {
       acceptOrRejectStudentPostulationStore: acceptOrRejectStudentPostulationStore(),
       acceptedOrRejectedPostulationIsReady: false,
       postulationResult: [],
+      //*jijiji
+      idPostulation: null,
+      postulation: null,
+      isPostulationLoaded: false,
+      institution: null,
+      allDataIsLoaded: false,
+      srcLogo: "",
+      comments: [
+
+      ],
+      comment: "",
     };
   },
   methods: {
@@ -319,12 +444,37 @@ export default {
           }
         });
     },
-    postComment() {
-      console.log("Comment posted!");
+    async getComments(){
+      await useCommentsByIDInternshipStoreinstitucion().loadCommentsByIdInternshipInstitution(this.postulation.convocatoria_id.id);
+      this.comments = useCommentsByIDInternshipStoreinstitucion().comments;
     },
+    async sendComment(value){
+      useLoaderStore().activateLoader();
+      try{
+        const response = await useCommentsByIDInternshipStoreinstitucion().createcomentarioConvocatoria(this.comment,this.postulation.id, this.postulation.convocatoria_id.id);
+        if(response)
+        {
+          await this.getComments();
+          this.comment = "";
+        }
+      }catch(error){
+        console.log(error);
+      } finally{
+        }
+        useLoaderStore().desactivateLoader();
+    }
   },
-  mounted() {
+  async mounted() {
+    useLoaderStore().activateLoader();
+
+    //await this.getComments();
+    
+    
     this.getPendingPostulationsByInternshipId(this.$route.params.internshipId);
+    useLoaderStore().desactivateLoader();
+  },
+  created() {
+    this.idPostulation = this.$route.params.id;
   },
 };
 </script>

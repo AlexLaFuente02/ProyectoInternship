@@ -23,6 +23,7 @@ Accept: application/json
   "horario_fin": "17:00",
   "fechasolicitud": "2023-10-22",
   "fechaseleccionpasante": "2025-12-12",
+  "duracion": 2,
   "estadoconvocatoria": {
     "id": 2
   },

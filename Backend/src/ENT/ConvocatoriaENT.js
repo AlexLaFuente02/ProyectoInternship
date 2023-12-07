@@ -40,6 +40,10 @@ const ConvocatoriaENT = sequelize.define(
       type: DataTypes.DATEONLY,
       allowNull: true,
     },
+    duracion: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     tableName: "convocatoria",
