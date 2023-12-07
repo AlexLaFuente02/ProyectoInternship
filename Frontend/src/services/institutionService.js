@@ -151,3 +151,29 @@ export const createInstitution = async (formData) => {
     throw error;
   }
 };
+
+export const comentarioConvocatoria = async (convocatoria_ID) => {
+  const response = await axios.put(
+    `${institutionAPIRoute}/comentarioconvocatoria/${convocatoria_ID}`
+  );
+  return response.data;
+};
+
+
+export const createcomentarioConvocatoria = async (formData) => {
+  try {
+    const response = await axios.post(
+      `${institutionAPIRoute}/comentarioconvocatoria`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Hubo un error al crear el comentario: ", error);
+    throw error;
+  }
+};
