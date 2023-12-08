@@ -43,6 +43,10 @@
                   {{ internship.fechaseleccionpasante }}
                 </li>
                 <li>
+                  <strong>Duracion(meses):</strong>
+                  {{ internship.duracion }}
+                </li>
+                <li>
                   <strong>Estado de la convocatoria:</strong>
                   {{ internship.nombreestadoconvocatoria }}
                 </li>
@@ -110,6 +114,7 @@ export default {
           horario_fin: internship.horario_fin,
           fechasolicitud: internship.fechasolicitud,
           fechaseleccionpasante: internship.fechaseleccionpasante,
+          duracion: internship.duracion,
           nombreestadoconvocatoria: internship.estadoconvocatoria.nombreestadoconvocatoria,
           tiempoacumplir: internship.tiempoacumplir.descripcion,
         };

@@ -56,6 +56,9 @@
                     <strong>Fecha de Finalización para la selección: </strong>{{ this.postulation.convocatoria_id.fechaseleccionpasante  }}
                   </li>
                   <li>
+                    <strong>Duracion de la pasntia en meses: </strong>{{ this.postulation.convocatoria_id.duracion  }}
+                  </li>
+                  <li>
                     <strong>Tipo de Pasantía: </strong>{{ this.postulation.estadopostulacion_id.nombreestadopostulacion  }}
                   </li>
                   <li>

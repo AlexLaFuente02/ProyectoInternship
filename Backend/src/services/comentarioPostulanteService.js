@@ -75,6 +75,7 @@ const getAllComentarios = async () => {
                     horario_fin: comentario.convocatoria.horario_fin,
                     fecha_solicitud: comentario.convocatoria.fecha_solicitud,
                     fechaslseccionpasante: comentario.convocatoria.fechaslseccionpasante,
+                    duracion: comentario.convocatoria.duracion,
                     estadoconvocatoria: comentario.convocatoria.estadoconvocatoria,
                     institucion: comentario.convocatoria.institucion,
                     tiempoacumplir: comentario.convocatoria.tiempoacumplir
@@ -149,6 +150,7 @@ const getComentarioById = async (id) => {
                 horario_fin: comentario.postulacion.convocatoria.horario_fin,
                 fecha_solicitud: comentario.postulacion.convocatoria.fecha_solicitud,
                 fechaslseccionpasante: comentario.postulacion.convocatoria.fechaslseccionpasante,
+                duracion: comentario.postulacion.convocatoria.duracion,
                 estadoconvocatoria: comentario.postulacion.convocatoria.estadoconvocatoria,
                 institucion: comentario.postulacion.convocatoria.institucion,
                 tiempoacumplir: comentario.postulacion.convocatoria.tiempoacumplir
@@ -164,6 +166,7 @@ const getComentarioById = async (id) => {
             horario_fin: comentario.convocatoria.horario_fin,
             fecha_solicitud: comentario.convocatoria.fecha_solicitud,
             fechaslseccionpasante: comentario.convocatoria.fechaslseccionpasante,
+            duracion: comentario.convocatoria.duracion,
             estadoconvocatoria: comentario.convocatoria.estadoconvocatoria,
             institucion: comentario.convocatoria.institucion,
             tiempoacumplir: comentario.convocatoria.tiempoacumplir
@@ -307,6 +310,7 @@ const getComentarioByConvocatoriaId = async (id) => {
                     horario_fin: comentario.convocatoria.horario_fin,
                     fecha_solicitud: comentario.convocatoria.fecha_solicitud,
                     fechaslseccionpasante: comentario.convocatoria.fechaslseccionpasante,
+                    duracion: comentario.convocatoria.duracion,
                     estadoconvocatoria: comentario.convocatoria.estadoconvocatoria,
                     institucion: comentario.convocatoria.institucion,
                     tiempoacumplir: comentario.convocatoria.tiempoacumplir

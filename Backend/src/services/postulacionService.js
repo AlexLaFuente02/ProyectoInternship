@@ -56,6 +56,7 @@ const getAllPostulaciones = async () => {
         horario_fin: postulacion.convocatoria.horario_fin,
         fechasolicitud: postulacion.convocatoria.fechasolicitud,
         fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
+        duracion: postulacion.convocatoria.duracion,
         estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
         institucion: postulacion.convocatoria.institucion,
         tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
@@ -129,6 +130,7 @@ const getPostulacionById = async (id) => {
       horario_fin: postulacion.convocatoria.horario_fin,
       fechasolicitud: postulacion.convocatoria.fechasolicitud,
       fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
+      duracion: postulacion.convocatoria.duracion,
       estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
       institucion: postulacion.convocatoria.institucion_id,
       tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
@@ -202,6 +204,7 @@ const getPostulacionesPorIdConvocatoria = async (idConvocatoria) => {
           horario_fin: postulacion.convocatoria.horario_fin,
           fechasolicitud: postulacion.convocatoria.fechasolicitud,
           fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
+          duracion: postulacion.convocatoria.duracion,
           estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
           institucion: postulacion.convocatoria.institucion,
           tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
@@ -291,6 +294,7 @@ const getPostulacionesPendientesPorIdConvocatoria = async (idConvocatoria) => {
           horario_fin: postulacion.convocatoria.horario_fin,
           fechasolicitud: postulacion.convocatoria.fechasolicitud,
           fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
+          duracion: postulacion.convocatoria.duracion,
           estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
           institucion: postulacion.convocatoria.institucion,
           tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
@@ -377,6 +381,7 @@ const createPostulacion = async (postulationData) => {
             postulationData.convocatoria.horario_fin,
             postulationData.convocatoria.fechasolicitud,
             postulationData.convocatoria.fechaseleccionpasante,
+            postulationData.convocatoria.duracion,
             postulationData.convocatoria.estadoconvocatoria_id, // Considera si necesitas el id o un objeto más detallado aquí
             postulationData.convocatoria.institucion_id,       // Lo mismo para institución y tiempo a cumplir
             postulationData.convocatoria.tiempoacumplir_id
@@ -562,6 +567,7 @@ const getPostulacionByStudent = async (studentId) => {
           horario_fin: postulacion.convocatoria.horario_fin,
           fechasolicitud: postulacion.convocatoria.fechasolicitud,
           fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
+          duracion: postulacion.convocatoria.duracion,
           estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
           institucion: postulacion.convocatoria.institucion,
           tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
@@ -632,6 +638,7 @@ const getPostulacionByStudentByStatus = async (studentId, estadopostulacionId) =
           horario_fin: postulacion.convocatoria.horario_fin,
           fechasolicitud: postulacion.convocatoria.fechasolicitud,
           fechaseleccionpasante: postulacion.convocatoria.fechaseleccionpasante,
+          duracion: postulacion.convocatoria.duracion,
           estadoconvocatoria: postulacion.convocatoria.estadoconvocatoria,
           institucion: postulacion.convocatoria.institucion,
           tiempoacumplir: postulacion.convocatoria.tiempoacumplir,
@@ -684,6 +691,7 @@ const getPostulacionesActivasPorIdInstitucion = async (institutionId) => {
         c.horario_fin,
         c.fechasolicitud,
         c.fechaseleccionpasante,
+        c.duracion,
         i.nombreinstitucion
       FROM 
         postulacion p
@@ -732,7 +740,8 @@ const getPostulacionesActivasPorIdInstitucion = async (institutionId) => {
           postulacion.horario_inicio,
           postulacion.horario_fin,
           postulacion.fechasolicitud,
-          postulacion.fechaseleccionpasante
+          postulacion.fechaseleccionpasante,
+          postulacion.duracion
         )
       );
     });
@@ -788,6 +797,7 @@ const getPostulacionPendientesPorIdInstitucion = async (institutionId) => {
         c.horario_fin,
         c.fechasolicitud,
         c.fechaseleccionpasante,
+        c.duracion,
         i.nombreinstitucion
       FROM 
         postulacion p
@@ -836,7 +846,8 @@ const getPostulacionPendientesPorIdInstitucion = async (institutionId) => {
           postulacion.horario_inicio,
           postulacion.horario_fin,
           postulacion.fechasolicitud,
-          postulacion.fechaseleccionpasante
+          postulacion.fechaseleccionpasante,
+          postulacion.duracion
         )
       );
     });
@@ -893,6 +904,7 @@ const getPostulacionesRechazadasPorIdInstitucion = async (institutionId) => {
         c.horario_fin,
         c.fechasolicitud,
         c.fechaseleccionpasante,
+        c.duracion,
         i.nombreinstitucion
       FROM 
         postulacion p
@@ -941,7 +953,8 @@ const getPostulacionesRechazadasPorIdInstitucion = async (institutionId) => {
           postulacion.horario_inicio,
           postulacion.horario_fin,
           postulacion.fechasolicitud,
-          postulacion.fechaseleccionpasante
+          postulacion.fechaseleccionpasante,
+          postulacion.duracion
         )
       );
     });

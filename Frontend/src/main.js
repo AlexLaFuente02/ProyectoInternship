@@ -62,7 +62,7 @@ import "primeflex/primeflex.css";
 import Galleria from 'primevue/galleria';
 import Chart from "primevue/chart";
 import Calendar from "primevue/calendar";
-
+import MultiSelect from "primevue/multiselect";
 import Password from 'primevue/password';
 //Main
 import "./assets/main.css";
@@ -153,6 +153,7 @@ app.component("Chart", Chart);
 app.component("Calendar", Calendar);
 
 app.component('Password', Password);
+app.component('MultiSelect', MultiSelect);
 //Montar la aplicacion
 app.mount("#app");
 

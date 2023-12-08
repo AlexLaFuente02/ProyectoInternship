@@ -1,5 +1,6 @@
 import axios from "axios";
 import { institutionAPIRoute } from "../assets/apiConfig";
+import { publicAPIRoute } from "../assets/apiConfig";
 
 export const getInstitutionById = async (institution_id) => {
   const response = await axios.get(
@@ -137,7 +138,7 @@ export const rejectStudentPostulation = async (postulation_id) => {
 export const createInstitution = async (formData) => {
   try {
     const response = await axios.post(
-      `${institutionAPIRoute}/crear`,
+      `${publicAPIRoute}/institucion`,
       formData,
       {
         headers: {
@@ -151,3 +152,47 @@ export const createInstitution = async (formData) => {
     throw error;
   }
 };
+
+
+export const comentarioConvocatoria = async (convocatoria_ID) => {
+  try {
+      const response = await axios.get(`${institutionAPIRoute}/comentarioconvocatoria/${convocatoria_ID}/`);
+      const data = response.data;
+      if (data.code === "C-0000") {
+          console.log(data.result);
+          return data.result;
+      }else{
+          alert("No se pudo cargar los comentarios");
+          return null;
+      }
+  } catch (error) {
+      // Manejar el error aquí, por ejemplo:
+      console.error("Hubo un error al cargar los comentarios: ", error);
+      throw error; // O reenviar el error para manejarlo en otro lugar
+  }
+}
+
+
+export const createcomentarioConvocatoria = async (formData) => {
+  try {
+      const response = await axios.post(`${institutionAPIRoute}/comentarioconvocatoria`, formData, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+          },
+      });
+      const data = response.data;
+      if (data.code === "C-0000") {
+          alert("Comentario creado exitosamente");
+          return data.result;
+      }
+      else{
+          alert("No se pudo crear el comentario");
+          return null;
+      }
+  } catch (error) {
+      // Manejar el error aquí, por ejemplo:
+      console.error("Hubo un error al crear el comentario: ", error);
+      throw error; // O reenviar el error para manejarlo en otro lugar
+  }
+}

@@ -153,6 +153,7 @@ CREATE TABLE convocatoria (
     horario_fin TIME NOT NULL,
     fechasolicitud date NOT NULL,
     fechaseleccionpasante date NULL,
+    duracion int NULL,
     estadoconvocatoria_id int NOT NULL,
     institucion_id int NOT NULL,
     tiempoacumplir_id int NOT NULL,
@@ -162,11 +163,11 @@ CREATE TABLE convocatoria (
 );
 
 INSERT INTO convocatoria
-(areapasantia, descripcionfunciones, requisitoscompetencias, horario_inicio, horario_fin, fechasolicitud, fechaseleccionpasante, estadoconvocatoria_id, institucion_id, tiempoacumplir_id)
+(areapasantia, descripcionfunciones, requisitoscompetencias, horario_inicio, horario_fin, fechasolicitud, fechaseleccionpasante, duracion, estadoconvocatoria_id, institucion_id, tiempoacumplir_id)
 VALUES
-('Area 1', 'Descripcion 1', 'Requisitos 1', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 1, 1, 1),
-('Area 2', 'Descripcion 2', 'Requisitos 2', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 2, 1, 1),
-('Area 3', 'Descripcion 3', 'Requisitos 3', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 3, 1, 1);
+('Area 1', 'Descripcion 1', 'Requisitos 1', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 4, 1, 1, 1),
+('Area 2', 'Descripcion 2', 'Requisitos 2', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 3, 2, 1, 1),
+('Area 3', 'Descripcion 3', 'Requisitos 3', '08:00:00', '12:00:00', '2021-01-01', '2021-01-01', 6, 3, 1, 1);
 
 
 CREATE TABLE historico_convocatorias (
@@ -212,7 +213,7 @@ CREATE TABLE estudiante (
 );
 
 INSERT INTO estudiante (usuario_id, nombres, apellidopaterno, apellidomaterno, carnetidentidad, correoelectronico, celularcontacto, graduado, carrera_id, semestre_id, sede_id, aniograduacion, linkcurriculumvitae)
-VALUES (1, 'Juan', 'Pérez', 'Velasquez', '1234567', 'juan@example.com', '123-456-7890', 1, 2, 3, 1, 2022, 'https://example.com/juan_cv.pdf');
+VALUES (1, 'Juan', 'Pérez', 'Velasquez', '1234567', 'juan@example.com', '123-456-7890', 1, 2, 3, 1, 2022, 'https://docs.google.com/document/d/1ftwU8jgfkaDuPJJGgcWPLDbfGPQjNCD02KNky_PS4bI/edit');
 
 
 CREATE TABLE postulacion (

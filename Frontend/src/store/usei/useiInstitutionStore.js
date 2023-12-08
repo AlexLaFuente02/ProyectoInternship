@@ -22,20 +22,14 @@ export const UseUseiInstitutionStore = defineStore({
         },
         async ActivateInstitution(institutionId){
             const result = await activateInstitution(institutionId);
-            // Aquí puedes manejar la respuesta, por ejemplo, actualizando la lista de instituciones
-            // o emitiendo un mensaje de éxito o error.
             return result;
         },
         async RechazarInstitution(institutionId){
             const result = await rechazarInstitution(institutionId);
-            // Aquí puedes manejar la respuesta, por ejemplo, actualizando la lista de instituciones
-            // o emitiendo un mensaje de éxito o error.
             return result;
         },
         async PendienteInstitution(institutionId){
             const result = await pendienteInstitution(institutionId);
-            // Aquí puedes manejar la respuesta, por ejemplo, actualizando la lista de instituciones
-            // o emitiendo un mensaje de éxito o error.
             return result;
         },
     },

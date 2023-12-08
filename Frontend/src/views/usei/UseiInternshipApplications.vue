@@ -20,10 +20,13 @@
               <div class="description"> <ul class="internship-details">
             <li><strong>Empresa: </strong>{{card.institucion.nombreinstitucion}}</li>
             <li><strong>Requisitos: </strong>{{card.requisitoscompetencias}}</li>
-            <li><strong>Duración: </strong>{{card.tiempoacumplir.descripcion}}</li>
+            <li><strong>Horas: </strong>{{card.tiempoacumplir.descripcion}}</li>
             <li><strong>Fecha de Inicio: </strong>{{card.fechasolicitud}}</li>
             <li>
               <strong>Fecha de Finalización: </strong>{{card.fechaseleccionpasante}}</li>
+            <li>
+              <strong>Duracion (meses):</strong> {{card.duracion}}
+            </li>
             <li>
               <strong>Tipo de Pasantía: </strong>{{card.areapasantia}}</li>
     
